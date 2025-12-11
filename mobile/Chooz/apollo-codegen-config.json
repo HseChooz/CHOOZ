@@ -1,0 +1,28 @@
+{
+  "schemaNamespace": "ChoozAPI",
+  "input": {
+    "operationSearchPaths": [
+      "Chooz/Sources/GraphQL/operations/**/*.graphql"
+    ],
+    "schemaSearchPaths": [
+      "Chooz/Sources/GraphQL/schema.graphqls"
+    ]
+  },
+  "output": {
+    "schemaTypes": {
+      "path": "Chooz/Sources/GraphQL/Generated",
+      "moduleType": {
+        "embeddedInTarget": {
+          "name": "Chooz"
+        }
+      }
+    },
+    "operations": {
+      "inSchemaModule": {}
+    },
+    "testMocks": {
+      "none": {}
+    }
+  }
+}
+

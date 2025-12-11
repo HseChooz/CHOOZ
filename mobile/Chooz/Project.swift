@@ -2,6 +2,9 @@ import ProjectDescription
 
 let project = Project(
     name: "Chooz",
+    packages: [
+        .package(url: "https://github.com/apollographql/apollo-ios.git", .upToNextMajor(from: "1.7.0"))
+    ],
     targets: [
         .target(
             name: "Chooz",
@@ -20,7 +23,16 @@ let project = Project(
                 "Chooz/Sources",
                 "Chooz/Resources",
             ],
-            dependencies: []
+            scripts: [
+                .pre(
+                    path: .relativeToRoot("../tools/graphql/apollo_codegen.sh"),
+                    name: "Apollo GraphQL Codegen",
+                    basedOnDependencyAnalysis: false
+                )
+            ],
+            dependencies: [
+                .package(product: "Apollo")
+            ]
         ),
         .target(
             name: "ChoozTests",
