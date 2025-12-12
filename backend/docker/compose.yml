@@ -1,0 +1,11 @@
+name: chooz
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: chooz-image
+    container_name: chooz-backend
+    ports:
+      - "8010:8000"

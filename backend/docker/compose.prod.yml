@@ -1,0 +1,8 @@
+name: chooz
+
+services:
+  backend:
+    image: ghcr.io/hsechooz/chooz:latest
+    container_name: chooz-backend
+    ports:
+      - "8010:8000"
