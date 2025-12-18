@@ -1,11 +1,15 @@
 name: chooz
 
 services:
-  backend:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    image: chooz-image
-    container_name: chooz-backend
+  db:
+    image: postgres:17
+    container_name: chooz-postgres-dev
+    env_file:
+      - ../.env
     ports:
-      - "8010:8000"
+      - "5432:5432"
+    volumes:
+      - chooz_pg_data:/var/lib/postgresql/data
+
+volumes:
+  chooz_pg_data:

@@ -3,30 +3,30 @@ name: chooz
 services:
   db:
     image: postgres:17
-    container_name: chooz-postgres
+    container_name: chooz-postgres-dev
     env_file:
-      - .env
+      - ../.env
     volumes:
       - chooz_pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 5s
+      interval: 1s
       timeout: 3s
-      retries: 5
-    restart: unless-stopped
-
+      retries: 3
 
   backend:
-    image: ghcr.io/hsechooz/chooz:latest
-    container_name: chooz-backend
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: chooz-image
+    container_name: chooz-backend-dev
     env_file:
-      - .env
+      - ../.env
     ports:
-      - "8010:8000"
+      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
-    restart: unless-stopped
 
 volumes:
   chooz_pg_data:

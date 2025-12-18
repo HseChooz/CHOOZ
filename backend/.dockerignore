@@ -1,13 +1,14 @@
 .git
 .github
+.gitignore
+
 .idea
 .vscode
 .DS_Store
 
-.env
-.env.*
+.env*
 .venv
-backend/.venv
+.ruff_cache
 
 __pycache__
 **/__pycache__
@@ -15,5 +16,3 @@ __pycache__
 *.pyo
 *.pyd
 *.log
-
-*.sqlite3
