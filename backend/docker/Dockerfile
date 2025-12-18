@@ -18,4 +18,5 @@ ENV PATH="/backend/.venv/bin:$PATH"
 
 EXPOSE 8000
 
+ENTRYPOINT ["sh", "-c", "python manage.py migrate --noinput && exec \"$@\"", "--"]
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
