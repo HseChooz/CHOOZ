@@ -19,4 +19,4 @@ ENV PATH="/backend/.venv/bin:$PATH"
 EXPOSE 8000
 
 ENTRYPOINT ["sh", "-c", "python manage.py migrate --noinput && exec \"$@\"", "--"]
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "config.asgi:application", "-k", "uvicorn.workers.UvicornWorker", "-w", "2", "-b", "0.0.0.0:8000"]
