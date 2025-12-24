@@ -1,0 +1,86 @@
+name: CI Backend
+
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/ci-backend.yml"
+  push:
+    branches: [ main ]
+    paths:
+      - "backend/**"
+      - ".github/workflows/ci-backend.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-backend-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.12", "3.13" ]
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: chooz
+          POSTGRES_USER: chooz
+          POSTGRES_PASSWORD: chooz
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U chooz -d chooz"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: uv sync --frozen --all-groups
+
+      - name: Django checks & tests
+        env:
+          DJANGO_SECRET_KEY: ci
+          DJANGO_DEBUG: "0"
+          ALLOWED_HOSTS: localhost,127.0.0.1
+          POSTGRES_DB: chooz
+          POSTGRES_USER: chooz
+          POSTGRES_PASSWORD: chooz
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: "5432"
+          GOOGLE_CLIENT_ID: ci
+        run: |
+          uv run python manage.py check
+          uv run python manage.py makemigrations --check --dry-run
+          uv run python manage.py migrate --no-input
+          uv run python manage.py test
+
+      - name: Pip audit
+        run: uv run pip-audit --strict
+
+      - name: Pre-commit (all files)
+        run: uv run pre-commit run -a

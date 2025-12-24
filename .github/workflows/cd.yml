@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
+    paths:
+      - "backend/**"
+      - ".github/workflows/cd.yml"
 
 permissions:
   contents: read
@@ -59,7 +62,7 @@ jobs:
           key: ${{ secrets.NAS_SSH_KEY }}
           script: |
             set -e
-            export PATH=/usr/local/bin:$PATH 
-            
+            export PATH=/usr/local/bin:$PATH
+
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-            docker compose -f "${COMPOSE_FILE}" up -d --pull always --force-recreate --remove-orphans
+            docker compose -f "${{ env.COMPOSE_FILE }}" up -d --pull always --force-recreate --remove-orphans
