@@ -3,7 +3,9 @@ from django.db import models
 
 
 class GoogleAccount(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="google_account")
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="google_account"
+    )
     sub = models.CharField(max_length=64, unique=True)
     email = models.EmailField()
 
@@ -12,7 +14,9 @@ class GoogleAccount(models.Model):
 
 
 class WishItem(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="wish_items")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="wish_items"
+    )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 

@@ -10,4 +10,3 @@ echo "🔄 Running Apollo GraphQL codegen..."
 echo ""
 echo "🛠  Running tuist generate..."
 tuist generate "$@"
-

@@ -1,7 +1,20 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".venv"]
+force-exclude = true
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.bandit]
+exclude_dirs = [".venv"]
+targets = ["."]
+
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "GraphQL API for wishlist and calendar"
 requires-python = ">=3.12"
 dependencies = [
     "django>=6.0",
@@ -19,8 +32,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "black>=25.12.0",
-    "django-stubs>=5.2.8",
-    "mypy>=1.19.0",
+    "bandit>=1.9.2",
+    "pre-commit>=4.5.1",
     "ruff>=0.14.9",
 ]

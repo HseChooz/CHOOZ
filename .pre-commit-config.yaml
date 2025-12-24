@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [ --markdown-linebreak-ext=md ]
+      - id: check-merge-conflict
+      - id: check-json
+      - id: check-yaml
+      - id: mixed-line-ending
+        args: [ --fix=lf ]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.4
+    hooks:
+      - id: ruff-check
+        args: [ --config, backend/pyproject.toml, --fix ]
+        files: ^backend/
+      - id: ruff-format
+        args: [ --config, backend/pyproject.toml ]
+        files: ^backend/
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.6
+    hooks:
+      - id: bandit
+        args: [ -c, backend/pyproject.toml ]
