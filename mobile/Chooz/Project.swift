@@ -11,18 +11,11 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "dev.tuist.Chooz",
-            infoPlist: .extendingDefault(
-                with: [
-                    "UILaunchScreen": [
-                        "UIColorName": "",
-                        "UIImageName": "",
-                    ],
-                ]
-            ),
-            buildableFolders: [
-                "Chooz/Sources",
-                "Chooz/Resources",
-            ],
+            infoPlist: .extendingDefault(with: [
+                "UILaunchStoryboardName": .string("Launch Screen")
+            ]),
+            sources: ["Chooz/Sources/**"],
+            resources: ["Chooz/Resources/**"],
             scripts: [
                 .pre(
                     path: .relativeToRoot("../tools/graphql/apollo_codegen.sh"),
@@ -40,9 +33,7 @@ let project = Project(
             product: .unitTests,
             bundleId: "dev.tuist.ChoozTests",
             infoPlist: .default,
-            buildableFolders: [
-                "Chooz/Tests"
-            ],
+            sources: ["Chooz/Tests/**"],
             dependencies: [.target(name: "Chooz")]
         ),
     ]
