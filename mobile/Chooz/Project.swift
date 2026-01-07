@@ -12,7 +12,16 @@ let project = Project(
             product: .app,
             bundleId: "dev.tuist.Chooz",
             infoPlist: .extendingDefault(with: [
-                "UILaunchStoryboardName": .string("Launch Screen")
+                "UILaunchStoryboardName": .string("Launch Screen"),
+                "UIAppFonts": .array([
+                    .string("VelaSans-ExtraLight.ttf"),
+                    .string("VelaSans-Light.ttf"),
+                    .string("VelaSans-Regular.ttf"),
+                    .string("VelaSans-Medium.ttf"),
+                    .string("VelaSans-SemiBold.ttf"),
+                    .string("VelaSans-Bold.ttf"),
+                    .string("VelaSans-ExtraBold.ttf")
+                ])
             ]),
             sources: ["Chooz/Sources/**"],
             resources: ["Chooz/Resources/**"],

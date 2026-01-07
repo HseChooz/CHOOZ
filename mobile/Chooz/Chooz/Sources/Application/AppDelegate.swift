@@ -8,7 +8,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
-        appCoordinator = AppCoordinator(window: window)
+        let appContainer = AppContainer()
+        appCoordinator = AppCoordinator(window: window, appContainer: appContainer)
         appCoordinator?.start()
         
         return true
