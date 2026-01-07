@@ -5,8 +5,9 @@ final class AppCoordinator: BaseCoordinator<UINavigationController> {
     
     // MARK: - Init
     
-    init(window: UIWindow) {
+    init(window: UIWindow, appContainer: AppContainer) {
         self.window = window
+        self.appContainer = appContainer
         
         let presenter = UINavigationController()
         presenter.isToolbarHidden = true
@@ -20,12 +21,12 @@ final class AppCoordinator: BaseCoordinator<UINavigationController> {
     // MARK: - Internal Methods
     
     override func start() {
-        let view = ContentView()
-        let controller = UIHostingController(rootView: view)
-        presenter.setViewControllers([controller], animated: false)
+        let vc = appContainer.authScreenFactory.makeScreen()
+        presenter.setViewControllers([vc], animated: false)
     }
     
     // MARK: - Private Properties
     
     private let window: UIWindow
+    private let appContainer: AppContainer
 }

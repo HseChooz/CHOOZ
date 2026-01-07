@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 class BaseCoordinator<ControllerType>: Identifiable where ControllerType: UIViewController {
     
     // MARK: - Init
