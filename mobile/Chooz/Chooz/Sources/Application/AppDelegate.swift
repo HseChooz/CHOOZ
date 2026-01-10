@@ -8,13 +8,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
-        let appContainer = AppContainer()
-        appCoordinator = AppCoordinator(window: window, appContainer: appContainer)
-        appCoordinator?.start()
+        let appRouter = AppRouter(window: window)
+        let appContainer = AppContainer(appRouter: appRouter)
+        appBootstraper = AppBootstraper(appContainer: appContainer)
+        appBootstraper?.start()
         
         return true
     }
     
-    private var appCoordinator: AppCoordinator?
+    private var appBootstraper: AppBootstraper?
 }
 

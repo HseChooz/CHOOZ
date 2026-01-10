@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct AuthScreenView: View {
+struct AuthorizationView: View {
     
     // MARK: - Init
     
-    init(viewModel: AuthScreenViewModel) {
+    init(viewModel: AuthorizationViewModel) {
         self.viewModel = viewModel
     }
         
@@ -17,7 +17,7 @@ struct AuthScreenView: View {
                 .scaledToFill()
                 .frame(width: 136.0, height: 26.0)
             
-            Text(AuthScreenStrings.auth)
+            Text("Аутентификация")
                 .font(.velaSans(size: 20.0, weight: .bold))
                 .foregroundStyle(Colors.Neutral.grey900)
             
@@ -29,7 +29,7 @@ struct AuthScreenView: View {
     
     // MARK: - Private Properties
     
-    private var viewModel: AuthScreenViewModel
+    private var viewModel: AuthorizationViewModel
     
     // MARK: - Private Views
     
@@ -37,21 +37,21 @@ struct AuthScreenView: View {
         VStack(spacing: 8.0) {
             AuthScreenButtonView(
                 image: Images.Icons.apple,
-                title: AuthScreenStrings.signInWithApple,
+                title: "Войти через Apple",
                 style: .primary,
                 action: {}
             )
             
             AuthScreenButtonView(
                 image: Images.Icons.google,
-                title: AuthScreenStrings.signInWithGoogle,
+                title: "Войти через Google",
                 style: .secondary,
                 action: {}
             )
             
             AuthScreenButtonView(
                 image: Images.Icons.yandex,
-                title: AuthScreenStrings.signInWithYandex,
+                title: "Войти через Яндекс",
                 style: .secondary,
                 action: {}
             )
@@ -60,7 +60,7 @@ struct AuthScreenView: View {
     }
     
     private var termsAgreementView: some View {
-        AuthScreenStrings.termsAgreement()
+        Text("Нажимая на кнопку, вы соглашаетесь\nс **[условиями](https://oliverfoggin.com)** использования сервиса\nChooz и **[обработки](https://oliverfoggin.com)** персональных данных")
             .multilineTextAlignment(.center)
             .font(.velaSans(size: 12.0, weight: .bold))
             .tint(Colors.Blue.blue500)

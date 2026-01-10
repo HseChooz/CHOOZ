@@ -13,6 +13,9 @@ let project = Project(
             bundleId: "dev.tuist.Chooz",
             infoPlist: .extendingDefault(with: [
                 "UILaunchStoryboardName": .string("Launch Screen"),
+                "UISupportedInterfaceOrientations": .array([
+                    .string("UIInterfaceOrientationPortrait")
+                ]),
                 "UIAppFonts": .array([
                     .string("VelaSans-ExtraLight.ttf"),
                     .string("VelaSans-Light.ttf"),
