@@ -2,7 +2,7 @@ import UIKit
 import SwiftUI
 
 @MainActor
-struct AuthScreenFactory {
+struct AuthorizationFactory {
     
     // MARK: - Public Methods
     
