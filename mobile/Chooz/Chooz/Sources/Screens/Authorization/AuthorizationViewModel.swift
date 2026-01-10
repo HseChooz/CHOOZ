@@ -3,6 +3,6 @@ import Observation
 
 @MainActor
 @Observable
-final class AuthScreenViewModel {
+final class AuthorizationViewModel {
     
 }

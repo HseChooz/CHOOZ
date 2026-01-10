@@ -11,36 +11,32 @@ struct OnboardingView: View {
     // MARK: - Body
     
     var body: some View {
-        TabView(selection: $viewModel.currentPageIndex) {
-            Text("\(viewModel.currentPageIndex)")
-                .font(.largeTitle)
-            
-            Spacer()
-            
-            VStack(spacing: 10.0) {
-                Button(
-                    action: {
-                        viewModel.incrementPageIndex()
-                    },
-                    label: {
-                        Text("Increment")
-                    }
-                )
-                
-                Button(
-                    action: {
-                        viewModel.decrementPageIndex()
-                    },
-                    label: {
-                        Text("Decrement")
-                    }
-                )
-            }
+        OnboardingPageContainerView(viewModel: viewModel) {
+            pageContent
+        }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.currentPage)
+        .onAppear {
+            viewModel.onAppear()
         }
     }
     
     // MARK: - Private Properties
     
-    @Bindable
     private var viewModel: OnboardingViewModel
+    
+    // MARK: - Private Views
+    
+    @ViewBuilder
+    private var pageContent: some View {
+        switch viewModel.currentPage {
+        case .start:
+            OnboardingStartContentView()
+        case .wishlist:
+            OnboardingWishlistContentView()
+        case .calendar:
+            OnboardingCalendarContentView()
+        case .finish:
+            OnboardingFinishContentView()
+        }
+    }
 }
