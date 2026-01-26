@@ -24,6 +24,23 @@ let project = Project(
                     .string("VelaSans-SemiBold.ttf"),
                     .string("VelaSans-Bold.ttf"),
                     .string("VelaSans-ExtraBold.ttf")
+                ]),
+                "CFBundleURLTypes": .array([
+                    .dictionary([
+                        "CFBundleURLSchemes": .array([
+                            .string("com.googleusercontent.apps.997450664376-be282n3v8e24voj4t16e35l9luqq22t1")
+                        ])
+                    ])
+                ]),
+                "GIDClientID": .string("997450664376-be282n3v8e24voj4t16e35l9luqq22t1.apps.googleusercontent.com"),
+                "APIBaseURL": .string("$(API_BASE_URL)"),
+                "NSAppTransportSecurity": .dictionary([
+                    "NSExceptionDomains": .dictionary([
+                        "94.198.132.110": .dictionary([
+                            "NSExceptionAllowsInsecureHTTPLoads": .boolean(true),
+                            "NSIncludesSubdomains": .boolean(true)
+                        ])
+                    ])
                 ])
             ]),
             sources: ["Chooz/Sources/**"],
@@ -36,8 +53,22 @@ let project = Project(
                 )
             ],
             dependencies: [
-                .package(product: "Apollo")
-            ]
+                .package(product: "Apollo"),
+                .external(name: "GoogleSignIn")
+            ],
+            settings: .settings(
+                base: [
+                    "OTHER_LDFLAGS": "-ObjC"
+                ],
+                configurations: [
+                    .debug(name: "Debug", settings: [
+                        "API_BASE_URL": "http://94.198.132.110:8010/api/graphql/"
+                    ]),
+                    .release(name: "Release", settings: [
+                        "API_BASE_URL": "https://api.chooz.app/graphql/"
+                    ])
+                ]
+            )
         ),
         .target(
             name: "ChoozTests",

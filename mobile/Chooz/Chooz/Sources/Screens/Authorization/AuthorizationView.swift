@@ -41,13 +41,15 @@ struct AuthorizationView: View {
                 style: .primary,
                 action: {}
             )
+            .disabled(viewModel.isLoading)
             
             AuthScreenButtonView(
                 image: Images.Icons.google,
                 title: "Войти через Google",
                 style: .secondary,
-                action: {}
+                action: viewModel.signInWithGoogle
             )
+            .disabled(viewModel.isLoading)
             
             AuthScreenButtonView(
                 image: Images.Icons.yandex,
@@ -55,6 +57,7 @@ struct AuthorizationView: View {
                 style: .secondary,
                 action: {}
             )
+            .disabled(viewModel.isLoading)
         }
         .padding(.horizontal, 32.0)
     }

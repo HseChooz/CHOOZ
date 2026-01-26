@@ -14,6 +14,16 @@ final class AppRouter {
         window.makeKeyAndVisible()
     }
     
+    // MARK: - Internal Properties
+    
+    var topViewController: UIViewController? {
+        var top = navigationController.topViewController
+        while let presented = top?.presentedViewController {
+            top = presented
+        }
+        return top
+    }
+    
     // MARK: - Internal Methods
     
     func setRoot(_ viewController: UIViewController, animated: Bool = false) {
