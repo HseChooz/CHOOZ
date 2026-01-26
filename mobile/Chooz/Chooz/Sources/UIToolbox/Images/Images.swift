@@ -7,6 +7,9 @@ enum Images {
         static let google = Image("icon_google", bundle: .module)
         static let yandex = Image("icon_yandex", bundle: .module)
         static let flowerShape = Image("icon_flower_shape", bundle: .module)
+        static let infoStoke = Image("icon_info_stroke", bundle: .module)
+        static let successStoke = Image("icon_success_stroke", bundle: .module)
+        static let cross = Image("icon_cross", bundle: .module)
     }
     
     enum Logo {

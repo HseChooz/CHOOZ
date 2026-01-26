@@ -1,0 +1,35 @@
+type Query {
+  me: UserType
+  wishItems: [WishItemType!]!
+}
+
+type Mutation {
+  loginWithGoogle(idToken: String!): AuthPayload!
+  refreshToken(refreshToken: String!): TokenPair!
+  createWishItem(title: String!, description: String! = ""): WishItemType!
+}
+
+type UserType {
+  id: ID!
+  username: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+type WishItemType {
+  id: ID!
+  title: String!
+  description: String!
+}
+
+type AuthPayload {
+  accessToken: String!
+  refreshToken: String!
+  user: UserType!
+}
+
+type TokenPair {
+  accessToken: String!
+  refreshToken: String!
+}
