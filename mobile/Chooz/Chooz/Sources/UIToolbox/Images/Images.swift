@@ -10,6 +10,13 @@ enum Images {
         static let infoStoke = Image("icon_info_stroke", bundle: .module)
         static let successStoke = Image("icon_success_stroke", bundle: .module)
         static let cross = Image("icon_cross", bundle: .module)
+        static let calendar = Image("icon_calendar", bundle: .module)
+        static let profile = Image("icon_profile", bundle: .module)
+        static let settings = Image("icon_settings", bundle: .module)
+        static let share = Image("icon_share", bundle: .module)
+        static let crossLarge = Image("icon_cross_large", bundle: .module)
+        static let camera = Image("icon_camera", bundle: .module)
+        static let dropdown = Image("icon_dropdown", bundle: .module)
     }
     
     enum Logo {
@@ -24,6 +31,10 @@ enum Images {
     }
     
     enum Mascotte {
+        enum Joyful {
+            static let v1 = Image("mascotte_joyful_v1", bundle: .module)
+        }
+        
         enum Curious {
             static let v3 = Image("mascotte_curious_v3", bundle: .module)
         }

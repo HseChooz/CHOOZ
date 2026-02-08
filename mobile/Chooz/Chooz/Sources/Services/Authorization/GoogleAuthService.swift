@@ -13,9 +13,7 @@ final class GoogleAuthService {
     
     // MARK: - Internal Methods
     
-    func signIn(
-        presenting viewController: UIViewController
-    ) async throws -> ChoozAPI.LoginWithGoogleMutation.Data.LoginWithGoogle {
+    func signIn(presenting viewController: UIViewController) async throws {
         do {
             let signInResult = try await GIDSignIn.sharedInstance.signIn(withPresenting: viewController)
             let user = try await signInResult.user.refreshTokensIfNeeded()
@@ -28,8 +26,6 @@ final class GoogleAuthService {
             
             tokenStorage.accessToken = authPayload.accessToken
             tokenStorage.refreshToken = authPayload.refreshToken
-            
-            return authPayload
         } catch let error as AuthError {
             throw error
         } catch let error as NSError {

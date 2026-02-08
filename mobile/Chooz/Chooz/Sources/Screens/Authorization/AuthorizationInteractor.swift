@@ -5,7 +5,10 @@ final class AuthorizationInteractor {
     
     // MARK: Init
     
-    init(appRouter: AppRouter, googleAuthService: GoogleAuthService) {
+    init(
+        appRouter: AppRouter,
+        googleAuthService: GoogleAuthService
+    ) {
         self.appRouter = appRouter
         self.googleAuthService = googleAuthService
     }
@@ -17,10 +20,7 @@ final class AuthorizationInteractor {
             throw AuthError.unknown
         }
         
-        _ = try await googleAuthService.signIn(presenting: topViewController)
-        
-        // TODO: Navigate to main screen
-        // appRouter.showMain()
+        try await googleAuthService.signIn(presenting: topViewController)
     }
     
     // MARK: - Private Properties

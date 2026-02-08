@@ -16,12 +16,12 @@ final class AppRouter {
     
     // MARK: - Internal Properties
     
+    weak var activeTabNavigationController: UINavigationController?
+    weak var mainTabBarController: MainTabBarController?
+    
     var topViewController: UIViewController? {
-        var top = navigationController.topViewController
-        while let presented = top?.presentedViewController {
-            top = presented
-        }
-        return top
+        let nav = activeNavigationController
+        return nav.topViewController ?? nav
     }
     
     // MARK: - Internal Methods
@@ -30,20 +30,31 @@ final class AppRouter {
         navigationController.setViewControllers([viewController], animated: animated)
     }
     
-    func push(_ viewController: UIViewController, animated: Bool = true) {
-        navigationController.pushViewController(viewController, animated: animated)
+    func push(_ viewController: UIViewController, animated: Bool = true, hideBackButton: Bool = false) {
+        if hideBackButton {
+            viewController.navigationItem.hidesBackButton = true
+        }
+        activeNavigationController.pushViewController(viewController, animated: animated)
     }
-        
+    
     func pop(animated: Bool = true) {
-        navigationController.popViewController(animated: animated)
+        _ = activeNavigationController.popViewController(animated: animated)
     }
-        
+    
     func popToRoot(animated: Bool = true) {
-        navigationController.popToRootViewController(animated: animated)
+        _ = activeNavigationController.popToRootViewController(animated: animated)
+    }
+    
+    func setTabSelected(_ selected: Bool) {
+        mainTabBarController?.setTabSelected(selected)
     }
     
     // MARK: - Private Properties
     
     private let window: UIWindow
     private let navigationController: UINavigationController
+    
+    private var activeNavigationController: UINavigationController {
+        activeTabNavigationController ?? navigationController
+    }
 }

@@ -15,6 +15,9 @@ final class AppBootstraper {
         if !appContainer.userDefaultsService.hasSeenOnboarding {
             let vc = appContainer.onboardingFactory.makeScreen()
             appContainer.appRouter.setRoot(vc)
+        } else if appContainer.tokenStorage.isLoggedIn {
+            let vc = appContainer.mainTabBarFactory.makeScreen()
+            appContainer.appRouter.setRoot(vc)
         } else {
             let vc = appContainer.authorizationFactory.makeScreen()
             appContainer.appRouter.setRoot(vc)

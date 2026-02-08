@@ -38,6 +38,7 @@ Derived/
 *.swp
 *.swo
 *~
+.cursor/
 
 # Environment
 .env

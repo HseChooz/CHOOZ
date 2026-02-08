@@ -24,13 +24,31 @@ final class AppContainer {
         tokenStorage: tokenStorage
     )
     lazy var toastManager: ToastManager = ToastManager()
+    lazy var wishlistService: WishlistService = WishlistService()
+    
+    // MARK: - ViewModels
+    
+    lazy var wishlistViewModel: WishlistViewModel = WishlistViewModel(wishlistService: wishlistService)
     
     // MARK: - Factories
     
+    lazy var profileFactory: ProfileFactory = ProfileFactory(
+        appRouter: appRouter,
+        wishlistViewModel: wishlistViewModel
+    )
+    lazy var calendarFactory: CalendarFactory = CalendarFactory(
+        appRouter: appRouter,
+        profileFactory: profileFactory
+    )
+    lazy var mainTabBarFactory: MainTabBarFactory = MainTabBarFactory(
+        appRouter: appRouter,
+        calendarFactory: calendarFactory
+    )
     lazy var authorizationFactory: AuthorizationFactory = AuthorizationFactory(
         appRouter: appRouter,
         googleAuthService: googleAuthService,
-        toastManager: toastManager
+        toastManager: toastManager,
+        mainTabBarFactory: mainTabBarFactory
     )
     lazy var onboardingFactory: OnboardingFactory = OnboardingFactory(
         appRouter: appRouter,

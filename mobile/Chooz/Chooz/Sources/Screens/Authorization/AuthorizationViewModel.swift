@@ -7,8 +7,13 @@ final class AuthorizationViewModel {
     
     // MARK: - Init
     
-    init(interactor: AuthorizationInteractor, toastManager: ToastManager) {
+    init(
+        interactor: AuthorizationInteractor,
+        router: AuthorizationRouter,
+        toastManager: ToastManager
+    ) {
         self.interactor = interactor
+        self.router = router
         self.toastManager = toastManager
     }
     
@@ -25,6 +30,7 @@ final class AuthorizationViewModel {
         signInTask = Task {
             do {
                 try await interactor.signInWithGoogle()
+                router.routeToMainScreen()
             } catch let error as AuthError {
                 if let content = error.toastContent {
                     toastManager.showError(content.title, subtitle: content.subtitle)
@@ -40,6 +46,7 @@ final class AuthorizationViewModel {
     // MARK: - Private Properties
     
     private let interactor: AuthorizationInteractor
+    private let router: AuthorizationRouter
     private let toastManager: ToastManager
     
     private var signInTask: Task<Void, Never>?

@@ -34,6 +34,11 @@ let project = Project(
                 ]),
                 "GIDClientID": .string("997450664376-be282n3v8e24voj4t16e35l9luqq22t1.apps.googleusercontent.com"),
                 "APIBaseURL": .string("$(API_BASE_URL)"),
+                "UIApplicationSceneManifest": .dictionary([
+                    "UIApplicationSupportsMultipleScenes": .boolean(false),
+                    "UISceneConfigurations": .dictionary([:])
+                ]),
+                "UIDesignRequiresCompatibility": .boolean(true),
                 "NSAppTransportSecurity": .dictionary([
                     "NSExceptionDomains": .dictionary([
                         "94.198.132.110": .dictionary([
