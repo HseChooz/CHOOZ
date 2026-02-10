@@ -2,7 +2,7 @@ name: CD to NAS
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ main, feature-google-auth ]
     paths:
       - "backend/**"
       - ".github/workflows/cd.yml"

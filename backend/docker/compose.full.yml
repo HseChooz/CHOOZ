@@ -8,6 +8,8 @@ services:
       - ../.env
     volumes:
       - chooz_pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 1s
@@ -22,6 +24,9 @@ services:
     container_name: chooz-backend-dev
     env_file:
       - ../.env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
     ports:
       - "8000:8000"
     depends_on:
