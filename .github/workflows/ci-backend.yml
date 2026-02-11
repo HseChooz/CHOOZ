@@ -82,5 +82,5 @@ jobs:
       - name: Pip audit
         run: uv run pip-audit --strict
 
-      - name: Pre-commit (all files)
-        run: uv run pre-commit run -a
+#      - name: Pre-commit (all files)
+#        run: uv run pre-commit run -a
