@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional
 
 import strawberry
@@ -18,6 +19,14 @@ class WishItemType:
     title: str
     description: str
     image_url: Optional[str] = strawberry.field(name="imageUrl")
+
+
+@strawberry.type
+class EventType:
+    id: strawberry.ID
+    title: str
+    description: str
+    date: date
 
 
 @strawberry.type

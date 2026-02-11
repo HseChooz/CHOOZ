@@ -23,7 +23,7 @@ urlpatterns = [
     path(
         "graphql/",
         csrf_exempt(
-            AuthGraphQLView.as_view(schema=schema, graphiql=True, multipart_uploads_enabled=True)
+            AuthGraphQLView.as_view(schema=schema, graphiql=True)
         ),
     ),
 ]

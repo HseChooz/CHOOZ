@@ -3,7 +3,7 @@ from typing import Optional
 import strawberry
 
 from api.graphql.types import PresignedUpload, WishItemType
-from api.graphql.wish_items.queries import get_owned_wish_item, require_user, to_wish_item_type
+from api.graphql.wish_items.service import get_owned_wish_item, require_user, to_wish_item_type
 from api.models import WishItem
 from api.storage.minio import make_image_key, presigned_put_url
 
