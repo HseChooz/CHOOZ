@@ -1,0 +1,11 @@
+chooz-hse.ru, www.chooz-hse.ru {
+	reverse_proxy backend:8000
+}
+
+minio.chooz-hse.ru {
+	reverse_proxy minio:9000
+}
+
+minio-console.chooz-hse.ru {
+	reverse_proxy minio:9001
+}

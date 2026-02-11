@@ -4,7 +4,7 @@
 
 #### 1) Из папки `backend/` запустить контейнеры:
 ```shell
-docker compose -f docker/compose.full.yml up -d --force-recreate
+docker compose -f docker/compose.dev.yml up -d --force-recreate
 ```
 
 #### 2) Перейти по http://localhost:8000/api/graphql/

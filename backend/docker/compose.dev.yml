@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:17
     env_file:
-      - ../.env
+      - ../.env.local
     ports:
       - "5432:5432"
     volumes:
@@ -18,7 +18,7 @@ services:
   minio:
     image: minio/minio:latest
     env_file:
-      - ../.env
+      - ../.env.local
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"
@@ -34,7 +34,7 @@ services:
   minio_init:
     image: minio/mc:latest
     env_file:
-      - ../.env
+      - ../.env.local
     depends_on:
       minio:
         condition: service_healthy
@@ -42,8 +42,8 @@ services:
       - /bin/sh
       - -c
       - |
-        mc alias set chooz http://minio:9000 "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY";
-        mc mb -p chooz/"$MINIO_BUCKET" || true;
+        mc alias set chooz http://minio:9000 "$$MINIO_ACCESS_KEY" "$$MINIO_SECRET_KEY";
+        mc mb -p chooz/"$$MINIO_BUCKET" || true;
         exit 0
     restart: "no"
 
@@ -52,7 +52,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     env_file:
-      - ../.env
+      - ../.env.local
     environment:
       POSTGRES_HOST: db
       POSTGRES_PORT: "5432"

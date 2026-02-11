@@ -21,9 +21,6 @@ services:
     env_file:
       - .env
     command: server /data --console-address ":9001"
-    ports:
-      - "9000:9000"
-      - "9001:9001"
     volumes:
       - chooz_minio_data:/data
     healthcheck:
@@ -45,8 +42,8 @@ services:
       - /bin/sh
       - -c
       - |
-        mc alias set chooz http://minio:9000 "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY";
-        mc mb -p chooz/"$MINIO_BUCKET" || true;
+        mc alias set chooz http://minio:9000 "$$MINIO_ACCESS_KEY" "$$MINIO_SECRET_KEY";
+        mc mb -p chooz/"$$MINIO_BUCKET" || true;
         exit 0
     restart: "no"
 
@@ -55,10 +52,31 @@ services:
     container_name: chooz-backend
     env_file:
       - .env
-    ports:
-      - "8010:8000"
     depends_on:
       db:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/graphql/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2
+    container_name: chooz-caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - chooz_caddy_data:/data
+      - chooz_caddy_config:/config
+    depends_on:
+      backend:
         condition: service_healthy
       minio:
         condition: service_healthy
@@ -67,3 +85,5 @@ services:
 volumes:
   chooz_pg_data:
   chooz_minio_data:
+  chooz_caddy_data:
+  chooz_caddy_config:
