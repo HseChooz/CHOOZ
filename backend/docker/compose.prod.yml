@@ -21,6 +21,9 @@ services:
     env_file:
       - .env
     command: server /data --console-address ":9001"
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
     volumes:
       - chooz_minio_data:/data
     healthcheck:
@@ -52,31 +55,10 @@ services:
     container_name: chooz-backend
     env_file:
       - .env
+    ports:
+      - "127.0.0.1:8000:8000"
     depends_on:
       db:
-        condition: service_healthy
-      minio:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/').read()"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    restart: unless-stopped
-
-  caddy:
-    image: caddy:2
-    container_name: chooz-caddy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - chooz_caddy_data:/data
-      - chooz_caddy_config:/config
-    depends_on:
-      backend:
         condition: service_healthy
       minio:
         condition: service_healthy
@@ -85,5 +67,3 @@ services:
 volumes:
   chooz_pg_data:
   chooz_minio_data:
-  chooz_caddy_data:
-  chooz_caddy_config:
