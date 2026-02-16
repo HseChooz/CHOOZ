@@ -1,5 +1,5 @@
 {
-  "originHash" : "4d5ddb418181ba5d45ba94b3fcd7a41ed76a1e0a067004f1aa2f4466faa11451",
+  "originHash" : "84a107110571d23db2c1b15500c6f53c3fd9587434d0026598ded0b9ffff8779",
   "pins" : [
     {
       "identity" : "app-check",
@@ -62,6 +62,15 @@
       "state" : {
         "revision" : "540318ecedd63d883069ae7f1ed811a2df00b6ac",
         "version" : "2.4.0"
+      }
+    },
+    {
+      "identity" : "yandex-login-sdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yandexmobile/yandex-login-sdk-ios",
+      "state" : {
+        "revision" : "ee494dac017fa2cf63915321d73926a8f6068e99",
+        "version" : "3.0.2"
       }
     }
   ],

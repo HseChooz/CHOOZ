@@ -11,8 +11,9 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "dev.tuist.Chooz",
+            deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: [
-                "UILaunchStoryboardName": .string("Launch Screen"),
+                "UILaunchScreen": .dictionary([:]),
                 "UISupportedInterfaceOrientations": .array([
                     .string("UIInterfaceOrientationPortrait")
                 ]),
@@ -30,9 +31,19 @@ let project = Project(
                         "CFBundleURLSchemes": .array([
                             .string("com.googleusercontent.apps.997450664376-be282n3v8e24voj4t16e35l9luqq22t1")
                         ])
+                    ]),
+                    .dictionary([
+                        "CFBundleURLSchemes": .array([
+                            .string("yx55beaf891397487595e91873c084e1bd")
+                        ])
                     ])
                 ]),
                 "GIDClientID": .string("997450664376-be282n3v8e24voj4t16e35l9luqq22t1.apps.googleusercontent.com"),
+                "YandexClientID": .string("55beaf891397487595e91873c084e1bd"),
+                "LSApplicationQueriesSchemes": .array([
+                    .string("primaryyandexloginsdk"),
+                    .string("secondaryyandexloginsdk")
+                ]),
                 "APIBaseURL": .string("$(API_BASE_URL)"),
                 "UIApplicationSceneManifest": .dictionary([
                     "UIApplicationSupportsMultipleScenes": .boolean(false),
@@ -59,7 +70,8 @@ let project = Project(
             ],
             dependencies: [
                 .package(product: "Apollo"),
-                .external(name: "GoogleSignIn")
+                .external(name: "GoogleSignIn"),
+                .external(name: "YandexLoginSDK")
             ],
             settings: .settings(
                 base: [
@@ -67,10 +79,10 @@ let project = Project(
                 ],
                 configurations: [
                     .debug(name: "Debug", settings: [
-                        "API_BASE_URL": "http://94.198.132.110:8010/api/graphql/"
+                        "API_BASE_URL": "https://chooz-hse.ru/api/graphql/"
                     ]),
                     .release(name: "Release", settings: [
-                        "API_BASE_URL": "https://api.chooz.app/graphql/"
+                        "API_BASE_URL": "https://chooz-hse.ru/api/graphql/"
                     ])
                 ]
             )
@@ -80,6 +92,7 @@ let project = Project(
             destinations: .iOS,
             product: .unitTests,
             bundleId: "dev.tuist.ChoozTests",
+            deploymentTargets: .iOS("17.0"),
             infoPlist: .default,
             sources: ["Chooz/Tests/**"],
             dependencies: [.target(name: "Chooz")]

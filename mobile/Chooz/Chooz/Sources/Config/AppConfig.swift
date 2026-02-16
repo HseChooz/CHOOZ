@@ -16,4 +16,11 @@ enum AppConfig {
         }
         return clientID
     }
+    
+    static var yandexClientID: String {
+        guard let clientID = Bundle.main.infoDictionary?["YandexClientID"] as? String else {
+            fatalError("YandexClientID not configured in Info.plist")
+        }
+        return clientID
+    }
 }

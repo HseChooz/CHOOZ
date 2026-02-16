@@ -32,6 +32,9 @@ struct ProfileView: View {
         .toolbar {
             toolbarContentView
         }
+        .onAppear {
+            viewModel.fetchProfile()
+        }
     }
     
     // MARK: - Private Properties

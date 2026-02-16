@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AddWishView: View {
+struct WishFormView: View {
     
     // MARK: - Init
     
@@ -17,13 +17,13 @@ struct AddWishView: View {
                 
                 descriptionView
                 
-                AddWishPhotoSectionView(viewModel: viewModel)
+                WishFormPhotoSectionView(viewModel: viewModel)
                 
                 addLinkView
                 
-                AddWishPriceView(viewModel: viewModel)
+                WishFormPriceView(viewModel: viewModel)
                 
-                createButtonView
+                saveButtonView
             }
             .padding(.horizontal, 16.0)
             .padding(.top, 24.0)
@@ -42,6 +42,10 @@ struct AddWishView: View {
     @Bindable private var viewModel: WishlistViewModel
     
     @Environment(\.dismiss) private var dismiss
+    
+    private var isEditMode: Bool {
+        viewModel.wishFormMode == .edit
+    }
     
     // MARK: - Private Views
     
@@ -109,23 +113,23 @@ struct AddWishView: View {
         }
     }
     
-    private var createButtonView: some View {
+    private var saveButtonView: some View {
         Button(
             action: {
-                viewModel.createWish()
+                viewModel.saveWish()
                 dismiss()
             },
             label: {
-                Text("Создать событие")
+                Text(isEditMode ? "Сохранить" : "Создать событие")
                     .font(.velaSans(size: 16.0, weight: .bold))
-                    .foregroundStyle(viewModel.isCreateEnabled ? Colors.Common.white : Colors.Neutral.grey400)
+                    .foregroundStyle(viewModel.isSaveEnabled ? Colors.Common.white : Colors.Neutral.grey400)
                     .frame(maxWidth: .infinity)
                     .frame(height: 50.0)
             }
         )
         .buttonStyle(ScaleButtonStyle())
-        .background(viewModel.isCreateEnabled ? Colors.Blue.blue500 : Colors.Neutral.grey200)
+        .background(viewModel.isSaveEnabled ? Colors.Blue.blue500 : Colors.Neutral.grey200)
         .clipShape(RoundedRectangle(cornerRadius: 14.0))
-        .disabled(!viewModel.isCreateEnabled)
+        .disabled(!viewModel.isSaveEnabled)
     }
 }

@@ -11,6 +11,20 @@ struct WishlistContentView: View {
     // MARK: - Body
     
     var body: some View {
+        contentView
+            .onAppear {
+                viewModel.fetchWishes()
+            }
+    }
+    
+    // MARK: - Private Properties
+    
+    private let viewModel: WishlistViewModel
+    
+    // MARK: - Private Views
+    
+    @ViewBuilder
+    private var contentView: some View {
         switch viewModel.wishlistState {
         case .empty:
             WishlistEmptyStateView(viewModel: viewModel)
@@ -18,10 +32,8 @@ struct WishlistContentView: View {
             WishlistSkeletonView()
         case .loaded(let items):
             WishlistLoadedView(viewModel: viewModel, items: items)
+        case .error(let message):
+            WishlistErrorView(message: message, viewModel: viewModel)
         }
     }
-    
-    // MARK: - Private Properties
-    
-    private let viewModel: WishlistViewModel
 }

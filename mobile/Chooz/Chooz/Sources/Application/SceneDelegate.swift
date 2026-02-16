@@ -1,5 +1,6 @@
 import UIKit
 import GoogleSignIn
+import YandexLoginSDK
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -28,6 +29,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
         GIDSignIn.sharedInstance.handle(url)
+        try? YandexLoginSDK.shared.handleOpenURL(url)
     }
     
     // MARK: - Private Properties

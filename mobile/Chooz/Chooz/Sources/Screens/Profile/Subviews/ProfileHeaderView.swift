@@ -5,7 +5,9 @@ struct ProfileHeaderView: View {
     // MARK: - Internal Types
     
     struct Model {
-        let userName: String
+        let firstName: String?
+        let lastName: String?
+        let isLoading: Bool
     }
     
     // MARK: - Init
@@ -28,13 +30,30 @@ struct ProfileHeaderView: View {
                         .frame(width: 54.0, height: 23.0)
                 }
             
-            Text(model.userName)
-                .lineLimit(1)
-                .font(.velaSans(size: 24.0, weight: .extraBold))
+            if model.isLoading {
+                userNameSkeletonView
+            } else {
+                Text([model.firstName, model.lastName]
+                    .compactMap { $0 }
+                    .joined(separator: " "))
+                    .lineLimit(1)
+                    .font(.velaSans(size: 24.0, weight: .extraBold))
+            }
         }
     }
     
     // MARK: - Private Properties
     
     private let model: Model
+    
+    // MARK: - Private Views
+    
+    private var userNameSkeletonView: some View {
+        let mask = RoundedRectangle(cornerRadius: 6.0)
+            .frame(width: 160.0, height: 24.0)
+        
+        return mask
+            .foregroundStyle(Colors.Neutral.grey200)
+            .shimmering(mask: mask)
+    }
 }

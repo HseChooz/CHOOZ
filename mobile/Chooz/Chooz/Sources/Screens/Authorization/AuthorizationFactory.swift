@@ -9,11 +9,13 @@ struct AuthorizationFactory {
     init(
         appRouter: AppRouter,
         googleAuthService: GoogleAuthService,
+        yandexAuthService: YandexAuthService,
         toastManager: ToastManager,
         mainTabBarFactory: MainTabBarFactory
     ) {
         self.appRouter = appRouter
         self.googleAuthService = googleAuthService
+        self.yandexAuthService = yandexAuthService
         self.toastManager = toastManager
         self.mainTabBarFactory = mainTabBarFactory
     }
@@ -22,7 +24,11 @@ struct AuthorizationFactory {
     
     func makeScreen() -> UIViewController {
         let router = AuthorizationRouter(appRouter: appRouter, mainTabBarFactory: mainTabBarFactory)
-        let interactor = AuthorizationInteractor(appRouter: appRouter, googleAuthService: googleAuthService)
+        let interactor = AuthorizationInteractor(
+            appRouter: appRouter,
+            googleAuthService: googleAuthService,
+            yandexAuthService: yandexAuthService
+        )
         let viewModel = AuthorizationViewModel(
             interactor: interactor,
             router: router,
@@ -37,6 +43,7 @@ struct AuthorizationFactory {
     
     private let appRouter: AppRouter
     private let googleAuthService: GoogleAuthService
+    private let yandexAuthService: YandexAuthService
     private let toastManager: ToastManager
     private let mainTabBarFactory: MainTabBarFactory
 }

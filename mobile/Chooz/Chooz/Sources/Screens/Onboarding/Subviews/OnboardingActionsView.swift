@@ -24,15 +24,15 @@ struct OnboardingActionsView: View {
                     Text(primaryActionTitle)
                         .font(.velaSans(size: 16.0, weight: .bold))
                         .foregroundStyle(Colors.Common.white)
+                        .padding(.vertical, 10.0)
+                        .padding(.horizontal, 16.0)
+                        .frame(minHeight: 50.0)
+                        .frame(maxWidth: .infinity)
+                        .background(Colors.Blue.blue500)
+                        .clipShape(RoundedRectangle(cornerRadius: 14.0))
                 }
             )
             .buttonStyle(ScaleButtonStyle())
-            .padding(.vertical, 10.0)
-            .padding(.horizontal, 16.0)
-            .frame(minHeight: 50.0)
-            .frame(maxWidth: .infinity)
-            .background(Colors.Blue.blue500)
-            .clipShape(RoundedRectangle(cornerRadius: 14.0))
                         
             if let skipAction = skipAction {
                 Button(
@@ -41,10 +41,10 @@ struct OnboardingActionsView: View {
                         Text("Пропустить")
                             .font(.velaSans(size: 16.0, weight: .semiBold))
                             .foregroundStyle(Colors.Neutral.grey600)
+                            .frame(maxWidth: .infinity)
                     }
                 )
                 .buttonStyle(ScaleButtonStyle())
-                .frame(maxWidth: .infinity)
             }
         }
     }

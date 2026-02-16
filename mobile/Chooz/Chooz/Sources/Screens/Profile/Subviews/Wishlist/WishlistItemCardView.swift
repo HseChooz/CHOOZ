@@ -4,21 +4,24 @@ struct WishlistItemCardView: View {
     
     // MARK: - Init
     
-    init(item: WishlistItem) {
+    init(item: WishlistItem, onTap: @escaping () -> Void) {
         self.item = item
+        self.onTap = onTap
     }
     
     // MARK: - Body
     
     var body: some View {
-        Button(action: {}) {
+        Button(action: onTap) {
             VStack(alignment: .leading, spacing: 12.0) {
                 imageView
                 
                 VStack(alignment: .leading, spacing: 4.0) {
                     titleView
                     
-                    priceView
+                    if let price = item.price, let currency = item.currency {
+                        priceView(price: price, currency: currency)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -29,28 +32,15 @@ struct WishlistItemCardView: View {
     // MARK: - Private Properties
     
     private let item: WishlistItem
+    private let onTap: () -> Void
     
     // MARK: - Private Views
     
     private var imageView: some View {
-        Color.clear
+        Colors.Neutral.grey200
             .frame(maxWidth: .infinity)
             .frame(height: 193.0)
-            .overlay {
-                imageContentView
-            }
             .clipShape(RoundedRectangle(cornerRadius: 20.0))
-    }
-    
-    @ViewBuilder
-    private var imageContentView: some View {
-        if let image = item.image {
-            image
-                .resizable()
-                .scaledToFill()
-        } else {
-            Colors.Blue.blue500
-        }
     }
     
     private var titleView: some View {
@@ -60,8 +50,8 @@ struct WishlistItemCardView: View {
             .lineLimit(1)
     }
     
-    private var priceView: some View {
-        Text("\(item.price) \(item.currency.symbol)")
+    private func priceView(price: String, currency: WishCurrency) -> some View {
+        Text("\(price) \(currency.symbol)")
             .font(.velaSans(size: 14.0, weight: .bold))
             .foregroundStyle(Colors.Neutral.grey600)
             .lineLimit(1)

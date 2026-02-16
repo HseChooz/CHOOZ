@@ -1,52 +1,194 @@
-import SwiftUI
+import Foundation
+import Apollo
 import Observation
 
 @MainActor
 @Observable
 final class WishlistService {
     
+    // MARK: - Init
+    
+    init(apolloClient: ApolloClient) {
+        self.apolloClient = apolloClient
+    }
+    
     // MARK: - Internal Properties
     
-    private(set) var wishes: [WishlistItem] = mockWishes
+    private(set) var wishes: [WishlistItem] = []
+    private(set) var isLoading: Bool = false
+    private(set) var errorMessage: String?
     
     // MARK: - Internal Methods
     
-    func addWish(
-        title: String,
-        image: Image?,
-        description: String,
-        link: String?,
-        price: String,
-        currency: WishCurrency,
-    ) async {
-        let item = WishlistItem(
-            id: UUID().uuidString,
-            image: image,
-            title: title,
-            description: description,
-            link: link,
-            price: price,
-            currency: currency
-        )
+    func fetchWishes() async {
+        isLoading = true
+        errorMessage = nil
         
-        // TODO: Send GraphQL mutation to backend
-        // e.g. let result = try await apolloClient.perform(mutation: CreateWishMutation(...))
+        let result: Result<[WishlistItem], Error> = await withCheckedContinuation { continuation in
+            apolloClient.fetch(
+                query: ChoozAPI.WishItemsQuery(),
+                cachePolicy: .fetchIgnoringCacheCompletely
+            ) { result in
+                switch result {
+                case .success(let graphQLResult):
+                    let items = graphQLResult.data?.wishItems.map { item in
+                        WishlistItem(
+                            id: item.id,
+                            title: item.title,
+                            description: item.description,
+                            link: nil,
+                            price: nil,
+                            currency: nil
+                        )
+                    } ?? []
+                    continuation.resume(returning: .success(items))
+                    
+                case .failure(let error):
+                    continuation.resume(returning: .failure(error))
+                }
+            }
+        }
         
-        wishes.insert(item, at: 0)
+        isLoading = false
+        
+        switch result {
+        case .success(let items):
+            wishes = items
+        case .failure(let error):
+            errorMessage = error.localizedDescription
+        }
     }
     
-    // MARK: - Private Static
+    func fetchWishItem(id: String) async throws -> WishlistItem {
+        let result: Result<WishlistItem, Error> = await withCheckedContinuation { continuation in
+            apolloClient.fetch(
+                query: ChoozAPI.WishItemQuery(id: id),
+                cachePolicy: .fetchIgnoringCacheCompletely
+            ) { result in
+                switch result {
+                case .success(let graphQLResult):
+                    if let data = graphQLResult.data?.wishItem {
+                        let item = WishlistItem(
+                            id: data.id,
+                            title: data.title,
+                            description: data.description,
+                            link: nil,
+                            price: nil,
+                            currency: nil
+                        )
+                        continuation.resume(returning: .success(item))
+                    } else {
+                        let error = NSError(
+                            domain: "WishlistService",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Не удалось загрузить желание"]
+                        )
+                        continuation.resume(returning: .failure(error))
+                    }
+                    
+                case .failure(let error):
+                    continuation.resume(returning: .failure(error))
+                }
+            }
+        }
+        
+        return try result.get()
+    }
     
-    static private let mockWishes: [WishlistItem] = [
-        WishlistItem(id: "1", image: nil, title: "Наушники Sony WH-1000XM5", description: nil, link: nil, price: "32 000", currency: .rub),
-        WishlistItem(id: "2", image: nil, title: "Кроссовки Nike Air Max", description: nil, link: nil, price: "15 990", currency: .rub),
-        WishlistItem(id: "3", image: nil, title: "Книга «Чистый код»", description: nil, link: nil, price: "890", currency: .rub),
-        WishlistItem(id: "4", image: nil, title: "Подписка на Spotify на год", description: nil, link: nil, price: "1 190", currency: .rub),
-        WishlistItem(id: "5", image: nil, title: "Рюкзак Fjällräven Kånken", description: nil, link: nil, price: "7 500", currency: .rub),
-        WishlistItem(id: "6", image: nil, title: "Набор маркеров для скетчинга", description: nil, link: nil, price: "3 200", currency: .rub),
-        WishlistItem(id: "7", image: nil, title: "Apple AirTag", description: nil, link: nil, price: "45", currency: .usd),
-        WishlistItem(id: "8", image: nil, title: "Термокружка Stanley", description: nil, link: nil, price: "4 800", currency: .rub),
-        WishlistItem(id: "9", image: nil, title: "Сертификат в IKEA", description: nil, link: nil, price: "100", currency: .eur),
-        WishlistItem(id: "10", image: nil, title: "Механическая клавиатура Keychron K2", description: nil, link: nil, price: "8 990", currency: .rub),
-    ]
+    func addWish(title: String, description: String) async {
+        errorMessage = nil
+        
+        let result: Result<WishlistItem, Error> = await withCheckedContinuation { continuation in
+            apolloClient.perform(
+                mutation: ChoozAPI.CreateWishItemMutation(
+                    title: title,
+                    description: description
+                )
+            ) { result in
+                switch result {
+                case .success(let graphQLResult):
+                    if let data = graphQLResult.data?.createWishItem {
+                        let item = WishlistItem(
+                            id: data.id,
+                            title: data.title,
+                            description: data.description,
+                            link: nil,
+                            price: nil,
+                            currency: nil
+                        )
+                        continuation.resume(returning: .success(item))
+                    } else {
+                        let error = NSError(
+                            domain: "WishlistService",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Не удалось создать желание"]
+                        )
+                        continuation.resume(returning: .failure(error))
+                    }
+                    
+                case .failure(let error):
+                    continuation.resume(returning: .failure(error))
+                }
+            }
+        }
+        
+        switch result {
+        case .success(let item):
+            wishes.insert(item, at: 0)
+        case .failure(let error):
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    func updateWish(id: String, title: String, description: String) async {
+        errorMessage = nil
+        
+        let result: Result<WishlistItem, Error> = await withCheckedContinuation { continuation in
+            apolloClient.perform(
+                mutation: ChoozAPI.UpdateWishItemMutation(
+                    id: id,
+                    title: .some(title),
+                    description: .some(description)
+                )
+            ) { result in
+                switch result {
+                case .success(let graphQLResult):
+                    if let data = graphQLResult.data?.updateWishItem {
+                        let item = WishlistItem(
+                            id: data.id,
+                            title: data.title,
+                            description: data.description,
+                            link: nil,
+                            price: nil,
+                            currency: nil
+                        )
+                        continuation.resume(returning: .success(item))
+                    } else {
+                        let error = NSError(
+                            domain: "WishlistService",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Не удалось обновить желание"]
+                        )
+                        continuation.resume(returning: .failure(error))
+                    }
+                    
+                case .failure(let error):
+                    continuation.resume(returning: .failure(error))
+                }
+            }
+        }
+        
+        switch result {
+        case .success(let updatedItem):
+            if let index = wishes.firstIndex(where: { $0.id == updatedItem.id }) {
+                wishes[index] = updatedItem
+            }
+        case .failure(let error):
+            errorMessage = error.localizedDescription
+        }
+    }
+    
+    // MARK: - Private Properties
+    
+    private let apolloClient: ApolloClient
 }

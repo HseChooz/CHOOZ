@@ -6,24 +6,14 @@ struct WishlistSkeletonView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            let columns = Self.columnsCount(for: geometry.size.width)
-            let cardWidth = Self.cardWidth(
-                for: geometry.size.width,
-                columns: columns
-            )
-            let rows = Self.rowsCount(
-                for: geometry.size.height,
-                columns: columns
-            )
+            let availableWidth = geometry.size.width - Layout.padding * 2
+            let columns = columns(for: availableWidth)
+            let totalItems = Layout.totalItems.value(for: interfaceLayout)
             
-            let mask = gridMask(
-                rows: rows,
-                columns: columns,
-                cardWidth: cardWidth
-            )
+            let mask = gridMask(columns: columns, totalItems: totalItems)
             
             mask
-                .padding(16.0)
+                .padding(Layout.padding)
                 .foregroundStyle(Colors.Neutral.grey200)
                 .shimmering(mask: mask)
         }
@@ -31,30 +21,67 @@ struct WishlistSkeletonView: View {
     
     // MARK: - Private Types
     
-    private enum Static {
-        static let referenceCardWidth: CGFloat = 160.0
+    private enum Layout {
+        static let compactColumnsCount: Int = 2
+        static let iPadCardWidth: CGFloat = 160.0
         static let imageHeight: CGFloat = 193.0
         static let cornerRadius: CGFloat = 20.0
         static let spacing: CGFloat = 20.0
+        static let padding: CGFloat = 16.0
         static let textSpacing: CGFloat = 12.0
         static let titleHeight: CGFloat = 15.0
         static let subtitleSpacing: CGFloat = 4.0
         static let subtitleHeight: CGFloat = 10.0
-        static let cardTotalHeight: CGFloat = imageHeight + textSpacing + titleHeight + subtitleSpacing + subtitleHeight
+        static let cardMaxWidth: InterfaceLayoutValue<CGFloat> = InterfaceLayoutValue(
+            large: 160.0,
+            compact: .infinity
+        )
+        static let totalItems: InterfaceLayoutValue<Int> = InterfaceLayoutValue(
+            large: 10,
+            compact: 4
+        )
+    }
+    
+    // MARK: - Private Properties
+    
+    @Environment(\.interfaceLayout) private var interfaceLayout
+    
+    // MARK: - Private Methods
+    
+    private func columns(for availableWidth: CGFloat) -> Int {
+        switch interfaceLayout {
+        case .compact:
+            return Layout.compactColumnsCount
+        case .large:
+            return Self.columnsCount(for: availableWidth)
+        }
+    }
+    
+    private static func columnsCount(for availableWidth: CGFloat) -> Int {
+        max(1, Int((availableWidth + Layout.spacing) / (Layout.iPadCardWidth + Layout.spacing)))
     }
     
     // MARK: - Private Views
     
-    private func gridMask(
-        rows: Int,
-        columns: Int,
-        cardWidth: CGFloat
-    ) -> some View {
-        VStack(spacing: Static.spacing) {
-            ForEach(0..<rows, id: \.self) { _ in
-                HStack(spacing: Static.spacing) {
-                    ForEach(0..<columns, id: \.self) { _ in
-                        cardSkeletonView(cardWidth: cardWidth)
+    private func gridMask(columns: Int, totalItems: Int) -> some View {
+        let rowCount = (totalItems + columns - 1) / columns
+        
+        return VStack(spacing: Layout.spacing) {
+            ForEach(0..<rowCount, id: \.self) { rowIndex in
+                let startIndex = rowIndex * columns
+                let itemsInRow = min(columns, totalItems - startIndex)
+                
+                HStack(spacing: Layout.spacing) {
+                    ForEach(0..<itemsInRow, id: \.self) { _ in
+                        cardSkeletonView
+                            .frame(maxWidth: Layout.cardMaxWidth.value(for: interfaceLayout))
+                    }
+                    
+                    if itemsInRow < columns {
+                        ForEach(0..<(columns - itemsInRow), id: \.self) { _ in
+                            Color.clear
+                                .frame(maxWidth: Layout.cardMaxWidth.value(for: interfaceLayout))
+                        }
                     }
                 }
             }
@@ -62,33 +89,20 @@ struct WishlistSkeletonView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
     
-    private func cardSkeletonView(cardWidth: CGFloat) -> some View {
-        VStack(spacing: Static.textSpacing) {
-            RoundedRectangle(cornerRadius: Static.cornerRadius)
-                .frame(width: cardWidth, height: Static.imageHeight)
+    private var cardSkeletonView: some View {
+        VStack(alignment: .leading, spacing: Layout.textSpacing) {
+            RoundedRectangle(cornerRadius: Layout.cornerRadius)
+                .frame(maxWidth: .infinity)
+                .frame(height: Layout.imageHeight)
             
-            VStack(alignment: .leading, spacing: Static.subtitleSpacing) {
-                Rectangle()
-                    .frame(width: cardWidth, height: Static.titleHeight)
+            VStack(alignment: .leading, spacing: Layout.subtitleSpacing) {
+                RoundedRectangle(cornerRadius: 4.0)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: Layout.titleHeight)
                 
-                Rectangle()
-                    .frame(width: cardWidth / 3.0, height: Static.subtitleHeight)
+                RoundedRectangle(cornerRadius: 4.0)
+                    .frame(width: 50.0, height: Layout.subtitleHeight)
             }
         }
-    }
-    
-    // MARK: - Private Helpers
-    
-    private static func columnsCount(for availableWidth: CGFloat) -> Int {
-        max(1, Int((availableWidth + Static.spacing) / (Static.referenceCardWidth + Static.spacing)))
-    }
-    
-    private static func cardWidth(for availableWidth: CGFloat, columns: Int) -> CGFloat {
-        let totalSpacing = Static.spacing * CGFloat(columns - 1)
-        return (availableWidth - totalSpacing) / CGFloat(columns)
-    }
-    
-    private static func rowsCount(for availableHeight: CGFloat, columns: Int) -> Int {
-        max(1, Int((availableHeight + Static.spacing) / (Static.cardTotalHeight + Static.spacing)))
     }
 }

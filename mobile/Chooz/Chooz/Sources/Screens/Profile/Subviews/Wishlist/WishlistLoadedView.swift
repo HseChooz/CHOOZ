@@ -14,49 +14,66 @@ struct WishlistLoadedView: View {
     var body: some View {
         VStack(spacing: 16.0) {
             GeometryReader { geometry in
-                let availableWidth = geometry.size.width - Static.padding * 2
-                let columns = isCompact
-                    ? Static.compactColumnsCount
-                    : Self.columnsCount(for: availableWidth)
+                let availableWidth = geometry.size.width - Layout.padding * 2
+                let columns = columns(for: availableWidth)
                 
                 ScrollView {
                     gridView(columns: columns)
+                }
+                .scrollIndicators(.hidden)
+                .refreshable {
+                    await viewModel.refreshWishes()
                 }
             }
             
             createWishButtonView
         }
-        .padding(Static.padding)
-        .sheet(isPresented: $viewModel.isAddWishSheetPresented) {
-            AddWishView(viewModel: viewModel)
+        .padding(Layout.padding)
+        .sheet(isPresented: $viewModel.isWishFormSheetPresented) {
+            WishFormView(viewModel: viewModel)
                 .presentationDetents([.height(500.0)])
+        }
+        .adaptiveSheet(
+            isPresented: $viewModel.isWishSheetPresented,
+            onDismiss: { viewModel.handleWishSheetDismiss() }
+        ) {
+            WishView(viewModel: viewModel)
         }
     }
     
     // MARK: - Private Types
     
-    private enum Static {
+    private enum Layout {
         static let compactColumnsCount: Int = 2
         static let iPadCardWidth: CGFloat = 160.0
         static let spacing: CGFloat = 20.0
         static let padding: CGFloat = 16.0
+        static let cardMaxWidth: InterfaceLayoutValue<CGFloat> = InterfaceLayoutValue(
+            large: 160.0,
+            compact: .infinity
+        )
     }
     
     // MARK: - Private Properties
     
     @Bindable private var viewModel: WishlistViewModel
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.interfaceLayout) private var interfaceLayout
     
     private let items: [WishlistItem]
     
-    private var isCompact: Bool {
-        horizontalSizeClass == .compact
-    }
-    
     // MARK: - Private Methods
     
+    private func columns(for availableWidth: CGFloat) -> Int {
+        switch interfaceLayout {
+        case .compact:
+            return Layout.compactColumnsCount
+        case .large:
+            return Self.columnsCount(for: availableWidth)
+        }
+    }
+    
     private static func columnsCount(for availableWidth: CGFloat) -> Int {
-        max(1, Int((availableWidth + Static.spacing) / (Static.iPadCardWidth + Static.spacing)))
+        max(1, Int((availableWidth + Layout.spacing) / (Layout.iPadCardWidth + Layout.spacing)))
     }
     
     private func rowIndices(columns: Int) -> Range<Int> {
@@ -73,30 +90,22 @@ struct WishlistLoadedView: View {
     // MARK: - Private Views
     
     private func gridView(columns: Int) -> some View {
-        LazyVStack(spacing: Static.spacing) {
+        LazyVStack(spacing: Layout.spacing) {
             ForEach(rowIndices(columns: columns), id: \.self) { rowIndex in
                 let rowItems = itemsForRow(rowIndex, columns: columns)
                 
-                HStack(spacing: Static.spacing) {
+                HStack(spacing: Layout.spacing) {
                     ForEach(rowItems, id: \.id) { item in
-                        if isCompact {
-                            WishlistItemCardView(item: item)
-                                .frame(maxWidth: .infinity)
-                        } else {
-                            WishlistItemCardView(item: item)
-                                .frame(width: Static.iPadCardWidth)
+                        WishlistItemCardView(item: item) {
+                            viewModel.selectWishItem(item)
                         }
+                        .frame(maxWidth: Layout.cardMaxWidth.value(for: interfaceLayout))
                     }
                     
                     if rowItems.count < columns {
                         ForEach(0..<(columns - rowItems.count), id: \.self) { _ in
-                            if isCompact {
-                                Color.clear
-                                    .frame(maxWidth: .infinity)
-                            } else {
-                                Color.clear
-                                    .frame(width: Static.iPadCardWidth)
-                            }
+                            Color.clear
+                                .frame(maxWidth: Layout.cardMaxWidth.value(for: interfaceLayout))
                         }
                     }
                 }
@@ -107,7 +116,7 @@ struct WishlistLoadedView: View {
     private var createWishButtonView: some View {
         Button(
             action: {
-                viewModel.showAddWishSheet()
+                viewModel.showCreateWishForm()
             },
             label: {
                 Text("Создать желание")
@@ -115,10 +124,10 @@ struct WishlistLoadedView: View {
                     .foregroundStyle(Colors.Common.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 50.0)
+                    .background(Colors.Neutral.grey800)
+                    .clipShape(RoundedRectangle(cornerRadius: 14.0))
             }
         )
         .buttonStyle(ScaleButtonStyle())
-        .background(Colors.Neutral.grey800)
-        .clipShape(RoundedRectangle(cornerRadius: 14.0))
     }
 }

@@ -35,6 +35,28 @@ final class AuthorizationViewModel {
                 if let content = error.toastContent {
                     toastManager.showError(content.title, subtitle: content.subtitle)
                 }
+                print("Sign in with Google error: \(error)")
+            } catch {
+                toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
+            }
+            
+            isLoading = false
+        }
+    }
+    
+    func signInWithYandex() {
+        signInTask?.cancel()
+        isLoading = true
+        
+        signInTask = Task {
+            do {
+                try await interactor.signInWithYandex()
+                router.routeToMainScreen()
+            } catch let error as AuthError {
+                if let content = error.toastContent {
+                    toastManager.showError(content.title, subtitle: content.subtitle)
+                }
+                print("Sign in with Yandex error: \(error.localizedDescription)")
             } catch {
                 toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
             }

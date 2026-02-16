@@ -57,15 +57,24 @@ struct AuthScreenButtonView: View {
                         .font(.velaSans(size: 16.0, weight: .bold))
                         .foregroundStyle(style.foregroundColor)
                 }
+                .padding(.vertical, 10.0)
+                .padding(.horizontal, 16.0)
+                .frame(minHeight: 50.0)
+                .frame(maxWidth: Layout.maxWidth.value(for: interfaceLayout))
+                .background(style.backgroundColor)
+                .clipShape(RoundedRectangle(cornerRadius: 14.0))
             }
         )
         .buttonStyle(ScaleButtonStyle())
-        .padding(.vertical, 10.0)
-        .padding(.horizontal, 16.0)
-        .frame(minHeight: 50.0)
-        .frame(maxWidth: .infinity)
-        .background(style.backgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: 14.0))
+    }
+    
+    // MARK: - Private Types
+    
+    private enum Layout {
+        static let maxWidth: InterfaceLayoutValue<CGFloat> = InterfaceLayoutValue(
+            large: 350.0,
+            compact: .infinity
+        )
     }
     
     // MARK: - Private Properties
@@ -74,4 +83,6 @@ struct AuthScreenButtonView: View {
     private let title: String
     private let style: Style
     private let action: () -> Void
+    
+    @Environment(\.interfaceLayout) private var interfaceLayout
 }

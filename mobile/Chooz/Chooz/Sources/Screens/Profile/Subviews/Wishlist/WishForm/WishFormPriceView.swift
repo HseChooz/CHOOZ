@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AddWishPriceView: View {
+struct WishFormPriceView: View {
     
     // MARK: - Init
     

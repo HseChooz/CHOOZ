@@ -3,7 +3,6 @@ import SwiftUI
 enum Images {
     
     enum Icons {
-        static let apple = Image("icon_apple", bundle: .module)
         static let google = Image("icon_google", bundle: .module)
         static let yandex = Image("icon_yandex", bundle: .module)
         static let flowerShape = Image("icon_flower_shape", bundle: .module)
@@ -17,6 +16,7 @@ enum Images {
         static let crossLarge = Image("icon_cross_large", bundle: .module)
         static let camera = Image("icon_camera", bundle: .module)
         static let dropdown = Image("icon_dropdown", bundle: .module)
+        static let arrowUp = Image("icon_arrow_up", bundle: .module)
     }
     
     enum Logo {
