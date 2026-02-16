@@ -1,0 +1,31 @@
+query WishItems {
+  wishItems {
+    id
+    title
+    description
+  }
+}
+
+query WishItem($id: ID!) {
+  wishItem(id: $id) {
+    id
+    title
+    description
+  }
+}
+
+mutation CreateWishItem($title: String!, $description: String! = "") {
+  createWishItem(title: $title, description: $description) {
+    id
+    title
+    description
+  }
+}
+
+mutation UpdateWishItem($id: ID!, $title: String, $description: String) {
+  updateWishItem(id: $id, title: $title, description: $description) {
+    id
+    title
+    description
+  }
+}

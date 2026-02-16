@@ -31,7 +31,10 @@ extension ChoozAPI {
       switch typename {
       case "AuthPayload": return ChoozAPI.Objects.AuthPayload
       case "Mutation": return ChoozAPI.Objects.Mutation
+      case "Query": return ChoozAPI.Objects.Query
+      case "TokenPair": return ChoozAPI.Objects.TokenPair
       case "UserType": return ChoozAPI.Objects.UserType
+      case "WishItemType": return ChoozAPI.Objects.WishItemType
       default: return nil
       }
     }

@@ -15,6 +15,7 @@ import PackageDescription
 let package = Package(
     name: "Chooz",
     dependencies: [
-        .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "8.0.0")
+        .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "8.0.0"),
+        .package(url: "https://github.com/yandexmobile/yandex-login-sdk-ios", from: "3.0.0")
     ]
 )

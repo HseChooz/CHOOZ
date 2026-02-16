@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon_yandex.heic",
+      "filename" : "Frame 34004.heic",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon_yandex@2x.heic",
+      "filename" : "Frame 34004@2x.heic",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon_yandex@3x.heic",
+      "filename" : "Frame 34004@3x.heic",
       "idiom" : "universal",
       "scale" : "3x"
     }

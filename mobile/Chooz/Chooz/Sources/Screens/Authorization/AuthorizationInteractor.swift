@@ -5,9 +5,14 @@ final class AuthorizationInteractor {
     
     // MARK: Init
     
-    init(appRouter: AppRouter, googleAuthService: GoogleAuthService) {
+    init(
+        appRouter: AppRouter,
+        googleAuthService: GoogleAuthService,
+        yandexAuthService: YandexAuthService
+    ) {
         self.appRouter = appRouter
         self.googleAuthService = googleAuthService
+        self.yandexAuthService = yandexAuthService
     }
     
     // MARK: - Internal Methods
@@ -17,14 +22,20 @@ final class AuthorizationInteractor {
             throw AuthError.unknown
         }
         
-        _ = try await googleAuthService.signIn(presenting: topViewController)
+        try await googleAuthService.signIn(presenting: topViewController)
+    }
+    
+    func signInWithYandex() async throws {
+        guard let topViewController = appRouter.topViewController else {
+            throw AuthError.unknown
+        }
         
-        // TODO: Navigate to main screen
-        // appRouter.showMain()
+        try await yandexAuthService.signIn(presenting: topViewController)
     }
     
     // MARK: - Private Properties
     
     private let appRouter: AppRouter
     private let googleAuthService: GoogleAuthService
+    private let yandexAuthService: YandexAuthService
 }

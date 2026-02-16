@@ -9,3 +9,32 @@ mutation LoginWithGoogle($idToken: String!) {
     }
   }
 }
+
+mutation LoginWithYandex($oauthToken: String!) {
+  loginWithYandex(oauthToken: $oauthToken) {
+    accessToken
+    refreshToken
+    user {
+      id
+      email
+      username
+    }
+  }
+}
+
+mutation RefreshToken($refreshToken: String!) {
+  refreshToken(refreshToken: $refreshToken) {
+    accessToken
+    refreshToken
+  }
+}
+
+query Me {
+  me {
+    id
+    email
+    username
+    firstName
+    lastName
+  }
+}

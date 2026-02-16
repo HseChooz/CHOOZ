@@ -13,10 +13,21 @@ final class UserDefaultsService {
         }
     }
     
+    var isFirstLaunchAfterInstall: Bool {
+        !userDefaults.bool(forKey: Keys.hasLaunchedBefore)
+    }
+    
+    // MARK: - Internal Methods
+    
+    func markAsLaunched() {
+        userDefaults.set(true, forKey: Keys.hasLaunchedBefore)
+    }
+    
     // MARK: - Private Types
     
     private enum Keys {
         static let hasSeenOnboarding = "hasSeenOnboarding"
+        static let hasLaunchedBefore = "hasLaunchedBefore"
     }
     
     // MARK: - Private Properties

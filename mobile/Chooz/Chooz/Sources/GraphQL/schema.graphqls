@@ -1,12 +1,15 @@
 type Query {
   me: UserType
   wishItems: [WishItemType!]!
+  wishItem(id: ID!): WishItemType!
 }
 
 type Mutation {
   loginWithGoogle(idToken: String!): AuthPayload!
+  loginWithYandex(oauthToken: String!): AuthPayload!
   refreshToken(refreshToken: String!): TokenPair!
   createWishItem(title: String!, description: String! = ""): WishItemType!
+  updateWishItem(id: ID!, title: String = null, description: String = null): WishItemType!
 }
 
 type UserType {

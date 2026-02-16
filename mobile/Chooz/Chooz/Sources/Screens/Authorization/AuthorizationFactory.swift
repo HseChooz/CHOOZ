@@ -1,5 +1,4 @@
 import UIKit
-import Apollo
 import SwiftUI
 
 @MainActor
@@ -10,18 +9,31 @@ struct AuthorizationFactory {
     init(
         appRouter: AppRouter,
         googleAuthService: GoogleAuthService,
-        toastManager: ToastManager
+        yandexAuthService: YandexAuthService,
+        toastManager: ToastManager,
+        mainTabBarFactory: MainTabBarFactory
     ) {
         self.appRouter = appRouter
         self.googleAuthService = googleAuthService
+        self.yandexAuthService = yandexAuthService
         self.toastManager = toastManager
+        self.mainTabBarFactory = mainTabBarFactory
     }
     
     // MARK: - Public Methods
     
     func makeScreen() -> UIViewController {
-        let interactor = AuthorizationInteractor(appRouter: appRouter, googleAuthService: googleAuthService)
-        let viewModel = AuthorizationViewModel(interactor: interactor, toastManager: toastManager)
+        let router = AuthorizationRouter(appRouter: appRouter, mainTabBarFactory: mainTabBarFactory)
+        let interactor = AuthorizationInteractor(
+            appRouter: appRouter,
+            googleAuthService: googleAuthService,
+            yandexAuthService: yandexAuthService
+        )
+        let viewModel = AuthorizationViewModel(
+            interactor: interactor,
+            router: router,
+            toastManager: toastManager
+        )
         let view = AuthorizationView(viewModel: viewModel)
         let vc = UIHostingController(rootView: view)
         return vc
@@ -31,6 +43,7 @@ struct AuthorizationFactory {
     
     private let appRouter: AppRouter
     private let googleAuthService: GoogleAuthService
+    private let yandexAuthService: YandexAuthService
     private let toastManager: ToastManager
-    
+    private let mainTabBarFactory: MainTabBarFactory
 }

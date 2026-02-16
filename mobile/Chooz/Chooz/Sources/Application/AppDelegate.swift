@@ -1,30 +1,29 @@
 import UIKit
-import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    // MARK: - UIApplicationDelegate
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        let appRouter = AppRouter(window: window)
-        let appContainer = AppContainer(appRouter: appRouter)
-        appBootstraper = AppBootstraper(appContainer: appContainer)
-        appBootstraper?.start()
-        
+        UserDefaults.standard.register(defaults: ["UseFloatingTabBar": false])
         return true
     }
     
     func application(
-        _ app: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey: Any] = [:]
-    ) -> Bool {
-        GIDSignIn.sharedInstance.handle(url)
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        let configuration = UISceneConfiguration(
+            name: "Default Configuration",
+            sessionRole: connectingSceneSession.role
+        )
+        configuration.delegateClass = SceneDelegate.self
+        return configuration
     }
-    
-    private var appBootstraper: AppBootstraper?
 }
 
