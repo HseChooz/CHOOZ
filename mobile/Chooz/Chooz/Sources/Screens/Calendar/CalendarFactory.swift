@@ -6,16 +6,28 @@ final class CalendarFactory {
     
     // MARK: - Init
     
-    init(appRouter: AppRouter, profileFactory: ProfileFactory) {
+    init(
+        appRouter: AppRouter,
+        profileFactory: ProfileFactory,
+        calendarService: CalendarService,
+        toastManager: ToastManager
+    ) {
         self.appRouter = appRouter
         self.profileFactory = profileFactory
+        self.calendarService = calendarService
+        self.toastManager = toastManager
     }
     
     // MARK: - Internal Methods
     
     func makeScreen() -> UIViewController {
         let router = CalendarRouter(appRouter: appRouter, profileFactory: profileFactory)
-        let viewModel = CalendarViewModel(router: router)
+        let interactor = CalendarInteractor(calendarService: calendarService)
+        let viewModel = CalendarViewModel(
+            router: router,
+            interactor: interactor,
+            toastManager: toastManager
+        )
         let view = CalendarView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: view)
         
@@ -29,4 +41,6 @@ final class CalendarFactory {
     
     private let appRouter: AppRouter
     private let profileFactory: ProfileFactory
+    private let calendarService: CalendarService
+    private let toastManager: ToastManager
 }

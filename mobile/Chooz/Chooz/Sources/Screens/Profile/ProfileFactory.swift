@@ -9,17 +9,19 @@ final class ProfileFactory {
     init(
         appRouter: AppRouter,
         profileService: ProfileService,
-        wishlistViewModel: WishlistViewModel
+        wishlistViewModel: WishlistViewModel,
+        settingsFactory: SettingsFactory
     ) {
         self.appRouter = appRouter
         self.profileService = profileService
         self.wishlistViewModel = wishlistViewModel
+        self.settingsFactory = settingsFactory
     }
     
     // MARK: - Internal Methods
     
     func makeScreen() -> UIViewController {
-        let router = ProfileRouter(appRouter: appRouter)
+        let router = ProfileRouter(appRouter: appRouter, settingsFactory: settingsFactory)
         let viewModel = ProfileViewModel(
             router: router,
             profileService: profileService,
@@ -41,4 +43,5 @@ final class ProfileFactory {
     private let appRouter: AppRouter
     private let profileService: ProfileService
     private let wishlistViewModel: WishlistViewModel
+    private let settingsFactory: SettingsFactory
 }

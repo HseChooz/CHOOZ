@@ -39,6 +39,10 @@ final class ProfileViewModel {
         }
     }
     
+    func openSettings() {
+        router.routeTo(destination: .settings)
+    }
+    
     // MARK: - Private Properties
     
     private let router: ProfileRouter

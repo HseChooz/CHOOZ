@@ -1,0 +1,30 @@
+query Events {
+  events {
+    id
+    title
+    description
+    date
+  }
+}
+
+mutation CreateEvent($title: String!, $date: Date!, $description: String! = "") {
+  createEvent(title: $title, date: $date, description: $description) {
+    id
+    title
+    description
+    date
+  }
+}
+
+mutation UpdateEvent($id: ID!, $title: String, $description: String, $date: Date) {
+  updateEvent(id: $id, title: $title, description: $description, date: $date) {
+    id
+    title
+    description
+    date
+  }
+}
+
+mutation DeleteEvent($id: ID!) {
+  deleteEvent(id: $id)
+}
