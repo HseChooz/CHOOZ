@@ -57,7 +57,7 @@ struct ProfileView: View {
     
     private var settingsButtonView: some View {
         Button(
-            action: {},
+            action: viewModel.openSettings,
             label: {
                 Images.Icons.settings
                     .resizable()

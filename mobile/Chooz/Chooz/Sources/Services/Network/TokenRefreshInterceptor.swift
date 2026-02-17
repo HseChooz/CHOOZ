@@ -38,8 +38,18 @@ final class TokenRefreshInterceptor: ApolloInterceptor {
             }
             
             switch result {
-            case .success:
-                completion(result)
+            case .success(let graphQLResult):
+                let errors = graphQLResult.errors ?? []
+                
+                if self.hasGraphQLAuthError(errors), !self.isRefreshOperation(request) {
+                    self.refreshTokenAndRetry(
+                        chain: chain,
+                        request: request,
+                        completion: completion
+                    )
+                } else {
+                    completion(result)
+                }
             case .failure(let error):
                 guard self.isAuthError(error),
                       !self.isRefreshOperation(request) else {
@@ -63,6 +73,13 @@ final class TokenRefreshInterceptor: ApolloInterceptor {
     private let onSessionExpired: @Sendable () -> Void
     
     // MARK: - Private Methods
+    
+    private func hasGraphQLAuthError(_ errors: [GraphQLError]) -> Bool {
+        errors.contains { error in
+            guard let code = error.extensions?["code"] as? String else { return false }
+            return code == "UNAUTHORIZED"
+        }
+    }
     
     private func isAuthError(_ error: Error) -> Bool {
         if let responseCodeError = error as? ResponseCodeInterceptor.ResponseCodeError,

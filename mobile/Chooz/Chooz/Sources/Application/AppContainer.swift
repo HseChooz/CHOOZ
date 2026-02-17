@@ -21,6 +21,7 @@ final class AppContainer {
     lazy var toastManager: ToastManager = ToastManager()
     lazy var profileService: ProfileService = ProfileService(apolloClient: apolloClient)
     lazy var wishlistService: WishlistService = WishlistService(apolloClient: apolloClient)
+    lazy var calendarService: CalendarService = CalendarService(apolloClient: apolloClient)
     
     lazy var refreshClient: ApolloClient = ApolloClient(url: AppConfig.apiBaseURL)
     
@@ -71,14 +72,21 @@ final class AppContainer {
     
     // MARK: - Factories
     
+    lazy var settingsFactory: SettingsFactory = SettingsFactory(
+        appRouter: appRouter,
+        sessionServiceProvider: { [unowned self] in self.sessionService }
+    )
     lazy var profileFactory: ProfileFactory = ProfileFactory(
         appRouter: appRouter,
         profileService: profileService,
-        wishlistViewModel: wishlistViewModel
+        wishlistViewModel: wishlistViewModel,
+        settingsFactory: settingsFactory
     )
     lazy var calendarFactory: CalendarFactory = CalendarFactory(
         appRouter: appRouter,
-        profileFactory: profileFactory
+        profileFactory: profileFactory,
+        calendarService: calendarService,
+        toastManager: toastManager
     )
     lazy var mainTabBarFactory: MainTabBarFactory = MainTabBarFactory(
         appRouter: appRouter,
