@@ -36,9 +36,9 @@ final class WishlistService {
                             id: item.id,
                             title: item.title,
                             description: item.description,
-                            link: nil,
-                            price: nil,
-                            currency: nil
+                            link: item.link,
+                            price: item.price.map { String($0) },
+                            currency: item.currency.flatMap { WishCurrency(rawValue: $0) }
                         )
                     } ?? []
                     continuation.resume(returning: .success(items))
@@ -72,9 +72,9 @@ final class WishlistService {
                             id: data.id,
                             title: data.title,
                             description: data.description,
-                            link: nil,
-                            price: nil,
-                            currency: nil
+                            link: data.link,
+                            price: data.price.map { String($0) },
+                            currency: data.currency.flatMap { WishCurrency(rawValue: $0) }
                         )
                         continuation.resume(returning: .success(item))
                     } else {
@@ -95,14 +95,17 @@ final class WishlistService {
         return try result.get()
     }
     
-    func addWish(title: String, description: String) async {
+    func addWish(title: String, description: String, link: String, price: String?, currency: WishCurrency) async {
         errorMessage = nil
         
         let result: Result<WishlistItem, Error> = await withCheckedContinuation { continuation in
             apolloClient.perform(
                 mutation: ChoozAPI.CreateWishItemMutation(
                     title: title,
-                    description: description
+                    description: description,
+                    link: link,
+                    price: price.flatMap { $0.isEmpty ? nil : $0 }.map { .some($0) } ?? .null,
+                    currency: currency.rawValue
                 )
             ) { result in
                 switch result {
@@ -112,9 +115,9 @@ final class WishlistService {
                             id: data.id,
                             title: data.title,
                             description: data.description,
-                            link: nil,
-                            price: nil,
-                            currency: nil
+                            link: data.link,
+                            price: data.price.map { String($0) },
+                            currency: data.currency.flatMap { WishCurrency(rawValue: $0) }
                         )
                         continuation.resume(returning: .success(item))
                     } else {
@@ -140,7 +143,7 @@ final class WishlistService {
         }
     }
     
-    func updateWish(id: String, title: String, description: String) async {
+    func updateWish(id: String, title: String, description: String, link: String, price: String?, currency: WishCurrency) async {
         errorMessage = nil
         
         let result: Result<WishlistItem, Error> = await withCheckedContinuation { continuation in
@@ -148,7 +151,10 @@ final class WishlistService {
                 mutation: ChoozAPI.UpdateWishItemMutation(
                     id: id,
                     title: .some(title),
-                    description: .some(description)
+                    description: .some(description),
+                    link: .some(link),
+                    price: price.flatMap { $0.isEmpty ? nil : $0 }.map { .some($0) } ?? .null,
+                    currency: .some(currency.rawValue)
                 )
             ) { result in
                 switch result {
@@ -158,9 +164,9 @@ final class WishlistService {
                             id: data.id,
                             title: data.title,
                             description: data.description,
-                            link: nil,
-                            price: nil,
-                            currency: nil
+                            link: data.link,
+                            price: data.price.map { String($0) },
+                            currency: data.currency.flatMap { WishCurrency(rawValue: $0) }
                         )
                         continuation.resume(returning: .success(item))
                     } else {

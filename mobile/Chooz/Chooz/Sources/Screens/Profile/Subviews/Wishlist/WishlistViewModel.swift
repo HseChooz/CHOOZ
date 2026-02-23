@@ -146,10 +146,14 @@ final class WishlistViewModel {
     }
     
     private func createWish() {
+        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
         Task {
             await wishlistService.addWish(
                 title: title,
-                description: description
+                description: description,
+                link: link.trimmingCharacters(in: .whitespaces),
+                price: trimmedPrice.isEmpty ? nil : trimmedPrice,
+                currency: selectedCurrency
             )
             if wishlistService.errorMessage == nil {
                 toastManager.showSuccessBlue("Добавлена новая заметка")
@@ -159,11 +163,15 @@ final class WishlistViewModel {
     
     private func updateWish() {
         guard let id = selectedWishItem?.id else { return }
+        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
         Task {
             await wishlistService.updateWish(
                 id: id,
                 title: title,
-                description: description
+                description: description,
+                link: link.trimmingCharacters(in: .whitespaces),
+                price: trimmedPrice.isEmpty ? nil : trimmedPrice,
+                currency: selectedCurrency
             )
         }
     }

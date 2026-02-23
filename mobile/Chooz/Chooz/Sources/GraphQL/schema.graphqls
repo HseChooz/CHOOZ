@@ -1,4 +1,5 @@
 scalar Date
+scalar Decimal
 
 type Query {
   me: UserType
@@ -11,8 +12,8 @@ type Mutation {
   loginWithGoogle(idToken: String!): AuthPayload!
   loginWithYandex(oauthToken: String!): AuthPayload!
   refreshToken(refreshToken: String!): TokenPair!
-  createWishItem(title: String!, description: String! = ""): WishItemType!
-  updateWishItem(id: ID!, title: String = null, description: String = null): WishItemType!
+  createWishItem(title: String!, description: String! = "", link: String! = "", price: Decimal = null, currency: String! = ""): WishItemType!
+  updateWishItem(id: ID!, title: String = null, description: String = null, link: String = null, price: Decimal = null, currency: String = null): WishItemType!
   createEvent(title: String!, date: Date!, description: String! = ""): EventType!
   updateEvent(id: ID!, title: String = null, description: String = null, date: Date = null): EventType!
   deleteEvent(id: ID!): Boolean!
@@ -30,6 +31,10 @@ type WishItemType {
   id: ID!
   title: String!
   description: String!
+  link: String
+  price: Float
+  currency: String
+  imageUrl: String
 }
 
 type EventType {
