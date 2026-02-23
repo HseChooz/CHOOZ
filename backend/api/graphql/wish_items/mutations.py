@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Optional
 
 import strawberry
@@ -11,9 +12,24 @@ from api.storage.minio import make_image_key, presigned_put_url
 @strawberry.type
 class WishItemsMutation:
     @strawberry.mutation(name="createWishItem")
-    def create_wish_item(self, info, title: str, description: str = "") -> WishItemType:
+    def create_wish_item(
+        self,
+        info,
+        title: str,
+        description: str = "",
+        link: str = "",
+        price: Optional[Decimal] = None,
+        currency: str = "",
+    ) -> WishItemType:
         user = require_user(info)
-        item = WishItem.objects.create(owner=user, title=title, description=description)
+        item = WishItem.objects.create(
+            owner=user,
+            title=title,
+            description=description,
+            link=(link or "").strip(),
+            price=price,
+            currency=(currency or "").strip(),
+        )
         return to_wish_item_type(item)
 
     @strawberry.mutation(name="createWishItemImageUpload")
@@ -45,6 +61,9 @@ class WishItemsMutation:
         id: strawberry.ID,
         title: Optional[str] = None,
         description: Optional[str] = None,
+        link: Optional[str] = None,
+        price: Optional[Decimal] = None,
+        currency: Optional[str] = None,
     ) -> WishItemType:
         user = require_user(info)
         item = get_owned_wish_item(user, str(id))
@@ -56,6 +75,15 @@ class WishItemsMutation:
         if description is not None:
             item.description = description
             updated_fields.append("description")
+        if link is not None:
+            item.link = (link or "").strip()
+            updated_fields.append("link")
+        if price is not None:
+            item.price = price
+            updated_fields.append("price")
+        if currency is not None:
+            item.currency = (currency or "").strip()
+            updated_fields.append("currency")
 
         if updated_fields:
             item.save(update_fields=updated_fields)

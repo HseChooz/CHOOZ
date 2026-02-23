@@ -26,6 +26,7 @@ def to_event_type(event: Event) -> EventType:
         id=str(event.id),
         title=event.title,
         description=event.description,
+        link=event.link,
         date=event.date,
     )
 

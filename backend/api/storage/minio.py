@@ -13,8 +13,8 @@ _s3_client = None
 def _configured() -> bool:
     return bool(
         getattr(settings, "MINIO_ENDPOINT", "")
-        and getattr(settings, "MINIO_ACCESS_KEY", "")
-        and getattr(settings, "MINIO_SECRET_KEY", "")
+        and getattr(settings, "MINIO_ROOT_USER", "")
+        and getattr(settings, "MINIO_ROOT_PASSWORD", "")
         and getattr(settings, "MINIO_BUCKET", "")
     )
 
@@ -33,8 +33,8 @@ def get_s3_client():
     _s3_client = boto3.client(
         "s3",
         endpoint_url=endpoint_url,
-        aws_access_key_id=settings.MINIO_ACCESS_KEY,
-        aws_secret_access_key=settings.MINIO_SECRET_KEY,
+        aws_access_key_id=settings.MINIO_ROOT_USER,
+        aws_secret_access_key=settings.MINIO_ROOT_PASSWORD,
         region_name=getattr(settings, "MINIO_REGION", "us-east-1"),
         config=Config(signature_version="s3v4"),
     )
@@ -66,8 +66,9 @@ def presigned_put_url(key: str, content_type: str, expires_in: int = 900) -> str
 
 def presigned_get_url(key: str, expires_in: int = 3600) -> str:
     base = (getattr(settings, "MINIO_PUBLIC_BASE_URL", "") or "").strip()
+    bucket = settings.MINIO_BUCKET
     if base:
-        return f"{base.rstrip('/')}/{key.lstrip('/')}"
+        return f"{base.rstrip('/')}/{bucket}/{key.lstrip('/')}"
 
     client = get_s3_client()
     try:

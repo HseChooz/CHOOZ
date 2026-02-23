@@ -18,6 +18,9 @@ class WishItemType:
     id: strawberry.ID
     title: str
     description: str
+    link: Optional[str]
+    price: Optional[float]
+    currency: Optional[str]
     image_url: Optional[str] = strawberry.field(name="imageUrl")
 
 
@@ -26,6 +29,7 @@ class EventType:
     id: strawberry.ID
     title: str
     description: str
+    link: Optional[str]
     date: date
 
 

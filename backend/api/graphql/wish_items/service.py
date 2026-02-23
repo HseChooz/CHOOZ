@@ -25,5 +25,8 @@ def to_wish_item_type(item: WishItem) -> WishItemType:
         id=str(item.id),
         title=item.title,
         description=item.description,
+        link=item.link,
+        price=float(item.price) if item.price is not None else None,
+        currency=item.currency or None,
         image_url=url,
     )

@@ -23,8 +23,30 @@ class YandexAccount(models.Model):
 
 class WishItem(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="wish_items")
+
+    class Currency(models.TextChoices):
+        RUB = "rub", "RUB"
+        USD = "usd", "USD"
+        EUR = "eur", "EUR"
+        BYN = "byn", "BYN"
+        KZT = "kzt", "KZT"
+        JPY = "jpy", "JPY"
+        KRW = "krw", "KRW"
+        TRY = "try", "TRY"
+        AED = "aed", "AED"
+        ILS = "ils", "ILS"
+        UZS = "uzs", "UZS"
+        KGS = "kgs", "KGS"
+        GBP = "gbp", "GBP"
+        CHF = "chf", "CHF"
+        UAH = "uah", "UAH"
+        PLN = "pln", "PLN"
+
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    link = models.URLField(blank=True, default="")
+    price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    currency = models.CharField(max_length=8, choices=Currency.choices, blank=True, default="")
     image_key = models.CharField(max_length=512, blank=True, default="")
 
     def __str__(self):
@@ -35,6 +57,7 @@ class Event(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="events")
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    link = models.URLField(blank=True, default="")
     date = models.DateField()
 
     class Meta:

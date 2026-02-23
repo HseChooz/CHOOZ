@@ -11,9 +11,9 @@ from .service import get_owned_event, require_user, to_event_type
 @strawberry.type
 class EventsMutation:
     @strawberry.mutation(name="createEvent")
-    def create_event(self, info, title: str, date: date, description: str = "") -> EventType:
+    def create_event(self, info, title: str, date: date, description: str = "", link: str = "") -> EventType:
         user = require_user(info)
-        e = Event.objects.create(owner=user, title=title, description=description, date=date)
+        e = Event.objects.create(owner=user, title=title, description=description, link=(link or "").strip(), date=date)
         return to_event_type(e)
 
     @strawberry.mutation(name="updateEvent")
@@ -23,6 +23,7 @@ class EventsMutation:
         id: strawberry.ID,
         title: Optional[str] = None,
         description: Optional[str] = None,
+        link: Optional[str] = None,
         date: Optional[date] = None,
     ) -> EventType:
         user = require_user(info)
@@ -35,6 +36,9 @@ class EventsMutation:
         if description is not None:
             e.description = description
             updated.append("description")
+        if link is not None:
+            e.link = (link or "").strip()
+            updated.append("link")
         if date is not None:
             e.date = date
             updated.append("date")
