@@ -1,4 +1,5 @@
 import uuid
+from urllib.parse import urlparse
 
 import boto3
 from botocore.config import Config
@@ -8,6 +9,7 @@ from api.graphql.errors import gql_error
 
 
 _s3_client = None
+_s3_public_client = None
 
 
 def _configured() -> bool:
@@ -19,18 +21,35 @@ def _configured() -> bool:
     )
 
 
-def get_s3_client():
-    global _s3_client
-    if _s3_client is not None:
+def _build_internal_endpoint_url() -> str:
+    scheme = "https" if getattr(settings, "MINIO_USE_SSL", False) else "http"
+    return f"{scheme}://{settings.MINIO_ENDPOINT}"
+
+
+def _build_public_endpoint_url() -> str:
+    base = (getattr(settings, "MINIO_PUBLIC_BASE_URL", "") or "").strip()
+    if not base:
+        return _build_internal_endpoint_url()
+    parsed = urlparse(base)
+    if parsed.scheme and parsed.netloc:
+        return f"{parsed.scheme}://{parsed.netloc}"
+    return _build_internal_endpoint_url()
+
+
+def get_s3_client(public: bool = False):
+    global _s3_client, _s3_public_client
+
+    if public and _s3_public_client is not None:
+        return _s3_public_client
+    if not public and _s3_client is not None:
         return _s3_client
 
     if not _configured():
         gql_error("SERVER_MISCONFIGURED", "MinIO is not configured")
 
-    scheme = "https" if getattr(settings, "MINIO_USE_SSL", False) else "http"
-    endpoint_url = f"{scheme}://{settings.MINIO_ENDPOINT}"
+    endpoint_url = _build_public_endpoint_url() if public else _build_internal_endpoint_url()
 
-    _s3_client = boto3.client(
+    client = boto3.client(
         "s3",
         endpoint_url=endpoint_url,
         aws_access_key_id=settings.MINIO_ROOT_USER,
@@ -38,6 +57,12 @@ def get_s3_client():
         region_name=getattr(settings, "MINIO_REGION", "us-east-1"),
         config=Config(signature_version="s3v4"),
     )
+
+    if public:
+        _s3_public_client = client
+        return _s3_public_client
+
+    _s3_client = client
     return _s3_client
 
 
@@ -53,7 +78,7 @@ def make_image_key(user_id: str, wish_item_id: str, filename: str) -> str:
 
 
 def presigned_put_url(key: str, content_type: str, expires_in: int = 900) -> str:
-    client = get_s3_client()
+    client = get_s3_client(public=True)
     try:
         return client.generate_presigned_url(
             "put_object",
