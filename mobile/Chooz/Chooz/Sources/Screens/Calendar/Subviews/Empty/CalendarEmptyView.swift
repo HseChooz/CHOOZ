@@ -12,20 +12,15 @@ struct CalendarEmptyView: View {
     
     var body: some View {
         VStack(spacing: 24.0) {
-            VStack(spacing: 16.0) {
-                Text("Вы еще не заполнили календарь")
-                    .font(.velaSans(size: 24.0, weight: .bold))
-                    .foregroundStyle(Colors.Neutral.grey800)
-                
-                Text("Какой-то текст")
-                    .font(.velaSans(size: 14.0, weight: .bold))
-                    .foregroundStyle(Colors.Neutral.grey600)
-            }
-            .multilineTextAlignment(.center)
+            Text("Вы еще не заполнили календарь")
+                .font(.velaSans(size: 24.0, weight: .bold))
+                .foregroundStyle(Colors.Neutral.grey800)
+                .multilineTextAlignment(.center)
             
             MainActionButton(
                 title: "Создать событие",
                 backgroundColor: Colors.Blue.blue500,
+                foregroundColor: Colors.Common.white,
                 action: {
                     isEventFormPresented = true
                 }

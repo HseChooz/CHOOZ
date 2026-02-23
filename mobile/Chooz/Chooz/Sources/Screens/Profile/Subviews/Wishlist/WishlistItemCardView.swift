@@ -19,9 +19,7 @@ struct WishlistItemCardView: View {
                 VStack(alignment: .leading, spacing: 4.0) {
                     titleView
                     
-                    if let price = item.price, let currency = item.currency {
-                        priceView(price: price, currency: currency)
-                    }
+                    priceView(price: item.price, currency: item.currency ?? .rub)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -50,8 +48,9 @@ struct WishlistItemCardView: View {
             .lineLimit(1)
     }
     
-    private func priceView(price: String, currency: WishCurrency) -> some View {
-        Text("\(price) \(currency.symbol)")
+    private func priceView(price: String?, currency: WishCurrency) -> some View {
+        let displayPrice = price.map { "\($0) \(currency.symbol)" } ?? "- \(currency.symbol)"
+        return Text(displayPrice)
             .font(.velaSans(size: 14.0, weight: .bold))
             .foregroundStyle(Colors.Neutral.grey600)
             .lineLimit(1)

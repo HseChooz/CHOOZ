@@ -7,10 +7,12 @@ struct MainActionButton: View {
     init(
         title: String,
         backgroundColor: Color,
+        foregroundColor: Color,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.backgroundColor = backgroundColor
+        self.foregroundColor = foregroundColor
         self.action = action
     }
     
@@ -23,7 +25,7 @@ struct MainActionButton: View {
                 Text(title)
                     .padding(.horizontal, 15.0)
                     .font(.velaSans(size: 16.0, weight: .bold))
-                    .foregroundColor(Colors.Common.white)
+                    .foregroundColor(foregroundColor)
                     .lineLimit(1)
                     .frame(height: 50.0)
                     .frame(maxWidth: Layout.maxWidth.value(for: interfaceLayout))
@@ -47,6 +49,7 @@ struct MainActionButton: View {
     
     let title: String
     let backgroundColor: Color
+    let foregroundColor: Color
     let action: @MainActor () -> Void
     
     @Environment(\.interfaceLayout) private var interfaceLayout

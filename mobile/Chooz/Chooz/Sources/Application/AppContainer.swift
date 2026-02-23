@@ -66,15 +66,27 @@ final class AppContainer {
         authorizationFactory: authorizationFactory
     )
     
+    lazy var deepLinkService: DeepLinkService = DeepLinkService(
+        appRouter: appRouter,
+        socialProfileFactory: socialProfileFactory
+    )
+    
     // MARK: - ViewModels
     
-    lazy var wishlistViewModel: WishlistViewModel = WishlistViewModel(wishlistService: wishlistService)
+    lazy var wishlistViewModel: WishlistViewModel = WishlistViewModel(
+        wishlistService: wishlistService,
+        toastManager: toastManager
+    )
     
     // MARK: - Factories
     
+    lazy var socialProfileFactory: SocialProfileFactory = SocialProfileFactory(
+        appRouter: appRouter
+    )
     lazy var settingsFactory: SettingsFactory = SettingsFactory(
         appRouter: appRouter,
-        sessionServiceProvider: { [unowned self] in self.sessionService }
+        sessionServiceProvider: { [unowned self] in self.sessionService },
+        toastManager: toastManager
     )
     lazy var profileFactory: ProfileFactory = ProfileFactory(
         appRouter: appRouter,

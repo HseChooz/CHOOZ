@@ -55,10 +55,11 @@ struct SettingsView: View {
             
             dashDivider
             
-            SettingsToggleView(title: "Получать SMS-рассылки")
-                .padding(.vertical, 16.0)
-            
-            dashDivider
+            // TODO: uncomment when feature is ready
+//            SettingsToggleView(title: "Получать SMS-рассылки")
+//                .padding(.vertical, 16.0)
+//            
+//            dashDivider
             
             SettingsButtonView(
                 title: "Пароль и данные",

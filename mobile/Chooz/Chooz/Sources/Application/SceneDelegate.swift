@@ -22,17 +22,24 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let appRouter = AppRouter(window: window)
         let appContainer = AppContainer(appRouter: appRouter)
+        self.appContainer = appContainer
         appBootstraper = AppBootstraper(appContainer: appContainer)
         appBootstraper?.start()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
+        
+        if appContainer?.deepLinkService.handle(url: url) == true {
+            return
+        }
+        
         GIDSignIn.sharedInstance.handle(url)
         try? YandexLoginSDK.shared.handleOpenURL(url)
     }
     
     // MARK: - Private Properties
     
+    private var appContainer: AppContainer?
     private var appBootstraper: AppBootstraper?
 }

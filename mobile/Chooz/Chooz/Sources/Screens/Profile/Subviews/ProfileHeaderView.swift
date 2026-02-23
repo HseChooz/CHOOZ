@@ -33,9 +33,7 @@ struct ProfileHeaderView: View {
             if model.isLoading {
                 userNameSkeletonView
             } else {
-                Text([model.firstName, model.lastName]
-                    .compactMap { $0 }
-                    .joined(separator: " "))
+                Text(displayName)
                     .lineLimit(1)
                     .font(.velaSans(size: 24.0, weight: .extraBold))
             }
@@ -45,6 +43,13 @@ struct ProfileHeaderView: View {
     // MARK: - Private Properties
     
     private let model: Model
+    
+    private var displayName: String {
+        let name = [model.firstName, model.lastName]
+            .compactMap { $0 }
+            .joined(separator: " ")
+        return name.isEmpty ? "Аноним" : name
+    }
     
     // MARK: - Private Views
     

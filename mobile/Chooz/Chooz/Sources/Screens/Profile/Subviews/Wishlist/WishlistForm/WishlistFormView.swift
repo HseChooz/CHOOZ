@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct WishFormView: View {
+struct WishlistFormView: View {
     
     // MARK: - Init
     
@@ -11,30 +11,37 @@ struct WishFormView: View {
     // MARK: - Body
     
     var body: some View {
-        NavigationStack {
+        VStack(spacing: 24.0) {
+            toolbarView
+            
             VStack(spacing: 16.0) {
                 titleRowView
                 
                 descriptionView
                 
-                WishFormPhotoSectionView(viewModel: viewModel)
+                WishlistFormPhotoSectionView(viewModel: viewModel)
                 
                 addLinkView
-                
-                WishFormPriceView(viewModel: viewModel)
-                
-                saveButtonView
             }
-            .padding(.horizontal, 16.0)
-            .padding(.top, 24.0)
-            .padding(.bottom, 32.0)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-            .background(Colors.Common.white)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                toolbarContentView
-            }
+            
+            WishlistFormPriceView(viewModel: viewModel)
+                
+            saveButtonView
         }
+        .padding(.horizontal, 16.0)
+        .padding(.top, 24.0)
+        .padding(Layout.bottomPadding.value(for: interfaceLayout))
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .background(Colors.Common.white)
+    }
+    
+    // MARK: - Private Types
+    
+    private enum Layout {
+        static let bottomPadding: InterfaceLayoutValue<CGFloat> = InterfaceLayoutValue(
+            large: 32.0,
+            compact: .zero
+        )
     }
     
     // MARK: - Private Properties
@@ -42,6 +49,7 @@ struct WishFormView: View {
     @Bindable private var viewModel: WishlistViewModel
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.interfaceLayout) private var interfaceLayout
     
     private var isEditMode: Bool {
         viewModel.wishFormMode == .edit
@@ -49,13 +57,12 @@ struct WishFormView: View {
     
     // MARK: - Private Views
     
-    @ToolbarContentBuilder
-    private var toolbarContentView: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
+    private var toolbarView: some View {
+        HStack(spacing: .zero) {
+            Spacer()
+            
             Button(
-                action: {
-                    dismiss()
-                },
+                action: { dismiss() },
                 label: {
                     Images.Icons.crossLarge
                         .foregroundStyle(Colors.Neutral.grey5b)
@@ -63,6 +70,8 @@ struct WishFormView: View {
             )
             .buttonStyle(ScaleButtonStyle())
         }
+        .frame(height: 24.0)
+        .frame(maxWidth: .infinity)
     }
     
     private var titleRowView: some View {
@@ -114,22 +123,16 @@ struct WishFormView: View {
     }
     
     private var saveButtonView: some View {
-        Button(
+        MainActionButton(
+            title: isEditMode ? "Сохранить" : "Создать событие",
+            backgroundColor: viewModel.isSaveEnabled ? Colors.Blue.blue500 : Colors.Neutral.grey200,
+            foregroundColor: viewModel.isSaveEnabled ? Colors.Common.white : Colors.Neutral.grey400,
             action: {
-                viewModel.saveWish()
-                dismiss()
-            },
-            label: {
-                Text(isEditMode ? "Сохранить" : "Создать событие")
-                    .font(.velaSans(size: 16.0, weight: .bold))
-                    .foregroundStyle(viewModel.isSaveEnabled ? Colors.Common.white : Colors.Neutral.grey400)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 50.0)
+                if viewModel.saveWish() {
+                    dismiss()
+                }
             }
         )
-        .buttonStyle(ScaleButtonStyle())
-        .background(viewModel.isSaveEnabled ? Colors.Blue.blue500 : Colors.Neutral.grey200)
-        .clipShape(RoundedRectangle(cornerRadius: 14.0))
         .disabled(!viewModel.isSaveEnabled)
     }
 }

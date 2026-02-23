@@ -32,8 +32,8 @@ struct WishlistContentView: View {
             WishlistSkeletonView()
         case .loaded(let items):
             WishlistLoadedView(viewModel: viewModel, items: items)
-        case .error(let message):
-            WishlistErrorView(message: message, viewModel: viewModel)
+        case .error:
+            WishlistErrorView(viewModel: viewModel)
         }
     }
 }

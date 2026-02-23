@@ -13,15 +13,9 @@ struct WishlistEmptyStateView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 24.0) {
-                VStack(spacing: 16.0) {
-                    Text("Здесь пока пусто")
-                        .font(.velaSans(size: 18.0, weight: .bold))
-                        .foregroundStyle(Colors.Neutral.grey800)
-                    
-                    Text("Какой-то текст")
-                        .font(.velaSans(size: 14.0, weight: .bold))
-                        .foregroundStyle(Colors.Neutral.grey600)
-                }
+                Text("Здесь пока пусто")
+                    .font(.velaSans(size: 18.0, weight: .bold))
+                    .foregroundStyle(Colors.Neutral.grey800)
                 
                 Button(
                     action: {
@@ -45,9 +39,8 @@ struct WishlistEmptyStateView: View {
         .refreshable {
             await viewModel.refreshWishes()
         }
-        .sheet(isPresented: $viewModel.isWishFormSheetPresented) {
-            WishFormView(viewModel: viewModel)
-                .presentationDetents([.height(500.0)])
+        .adaptiveSheet(isPresented: $viewModel.isWishFormSheetPresented) {
+            WishlistFormView(viewModel: viewModel)
         }
     }
     

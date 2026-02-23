@@ -27,6 +27,11 @@ final class ProfileRouter {
         }
     }
     
+    func presentShareSheet(items: [Any]) {
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        appRouter.present(activityVC)
+    }
+    
     // MARK: - Private Properties
     
     private let appRouter: AppRouter

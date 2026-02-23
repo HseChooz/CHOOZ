@@ -45,6 +45,10 @@ final class AppRouter {
         _ = activeNavigationController.popToRootViewController(animated: animated)
     }
     
+    func present(_ viewController: UIViewController, animated: Bool = true) {
+        topViewController?.present(viewController, animated: animated)
+    }
+    
     func setTabSelected(_ selected: Bool) {
         mainTabBarController?.setTabSelected(selected)
     }

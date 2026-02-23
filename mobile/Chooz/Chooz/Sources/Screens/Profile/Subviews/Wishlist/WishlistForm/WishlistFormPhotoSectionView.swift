@@ -1,7 +1,7 @@
 import SwiftUI
 import PhotosUI
 
-struct WishFormPhotoSectionView: View {
+struct WishlistFormPhotoSectionView: View {
     
     // MARK: - Init
     

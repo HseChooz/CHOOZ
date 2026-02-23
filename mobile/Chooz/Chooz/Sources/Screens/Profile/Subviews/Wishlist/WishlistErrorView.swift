@@ -4,8 +4,7 @@ struct WishlistErrorView: View {
     
     // MARK: - Init
     
-    init(message: String, viewModel: WishlistViewModel) {
-        self.message = message
+    init(viewModel: WishlistViewModel) {
         self.viewModel = viewModel
     }
     
@@ -18,11 +17,6 @@ struct WishlistErrorView: View {
                     Text("Что-то пошло не так")
                         .font(.velaSans(size: 18.0, weight: .bold))
                         .foregroundStyle(Colors.Neutral.grey800)
-                    
-                    Text(message)
-                        .font(.velaSans(size: 14.0, weight: .bold))
-                        .foregroundStyle(Colors.Neutral.grey600)
-                        .multilineTextAlignment(.center)
                 }
                 
                 Button(
@@ -51,6 +45,5 @@ struct WishlistErrorView: View {
     
     // MARK: - Private Properties
     
-    private let message: String
     private let viewModel: WishlistViewModel
 }
