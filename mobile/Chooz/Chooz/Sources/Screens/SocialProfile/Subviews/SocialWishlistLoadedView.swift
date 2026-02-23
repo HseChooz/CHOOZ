@@ -1,42 +1,30 @@
 import SwiftUI
 
-struct WishlistLoadedView: View {
+struct SocialWishlistLoadedView: View {
     
     // MARK: - Init
     
-    init(viewModel: WishlistViewModel, items: [WishlistItem]) {
-        self.viewModel = viewModel
+    init(items: [WishlistItem]) {
         self.items = items
     }
     
     // MARK: - Body
     
     var body: some View {
-        VStack(spacing: 16.0) {
-            GeometryReader { geometry in
-                let availableWidth = geometry.size.width - Layout.padding * 2
-                let columns = columns(for: availableWidth)
-                
-                ScrollView {
-                    gridView(columns: columns)
-                }
-                .scrollIndicators(.hidden)
-                .refreshable {
-                    await viewModel.refreshWishes()
-                }
-            }
+        GeometryReader { geometry in
+            let availableWidth = geometry.size.width - Layout.padding * 2
+            let columns = columns(for: availableWidth)
             
-            createWishButtonView
+            ScrollView {
+                gridView(columns: columns)
+            }
+            .scrollIndicators(.hidden)
         }
         .padding(Layout.padding)
-        .adaptiveSheet(isPresented: $viewModel.isWishFormSheetPresented) {
-            WishlistFormView(viewModel: viewModel)
-        }
-        .adaptiveSheet(
-            isPresented: $viewModel.isWishSheetPresented,
-            onDismiss: { viewModel.handleWishSheetDismiss() }
-        ) {
-            WishlistItemView(viewModel: viewModel)
+        .adaptiveSheet(isPresented: $isItemSheetPresented) {
+            if let selectedItem {
+                SocialWishlistItemView(item: selectedItem)
+            }
         }
     }
     
@@ -55,7 +43,8 @@ struct WishlistLoadedView: View {
     
     // MARK: - Private Properties
     
-    @Bindable private var viewModel: WishlistViewModel
+    @State private var selectedItem: WishlistItem?
+    @State private var isItemSheetPresented: Bool = false
     @Environment(\.interfaceLayout) private var interfaceLayout
     
     private let items: [WishlistItem]
@@ -96,7 +85,8 @@ struct WishlistLoadedView: View {
                 HStack(spacing: Layout.spacing) {
                     ForEach(rowItems, id: \.id) { item in
                         WishlistItemCardView(item: item) {
-                            viewModel.selectWishItem(item)
+                            selectedItem = item
+                            isItemSheetPresented = true
                         }
                         .frame(maxWidth: Layout.cardMaxWidth.value(for: interfaceLayout))
                     }
@@ -110,16 +100,5 @@ struct WishlistLoadedView: View {
                 }
             }
         }
-    }
-    
-    private var createWishButtonView: some View {
-        MainActionButton(
-            title: "Создать желание",
-            backgroundColor: Colors.Neutral.grey800,
-            foregroundColor: Colors.Common.white,
-            action: {
-                viewModel.showCreateWishForm()
-            }
-        )
     }
 }

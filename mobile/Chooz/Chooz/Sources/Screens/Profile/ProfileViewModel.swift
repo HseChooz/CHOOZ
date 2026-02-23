@@ -43,6 +43,12 @@ final class ProfileViewModel {
         router.routeTo(destination: .settings)
     }
     
+    func shareProfile() {
+        guard let userId = profileService.userId else { return }
+        guard let url = URL(string: "chooz://profile/\(userId)") else { return }
+        router.presentShareSheet(items: [url])
+    }
+    
     // MARK: - Private Properties
     
     private let router: ProfileRouter

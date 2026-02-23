@@ -29,6 +29,7 @@ struct CalendarLoadedView: View {
             MainActionButton(
                 title: "Создать событие",
                 backgroundColor: Colors.Neutral.grey800,
+                foregroundColor: Colors.Common.white,
                 action: {
                     viewModel.clearPendingEdit()
                     viewModel.isEventFormPresented = true

@@ -36,6 +36,11 @@ let project = Project(
                         "CFBundleURLSchemes": .array([
                             .string("yx55beaf891397487595e91873c084e1bd")
                         ])
+                    ]),
+                    .dictionary([
+                        "CFBundleURLSchemes": .array([
+                            .string("chooz")
+                        ])
                     ])
                 ]),
                 "GIDClientID": .string("997450664376-be282n3v8e24voj4t16e35l9luqq22t1.apps.googleusercontent.com"),

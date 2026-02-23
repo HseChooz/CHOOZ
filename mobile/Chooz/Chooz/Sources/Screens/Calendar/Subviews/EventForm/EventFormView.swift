@@ -154,6 +154,7 @@ struct EventFormView: View {
             MainActionButton(
                 title: "Готово",
                 backgroundColor: Colors.Blue.blue500,
+                foregroundColor: Colors.Common.white,
                 action: { isDatePickerPresented = false }
             )
         }
@@ -199,6 +200,7 @@ struct EventFormView: View {
         MainActionButton(
             title: saveButtonTitle,
             backgroundColor: isSaveEnabled ? Colors.Blue.blue500 : Colors.Neutral.grey200,
+            foregroundColor: isSaveEnabled ? Colors.Common.white : Colors.Neutral.grey400,
             action: {
                 let shouldDismiss = onSave(
                     title,

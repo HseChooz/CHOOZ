@@ -14,6 +14,7 @@ final class ProfileService {
     
     // MARK: - Internal Properties
     
+    private(set) var userId: String?
     private(set) var firstName: String?
     private(set) var lastName: String?
     private(set) var isLoading: Bool = false
@@ -25,7 +26,7 @@ final class ProfileService {
         isLoading = true
         errorMessage = nil
         
-        let result: Result<(firstName: String, lastName: String), Error> = await withCheckedContinuation { continuation in
+        let result: Result<(id: String, firstName: String, lastName: String), Error> = await withCheckedContinuation { continuation in
             apolloClient.fetch(
                 query: ChoozAPI.MeQuery(),
                 cachePolicy: .fetchIgnoringCacheCompletely
@@ -33,7 +34,7 @@ final class ProfileService {
                 switch result {
                 case .success(let graphQLResult):
                     if let me = graphQLResult.data?.me {
-                        continuation.resume(returning: .success((me.firstName, me.lastName)))
+                        continuation.resume(returning: .success((me.id, me.firstName, me.lastName)))
                     } else {
                         let error = NSError(
                             domain: "ProfileService",
@@ -52,9 +53,10 @@ final class ProfileService {
         isLoading = false
         
         switch result {
-        case .success(let name):
-            firstName = name.firstName
-            lastName = name.lastName
+        case .success(let profile):
+            userId = profile.id
+            firstName = profile.firstName
+            lastName = profile.lastName
         case .failure(let error):
             errorMessage = error.localizedDescription
         }

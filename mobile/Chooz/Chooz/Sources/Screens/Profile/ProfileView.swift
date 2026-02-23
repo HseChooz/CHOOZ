@@ -70,7 +70,7 @@ struct ProfileView: View {
     
     private var shareButtonView: some View {
         Button(
-            action: {},
+            action: viewModel.shareProfile,
             label: {
                 Images.Icons.share
                     .resizable()

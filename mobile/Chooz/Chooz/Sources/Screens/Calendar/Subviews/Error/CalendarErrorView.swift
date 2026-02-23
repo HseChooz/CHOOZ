@@ -26,6 +26,7 @@ struct CalendarErrorView: View {
             MainActionButton(
                 title: "Попробовать ещё раз",
                 backgroundColor: Colors.Blue.blue500,
+                foregroundColor: Colors.Common.white,
                 action: { eventsHandler.getEvents() }
             )
         }

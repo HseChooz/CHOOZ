@@ -16,8 +16,9 @@ final class WishlistViewModel {
     
     // MARK: - Init
     
-    init(wishlistService: WishlistService) {
+    init(wishlistService: WishlistService, toastManager: ToastManager) {
         self.wishlistService = wishlistService
+        self.toastManager = toastManager
     }
     
     // MARK: - Internal Properties
@@ -26,8 +27,8 @@ final class WishlistViewModel {
         if wishlistService.isLoading {
             return .loading
         }
-        if let errorMessage = wishlistService.errorMessage {
-            return .error(errorMessage)
+        if let _ = wishlistService.errorMessage {
+            return .error
         }
         let wishes = wishlistService.wishes
         return wishes.isEmpty ? .empty : .loaded(wishes)
@@ -55,7 +56,6 @@ final class WishlistViewModel {
     
     var isSaveEnabled: Bool {
         !title.trimmingCharacters(in: .whitespaces).isEmpty
-            && !price.trimmingCharacters(in: .whitespaces).isEmpty
     }
     
     var imageSelection: PhotosPickerItem? {
@@ -102,21 +102,48 @@ final class WishlistViewModel {
         }
     }
     
-    func saveWish() {
+    @discardableResult
+    func saveWish() -> Bool {
+        guard validateForm() else { return false }
+        
         switch wishFormMode {
         case .create:
             createWish()
         case .edit:
             updateWish()
         }
+        return true
     }
     
     // MARK: - Private Properties
     
     private let wishlistService: WishlistService
+    private let toastManager: ToastManager
     private var pendingFormPresentation: Bool = false
     
     // MARK: - Private Methods
+    
+    private func validateForm() -> Bool {
+        let trimmedLink = link.trimmingCharacters(in: .whitespaces)
+        if !trimmedLink.isEmpty {
+            guard let url = URL(string: trimmedLink),
+                  let scheme = url.scheme?.lowercased(),
+                  scheme == "http" || scheme == "https" else {
+                toastManager.showError("Некорректная ссылка")
+                return false
+            }
+        }
+        
+        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
+        if !trimmedPrice.isEmpty {
+            guard let value = Double(trimmedPrice), value >= 0 else {
+                toastManager.showError("Некорректная цена")
+                return false
+            }
+        }
+        
+        return true
+    }
     
     private func createWish() {
         Task {
@@ -124,6 +151,9 @@ final class WishlistViewModel {
                 title: title,
                 description: description
             )
+            if wishlistService.errorMessage == nil {
+                toastManager.showSuccessBlue("Добавлена новая заметка")
+            }
         }
     }
     
