@@ -8,27 +8,39 @@ extension ChoozAPI {
     static let operationName: String = "CreateEvent"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"mutation CreateEvent($title: String!, $date: Date!, $description: String! = "") { createEvent(title: $title, date: $date, description: $description) { __typename id title description date } }"#
+        #"mutation CreateEvent($title: String!, $date: Date!, $description: String! = "", $link: String! = "", $notifyEnabled: Boolean! = false, $repeatYearly: Boolean! = false) { createEvent( title: $title date: $date description: $description link: $link notifyEnabled: $notifyEnabled repeatYearly: $repeatYearly ) { __typename id title description link notifyEnabled repeatYearly date } }"#
       ))
 
     public var title: String
     public var date: Date
     public var description: String
+    public var link: String
+    public var notifyEnabled: Bool
+    public var repeatYearly: Bool
 
     public init(
       title: String,
       date: Date,
-      description: String = ""
+      description: String = "",
+      link: String = "",
+      notifyEnabled: Bool = false,
+      repeatYearly: Bool = false
     ) {
       self.title = title
       self.date = date
       self.description = description
+      self.link = link
+      self.notifyEnabled = notifyEnabled
+      self.repeatYearly = repeatYearly
     }
 
     public var __variables: Variables? { [
       "title": title,
       "date": date,
-      "description": description
+      "description": description,
+      "link": link,
+      "notifyEnabled": notifyEnabled,
+      "repeatYearly": repeatYearly
     ] }
 
     struct Data: ChoozAPI.SelectionSet {
@@ -40,7 +52,10 @@ extension ChoozAPI {
         .field("createEvent", CreateEvent.self, arguments: [
           "title": .variable("title"),
           "date": .variable("date"),
-          "description": .variable("description")
+          "description": .variable("description"),
+          "link": .variable("link"),
+          "notifyEnabled": .variable("notifyEnabled"),
+          "repeatYearly": .variable("repeatYearly")
         ]),
       ] }
       static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
@@ -62,6 +77,9 @@ extension ChoozAPI {
           .field("id", ChoozAPI.ID.self),
           .field("title", String.self),
           .field("description", String.self),
+          .field("link", String?.self),
+          .field("notifyEnabled", Bool.self),
+          .field("repeatYearly", Bool.self),
           .field("date", ChoozAPI.Date.self),
         ] }
         static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
@@ -71,6 +89,9 @@ extension ChoozAPI {
         var id: ChoozAPI.ID { __data["id"] }
         var title: String { __data["title"] }
         var description: String { __data["description"] }
+        var link: String? { __data["link"] }
+        var notifyEnabled: Bool { __data["notifyEnabled"] }
+        var repeatYearly: Bool { __data["repeatYearly"] }
         var date: ChoozAPI.Date { __data["date"] }
       }
     }

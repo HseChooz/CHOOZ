@@ -28,7 +28,9 @@ final class CalendarService {
                             id: event.id,
                             title: event.title,
                             description: event.description,
-                            link: nil,
+                            link: event.link.flatMap { URL(string: $0) },
+                            notifyEnabled: event.notifyEnabled,
+                            repeatYearly: event.repeatYearly,
                             date: date
                         )
                     }
@@ -43,7 +45,7 @@ final class CalendarService {
         return try result.get()
     }
     
-    func createEvent(title: String, date: Date, description: String) async throws -> EventItem {
+    func createEvent(title: String, date: Date, description: String, link: String, notifyEnabled: Bool, repeatYearly: Bool) async throws -> EventItem {
         let dateString = dateFormatter.string(from: date)
         
         let result: Result<EventItem, Error> = await withCheckedContinuation { continuation in
@@ -51,7 +53,10 @@ final class CalendarService {
                 mutation: ChoozAPI.CreateEventMutation(
                     title: title,
                     date: dateString,
-                    description: description
+                    description: description,
+                    link: link,
+                    notifyEnabled: notifyEnabled,
+                    repeatYearly: repeatYearly
                 )
             ) { [dateFormatter] result in
                 switch result {
@@ -62,7 +67,9 @@ final class CalendarService {
                             id: data.id,
                             title: data.title,
                             description: data.description,
-                            link: nil,
+                            link: data.link.flatMap { URL(string: $0) },
+                            notifyEnabled: data.notifyEnabled,
+                            repeatYearly: data.repeatYearly,
                             date: parsedDate
                         )
                         continuation.resume(returning: .success(item))
@@ -84,16 +91,25 @@ final class CalendarService {
         return try result.get()
     }
     
-    func updateEvent(id: String, title: String, date: Date, description: String) async throws -> EventItem {
-        let dateString = dateFormatter.string(from: date)
-        
-        let result: Result<EventItem, Error> = await withCheckedContinuation { continuation in
+    func updateEvent(
+        id: String,
+        title: String? = nil,
+        date: Date? = nil,
+        description: String? = nil,
+        link: String? = nil,
+        notifyEnabled: Bool? = nil,
+        repeatYearly: Bool? = nil
+    ) async throws -> EventItem {
+        let result: Result<EventItem, Error> = await withCheckedContinuation { [dateFormatter] continuation in
             apolloClient.perform(
                 mutation: ChoozAPI.UpdateEventMutation(
                     id: id,
-                    title: .some(title),
-                    description: .some(description),
-                    date: .some(dateString)
+                    title: title.map { .some($0) } ?? .null,
+                    description: description.map { .some($0) } ?? .null,
+                    link: link.map { .some($0) } ?? .null,
+                    date: date.map { .some(dateFormatter.string(from: $0)) } ?? .null,
+                    notifyEnabled: notifyEnabled.map { .some($0) } ?? .null,
+                    repeatYearly: repeatYearly.map { .some($0) } ?? .null
                 )
             ) { [dateFormatter] result in
                 switch result {
@@ -104,7 +120,9 @@ final class CalendarService {
                             id: data.id,
                             title: data.title,
                             description: data.description,
-                            link: nil,
+                            link: data.link.flatMap { URL(string: $0) },
+                            notifyEnabled: data.notifyEnabled,
+                            repeatYearly: data.repeatYearly,
                             date: parsedDate
                         )
                         continuation.resume(returning: .success(item))

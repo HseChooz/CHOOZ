@@ -8,7 +8,7 @@ extension ChoozAPI {
     static let operationName: String = "Events"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query Events { events { __typename id title description date } }"#
+        #"query Events { events { __typename id title description link notifyEnabled repeatYearly date } }"#
       ))
 
     public init() {}
@@ -40,6 +40,9 @@ extension ChoozAPI {
           .field("id", ChoozAPI.ID.self),
           .field("title", String.self),
           .field("description", String.self),
+          .field("link", String?.self),
+          .field("notifyEnabled", Bool.self),
+          .field("repeatYearly", Bool.self),
           .field("date", ChoozAPI.Date.self),
         ] }
         static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
@@ -49,6 +52,9 @@ extension ChoozAPI {
         var id: ChoozAPI.ID { __data["id"] }
         var title: String { __data["title"] }
         var description: String { __data["description"] }
+        var link: String? { __data["link"] }
+        var notifyEnabled: Bool { __data["notifyEnabled"] }
+        var repeatYearly: Bool { __data["repeatYearly"] }
         var date: ChoozAPI.Date { __data["date"] }
       }
     }

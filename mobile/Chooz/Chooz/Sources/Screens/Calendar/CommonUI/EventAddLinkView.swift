@@ -18,6 +18,7 @@ struct EventAddLinkView: View {
                 .font(.velaSans(size: 16.0, weight: .bold))
                 .foregroundStyle(Colors.Neutral.grey400)
         )
+        .padding(.horizontal, 10.0)
         .font(.velaSans(size: 16.0, weight: .bold))
         .foregroundStyle(Colors.Neutral.grey800)
         .keyboardType(.URL)

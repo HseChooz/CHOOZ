@@ -84,7 +84,8 @@ final class CalendarViewModel:
                         id: editEvent.id,
                         title: title,
                         date: date,
-                        description: description ?? ""
+                        description: description ?? "",
+                        link: link ?? ""
                     )
                     mutateEvents { items in
                         if let idx = items.firstIndex(where: { $0.id == updatedItem.id }) {
@@ -95,7 +96,10 @@ final class CalendarViewModel:
                     let newItem = try await interactor.createEvent(
                         title: title,
                         date: date,
-                        description: description ?? ""
+                        description: description ?? "",
+                        link: link ?? "",
+                        notifyEnabled: false,
+                        repeatYearly: false
                     )
                     mutateEvents { $0.append(newItem) }
                     toastManager.showSuccessBlue("Добавлено новое событие")
@@ -145,6 +149,44 @@ final class CalendarViewModel:
         selectedEvent = nil
     }
     
+    func toggleNotification(for eventId: String, enabled: Bool) {
+        toggleEventTask?.cancel()
+        toggleEventTask = Task {
+            do {
+                let updatedItem = try await interactor.updateEvent(id: eventId, notifyEnabled: enabled)
+                mutateEvents { items in
+                    if let idx = items.firstIndex(where: { $0.id == updatedItem.id }) {
+                        items[idx] = updatedItem
+                    }
+                }
+                selectedEvent = updatedItem
+            } catch {
+                if !Task.isCancelled {
+                    toastManager.showError("Не удалось обновить уведомление")
+                }
+            }
+        }
+    }
+    
+    func toggleRepeatYearly(for eventId: String, enabled: Bool) {
+        toggleEventTask?.cancel()
+        toggleEventTask = Task {
+            do {
+                let updatedItem = try await interactor.updateEvent(id: eventId, repeatYearly: enabled)
+                mutateEvents { items in
+                    if let idx = items.firstIndex(where: { $0.id == updatedItem.id }) {
+                        items[idx] = updatedItem
+                    }
+                }
+                selectedEvent = updatedItem
+            } catch {
+                if !Task.isCancelled {
+                    toastManager.showError("Не удалось обновить повтор")
+                }
+            }
+        }
+    }
+    
     // MARK: - Private Properties
     
     private let router: CalendarRouter
@@ -154,6 +196,7 @@ final class CalendarViewModel:
     private var getEventsTask: Task<Void, Never>?
     private var saveEventTask: Task<Void, Never>?
     private var deleteEventTask: Task<Void, Never>?
+    private var toggleEventTask: Task<Void, Never>?
     
     // MARK: - Private Methods
     
