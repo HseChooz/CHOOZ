@@ -27,6 +27,8 @@ def to_event_type(event: Event) -> EventType:
         title=event.title,
         description=event.description,
         link=event.link,
+        notify_enabled=event.notify_enabled,
+        repeat_yearly=event.repeat_yearly,
         date=event.date,
     )
 
@@ -34,3 +36,7 @@ def to_event_type(event: Event) -> EventType:
 def upcoming_events_qs(user, from_date: date | None = None):
     d = from_date or localdate()
     return Event.objects.filter(owner=user, date__gte=d).order_by("date", "id")
+
+
+def sorted_events_qs(user):
+    return Event.objects.filter(owner=user).order_by("date", "id")

@@ -5,7 +5,7 @@ import strawberry
 
 from api.graphql.types import EventType
 from api.models import Event
-from .service import get_owned_event, require_user, to_event_type, upcoming_events_qs
+from .service import get_owned_event, require_user, to_event_type, upcoming_events_qs, sorted_events_qs
 
 
 @strawberry.type
@@ -13,12 +13,16 @@ class EventsQuery:
     @strawberry.field(name="events")
     def events(self, info) -> List[EventType]:
         user = require_user(info)
-        return [to_event_type(e) for e in Event.objects.filter(owner=user).order_by("date", "id")]
+        return [to_event_type(e) for e in sorted_events_qs(user)]
 
     @strawberry.field(name="event")
     def event(self, info, id: strawberry.ID) -> EventType:
+        from datetime import date
         user = require_user(info)
         e = get_owned_event(user, str(id))
+        if e.date < date.today() and not e.repeat_yearly:
+            from api.graphql.errors import gql_error
+            gql_error("EVENT_NOT_FOUND", "Event not found")
         return to_event_type(e)
 
     @strawberry.field(name="upcomingEvents")

@@ -11,6 +11,11 @@ from api.graphql.auth.queries import to_user_type
 
 UserModel = get_user_model()
 
+def require_user(info):
+    user = info.context.request.user
+    if not user or not user.is_authenticated:
+        gql_error("UNAUTHORIZED", "Unauthorized")
+    return user
 
 @strawberry.type
 class AuthMutation:
@@ -76,3 +81,9 @@ class AuthMutation:
             access_token=str(new_refresh.access_token),
             refresh_token=str(new_refresh),
         )
+
+    @strawberry.mutation(name="deleteMyAccount")
+    def delete_my_account(self, info) -> bool:
+        user = require_user(info)
+        user.delete()
+        return True

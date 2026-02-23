@@ -11,9 +11,26 @@ from .service import get_owned_event, require_user, to_event_type
 @strawberry.type
 class EventsMutation:
     @strawberry.mutation(name="createEvent")
-    def create_event(self, info, title: str, date: date, description: str = "", link: str = "") -> EventType:
+    def create_event(
+        self,
+        info,
+        title: str,
+        date: date,
+        description: str = "",
+        link: str = "",
+        notify_enabled: bool = False,
+        repeat_yearly: bool = False,
+    ) -> EventType:
         user = require_user(info)
-        e = Event.objects.create(owner=user, title=title, description=description, link=(link or "").strip(), date=date)
+        e = Event.objects.create(
+            owner=user,
+            title=title,
+            description=description,
+            link=(link or "").strip(),
+            notify_enabled=notify_enabled,
+            repeat_yearly=repeat_yearly,
+            date=date,
+        )
         return to_event_type(e)
 
     @strawberry.mutation(name="updateEvent")
@@ -25,6 +42,8 @@ class EventsMutation:
         description: Optional[str] = None,
         link: Optional[str] = None,
         date: Optional[date] = None,
+        notify_enabled: Optional[bool] = None,
+        repeat_yearly: Optional[bool] = None,
     ) -> EventType:
         user = require_user(info)
         e = get_owned_event(user, str(id))
@@ -42,6 +61,12 @@ class EventsMutation:
         if date is not None:
             e.date = date
             updated.append("date")
+        if notify_enabled is not None:
+            e.notify_enabled = notify_enabled
+            updated.append("notify_enabled")
+        if repeat_yearly is not None:
+            e.repeat_yearly = repeat_yearly
+            updated.append("repeat_yearly")
 
         if updated:
             e.save(update_fields=updated)

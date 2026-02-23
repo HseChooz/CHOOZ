@@ -30,6 +30,8 @@ class EventType:
     title: str
     description: str
     link: Optional[str]
+    notify_enabled: bool = strawberry.field(name="notifyEnabled")
+    repeat_yearly: bool = strawberry.field(name="repeatYearly")
     date: date
 
 

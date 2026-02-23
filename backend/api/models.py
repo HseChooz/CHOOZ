@@ -58,6 +58,8 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     link = models.URLField(blank=True, default="")
+    notify_enabled = models.BooleanField(default=False)
+    repeat_yearly = models.BooleanField(default=False)
     date = models.DateField()
 
     class Meta:
