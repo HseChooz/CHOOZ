@@ -50,6 +50,7 @@ struct WishlistItemView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.interfaceLayout) private var interfaceLayout
+    @Environment(\.openURL) private var openURL
     
     private var shareContent: String {
         var text = viewModel.selectedItem.title
@@ -160,20 +161,22 @@ struct WishlistItemView: View {
     
     @ViewBuilder
     private var linkButtonView: some View {
-        Button(
-            action: { },
-            label: {
-                RoundedRectangle(cornerRadius: 10.0)
-                    .fill(Colors.Blue.blue500)
-                    .frame(width: 44.0, height: 32.0)
-                    .overlay {
-                        Images.Icons.arrowUp
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 20.0, height: 20.0)
-                    }
-            }
-        )
-        .buttonStyle(ScaleButtonStyle())
+        if let link = viewModel.selectedItem.link, let url = URL(string: link) {
+            Button(
+                action: { openURL(url) },
+                label: {
+                    RoundedRectangle(cornerRadius: 10.0)
+                        .fill(Colors.Blue.blue500)
+                        .frame(width: 44.0, height: 32.0)
+                        .overlay {
+                            Images.Icons.arrowUp
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 20.0, height: 20.0)
+                        }
+                }
+            )
+            .buttonStyle(ScaleButtonStyle())
+        }
     }
 }

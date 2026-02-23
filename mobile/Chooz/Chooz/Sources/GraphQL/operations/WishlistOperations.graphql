@@ -3,6 +3,10 @@ query WishItems {
     id
     title
     description
+    link
+    price
+    currency
+    imageUrl
   }
 }
 
@@ -11,21 +15,33 @@ query WishItem($id: ID!) {
     id
     title
     description
+    link
+    price
+    currency
+    imageUrl
   }
 }
 
-mutation CreateWishItem($title: String!, $description: String! = "") {
-  createWishItem(title: $title, description: $description) {
+mutation CreateWishItem($title: String!, $description: String! = "", $link: String! = "", $price: Decimal = null, $currency: String! = "") {
+  createWishItem(title: $title, description: $description, link: $link, price: $price, currency: $currency) {
     id
     title
     description
+    link
+    price
+    currency
+    imageUrl
   }
 }
 
-mutation UpdateWishItem($id: ID!, $title: String, $description: String) {
-  updateWishItem(id: $id, title: $title, description: $description) {
+mutation UpdateWishItem($id: ID!, $title: String, $description: String, $link: String, $price: Decimal, $currency: String) {
+  updateWishItem(id: $id, title: $title, description: $description, link: $link, price: $price, currency: $currency) {
     id
     title
     description
+    link
+    price
+    currency
+    imageUrl
   }
 }

@@ -1,22 +1,22 @@
 import Foundation
 
-enum WishCurrency: CaseIterable, Identifiable {
-    case rub
-    case usd
-    case eur
-    case byn
-    case kzt
-    case jpy
-    case krw
-    case try_
-    case aed
-    case ils
-    case uzs
-    case kgs
-    case gbp
-    case chf
-    case uah
-    case pln
+enum WishCurrency: String, CaseIterable, Identifiable {
+    case rub = "RUB"
+    case usd = "USD"
+    case eur = "EUR"
+    case byn = "BYN"
+    case kzt = "KZT"
+    case jpy = "JPY"
+    case krw = "KRW"
+    case try_ = "TRY"
+    case aed = "AED"
+    case ils = "ILS"
+    case uzs = "UZS"
+    case kgs = "KGS"
+    case gbp = "GBP"
+    case chf = "CHF"
+    case uah = "UAH"
+    case pln = "PLN"
     
     // MARK: - Identifiable
     
