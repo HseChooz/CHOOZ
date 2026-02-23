@@ -3,24 +3,33 @@ query Events {
     id
     title
     description
+    link
+    notifyEnabled
+    repeatYearly
     date
   }
 }
 
-mutation CreateEvent($title: String!, $date: Date!, $description: String! = "") {
-  createEvent(title: $title, date: $date, description: $description) {
+mutation CreateEvent($title: String!, $date: Date!, $description: String! = "", $link: String! = "", $notifyEnabled: Boolean! = false, $repeatYearly: Boolean! = false) {
+  createEvent(title: $title, date: $date, description: $description, link: $link, notifyEnabled: $notifyEnabled, repeatYearly: $repeatYearly) {
     id
     title
     description
+    link
+    notifyEnabled
+    repeatYearly
     date
   }
 }
 
-mutation UpdateEvent($id: ID!, $title: String, $description: String, $date: Date) {
-  updateEvent(id: $id, title: $title, description: $description, date: $date) {
+mutation UpdateEvent($id: ID!, $title: String, $description: String, $link: String, $date: Date, $notifyEnabled: Boolean, $repeatYearly: Boolean) {
+  updateEvent(id: $id, title: $title, description: $description, link: $link, date: $date, notifyEnabled: $notifyEnabled, repeatYearly: $repeatYearly) {
     id
     title
     description
+    link
+    notifyEnabled
+    repeatYearly
     date
   }
 }

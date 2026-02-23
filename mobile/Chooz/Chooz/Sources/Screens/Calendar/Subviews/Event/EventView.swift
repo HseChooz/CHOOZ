@@ -10,6 +10,8 @@ struct EventView: View {
     ) {
         self.event = event
         self.eventsHandler = eventsHandler
+        _isNotificationEnabled = State(initialValue: event.notifyEnabled)
+        _isRepeatEnabled = State(initialValue: event.repeatYearly)
     }
     
     // MARK: - Body
@@ -44,8 +46,8 @@ struct EventView: View {
     
     @State private var isDeleteConfirmationPresented: Bool = false
     
-    @State private var isNotificationEnabled: Bool = false
-    @State private var isRepeatEnabled: Bool = false
+    @State private var isNotificationEnabled: Bool
+    @State private var isRepeatEnabled: Bool
     
     // MARK: - Private Views
     
@@ -114,7 +116,9 @@ struct EventView: View {
                 icon: Images.Icons.notification,
                 activeIcon: Images.Icons.notificationBlue,
                 isActive: $isNotificationEnabled,
-                action: { _ in }
+                action: { enabled in
+                    eventsHandler.toggleNotification(for: event.id, enabled: enabled)
+                }
             )
             
             Spacer()
@@ -123,7 +127,9 @@ struct EventView: View {
                 icon: Images.Icons.repeatIcon,
                 activeIcon: Images.Icons.reapetIconPurple,
                 isActive: $isRepeatEnabled,
-                action: { _ in }
+                action: { enabled in
+                    eventsHandler.toggleRepeatYearly(for: event.id, enabled: enabled)
+                }
             )
             
             Spacer()

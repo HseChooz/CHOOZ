@@ -14,12 +14,35 @@ final class CalendarInteractor {
         try await calendarService.fetchEvents()
     }
     
-    func createEvent(title: String, date: Date, description: String) async throws -> EventItem {
-        try await calendarService.createEvent(title: title, date: date, description: description)
+    func createEvent(title: String, date: Date, description: String, link: String, notifyEnabled: Bool, repeatYearly: Bool) async throws -> EventItem {
+        try await calendarService.createEvent(
+            title: title,
+            date: date,
+            description: description,
+            link: link,
+            notifyEnabled: notifyEnabled,
+            repeatYearly: repeatYearly
+        )
     }
     
-    func updateEvent(id: String, title: String, date: Date, description: String) async throws -> EventItem {
-        try await calendarService.updateEvent(id: id, title: title, date: date, description: description)
+    func updateEvent(
+        id: String,
+        title: String? = nil,
+        date: Date? = nil,
+        description: String? = nil,
+        link: String? = nil,
+        notifyEnabled: Bool? = nil,
+        repeatYearly: Bool? = nil
+    ) async throws -> EventItem {
+        try await calendarService.updateEvent(
+            id: id,
+            title: title,
+            date: date,
+            description: description,
+            link: link,
+            notifyEnabled: notifyEnabled,
+            repeatYearly: repeatYearly
+        )
     }
     
     func deleteEvent(id: String) async throws {

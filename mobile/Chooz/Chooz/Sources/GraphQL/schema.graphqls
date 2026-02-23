@@ -14,8 +14,8 @@ type Mutation {
   refreshToken(refreshToken: String!): TokenPair!
   createWishItem(title: String!, description: String! = "", link: String! = "", price: Decimal = null, currency: String! = ""): WishItemType!
   updateWishItem(id: ID!, title: String = null, description: String = null, link: String = null, price: Decimal = null, currency: String = null): WishItemType!
-  createEvent(title: String!, date: Date!, description: String! = ""): EventType!
-  updateEvent(id: ID!, title: String = null, description: String = null, date: Date = null): EventType!
+  createEvent(title: String!, date: Date!, description: String! = "", link: String! = "", notifyEnabled: Boolean! = false, repeatYearly: Boolean! = false): EventType!
+  updateEvent(id: ID!, title: String = null, description: String = null, link: String = null, date: Date = null, notifyEnabled: Boolean = null, repeatYearly: Boolean = null): EventType!
   deleteEvent(id: ID!): Boolean!
 }
 
@@ -41,6 +41,9 @@ type EventType {
   id: ID!
   title: String!
   description: String!
+  link: String
+  notifyEnabled: Boolean!
+  repeatYearly: Boolean!
   date: Date!
 }
 

@@ -5,6 +5,8 @@ struct EventItem: Hashable, Identifiable {
     let title: String
     let description: String?
     let link: URL?
+    let notifyEnabled: Bool
+    let repeatYearly: Bool
     let date: Date
 
     // MARK: - Internal Properties
