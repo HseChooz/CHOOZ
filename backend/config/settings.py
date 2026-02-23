@@ -22,8 +22,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 ALLOWED_HOSTS = [h for h in os.getenv("ALLOWED_HOSTS", "").split(",") if h]
 
 MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT", "")
-MINIO_ACCESS_KEY = os.getenv("MINIO_ROOT_USER", "")
-MINIO_SECRET_KEY = os.getenv("MINIO_ROOT_PASSWORD", "")
+MINIO_ROOT_USER = os.getenv("MINIO_ROOT_USER", "")
+MINIO_ROOT_PASSWORD = os.getenv("MINIO_ROOT_PASSWORD", "")
 MINIO_BUCKET = os.getenv("MINIO_BUCKET", "")
 MINIO_REGION = os.getenv("MINIO_REGION", "us-east-1")
 MINIO_USE_SSL = os.getenv("MINIO_USE_SSL", "0") == "1"
