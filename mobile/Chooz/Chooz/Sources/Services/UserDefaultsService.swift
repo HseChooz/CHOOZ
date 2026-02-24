@@ -13,6 +13,14 @@ final class UserDefaultsService {
         }
     }
     
+    var notificationsEnabled: Bool {
+        get {
+            userDefaults.bool(forKey: Keys.notificationsEnabled)
+        } set {
+            userDefaults.set(newValue, forKey: Keys.notificationsEnabled)
+        }
+    }
+    
     var isFirstLaunchAfterInstall: Bool {
         !userDefaults.bool(forKey: Keys.hasLaunchedBefore)
     }
@@ -28,6 +36,7 @@ final class UserDefaultsService {
     private enum Keys {
         static let hasSeenOnboarding = "hasSeenOnboarding"
         static let hasLaunchedBefore = "hasLaunchedBefore"
+        static let notificationsEnabled = "notificationsEnabled"
     }
     
     // MARK: - Private Properties

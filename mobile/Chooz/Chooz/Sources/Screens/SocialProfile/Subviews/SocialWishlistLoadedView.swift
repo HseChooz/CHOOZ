@@ -21,10 +21,8 @@ struct SocialWishlistLoadedView: View {
             .scrollIndicators(.hidden)
         }
         .padding(Layout.padding)
-        .adaptiveSheet(isPresented: $isItemSheetPresented) {
-            if let selectedItem {
-                SocialWishlistItemView(item: selectedItem)
-            }
+        .adaptiveSheet(item: $selectedItem) { item in
+            SocialWishlistItemView(item: item)
         }
     }
     
@@ -44,7 +42,6 @@ struct SocialWishlistLoadedView: View {
     // MARK: - Private Properties
     
     @State private var selectedItem: WishlistItem?
-    @State private var isItemSheetPresented: Bool = false
     @Environment(\.interfaceLayout) private var interfaceLayout
     
     private let items: [WishlistItem]
@@ -86,7 +83,6 @@ struct SocialWishlistLoadedView: View {
                     ForEach(rowItems, id: \.id) { item in
                         WishlistItemCardView(item: item) {
                             selectedItem = item
-                            isItemSheetPresented = true
                         }
                         .frame(maxWidth: Layout.cardMaxWidth.value(for: interfaceLayout))
                     }

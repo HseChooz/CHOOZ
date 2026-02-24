@@ -38,3 +38,7 @@ query Me {
     lastName
   }
 }
+
+mutation DeleteMyAccount {
+  deleteMyAccount
+}

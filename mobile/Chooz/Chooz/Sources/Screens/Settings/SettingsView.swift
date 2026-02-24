@@ -32,13 +32,23 @@ struct SettingsView: View {
                 viewModel.logout()
             }
         )
+        .confirmationDialog(
+            isPresented: $isDeleteAccountConfirmationPresented,
+            title: "Вы уверены, что хотите удалить аккаунт?",
+            description: "После удаления аккаунта ваши данные будут утеряны безвозвратно",
+            primaryAction: ConfirmationDialogAction(title: "Остаться") {},
+            destructiveAction: ConfirmationDialogAction(title: "Удалить") {
+                viewModel.deleteAccount()
+            }
+        )
     }
     
     // MARK: - Private Properties
     
-    private let viewModel: SettingsViewModel
+    @Bindable private var viewModel: SettingsViewModel
     
     @State private var isLogoutConfirmationPresented: Bool = false
+    @State private var isDeleteAccountConfirmationPresented: Bool = false
     
     // MARK: - Private Views
     
@@ -50,8 +60,11 @@ struct SettingsView: View {
 
     private var appSettingsSectionView: some View {
         VStack(spacing: .zero) {
-            SettingsToggleView(title: "Получать уведомления")
-                .padding(.vertical, 16.0)
+            SettingsToggleView(
+                title: "Получать уведомления",
+                isOn: $viewModel.notificationsEnabled
+            )
+            .padding(.vertical, 16.0)
             
             dashDivider
             
@@ -93,7 +106,8 @@ struct SettingsView: View {
             SettingsButtonView(
                 title: "Удалить аккаунт",
                 style: .red,
-                hasChevron: false
+                hasChevron: false,
+                action: { isDeleteAccountConfirmationPresented = true }
             )
         }
     }

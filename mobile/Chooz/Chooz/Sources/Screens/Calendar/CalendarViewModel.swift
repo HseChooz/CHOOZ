@@ -32,10 +32,12 @@ final class CalendarViewModel:
     init(
         router: CalendarRouter,
         interactor: CalendarInteractor,
+        notificationService: NotificationService,
         toastManager: ToastManager
     ) {
         self.router = router
         self.interactor = interactor
+        self.notificationService = notificationService
         self.toastManager = toastManager
     }
     
@@ -50,6 +52,7 @@ final class CalendarViewModel:
             do {
                 let events = try await interactor.getEvents()
                 viewState = events.isEmpty ? .empty : .loaded(events)
+                notificationService.rescheduleNotifications(for: events)
             } catch {
                 if !Task.isCancelled {
                     viewState = .error
@@ -92,6 +95,8 @@ final class CalendarViewModel:
                             items[idx] = updatedItem
                         }
                     }
+                    notificationService.cancelNotification(for: updatedItem.id)
+                    notificationService.scheduleNotification(for: updatedItem)
                 } else {
                     let newItem = try await interactor.createEvent(
                         title: title,
@@ -102,6 +107,7 @@ final class CalendarViewModel:
                         repeatYearly: false
                     )
                     mutateEvents { $0.append(newItem) }
+                    notificationService.scheduleNotification(for: newItem)
                     toastManager.showSuccessBlue("Добавлено новое событие")
                 }
             } catch {
@@ -135,6 +141,7 @@ final class CalendarViewModel:
             do {
                 try await interactor.deleteEvent(id: id)
                 selectedEvent = nil
+                notificationService.cancelNotification(for: id)
                 mutateEvents { $0.removeAll { $0.id == id } }
             } catch {
                 if !Task.isCancelled {
@@ -160,6 +167,12 @@ final class CalendarViewModel:
                     }
                 }
                 selectedEvent = updatedItem
+                
+                if enabled {
+                    notificationService.scheduleNotification(for: updatedItem)
+                } else {
+                    notificationService.cancelNotification(for: updatedItem.id)
+                }
             } catch {
                 if !Task.isCancelled {
                     toastManager.showError("Не удалось обновить уведомление")
@@ -191,6 +204,7 @@ final class CalendarViewModel:
     
     private let router: CalendarRouter
     private let interactor: CalendarInteractor
+    private let notificationService: NotificationService
     private let toastManager: ToastManager
     
     private var getEventsTask: Task<Void, Never>?
