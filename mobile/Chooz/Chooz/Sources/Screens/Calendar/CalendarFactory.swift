@@ -10,11 +10,13 @@ final class CalendarFactory {
         appRouter: AppRouter,
         profileFactory: ProfileFactory,
         calendarService: CalendarService,
+        notificationService: NotificationService,
         toastManager: ToastManager
     ) {
         self.appRouter = appRouter
         self.profileFactory = profileFactory
         self.calendarService = calendarService
+        self.notificationService = notificationService
         self.toastManager = toastManager
     }
     
@@ -26,6 +28,7 @@ final class CalendarFactory {
         let viewModel = CalendarViewModel(
             router: router,
             interactor: interactor,
+            notificationService: notificationService,
             toastManager: toastManager
         )
         let view = CalendarView(viewModel: viewModel)
@@ -42,5 +45,6 @@ final class CalendarFactory {
     private let appRouter: AppRouter
     private let profileFactory: ProfileFactory
     private let calendarService: CalendarService
+    private let notificationService: NotificationService
     private let toastManager: ToastManager
 }

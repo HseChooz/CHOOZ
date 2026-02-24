@@ -22,6 +22,7 @@ final class AppContainer {
     lazy var profileService: ProfileService = ProfileService(apolloClient: apolloClient)
     lazy var wishlistService: WishlistService = WishlistService(apolloClient: apolloClient)
     lazy var calendarService: CalendarService = CalendarService(apolloClient: apolloClient)
+    lazy var notificationService: NotificationService = NotificationService(userDefaultsService: userDefaultsService)
     
     lazy var refreshClient: ApolloClient = ApolloClient(url: AppConfig.apiBaseURL)
     
@@ -81,11 +82,14 @@ final class AppContainer {
     // MARK: - Factories
     
     lazy var socialProfileFactory: SocialProfileFactory = SocialProfileFactory(
-        appRouter: appRouter
+        appRouter: appRouter,
+        wishlistService: wishlistService
     )
     lazy var settingsFactory: SettingsFactory = SettingsFactory(
         appRouter: appRouter,
         sessionServiceProvider: { [unowned self] in self.sessionService },
+        userDefaultsService: userDefaultsService,
+        notificationService: notificationService,
         toastManager: toastManager
     )
     lazy var profileFactory: ProfileFactory = ProfileFactory(
@@ -98,6 +102,7 @@ final class AppContainer {
         appRouter: appRouter,
         profileFactory: profileFactory,
         calendarService: calendarService,
+        notificationService: notificationService,
         toastManager: toastManager
     )
     lazy var mainTabBarFactory: MainTabBarFactory = MainTabBarFactory(

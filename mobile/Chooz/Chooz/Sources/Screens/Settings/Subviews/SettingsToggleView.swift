@@ -4,8 +4,9 @@ struct SettingsToggleView: View {
     
     // MARK: - Init
     
-    init(title: String) {
+    init(title: String, isOn: Binding<Bool>) {
         self.title = title
+        self._isOn = isOn
     }
     
     // MARK: - Body
@@ -37,9 +38,9 @@ struct SettingsToggleView: View {
     // MARK: - Private Properties
     
     private let title: String
-    @State private var isOn: Bool = false
+    @Binding private var isOn: Bool
 }
 
 #Preview {
-    SettingsToggleView(title: "Получать уведомления")
+    SettingsToggleView(title: "Получать уведомления", isOn: .constant(true))
 }

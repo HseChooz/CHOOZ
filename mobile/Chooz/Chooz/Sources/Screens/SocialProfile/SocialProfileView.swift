@@ -29,6 +29,9 @@ struct SocialProfileView: View {
         .toolbar {
             toolbarContentView
         }
+        .task {
+            await viewModel.fetchWishItems()
+        }
     }
     
     // MARK: - Private Properties
@@ -58,7 +61,10 @@ struct SocialProfileView: View {
     private var contentView: some View {
         switch viewModel.selectedSegment {
         case .wishlist:
-            SocialWishlistContentView(items: viewModel.wishlistItems)
+            SocialWishlistContentView(
+                state: viewModel.wishlistState,
+                onRetry: { Task { await viewModel.fetchWishItems() } }
+            )
         case .questionnaire:
             EmptyView()
         }

@@ -95,6 +95,35 @@ final class WishlistService {
         return try result.get()
     }
     
+    func fetchUserWishItems(userId: String) async throws -> [WishlistItem] {
+        let result: Result<[WishlistItem], Error> = await withCheckedContinuation { continuation in
+            apolloClient.fetch(
+                query: ChoozAPI.UserWishItemsQuery(userId: userId),
+                cachePolicy: .fetchIgnoringCacheCompletely
+            ) { result in
+                switch result {
+                case .success(let graphQLResult):
+                    let items = graphQLResult.data?.userWishItems.map { item in
+                        WishlistItem(
+                            id: item.id,
+                            title: item.title,
+                            description: item.description,
+                            link: item.link,
+                            price: item.price.map { String($0) },
+                            currency: item.currency.flatMap { WishCurrency(rawValue: $0) }
+                        )
+                    } ?? []
+                    continuation.resume(returning: .success(items))
+                    
+                case .failure(let error):
+                    continuation.resume(returning: .failure(error))
+                }
+            }
+        }
+        
+        return try result.get()
+    }
+    
     func addWish(title: String, description: String, link: String, price: String?, currency: WishCurrency) async {
         errorMessage = nil
         

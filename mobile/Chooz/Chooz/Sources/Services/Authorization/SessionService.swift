@@ -1,3 +1,4 @@
+import Foundation
 import Apollo
 import YandexLoginSDK
 
@@ -63,6 +64,33 @@ final class SessionService {
         
         let vc = authorizationFactory.makeScreen()
         appRouter.setRoot(vc, animated: true)
+    }
+    
+    func deleteAccount() async throws {
+        let success: Bool = try await withCheckedThrowingContinuation { continuation in
+            apolloClient.perform(
+                mutation: ChoozAPI.DeleteMyAccountMutation()
+            ) { result in
+                switch result {
+                case .success(let graphQLResult):
+                    if let deleted = graphQLResult.data?.deleteMyAccount, deleted {
+                        continuation.resume(returning: true)
+                    } else {
+                        let error = NSError(
+                            domain: "SessionService",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Не удалось удалить аккаунт"]
+                        )
+                        continuation.resume(throwing: error)
+                    }
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+        
+        guard success else { return }
+        handleSessionExpired()
     }
     
     // MARK: - Private Types

@@ -6,8 +6,9 @@ final class SocialProfileFactory {
     
     // MARK: - Init
     
-    init(appRouter: AppRouter) {
+    init(appRouter: AppRouter, wishlistService: WishlistService) {
         self.appRouter = appRouter
+        self.wishlistService = wishlistService
     }
     
     // MARK: - Internal Methods
@@ -16,7 +17,10 @@ final class SocialProfileFactory {
         let navigationController = UINavigationController()
         navigationController.modalPresentationStyle = .fullScreen
         
-        let viewModel = SocialProfileViewModel(userId: userId) { [weak navigationController] in
+        let viewModel = SocialProfileViewModel(
+            userId: userId,
+            wishlistService: wishlistService
+        ) { [weak navigationController] in
             navigationController?.dismiss(animated: true)
         }
         let view = SocialProfileView(viewModel: viewModel)
@@ -35,4 +39,5 @@ final class SocialProfileFactory {
     // MARK: - Private Properties
     
     private let appRouter: AppRouter
+    private let wishlistService: WishlistService
 }

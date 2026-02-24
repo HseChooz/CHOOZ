@@ -45,3 +45,15 @@ mutation UpdateWishItem($id: ID!, $title: String, $description: String, $link: S
     imageUrl
   }
 }
+
+query UserWishItems($userId: ID!) {
+  userWishItems(userId: $userId) {
+    id
+    title
+    description
+    link
+    price
+    currency
+    imageUrl
+  }
+}
