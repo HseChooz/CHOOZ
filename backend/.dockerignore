@@ -1,17 +1,22 @@
-.git
-.github
+.git/
+.github/
 .gitignore
 
-.idea
-.vscode
+.idea/
+.vscode/
 .DS_Store
 
 .env*
-.venv
-.ruff_cache
+.venv/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+htmlcov/
+.coverage
+.coverage.*
 
-__pycache__
-**/__pycache__
+__pycache__/
 *.pyc
 *.pyo
 *.pyd

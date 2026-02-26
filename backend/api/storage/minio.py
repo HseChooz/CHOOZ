@@ -90,12 +90,7 @@ def presigned_put_url(key: str, content_type: str, expires_in: int = 900) -> str
 
 
 def presigned_get_url(key: str, expires_in: int = 3600) -> str:
-    base = (getattr(settings, "MINIO_PUBLIC_BASE_URL", "") or "").strip()
-    bucket = settings.MINIO_BUCKET
-    if base:
-        return f"{base.rstrip('/')}/{bucket}/{key.lstrip('/')}"
-
-    client = get_s3_client()
+    client = get_s3_client(public=True)
     try:
         return client.generate_presigned_url(
             "get_object",

@@ -1,40 +1,43 @@
-name: chooz-dev
+name: chooz-stage
 
 services:
   db:
     image: postgres:17
+    container_name: chooz-stage-postgres
     env_file:
-      - .env.local
-    ports:
-      - "5432:5432"
+      - .env.staging
     volumes:
-      - chooz_pg_data:/var/lib/postgresql/data
+      - chooz_stage_pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 2s
       timeout: 3s
       retries: 15
+    restart: unless-stopped
 
   minio:
     image: minio/minio:latest
+    container_name: chooz-stage-minio
     env_file:
-      - .env.local
+      - .env.staging
     command: server /data --console-address ":9001"
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "127.0.0.1:9100:9000"
+      - "127.0.0.1:9101:9001"
     volumes:
-      - chooz_minio_data:/data
+      - chooz_stage_minio_data:/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 5s
       timeout: 3s
       retries: 15
+    restart: unless-stopped
 
   minio_init:
     image: minio/mc:latest
+    container_name: chooz-stage-minio-init
     env_file:
-      - .env.local
+      - .env.staging
     depends_on:
       minio:
         condition: service_healthy
@@ -42,20 +45,18 @@ services:
       - /bin/sh
       - -c
       - |
-        mc alias set chooz http://minio:9000 "MINIO_ROOT_USER" "MINIO_ROOT_PASSWORD";
+        mc alias set chooz http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD";
         mc mb -p chooz/"$$MINIO_BUCKET" || true;
         exit 0
     restart: "no"
 
   backend:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    image: chooz-backend
+    image: ghcr.io/hsechooz/chooz:latest
+    container_name: chooz-stage-backend
     env_file:
-      - .env.local
+      - .env.staging
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8100:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -63,11 +64,8 @@ services:
         condition: service_healthy
       minio_init:
         condition: service_completed_successfully
-    volumes:
-      - ..:/backend
-      - backend_venv:/backend/.venv
+    restart: unless-stopped
 
 volumes:
-  chooz_pg_data:
-  chooz_minio_data:
-  backend_venv:
+  chooz_stage_pg_data:
+  chooz_stage_minio_data:

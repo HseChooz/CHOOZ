@@ -1,10 +1,10 @@
 ## Инструкция по локальному запуску API
 
-#### 0) Заменить `.env.example` на `.env` (с заполненными пропусками).
+#### 0) Заменить `.env.example` на `.env.local` (с заполненными пропусками).
 
 #### 1) Из папки `backend/` запустить контейнеры:
 ```shell
-docker compose -f docker/compose.dev.yml up -d --force-recreate
+docker compose -f docker/compose.dev.yml up -d
 ```
 
 #### 2) Перейти по http://localhost:8000/api/graphql/
@@ -31,5 +31,5 @@ API должно вернуть:
 
 #### 4) Остановить контейнеры (по желанию)
 ```shell
-docker compose -f docker/compose.full.yml down
+docker compose -f docker/compose.dev.yml down
 ```

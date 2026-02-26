@@ -5,7 +5,7 @@ services:
     image: postgres:17
     container_name: chooz-postgres
     env_file:
-      - .env
+      - .env.prod
     volumes:
       - chooz_pg_data:/var/lib/postgresql/data
     healthcheck:
@@ -19,7 +19,7 @@ services:
     image: minio/minio:latest
     container_name: chooz-minio
     env_file:
-      - .env
+      - .env.prod
     command: server /data --console-address ":9001"
     ports:
       - "127.0.0.1:9000:9000"
@@ -37,7 +37,7 @@ services:
     image: minio/mc:latest
     container_name: chooz-minio-init
     env_file:
-      - .env
+      - .env.prod
     depends_on:
       minio:
         condition: service_healthy
@@ -45,7 +45,7 @@ services:
       - /bin/sh
       - -c
       - |
-        mc alias set chooz http://minio:9000 "$$MINIO_ACCESS_KEY" "$$MINIO_SECRET_KEY";
+        mc alias set chooz http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD";
         mc mb -p chooz/"$$MINIO_BUCKET" || true;
         exit 0
     restart: "no"
@@ -54,7 +54,7 @@ services:
     image: ghcr.io/hsechooz/chooz:latest
     container_name: chooz-backend
     env_file:
-      - .env
+      - .env.prod
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -62,6 +62,8 @@ services:
         condition: service_healthy
       minio:
         condition: service_healthy
+      minio_init:
+        condition: service_completed_successfully
     restart: unless-stopped
 
 volumes:

@@ -1,1 +1,13 @@
 .venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+htmlcov/
+.coverage
+.coverage.*
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
