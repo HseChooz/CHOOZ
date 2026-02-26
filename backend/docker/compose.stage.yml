@@ -5,7 +5,7 @@ services:
     image: postgres:17
     container_name: chooz-stage-postgres
     env_file:
-      - .env.staging
+      - .env.stage
     volumes:
       - chooz_stage_pg_data:/var/lib/postgresql/data
     healthcheck:
@@ -19,7 +19,7 @@ services:
     image: minio/minio:latest
     container_name: chooz-stage-minio
     env_file:
-      - .env.staging
+      - .env.stage
     command: server /data --console-address ":9001"
     ports:
       - "127.0.0.1:9100:9000"
@@ -37,7 +37,7 @@ services:
     image: minio/mc:latest
     container_name: chooz-stage-minio-init
     env_file:
-      - .env.staging
+      - .env.stage
     depends_on:
       minio:
         condition: service_healthy
@@ -54,7 +54,7 @@ services:
     image: ghcr.io/hsechooz/chooz:latest
     container_name: chooz-stage-backend
     env_file:
-      - .env.staging
+      - .env.stage
     ports:
       - "127.0.0.1:8100:8000"
     depends_on:
