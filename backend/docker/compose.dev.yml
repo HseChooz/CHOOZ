@@ -42,7 +42,7 @@ services:
       - /bin/sh
       - -c
       - |
-        mc alias set chooz http://minio:9000 "MINIO_ROOT_USER" "MINIO_ROOT_PASSWORD";
+        mc alias set chooz http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD";
         mc mb -p chooz/"$$MINIO_BUCKET" || true;
         exit 0
     restart: "no"
