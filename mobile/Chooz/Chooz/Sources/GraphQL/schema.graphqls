@@ -15,10 +15,13 @@ type Mutation {
   refreshToken(refreshToken: String!): TokenPair!
   createWishItem(title: String!, description: String! = "", link: String! = "", price: Decimal = null, currency: String! = ""): WishItemType!
   updateWishItem(id: ID!, title: String = null, description: String = null, link: String = null, price: Decimal = null, currency: String = null): WishItemType!
+  deleteWishItem(id: ID!): Boolean!
   createEvent(title: String!, date: Date!, description: String! = "", link: String! = "", notifyEnabled: Boolean! = false, repeatYearly: Boolean! = false): EventType!
   updateEvent(id: ID!, title: String = null, description: String = null, link: String = null, date: Date = null, notifyEnabled: Boolean = null, repeatYearly: Boolean = null): EventType!
   deleteEvent(id: ID!): Boolean!
   deleteMyAccount: Boolean!
+  createWishItemImageUpload(id: ID!, filename: String!, contentType: String! = "image/png"): PresignedUpload!
+  attachWishItemImage(id: ID!, key: String!): WishItemType!
 }
 
 type UserType {
@@ -47,6 +50,11 @@ type EventType {
   notifyEnabled: Boolean!
   repeatYearly: Boolean!
   date: Date!
+}
+
+type PresignedUpload {
+  key: String!
+  uploadUrl: String!
 }
 
 type AuthPayload {

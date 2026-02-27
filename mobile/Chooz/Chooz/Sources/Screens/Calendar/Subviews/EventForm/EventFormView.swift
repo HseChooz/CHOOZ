@@ -38,9 +38,7 @@ struct EventFormView: View {
             VStack(spacing: 16.0) {
                 titleView
                 
-                descriptionView
-                
-                EventAddLinkView(linkString: $link)
+                descriptionView                
             }
             
             Spacer()

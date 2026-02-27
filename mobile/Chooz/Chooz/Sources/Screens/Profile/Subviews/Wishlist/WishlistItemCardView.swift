@@ -35,10 +35,36 @@ struct WishlistItemCardView: View {
     // MARK: - Private Views
     
     private var imageView: some View {
+        Group {
+            if let imageUrl = item.imageUrl, let url = URL(string: imageUrl) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        imagePlaceholder
+                            .overlay {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                    case .failure:
+                        imagePlaceholder
+                    default:
+                        imagePlaceholder
+                            .overlay { ProgressView() }
+                    }
+                }
+            } else {
+                imagePlaceholder
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 193.0)
+        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: 20.0))
+    }
+    
+    private var imagePlaceholder: some View {
         Colors.Neutral.grey200
-            .frame(maxWidth: .infinity)
-            .frame(height: 193.0)
-            .clipShape(RoundedRectangle(cornerRadius: 20.0))
     }
     
     private var titleView: some View {

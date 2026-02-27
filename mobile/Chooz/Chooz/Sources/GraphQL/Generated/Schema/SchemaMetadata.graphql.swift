@@ -32,6 +32,7 @@ extension ChoozAPI {
       case "AuthPayload": return ChoozAPI.Objects.AuthPayload
       case "EventType": return ChoozAPI.Objects.EventType
       case "Mutation": return ChoozAPI.Objects.Mutation
+      case "PresignedUpload": return ChoozAPI.Objects.PresignedUpload
       case "Query": return ChoozAPI.Objects.Query
       case "TokenPair": return ChoozAPI.Objects.TokenPair
       case "UserType": return ChoozAPI.Objects.UserType

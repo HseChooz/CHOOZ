@@ -46,6 +46,25 @@ mutation UpdateWishItem($id: ID!, $title: String, $description: String, $link: S
   }
 }
 
+mutation CreateWishItemImageUpload($id: ID!, $filename: String!, $contentType: String! = "image/png") {
+  createWishItemImageUpload(id: $id, filename: $filename, contentType: $contentType) {
+    key
+    uploadUrl
+  }
+}
+
+mutation AttachWishItemImage($id: ID!, $key: String!) {
+  attachWishItemImage(id: $id, key: $key) {
+    id
+    title
+    description
+    link
+    price
+    currency
+    imageUrl
+  }
+}
+
 query UserWishItems($userId: ID!) {
   userWishItems(userId: $userId) {
     id
@@ -56,4 +75,8 @@ query UserWishItems($userId: ID!) {
     currency
     imageUrl
   }
+}
+
+mutation DeleteWishItem($id: ID!) {
+  deleteWishItem(id: $id)
 }
