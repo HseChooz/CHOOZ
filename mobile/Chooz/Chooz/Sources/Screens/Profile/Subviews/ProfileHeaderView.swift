@@ -36,6 +36,7 @@ struct ProfileHeaderView: View {
                 Text(displayName)
                     .lineLimit(1)
                     .font(.velaSans(size: 24.0, weight: .extraBold))
+                    .foregroundStyle(Colors.Neutral.grey800)
             }
         }
     }

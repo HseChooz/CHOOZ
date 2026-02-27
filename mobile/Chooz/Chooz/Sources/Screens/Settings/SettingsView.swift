@@ -74,21 +74,22 @@ struct SettingsView: View {
 //            
 //            dashDivider
             
-            SettingsButtonView(
-                title: "Пароль и данные",
-                style: .neutral,
-                hasChevron: true
-            )
-            .padding(.vertical, 16.0)
-            
-            dashDivider
-            
-            SettingsButtonView(
-                title: "О приложении",
-                style: .neutral,
-                hasChevron: true
-            )
-            .padding(.vertical, 16.0)
+            // TODO: uncomment when feature is ready
+//            SettingsButtonView(
+//                title: "Пароль и данные",
+//                style: .neutral,
+//                hasChevron: true
+//            )
+//            .padding(.vertical, 16.0)
+//            
+//            dashDivider
+//            
+//            SettingsButtonView(
+//                title: "О приложении",
+//                style: .neutral,
+//                hasChevron: true
+//            )
+//            .padding(.vertical, 16.0)
             
             dashDivider
         }

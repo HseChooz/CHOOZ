@@ -21,7 +21,7 @@ struct WishlistFormView: View {
                 
                 WishlistFormPhotoSectionView(viewModel: viewModel)
                 
-                addLinkView
+                AddLinkView(linkString: $viewModel.link)
             }
             
             WishlistFormPriceView(viewModel: viewModel)
@@ -97,29 +97,6 @@ struct WishlistFormView: View {
         .font(.velaSans(size: 16.0, weight: .bold))
         .foregroundStyle(Colors.Neutral.grey400)
         .lineLimit(3...6)
-    }
-    
-    private var addLinkView: some View {
-        TextField(
-            "",
-            text: $viewModel.link,
-            prompt: Text("Добавить ссылку")
-                .font(.velaSans(size: 16.0, weight: .bold))
-                .foregroundStyle(Colors.Neutral.grey400)
-        )
-        .font(.velaSans(size: 16.0, weight: .bold))
-        .foregroundStyle(Colors.Neutral.grey800)
-        .keyboardType(.URL)
-        .textContentType(.URL)
-        .autocorrectionDisabled()
-        .textInputAutocapitalization(.never)
-        .padding(.horizontal, 16.0)
-        .frame(height: 64.0)
-        .overlay {
-            RoundedRectangle(cornerRadius: 20.0)
-                .strokeBorder(style: StrokeStyle(lineWidth: 1.0, dash: [6.0]))
-                .foregroundStyle(Colors.Neutral.grey400)
-        }
     }
     
     private var saveButtonView: some View {

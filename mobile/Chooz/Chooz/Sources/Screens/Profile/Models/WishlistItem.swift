@@ -7,4 +7,5 @@ struct WishlistItem: Identifiable {
     let link: String?
     let price: String?
     let currency: WishCurrency?
+    let imageUrl: String?
 }

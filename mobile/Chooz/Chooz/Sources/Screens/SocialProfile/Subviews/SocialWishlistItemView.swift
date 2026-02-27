@@ -56,9 +56,32 @@ struct SocialWishlistItemView: View {
     // MARK: - Private Views
     
     private var imageView: some View {
+        Group {
+            if let imageUrl = item.imageUrl, let url = URL(string: imageUrl) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    case .failure:
+                        imagePlaceholder
+                    default:
+                        imagePlaceholder
+                            .overlay { ProgressView() }
+                    }
+                }
+            } else {
+                imagePlaceholder
+            }
+        }
+        .frame(height: 387.0)
+        .frame(maxWidth: .infinity)
+        .clipped()
+    }
+    
+    private var imagePlaceholder: some View {
         Colors.Neutral.grey200
-            .frame(height: 387.0)
-            .frame(maxWidth: .infinity)
     }
     
     private var detailsView: some View {

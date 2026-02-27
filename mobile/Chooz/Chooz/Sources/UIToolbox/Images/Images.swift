@@ -19,6 +19,7 @@ enum Images {
         static let dropdown = Image("icon_dropdown", bundle: .module)
         static let arrowUp = Image("icon_arrow_up", bundle: .module)
         static let trash = Image("icon_trash", bundle: .module)
+        static let trashWhite = Image("icon_trash_white", bundle: .module)
         static let repeatIcon = Image("icon_repeat", bundle: .module)
         static let reapetIconPurple = Image("icon_repeat_purple", bundle: .module)
         static let notification = Image("icon_notification", bundle: .module)

@@ -36,12 +36,13 @@ final class WishlistViewModel {
     
     var isWishFormSheetPresented: Bool = false
     var isWishSheetPresented: Bool = false
+    var isDeleteConfirmationPresented: Bool = false
     var selectedWishItem: WishlistItem?
     var wishFormMode: WishFormMode = .create
     
     var selectedItem: WishlistItem {
         guard let selectedWishItem else {
-            return WishlistItem(id: "", title: "", description: nil, link: nil, price: nil, currency: nil)
+            return WishlistItem(id: "", title: "", description: nil, link: nil, price: nil, currency: nil, imageUrl: nil)
         }
         return selectedWishItem
     }
@@ -53,6 +54,8 @@ final class WishlistViewModel {
     var selectedCurrency: WishCurrency = .rub
     private(set) var selectedImage: Image?
     private(set) var selectedImageData: Data?
+    private(set) var existingImageUrl: String?
+    private(set) var isImageUploading: Bool = false
     
     var isSaveEnabled: Bool {
         !title.trimmingCharacters(in: .whitespaces).isEmpty
@@ -115,6 +118,23 @@ final class WishlistViewModel {
         return true
     }
     
+    func showDeleteConfirmation() {
+        isDeleteConfirmationPresented = true
+    }
+    
+    func deleteWish() {
+        guard let id = selectedWishItem?.id else { return }
+        Task {
+            let success = await wishlistService.deleteWish(id: id)
+            if success {
+                isWishSheetPresented = false
+                selectedWishItem = nil
+            } else if let error = wishlistService.errorMessage {
+                toastManager.showError(error)
+            }
+        }
+    }
+    
     // MARK: - Private Properties
     
     private let wishlistService: WishlistService
@@ -147,14 +167,23 @@ final class WishlistViewModel {
     
     private func createWish() {
         let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
+        let imageData = prepareImageDataForUpload()
         Task {
-            await wishlistService.addWish(
+            guard let createdItem = await wishlistService.addWish(
                 title: title,
                 description: description,
                 link: link.trimmingCharacters(in: .whitespaces),
                 price: trimmedPrice.isEmpty ? nil : trimmedPrice,
                 currency: selectedCurrency
-            )
+            ) else { return }
+            
+            if let imageData {
+                let updatedItem = await uploadImage(for: createdItem.id, data: imageData)
+                selectedWishItem = updatedItem ?? createdItem
+            } else {
+                selectedWishItem = createdItem
+            }
+            
             if wishlistService.errorMessage == nil {
                 toastManager.showSuccessBlue("Добавлена новая заметка")
             }
@@ -164,15 +193,23 @@ final class WishlistViewModel {
     private func updateWish() {
         guard let id = selectedWishItem?.id else { return }
         let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
+        let imageData = prepareImageDataForUpload()
         Task {
-            await wishlistService.updateWish(
+            guard let updatedItem = await wishlistService.updateWish(
                 id: id,
                 title: title,
                 description: description,
                 link: link.trimmingCharacters(in: .whitespaces),
                 price: trimmedPrice.isEmpty ? nil : trimmedPrice,
                 currency: selectedCurrency
-            )
+            ) else { return }
+            
+            if let imageData {
+                let itemWithImage = await uploadImage(for: id, data: imageData)
+                selectedWishItem = itemWithImage ?? updatedItem
+            } else {
+                selectedWishItem = updatedItem
+            }
         }
     }
     
@@ -185,6 +222,7 @@ final class WishlistViewModel {
         selectedImage = nil
         selectedImageData = nil
         imageSelection = nil
+        existingImageUrl = nil
     }
     
     private func populateForm(from item: WishlistItem) {
@@ -196,6 +234,7 @@ final class WishlistViewModel {
         selectedImage = nil
         selectedImageData = nil
         imageSelection = nil
+        existingImageUrl = item.imageUrl
     }
     
     private func loadImageData() {
@@ -205,6 +244,8 @@ final class WishlistViewModel {
             return
         }
         
+        existingImageUrl = nil
+        
         Task {
             if let data = try? await item.loadTransferable(type: Data.self) {
                 selectedImageData = data
@@ -213,6 +254,35 @@ final class WishlistViewModel {
                     selectedImage = Image(uiImage: uiImage)
                 }
             }
+        }
+    }
+    
+    private func prepareImageDataForUpload() -> Data? {
+        guard let selectedImageData,
+              let uiImage = UIImage(data: selectedImageData) else {
+            return nil
+        }
+        return uiImage.jpegData(compressionQuality: 0.8)
+    }
+    
+    @discardableResult
+    private func uploadImage(for itemId: String, data: Data) async -> WishlistItem? {
+        isImageUploading = true
+        defer { isImageUploading = false }
+        
+        let filename = "wish_\(itemId)_\(UUID().uuidString.prefix(8)).jpg"
+        do {
+            let updatedItem = try await wishlistService.uploadAndAttachImage(
+                itemId: itemId,
+                imageData: data,
+                filename: filename,
+                contentType: "image/jpeg"
+            )
+            return updatedItem
+        } catch {
+            print("[WishlistViewModel] Image upload failed: \(error)")
+            toastManager.showError("Не удалось загрузить изображение")
+            return nil
         }
     }
 }

@@ -30,6 +30,14 @@ struct WishlistItemView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Colors.Common.white)
+        .confirmationDialog(
+            isPresented: $viewModel.isDeleteConfirmationPresented,
+            title: "Вы уверены, что хотите удалить желание?",
+            primaryAction: ConfirmationDialogAction(title: "Отменить") {},
+            destructiveAction: ConfirmationDialogAction(title: "Удалить") {
+                viewModel.deleteWish()
+            }
+        )
     }
     
     // MARK: - Private Types
@@ -46,7 +54,8 @@ struct WishlistItemView: View {
     
     // MARK: - Private Properties
     
-    private let viewModel: WishlistViewModel
+    @Bindable
+    private var viewModel: WishlistViewModel
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.interfaceLayout) private var interfaceLayout
@@ -63,9 +72,35 @@ struct WishlistItemView: View {
     // MARK: - Private Views
     
     private var imageView: some View {
+        Group {
+            if let imageUrl = viewModel.selectedItem.imageUrl, let url = URL(string: imageUrl) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        imagePlaceholder
+                            .overlay {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                    case .failure:
+                        imagePlaceholder
+                    default:
+                        imagePlaceholder
+                            .overlay { ProgressView() }
+                    }
+                }
+            } else {
+                imagePlaceholder
+            }
+        }
+        .frame(height: 387.0)
+        .frame(maxWidth: .infinity)
+        .clipped()
+    }
+    
+    private var imagePlaceholder: some View {
         Colors.Neutral.grey200
-            .frame(height: 387.0)
-            .frame(maxWidth: .infinity)
     }
     
     private var detailsView: some View {
@@ -101,34 +136,24 @@ struct WishlistItemView: View {
     
     private var actionsView: some View {
         HStack(spacing: 8.0) {
-            Button(
-                action: { viewModel.showEditWishForm() },
-                label: {
-                    Text("Редактировать желание")
-                        .font(.velaSans(size: 16.0, weight: .bold))
-                        .foregroundStyle(Colors.Common.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 50.0)
-                        .background(Colors.Neutral.grey800)
-                        .clipShape(RoundedRectangle(cornerRadius: 14.0))
-                }
+            MainActionButton(
+                title: "Редактировать желание",
+                backgroundColor: Colors.Neutral.grey800,
+                foregroundColor: Colors.Common.white,
+                action: { viewModel.showEditWishForm() }
             )
-            .buttonStyle(ScaleButtonStyle())
             
             Button(
-                action: {},
+                action: { viewModel.showDeleteConfirmation() },
                 label: {
                     Circle()
                         .fill(Colors.Neutral.grey800)
                         .frame(width: 50)
                         .overlay {
-                            HStack(spacing: 5.0) {
-                                ForEach(1...3, id: \.self) { _ in
-                                    Circle()
-                                        .fill(Colors.Common.white)
-                                        .frame(width: 5)
-                                }
-                            }
+                            Images.Icons.trashWhite
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 22.0, height: 22.0)
                         }
                 }
             )
