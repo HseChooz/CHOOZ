@@ -8,7 +8,7 @@ extension ChoozAPI {
     static let operationName: String = "Events"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query Events { events { __typename id title description link notifyEnabled repeatYearly date } }"#
+        #"query Events { events(onlyUpcoming: true) { __typename id title description link notifyEnabled repeatYearly date } }"#
       ))
 
     public init() {}
@@ -19,7 +19,7 @@ extension ChoozAPI {
 
       static var __parentType: any ApolloAPI.ParentType { ChoozAPI.Objects.Query }
       static var __selections: [ApolloAPI.Selection] { [
-        .field("events", [Event].self),
+        .field("events", [Event].self, arguments: ["onlyUpcoming": true]),
       ] }
       static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
         EventsQuery.Data.self

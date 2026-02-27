@@ -6,7 +6,7 @@ type Query {
   wishItems: [WishItemType!]!
   wishItem(id: ID!): WishItemType!
   userWishItems(userId: ID!): [WishItemType!]!
-  events: [EventType!]!
+  events(onlyUpcoming: Boolean! = false, fromDate: Date = null, limit: Int! = 200): [EventType!]!
 }
 
 type Mutation {

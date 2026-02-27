@@ -21,6 +21,10 @@ struct EventItem: Hashable, Identifiable {
         let startOfEvent = calendar.startOfDay(for: date)
         let days = calendar.dateComponents([.day], from: startOfToday, to: startOfEvent).day ?? 0
 
+        if days == 0 {
+            return "сегодня"
+        }
+
         let remainder10 = days % 10
         let remainder100 = days % 100
 

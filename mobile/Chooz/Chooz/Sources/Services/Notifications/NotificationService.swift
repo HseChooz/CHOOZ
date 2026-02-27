@@ -92,7 +92,7 @@ final class NotificationService: NSObject {
             
             let content = UNMutableNotificationContent()
             content.title = event.title
-            content.body = offset.body(eventDescription: event.description, dateString: event.fullDateString)
+            content.body = offset.body(eventTitle: event.title)
             content.sound = .default
             
             let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
@@ -135,9 +135,8 @@ final class NotificationService: NSObject {
         
         var totalMinutes: Int { hours * 60 + minutes }
         
-        func body(eventDescription: String?, dateString: String) -> String {
-            let base = eventDescription ?? dateString
-            return "\(label): \(base)"
+        func body(eventTitle: String) -> String {
+            return "Событие \(eventTitle) начнется \(label.lowercased())"
         }
     }
     
