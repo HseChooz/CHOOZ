@@ -1,6 +1,5 @@
 # macOS
 .DS_Store
-**/.DS_Store
 .AppleDouble
 .LSOverride
 
@@ -42,11 +41,5 @@ Derived/
 
 # Environment
 .env
-.env.local
-.env.*.local
-
-# Node (if backend uses it)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.env.*
+!.env.example

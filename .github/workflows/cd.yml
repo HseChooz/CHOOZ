@@ -1,8 +1,6 @@
 name: CD to NAS
 on:
-  workflow_dispatch:
   push:
-    branches: [ main ]
     paths:
       - "backend/**"
       - ".github/workflows/cd.yml"
@@ -17,7 +15,8 @@ concurrency:
 
 env:
   IMAGE_NAME: ghcr.io/hsechooz/chooz
-  COMPOSE_FILE: /volume1/docker/CHOOZ/compose.prod.yml
+  COMPOSE_FILE_STAGE: /volume1/docker/CHOOZ/compose.stage.yml
+  COMPOSE_FILE_PROD: /volume1/docker/CHOOZ/compose.prod.yml
 
 jobs:
   build-and-push-image:
@@ -45,12 +44,36 @@ jobs:
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
-  deploy-prod:
-    environment: production
+  deploy-stage:
+    environment: staging
     runs-on: ubuntu-22.04
     permissions:
       packages: read
     needs: build-and-push-image
+    timeout-minutes: 10
+    steps:
+      - name: SSH deploy staging
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.NAS_HOST }}
+          port: ${{ secrets.NAS_PORT }}
+          username: ${{ secrets.NAS_USER }}
+          key: ${{ secrets.NAS_SSH_KEY }}
+          script: |
+            set -e
+            export PATH=/usr/local/bin:$PATH
+
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            docker compose -f "${{ env.COMPOSE_FILE_STAGE }}" pull
+            docker compose -f "${{ env.COMPOSE_FILE_STAGE }}" up -d --remove-orphans
+
+  deploy-prod:
+    environment: production
+    if: github.event_name == 'push'
+    runs-on: ubuntu-22.04
+    permissions:
+      packages: read
+    needs: deploy-stage
     timeout-minutes: 10
     steps:
       - name: SSH deploy prod
@@ -65,4 +88,5 @@ jobs:
             export PATH=/usr/local/bin:$PATH
 
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-            docker compose -f "${{ env.COMPOSE_FILE }}" up -d --pull always --force-recreate --remove-orphans
+            docker compose -f "${{ env.COMPOSE_FILE_PROD }}" pull
+            docker compose -f "${{ env.COMPOSE_FILE_PROD }}" up -d --remove-orphans

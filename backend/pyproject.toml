@@ -17,17 +17,25 @@ version = "0.1.0"
 description = "GraphQL API for wishlist and calendar"
 requires-python = ">=3.12"
 dependencies = [
-    "django>=6.0",
+    "boto3>=1.42.45",
+    "boto3-stubs~=1.42.45",
+    "django>=6.0.2",
     "djangorestframework>=3.16.1",
     "djangorestframework-simplejwt>=5.5.1",
+    "filelock>=3.20.3",
     "google-auth>=2.45.0",
     "gunicorn>=23.0.0",
+    "pillow>=12.1.1",
+    "pip>=26.0.1",
     "psycopg[binary]>=3.3.2",
+    "pyasn1>=0.6.2",
     "python-dotenv>=1.2.1",
     "requests>=2.32.5",
     "strawberry-graphql>=0.287.2",
     "strawberry-graphql-django>=0.70.1",
+    "urllib3>=2.6.3",
     "uvicorn>=0.38.0",
+    "virtualenv>=20.36.1",
 ]
 
 [dependency-groups]

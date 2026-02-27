@@ -1,43 +1,40 @@
-name: chooz
+name: chooz-dev
 
 services:
   db:
     image: postgres:17
-    container_name: chooz-postgres
     env_file:
-      - .env.prod
+      - .env.local
+    ports:
+      - "5432:5432"
     volumes:
       - chooz_pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
-      interval: 5s
+      interval: 2s
       timeout: 3s
-      retries: 5
-    restart: unless-stopped
+      retries: 15
 
   minio:
     image: minio/minio:latest
-    container_name: chooz-minio
     env_file:
-      - .env.prod
+      - .env.local
     command: server /data --console-address ":9001"
     ports:
-      - "127.0.0.1:9000:9000"
-      - "127.0.0.1:9001:9001"
+      - "9000:9000"
+      - "9001:9001"
     volumes:
       - chooz_minio_data:/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 5s
       timeout: 3s
-      retries: 10
-    restart: unless-stopped
+      retries: 15
 
   minio_init:
     image: minio/mc:latest
-    container_name: chooz-minio-init
     env_file:
-      - .env.prod
+      - .env.local
     depends_on:
       minio:
         condition: service_healthy
@@ -51,12 +48,14 @@ services:
     restart: "no"
 
   backend:
-    image: ghcr.io/hsechooz/chooz:latest
-    container_name: chooz-backend
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: chooz-backend
     env_file:
-      - .env.prod
+      - .env.local
     ports:
-      - "127.0.0.1:8000:8000"
+      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -64,8 +63,11 @@ services:
         condition: service_healthy
       minio_init:
         condition: service_completed_successfully
-    restart: unless-stopped
+    volumes:
+      - ..:/backend
+      - backend_venv:/backend/.venv
 
 volumes:
   chooz_pg_data:
   chooz_minio_data:
+  backend_venv:
