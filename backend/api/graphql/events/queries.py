@@ -13,7 +13,7 @@ class EventsQuery:
     def events(
         self,
         info,
-        only_upcoming: Annotated[bool, strawberry.argument(name="onlyUpcoming")] = False,
+        only_upcoming: Annotated[bool, strawberry.argument(name="onlyUpcoming")] = True,
         from_date: Annotated[Optional[date], strawberry.argument(name="fromDate")] = None,
         limit: int = 200,
     ) -> List[EventType]:

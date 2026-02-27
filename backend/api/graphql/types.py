@@ -23,6 +23,10 @@ class WishItemType:
     currency: Optional[str]
     image_url: Optional[str] = strawberry.field(name="imageUrl")
 
+@strawberry.type
+class UserWishItemsResult:
+    user: UserType
+    items: list[WishItemType]
 
 @strawberry.type
 class EventType:
