@@ -43,5 +43,12 @@ dev = [
     "bandit>=1.9.2",
     "pip-audit>=2.10.0",
     "pre-commit>=4.5.1",
+    "pytest>=8.4.2",
+    "pytest-django>=4.11.1",
     "ruff>=0.14.9",
 ]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings_test"
+python_files = ["test_*.py", "*_test.py"]
+testpaths = ["api/tests"]
