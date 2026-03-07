@@ -20,9 +20,9 @@ final class SocialProfileViewModel {
     
     var headerModel: ProfileHeaderView.Model {
         ProfileHeaderView.Model(
-            firstName: nil,
-            lastName: nil,
-            isLoading: false
+            firstName: firstName,
+            lastName: lastName,
+            isLoading: isLoading
         )
     }
     
@@ -45,7 +45,10 @@ final class SocialProfileViewModel {
         errorMessage = nil
         
         do {
-            items = try await wishlistService.fetchUserWishItems(userId: userId)
+            let result = try await wishlistService.fetchUserWishItems(userId: userId)
+            firstName = result.user.firstName
+            lastName = result.user.lastName
+            items = result.items
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -56,6 +59,8 @@ final class SocialProfileViewModel {
     // MARK: - Private Properties
     
     private let wishlistService: WishlistService
+    private var firstName: String?
+    private var lastName: String?
     private var items: [WishlistItem] = []
     private var isLoading: Bool = false
     private var errorMessage: String?

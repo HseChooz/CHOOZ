@@ -97,26 +97,41 @@ final class WishlistService {
         return try result.get()
     }
     
-    func fetchUserWishItems(userId: String) async throws -> [WishlistItem] {
-        let result: Result<[WishlistItem], Error> = await withCheckedContinuation { continuation in
+    func fetchUserWishItems(userId: String) async throws -> (user: UserInfo, items: [WishlistItem]) {
+        let result: Result<(user: UserInfo, items: [WishlistItem]), Error> = await withCheckedContinuation { continuation in
             apolloClient.fetch(
                 query: ChoozAPI.UserWishItemsQuery(userId: userId),
                 cachePolicy: .fetchIgnoringCacheCompletely
             ) { result in
                 switch result {
                 case .success(let graphQLResult):
-                    let items = graphQLResult.data?.userWishItems.map { item in
-                        WishlistItem(
-                            id: item.id,
-                            title: item.title,
-                            description: item.description,
-                            link: item.link,
-                            price: item.price.map { String($0) },
-                            currency: item.currency.flatMap { WishCurrency(rawValue: $0) },
-                            imageUrl: item.imageUrl
+                    if let data = graphQLResult.data?.userWishItems {
+                        let user = UserInfo(
+                            id: data.user.id,
+                            username: data.user.username,
+                            firstName: data.user.firstName,
+                            lastName: data.user.lastName
                         )
-                    } ?? []
-                    continuation.resume(returning: .success(items))
+                        let items = data.items.map { item in
+                            WishlistItem(
+                                id: item.id,
+                                title: item.title,
+                                description: item.description,
+                                link: item.link,
+                                price: item.price.map { String($0) },
+                                currency: item.currency.flatMap { WishCurrency(rawValue: $0) },
+                                imageUrl: item.imageUrl
+                            )
+                        }
+                        continuation.resume(returning: .success((user: user, items: items)))
+                    } else {
+                        let error = NSError(
+                            domain: "WishlistService",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Не удалось загрузить данные пользователя"]
+                        )
+                        continuation.resume(returning: .failure(error))
+                    }
                     
                 case .failure(let error):
                     continuation.resume(returning: .failure(error))

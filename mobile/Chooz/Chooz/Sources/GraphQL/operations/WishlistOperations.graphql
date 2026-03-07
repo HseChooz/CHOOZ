@@ -67,13 +67,21 @@ mutation AttachWishItemImage($id: ID!, $key: String!) {
 
 query UserWishItems($userId: ID!) {
   userWishItems(userId: $userId) {
-    id
-    title
-    description
-    link
-    price
-    currency
-    imageUrl
+    user {
+      id
+      username
+      firstName
+      lastName
+    }
+    items {
+      id
+      title
+      description
+      link
+      price
+      currency
+      imageUrl
+    }
   }
 }
 

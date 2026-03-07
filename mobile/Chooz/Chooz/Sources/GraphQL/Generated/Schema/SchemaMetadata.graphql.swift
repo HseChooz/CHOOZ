@@ -36,6 +36,7 @@ extension ChoozAPI {
       case "Query": return ChoozAPI.Objects.Query
       case "TokenPair": return ChoozAPI.Objects.TokenPair
       case "UserType": return ChoozAPI.Objects.UserType
+      case "UserWishItemsResult": return ChoozAPI.Objects.UserWishItemsResult
       case "WishItemType": return ChoozAPI.Objects.WishItemType
       default: return nil
       }
