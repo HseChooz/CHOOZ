@@ -28,6 +28,11 @@ final class NotificationService: NSObject {
         return settings.authorizationStatus == .authorized
     }
     
+    func getAuthorizationStatus() async -> UNAuthorizationStatus {
+        let settings = await center.notificationSettings()
+        return settings.authorizationStatus
+    }
+    
     func syncPermissionWithToggle() async {
         let granted = await isPermissionGranted()
         if !granted {

@@ -165,23 +165,25 @@ struct WishlistItemView: View {
     }
     
     private var toolbarView: some View {
-        HStack(spacing: 16.0) {
-            ShareLink(item: shareContent) {
-                Images.Icons.share
-                    .resizable()
-                    .scaledToFill()
-            }
-            .buttonStyle(ScaleButtonStyle())
-            
-            Button(action: { dismiss() }) {
-                Images.Icons.crossLarge
-                    .resizable()
-                    .scaledToFill()
-                    .foregroundStyle(Colors.Neutral.grey600)
-            }
-            .buttonStyle(ScaleButtonStyle())
+        // TODO: uncomment when ready
+//        HStack(spacing: 16.0) {
+//            ShareLink(item: shareContent) {
+//                Images.Icons.share
+//                    .resizable()
+//                    .scaledToFill()
+//            }
+//            .buttonStyle(ScaleButtonStyle())
+//            
+//            
+//        }
+        
+        Button(action: { dismiss() }) {
+            Images.Icons.crossLarge
+                .resizable()
+                .scaledToFill()
+                .frame(width: 24.0, height: 24.0)
         }
-        .frame(width: 64.0, height: 24.0)
+        .buttonStyle(ScaleButtonStyle())
     }
     
     @ViewBuilder

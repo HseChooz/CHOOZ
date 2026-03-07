@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import Observation
 
 @MainActor
@@ -80,15 +81,27 @@ final class SettingsViewModel {
     
     private func handleNotificationsEnable() {
         Task {
+            let status = await notificationService.getAuthorizationStatus()
+            
+            if status == .denied {
+                notificationsEnabled = false
+                openAppSettings()
+                return
+            }
+            
             let granted = await notificationService.requestPermission()
             userDefaultsService.notificationsEnabled = granted
             if !granted {
                 notificationsEnabled = false
-                toastManager.showError(
-                    "Уведомления отключены",
-                    subtitle: "Разрешите уведомления в настройках устройства"
-                )
             }
         }
+    }
+    
+    private func openAppSettings() {
+        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString),
+              UIApplication.shared.canOpenURL(settingsUrl) else {
+            return
+        }
+        UIApplication.shared.open(settingsUrl)
     }
 }
