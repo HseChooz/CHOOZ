@@ -10,7 +10,7 @@ let project = Project(
             name: "Chooz",
             destinations: .iOS,
             product: .app,
-            bundleId: "dev.tuist.Chooz",
+            bundleId: "com.chooz.app",
             deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: [
                 "UILaunchScreen": .dictionary([:]),
@@ -46,6 +46,7 @@ let project = Project(
                 ]),
                 "GIDClientID": .string("997450664376-be282n3v8e24voj4t16e35l9luqq22t1.apps.googleusercontent.com"),
                 "YandexClientID": .string("55beaf891397487595e91873c084e1bd"),
+                "AppMetricaAPIKey": .string("23fcaf7a-cebb-4e3a-b434-b463aeb4aaa9"),
                 "LSApplicationQueriesSchemes": .array([
                     .string("primaryyandexloginsdk"),
                     .string("secondaryyandexloginsdk")
@@ -67,6 +68,11 @@ let project = Project(
             ]),
             sources: ["Chooz/Sources/**"],
             resources: ["Chooz/Resources/**"],
+            entitlements: .dictionary([
+                "keychain-access-groups": .array([
+                    .string("$(AppIdentifierPrefix)io.appmetrica")
+                ])
+            ]),
             scripts: [
                 .pre(
                     path: .relativeToRoot("../tools/graphql/apollo_codegen.sh"),
@@ -76,6 +82,8 @@ let project = Project(
             ],
             dependencies: [
                 .package(product: "Apollo"),
+                .external(name: "AppMetricaCore"),
+                .external(name: "AppMetricaCrashes"),
                 .external(name: "GoogleSignIn"),
                 .external(name: "YandexLoginSDK")
             ],

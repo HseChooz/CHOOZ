@@ -10,11 +10,13 @@ final class AuthorizationViewModel {
     init(
         interactor: AuthorizationInteractor,
         router: AuthorizationRouter,
-        toastManager: ToastManager
+        toastManager: ToastManager,
+        analytics: AuthorizationAnalytics
     ) {
         self.interactor = interactor
         self.router = router
         self.toastManager = toastManager
+        self.analytics = analytics
     }
     
     // MARK: - Internal Properties
@@ -30,6 +32,7 @@ final class AuthorizationViewModel {
         signInTask = Task {
             do {
                 try await interactor.signInWithGoogle()
+                analytics.trackAuthCompleted(provider: "google")
                 router.routeToMainScreen()
             } catch let error as AuthError {
                 if let content = error.toastContent {
@@ -51,6 +54,7 @@ final class AuthorizationViewModel {
         signInTask = Task {
             do {
                 try await interactor.signInWithYandex()
+                analytics.trackAuthCompleted(provider: "yandex")
                 router.routeToMainScreen()
             } catch let error as AuthError {
                 if let content = error.toastContent {
@@ -70,6 +74,7 @@ final class AuthorizationViewModel {
     private let interactor: AuthorizationInteractor
     private let router: AuthorizationRouter
     private let toastManager: ToastManager
+    private let analytics: AuthorizationAnalytics
     
     private var signInTask: Task<Void, Never>?
 }

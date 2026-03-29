@@ -14,6 +14,7 @@ final class AppBootstraper {
     
     func start() {
         clearKeychainIfNeeded()
+        trackLifecycleEvents()
         
         let splashVC = UIHostingController(rootView: SplashView())
         appContainer.appRouter.setRoot(splashVC)
@@ -66,9 +67,26 @@ final class AppBootstraper {
             case .valid, .networkError:
                 let vc = appContainer.mainTabBarFactory.makeScreen()
                 appContainer.appRouter.setRoot(vc)
+                await setUserProfileIDFromProfile()
             case .invalid:
                 appContainer.sessionService.handleSessionExpired()
             }
+        }
+    }
+    
+    private func trackLifecycleEvents() {
+        let analytics = appContainer.analyticsService
+        
+        if appContainer.userDefaultsService.isFirstLaunchAfterInstall {
+            analytics.track(.firstLaunch)
+        }
+        analytics.track(.appSessionStarted)
+    }
+    
+    private func setUserProfileIDFromProfile() async {
+        await appContainer.profileService.fetchMe()
+        if let userId = appContainer.profileService.userId {
+            appContainer.analyticsService.setUserProfileID(userId)
         }
     }
     

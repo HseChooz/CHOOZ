@@ -16,9 +16,14 @@ final class WishlistViewModel {
     
     // MARK: - Init
     
-    init(wishlistService: WishlistService, toastManager: ToastManager) {
+    init(
+        wishlistService: WishlistService,
+        toastManager: ToastManager,
+        analytics: WishlistAnalytics
+    ) {
         self.wishlistService = wishlistService
         self.toastManager = toastManager
+        self.analytics = analytics
     }
     
     // MARK: - Internal Properties
@@ -127,6 +132,7 @@ final class WishlistViewModel {
         Task {
             let success = await wishlistService.deleteWish(id: id)
             if success {
+                analytics.trackWishDeleted(itemId: id)
                 isWishSheetPresented = false
                 selectedWishItem = nil
             } else if let error = wishlistService.errorMessage {
@@ -139,6 +145,7 @@ final class WishlistViewModel {
     
     private let wishlistService: WishlistService
     private let toastManager: ToastManager
+    private let analytics: WishlistAnalytics
     private var pendingFormPresentation: Bool = false
     
     // MARK: - Private Methods
@@ -185,6 +192,7 @@ final class WishlistViewModel {
             }
             
             if wishlistService.errorMessage == nil {
+                analytics.trackWishAdded(title: self.title)
                 toastManager.showSuccessBlue("Добавлена новая заметка")
             }
         }
@@ -203,6 +211,8 @@ final class WishlistViewModel {
                 price: trimmedPrice.isEmpty ? nil : trimmedPrice,
                 currency: selectedCurrency
             ) else { return }
+            
+            analytics.trackWishEdited(itemId: id)
             
             if let imageData {
                 let itemWithImage = await uploadImage(for: id, data: imageData)

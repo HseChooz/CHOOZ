@@ -23,4 +23,11 @@ enum AppConfig {
         }
         return clientID
     }
+    
+    static var appMetricaAPIKey: String {
+        guard let apiKey = Bundle.main.infoDictionary?["AppMetricaAPIKey"] as? String else {
+            fatalError("AppMetricaAPIKey not configured in Info.plist")
+        }
+        return apiKey
+    }
 }

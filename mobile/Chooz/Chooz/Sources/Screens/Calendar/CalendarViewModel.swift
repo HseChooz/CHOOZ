@@ -33,12 +33,14 @@ final class CalendarViewModel:
         router: CalendarRouter,
         interactor: CalendarInteractor,
         notificationService: NotificationService,
-        toastManager: ToastManager
+        toastManager: ToastManager,
+        analytics: CalendarAnalytics
     ) {
         self.router = router
         self.interactor = interactor
         self.notificationService = notificationService
         self.toastManager = toastManager
+        self.analytics = analytics
     }
     
     // MARK: - Internal Methods
@@ -97,6 +99,7 @@ final class CalendarViewModel:
                     }
                     notificationService.cancelNotification(for: updatedItem.id)
                     notificationService.scheduleNotification(for: updatedItem)
+                    analytics.trackEventEdited(eventId: editEvent.id)
                 } else {
                     let newItem = try await interactor.createEvent(
                         title: title,
@@ -108,6 +111,7 @@ final class CalendarViewModel:
                     )
                     mutateEvents { $0.append(newItem) }
                     notificationService.scheduleNotification(for: newItem)
+                    analytics.trackEventAdded(title: title)
                     toastManager.showSuccessBlue("Добавлено новое событие")
                 }
             } catch {
@@ -142,6 +146,7 @@ final class CalendarViewModel:
                 try await interactor.deleteEvent(id: id)
                 selectedEvent = nil
                 notificationService.cancelNotification(for: id)
+                analytics.trackEventDeleted(eventId: id)
                 mutateEvents { $0.removeAll { $0.id == id } }
             } catch {
                 if !Task.isCancelled {
@@ -167,6 +172,7 @@ final class CalendarViewModel:
                     }
                 }
                 selectedEvent = updatedItem
+                analytics.trackNotificationToggled(enabled: enabled)
                 
                 if enabled {
                     notificationService.scheduleNotification(for: updatedItem)
@@ -206,6 +212,7 @@ final class CalendarViewModel:
     private let interactor: CalendarInteractor
     private let notificationService: NotificationService
     private let toastManager: ToastManager
+    private let analytics: CalendarAnalytics
     
     private var getEventsTask: Task<Void, Never>?
     private var saveEventTask: Task<Void, Never>?
