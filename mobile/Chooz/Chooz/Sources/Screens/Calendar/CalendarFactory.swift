@@ -11,13 +11,15 @@ final class CalendarFactory {
         profileFactory: ProfileFactory,
         calendarService: CalendarService,
         notificationService: NotificationService,
-        toastManager: ToastManager
+        toastManager: ToastManager,
+        analyticsService: AnalyticsService
     ) {
         self.appRouter = appRouter
         self.profileFactory = profileFactory
         self.calendarService = calendarService
         self.notificationService = notificationService
         self.toastManager = toastManager
+        self.analyticsService = analyticsService
     }
     
     // MARK: - Internal Methods
@@ -25,11 +27,13 @@ final class CalendarFactory {
     func makeScreen() -> UIViewController {
         let router = CalendarRouter(appRouter: appRouter, profileFactory: profileFactory)
         let interactor = CalendarInteractor(calendarService: calendarService)
+        let analytics = CalendarAnalytics(analyticsService: analyticsService)
         let viewModel = CalendarViewModel(
             router: router,
             interactor: interactor,
             notificationService: notificationService,
-            toastManager: toastManager
+            toastManager: toastManager,
+            analytics: analytics
         )
         let view = CalendarView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: view)
@@ -47,4 +51,5 @@ final class CalendarFactory {
     private let calendarService: CalendarService
     private let notificationService: NotificationService
     private let toastManager: ToastManager
+    private let analyticsService: AnalyticsService
 }

@@ -7,9 +7,14 @@ final class OnboardingViewModel {
     
     // MARK: - Init
     
-    init(router: OnboardingRouter, userDefaultsService: UserDefaultsService) {
+    init(
+        router: OnboardingRouter,
+        userDefaultsService: UserDefaultsService,
+        analytics: OnboardingAnalytics
+    ) {
         self.router = router
         self.userDefaultsService = userDefaultsService
+        self.analytics = analytics
     }
     
     // MARK: - Internal Properties
@@ -55,7 +60,7 @@ final class OnboardingViewModel {
     
     func nextPage() {
         guard let nextIndex = OnboardingPageType(rawValue: currentPage.rawValue + 1) else {
-            finishOnboarding()
+            finishOnboarding(skipped: false)
             return
         }
         
@@ -63,17 +68,19 @@ final class OnboardingViewModel {
     }
         
     func skip() {
-        finishOnboarding()
+        finishOnboarding(skipped: true)
     }
     
     // MARK: - Private Properties
     
     private let router: OnboardingRouter
     private let userDefaultsService: UserDefaultsService
+    private let analytics: OnboardingAnalytics
     
     // MARK: - Private Methods
         
-    private func finishOnboarding() {
+    private func finishOnboarding(skipped: Bool) {
+        analytics.trackOnboardingCompleted(skipped: skipped)
         router.routeToAuthorizationScreen()
     }
 }

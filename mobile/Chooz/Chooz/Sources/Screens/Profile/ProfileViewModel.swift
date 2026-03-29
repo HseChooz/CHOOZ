@@ -10,11 +10,13 @@ final class ProfileViewModel {
     init(
         router: ProfileRouter,
         profileService: ProfileService,
-        wishlistViewModel: WishlistViewModel
+        wishlistViewModel: WishlistViewModel,
+        analytics: ProfileAnalytics
     ) {
         self.router = router
         self.profileService = profileService
         self.wishlistViewModel = wishlistViewModel
+        self.analytics = analytics
     }
     
     // MARK: - Internal Properties
@@ -34,8 +36,12 @@ final class ProfileViewModel {
     // MARK: - Internal Methods
     
     func fetchProfile() {
+        analytics.trackScreenViewed()
         Task {
             await profileService.fetchMe()
+            if let userId = profileService.userId {
+                analytics.setUserProfileID(userId)
+            }
         }
     }
     
@@ -46,6 +52,7 @@ final class ProfileViewModel {
     func shareProfile() {
         guard let userId = profileService.userId else { return }
         guard let url = URL(string: "chooz://profile/\(userId)") else { return }
+        analytics.trackProfileShared(userId: userId)
         router.presentShareSheet(items: [url])
     }
     
@@ -53,4 +60,5 @@ final class ProfileViewModel {
     
     private let router: ProfileRouter
     private let profileService: ProfileService
+    private let analytics: ProfileAnalytics
 }

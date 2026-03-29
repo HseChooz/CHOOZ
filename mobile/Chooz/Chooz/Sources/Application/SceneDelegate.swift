@@ -1,4 +1,5 @@
 import UIKit
+import AppMetricaCore
 import GoogleSignIn
 import YandexLoginSDK
 
@@ -21,6 +22,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.overrideUserInterfaceStyle = .light
         self.window = window
         
+        if let urlContext = connectionOptions.urlContexts.first {
+            AppMetrica.trackOpeningURL(urlContext.url)
+        }
+        
         let appRouter = AppRouter(window: window)
         let appContainer = AppContainer(appRouter: appRouter)
         self.appContainer = appContainer
@@ -30,6 +35,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else { return }
+        
+        AppMetrica.trackOpeningURL(url)
         
         if appContainer?.deepLinkService.handle(url: url) == true {
             return

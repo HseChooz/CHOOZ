@@ -14,6 +14,7 @@ final class SettingsViewModel {
             if notificationsEnabled {
                 handleNotificationsEnable()
             } else {
+                analytics.trackNotificationsToggled(enabled: false, source: "settings")
                 userDefaultsService.notificationsEnabled = false
                 notificationService.cancelAllNotifications()
             }
@@ -27,19 +28,22 @@ final class SettingsViewModel {
         sessionService: SessionService,
         userDefaultsService: UserDefaultsService,
         notificationService: NotificationService,
-        toastManager: ToastManager
+        toastManager: ToastManager,
+        analytics: SettingsAnalytics
     ) {
         self.router = router
         self.sessionService = sessionService
         self.userDefaultsService = userDefaultsService
         self.notificationService = notificationService
         self.toastManager = toastManager
+        self.analytics = analytics
         self.notificationsEnabled = userDefaultsService.notificationsEnabled
     }
     
     // MARK: - Internal Methods
     
     func logout() {
+        analytics.trackLogout()
         notificationService.cancelAllNotifications()
         sessionService.handleSessionExpired()
         Task { [toastManager] in
@@ -52,6 +56,7 @@ final class SettingsViewModel {
         deleteAccountTask?.cancel()
         deleteAccountTask = Task {
             do {
+                analytics.trackAccountDeleted()
                 notificationService.cancelAllNotifications()
                 try await sessionService.deleteAccount()
                 try? await Task.sleep(for: .seconds(0.5))
@@ -74,6 +79,7 @@ final class SettingsViewModel {
     private let userDefaultsService: UserDefaultsService
     private let notificationService: NotificationService
     private let toastManager: ToastManager
+    private let analytics: SettingsAnalytics
     
     private var deleteAccountTask: Task<Void, Never>?
     
@@ -91,7 +97,9 @@ final class SettingsViewModel {
             
             let granted = await notificationService.requestPermission()
             userDefaultsService.notificationsEnabled = granted
-            if !granted {
+            if granted {
+                analytics.trackNotificationsToggled(enabled: true, source: "settings")
+            } else {
                 notificationsEnabled = false
             }
         }

@@ -11,13 +11,15 @@ struct AuthorizationFactory {
         googleAuthService: GoogleAuthService,
         yandexAuthService: YandexAuthService,
         toastManager: ToastManager,
-        mainTabBarFactory: MainTabBarFactory
+        mainTabBarFactory: MainTabBarFactory,
+        analyticsService: AnalyticsService
     ) {
         self.appRouter = appRouter
         self.googleAuthService = googleAuthService
         self.yandexAuthService = yandexAuthService
         self.toastManager = toastManager
         self.mainTabBarFactory = mainTabBarFactory
+        self.analyticsService = analyticsService
     }
     
     // MARK: - Public Methods
@@ -29,10 +31,12 @@ struct AuthorizationFactory {
             googleAuthService: googleAuthService,
             yandexAuthService: yandexAuthService
         )
+        let analytics = AuthorizationAnalytics(analyticsService: analyticsService)
         let viewModel = AuthorizationViewModel(
             interactor: interactor,
             router: router,
-            toastManager: toastManager
+            toastManager: toastManager,
+            analytics: analytics
         )
         let view = AuthorizationView(viewModel: viewModel)
         let vc = UIHostingController(rootView: view)
@@ -46,4 +50,5 @@ struct AuthorizationFactory {
     private let yandexAuthService: YandexAuthService
     private let toastManager: ToastManager
     private let mainTabBarFactory: MainTabBarFactory
+    private let analyticsService: AnalyticsService
 }
