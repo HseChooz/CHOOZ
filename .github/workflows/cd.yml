@@ -4,6 +4,8 @@ on:
     paths:
       - "backend/**"
       - ".github/workflows/cd.yml"
+    branches:
+      - main
 
 permissions:
   contents: read
