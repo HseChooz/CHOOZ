@@ -3,17 +3,13 @@ from typing import List
 import strawberry
 from django.contrib.auth import get_user_model
 
-from api.graphql.types import UserType, WishItemType
+from api.graphql.types import UserType, WishItemType, UserWishItemsResult
 from api.models import WishItem
 from .service import get_owned_wish_item, require_user, to_wish_item_type
 
 
 User = get_user_model()
 
-@strawberry.type
-class UserWishItemsResult:
-    user: UserType
-    items: List[WishItemType]
 
 @strawberry.type
 class WishItemsQuery:
@@ -35,4 +31,13 @@ class WishItemsQuery:
         if target_user is None:
             return None
         items = [to_wish_item_type(item) for item in WishItem.objects.filter(owner=target_user).order_by("-id")]
-        return UserWishItemsResult(user=UserType.from_instance(target_user), items=items)
+        return UserWishItemsResult(
+            user=UserType(
+                id=strawberry.ID(str(target_user.id)),
+                username=target_user.username,
+                email=target_user.email,
+                first_name=target_user.first_name,
+                last_name=target_user.last_name,
+            ),
+            items=items
+        )
