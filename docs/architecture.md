@@ -33,7 +33,7 @@ Backend построен как Django-проект `config` с одним ос�
 
 Ключевые модели сейчас находятся в `backend/api/models.py`:
 
-- `GoogleAccount` и `YandexAccount` — связи пользователя с внешними провайдерами авторизации;
+- `AppleAccount` и `YandexAccount` — связи пользователя с внешними провайдерами авторизации;
 - `WishItem` — элементы вишлиста;
 - `Event` — события календаря.
 
@@ -61,7 +61,7 @@ GraphQL-схема собирается в `backend/api/graphql/schema.py` из 
 
 - `djangorestframework-simplejwt`;
 - `backend/api/middleware.py`;
-- доменные auth-модули для внешних провайдеров, включая Яндекс и Google.
+- доменные auth-модули для внешних провайдеров, сейчас это Яндекс и Apple ID.
 
 С точки зрения клиента backend сейчас предоставляет единый GraphQL endpoint, а пользовательский контекст пробрасывается в resolvers через JWT.
 

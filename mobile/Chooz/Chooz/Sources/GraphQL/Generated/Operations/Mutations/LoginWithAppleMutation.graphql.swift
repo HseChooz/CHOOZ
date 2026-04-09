@@ -4,20 +4,20 @@
 @_exported import ApolloAPI
 
 extension ChoozAPI {
-  class LoginWithGoogleMutation: GraphQLMutation {
-    static let operationName: String = "LoginWithGoogle"
+  class LoginWithAppleMutation: GraphQLMutation {
+    static let operationName: String = "LoginWithApple"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"mutation LoginWithGoogle($idToken: String!) { loginWithGoogle(idToken: $idToken) { __typename accessToken refreshToken user { __typename id email username } } }"#
+        #"mutation LoginWithApple($identityToken: String!) { loginWithApple(identityToken: $identityToken) { __typename accessToken refreshToken user { __typename id email username } } }"#
       ))
 
-    public var idToken: String
+    public var identityToken: String
 
-    public init(idToken: String) {
-      self.idToken = idToken
+    public init(identityToken: String) {
+      self.identityToken = identityToken
     }
 
-    public var __variables: Variables? { ["idToken": idToken] }
+    public var __variables: Variables? { ["identityToken": identityToken] }
 
     struct Data: ChoozAPI.SelectionSet {
       let __data: DataDict
@@ -25,18 +25,18 @@ extension ChoozAPI {
 
       static var __parentType: any ApolloAPI.ParentType { ChoozAPI.Objects.Mutation }
       static var __selections: [ApolloAPI.Selection] { [
-        .field("loginWithGoogle", LoginWithGoogle.self, arguments: ["idToken": .variable("idToken")]),
+        .field("loginWithApple", LoginWithApple.self, arguments: ["identityToken": .variable("identityToken")]),
       ] }
       static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-        LoginWithGoogleMutation.Data.self
+        LoginWithAppleMutation.Data.self
       ] }
 
-      var loginWithGoogle: LoginWithGoogle { __data["loginWithGoogle"] }
+      var loginWithApple: LoginWithApple { __data["loginWithApple"] }
 
-      /// LoginWithGoogle
+      /// LoginWithApple
       ///
       /// Parent Type: `AuthPayload`
-      struct LoginWithGoogle: ChoozAPI.SelectionSet {
+      struct LoginWithApple: ChoozAPI.SelectionSet {
         let __data: DataDict
         init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -48,14 +48,14 @@ extension ChoozAPI {
           .field("user", User.self),
         ] }
         static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-          LoginWithGoogleMutation.Data.LoginWithGoogle.self
+          LoginWithAppleMutation.Data.LoginWithApple.self
         ] }
 
         var accessToken: String { __data["accessToken"] }
         var refreshToken: String { __data["refreshToken"] }
         var user: User { __data["user"] }
 
-        /// LoginWithGoogle.User
+        /// LoginWithApple.User
         ///
         /// Parent Type: `UserType`
         struct User: ChoozAPI.SelectionSet {
@@ -70,7 +70,7 @@ extension ChoozAPI {
             .field("username", String.self),
           ] }
           static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-            LoginWithGoogleMutation.Data.LoginWithGoogle.User.self
+            LoginWithAppleMutation.Data.LoginWithApple.User.self
           ] }
 
           var id: ChoozAPI.ID { __data["id"] }

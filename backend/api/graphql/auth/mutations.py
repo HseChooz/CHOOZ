@@ -1,15 +1,16 @@
+import strawberry
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-import strawberry
 
-from api.graphql.auth.google import verify_google_id_token, get_or_create_user_from_google
+from api.graphql.auth import apple as apple_auth
+from api.graphql.auth.queries import to_user_type
 from api.graphql.auth.yandex import fetch_yandex_user_info, get_or_create_user_from_yandex
 from api.graphql.errors import gql_error
 from api.graphql.types import AuthPayload, TokenPair
-from api.graphql.auth.queries import to_user_type
 
 UserModel = get_user_model()
+
 
 def require_user(info):
     user = info.context.request.user
@@ -17,14 +18,15 @@ def require_user(info):
         gql_error("UNAUTHORIZED", "Unauthorized")
     return user
 
+
 @strawberry.type
 class AuthMutation:
-    @strawberry.mutation(name="loginWithGoogle")
-    def login_with_google(
-        self, info, id_token: str = strawberry.argument(name="idToken")
+    @strawberry.mutation(name="loginWithApple")
+    def login_with_apple(
+        self, info, identity_token: str = strawberry.argument(name="identityToken")
     ) -> AuthPayload:
-        idinfo = verify_google_id_token(id_token)
-        user = get_or_create_user_from_google(idinfo)
+        payload = apple_auth.verify_apple_identity_token(identity_token)
+        user = apple_auth.get_or_create_user_from_apple(payload)
 
         refresh = RefreshToken.for_user(user)
         access = refresh.access_token
