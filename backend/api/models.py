@@ -2,17 +2,22 @@ from django.conf import settings
 from django.db import models
 
 
-class GoogleAccount(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="google_account")
-    sub = models.CharField(max_length=64, unique=True)
-    email = models.EmailField()
+class AppleAccount(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="apple_account"
+    )
+    apple_user_id = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(blank=True)
+    is_private_email = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.email} ({self.sub})"
+        return self.email or self.apple_user_id
 
 
 class YandexAccount(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="yandex_account")
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="yandex_account"
+    )
     yandex_id = models.CharField(max_length=32, unique=True)
     login = models.CharField(max_length=255, blank=True)
     email = models.EmailField(blank=True)
@@ -22,7 +27,9 @@ class YandexAccount(models.Model):
 
 
 class WishItem(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="wish_items")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="wish_items"
+    )
 
     class Currency(models.TextChoices):
         RUB = "rub", "RUB"
@@ -54,7 +61,9 @@ class WishItem(models.Model):
 
 
 class Event(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="events")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="events"
+    )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     link = models.URLField(blank=True, default="")

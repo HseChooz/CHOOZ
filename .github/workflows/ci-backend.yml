@@ -72,7 +72,6 @@ jobs:
           POSTGRES_PASSWORD: chooz
           POSTGRES_HOST: localhost
           POSTGRES_PORT: "5432"
-          GOOGLE_CLIENT_ID: ci
         run: |
           uv run python manage.py check
           uv run python manage.py makemigrations --check --dry-run
