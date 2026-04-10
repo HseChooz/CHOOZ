@@ -11,6 +11,7 @@ final class SettingsFactory {
         sessionServiceProvider: @escaping () -> SessionService,
         userDefaultsService: UserDefaultsService,
         notificationService: NotificationService,
+        calendarService: CalendarService,
         toastManager: ToastManager,
         analyticsService: AnalyticsService
     ) {
@@ -18,6 +19,7 @@ final class SettingsFactory {
         self.sessionServiceProvider = sessionServiceProvider
         self.userDefaultsService = userDefaultsService
         self.notificationService = notificationService
+        self.calendarService = calendarService
         self.toastManager = toastManager
         self.analyticsService = analyticsService
     }
@@ -27,11 +29,13 @@ final class SettingsFactory {
     func makeScreen() -> UIViewController {
         let router = SettingsRouter(appRouter: appRouter)
         let analytics = SettingsAnalytics(analyticsService: analyticsService)
+        let calendarInteractor = CalendarInteractor(calendarService: calendarService)
         let viewModel = SettingsViewModel(
             router: router,
             sessionService: sessionServiceProvider(),
             userDefaultsService: userDefaultsService,
             notificationService: notificationService,
+            calendarInteractor: calendarInteractor,
             toastManager: toastManager,
             analytics: analytics
         )
@@ -53,6 +57,7 @@ final class SettingsFactory {
     private let sessionServiceProvider: () -> SessionService
     private let userDefaultsService: UserDefaultsService
     private let notificationService: NotificationService
+    private let calendarService: CalendarService
     private let toastManager: ToastManager
     private let analyticsService: AnalyticsService
 }

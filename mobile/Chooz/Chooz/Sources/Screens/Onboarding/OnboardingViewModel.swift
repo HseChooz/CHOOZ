@@ -54,10 +54,6 @@ final class OnboardingViewModel {
     
     // MARK: - Internal Methods
     
-    func onAppear() {
-        userDefaultsService.hasSeenOnboarding = true
-    }
-    
     func nextPage() {
         guard let nextIndex = OnboardingPageType(rawValue: currentPage.rawValue + 1) else {
             finishOnboarding(skipped: false)
@@ -80,6 +76,7 @@ final class OnboardingViewModel {
     // MARK: - Private Methods
         
     private func finishOnboarding(skipped: Bool) {
+        userDefaultsService.hasSeenOnboarding = true
         analytics.trackOnboardingCompleted(skipped: skipped)
         router.routeToAuthorizationScreen()
     }

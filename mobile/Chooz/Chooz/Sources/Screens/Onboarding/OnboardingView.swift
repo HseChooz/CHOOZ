@@ -15,9 +15,6 @@ struct OnboardingView: View {
             pageContent
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.currentPage)
-        .onAppear {
-            viewModel.onAppear()
-        }
     }
     
     // MARK: - Private Properties

@@ -94,6 +94,7 @@ final class AppContainer {
         sessionServiceProvider: { [unowned self] in self.sessionService },
         userDefaultsService: userDefaultsService,
         notificationService: notificationService,
+        calendarService: calendarService,
         toastManager: toastManager,
         analyticsService: analyticsService
     )
@@ -108,6 +109,7 @@ final class AppContainer {
         appRouter: appRouter,
         profileFactory: profileFactory,
         calendarService: calendarService,
+        userDefaultsService: userDefaultsService,
         notificationService: notificationService,
         toastManager: toastManager,
         analyticsService: analyticsService
