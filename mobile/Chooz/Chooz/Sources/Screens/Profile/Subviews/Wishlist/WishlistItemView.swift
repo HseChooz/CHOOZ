@@ -20,7 +20,7 @@ struct WishlistItemView: View {
                 }
                 
             detailsView
-                
+            
             actionsView
         }
         .overlay(alignment: .topTrailing) {
@@ -44,7 +44,7 @@ struct WishlistItemView: View {
     
     private enum Layout {
         static let descriptionLineHeight: CGFloat = 22.0
-        static let maxLines: Int = 5
+        static let maxLines: Int = 8
         static let descriptionMaxHeight: CGFloat = descriptionLineHeight * CGFloat(maxLines)
         static let bottomPadding: InterfaceLayoutValue<CGFloat> = InterfaceLayoutValue(
             large: 14.0,
@@ -72,31 +72,16 @@ struct WishlistItemView: View {
     // MARK: - Private Views
     
     private var imageView: some View {
-        Group {
-            if let imageUrl = viewModel.selectedItem.imageUrl, let url = URL(string: imageUrl) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        imagePlaceholder
-                            .overlay {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                            }
-                    case .failure:
-                        imagePlaceholder
-                    default:
-                        imagePlaceholder
-                            .overlay { ProgressView() }
-                    }
+        imagePlaceholder
+            .overlay {
+                CachedAsyncImage(url: viewModel.selectedItem.imageUrl.flatMap { URL(string: $0) }) {
+                    Color.clear
                 }
-            } else {
-                imagePlaceholder
+                .scaledToFill()
             }
-        }
-        .frame(height: 387.0)
-        .frame(maxWidth: .infinity)
-        .clipped()
+            .frame(height: 387.0)
+            .frame(maxWidth: .infinity)
+            .clipped()
     }
     
     private var imagePlaceholder: some View {
@@ -121,14 +106,11 @@ struct WishlistItemView: View {
             }
             
             if let description = viewModel.selectedItem.description, !description.isEmpty {
-                ScrollView {
+                FadeScrollView(maxHeight: Layout.descriptionMaxHeight) {
                     Text(description)
                         .font(.velaSans(size: 16.0, weight: .semiBold))
                         .foregroundStyle(Colors.Neutral.grey500)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .scrollIndicators(.hidden)
-                .frame(maxHeight: Layout.descriptionMaxHeight)
             }
         }
         .padding(.horizontal, 16.0)

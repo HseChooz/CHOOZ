@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/appmetrica/appmetrica-sdk-ios", from: "5.0.0"),
         .package(url: "https://github.com/google/GoogleSignIn-iOS", from: "8.0.0"),
-        .package(url: "https://github.com/yandexmobile/yandex-login-sdk-ios", from: "3.0.0")
+        .package(url: "https://github.com/yandexmobile/yandex-login-sdk-ios", from: "3.0.0"),
+        .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.0.0")
     ]
 )

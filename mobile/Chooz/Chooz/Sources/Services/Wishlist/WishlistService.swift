@@ -17,6 +17,8 @@ final class WishlistService {
     private(set) var wishes: [WishlistItem] = []
     private(set) var isLoading: Bool = false
     private(set) var errorMessage: String?
+    /// Ошибка последней мутации (создание/обновление/удаление); не влияет на загрузку списка.
+    private(set) var lastMutationError: Error?
     
     // MARK: - Internal Methods
     
@@ -144,7 +146,7 @@ final class WishlistService {
     
     @discardableResult
     func addWish(title: String, description: String, link: String, price: String?, currency: WishCurrency) async -> WishlistItem? {
-        errorMessage = nil
+        lastMutationError = nil
         
         let result: Result<WishlistItem, Error> = await withCheckedContinuation { continuation in
             apolloClient.perform(
@@ -170,10 +172,11 @@ final class WishlistService {
                         )
                         continuation.resume(returning: .success(item))
                     } else {
+                        let message = graphQLResult.errors?.first?.message ?? "Не удалось создать желание"
                         let error = NSError(
                             domain: "WishlistService",
                             code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: "Не удалось создать желание"]
+                            userInfo: [NSLocalizedDescriptionKey: message]
                         )
                         continuation.resume(returning: .failure(error))
                     }
@@ -189,14 +192,14 @@ final class WishlistService {
             wishes.insert(item, at: 0)
             return item
         case .failure(let error):
-            errorMessage = error.localizedDescription
+            lastMutationError = error
             return nil
         }
     }
     
     @discardableResult
     func updateWish(id: String, title: String, description: String, link: String, price: String?, currency: WishCurrency) async -> WishlistItem? {
-        errorMessage = nil
+        lastMutationError = nil
         
         let result: Result<WishlistItem, Error> = await withCheckedContinuation { continuation in
             apolloClient.perform(
@@ -223,10 +226,11 @@ final class WishlistService {
                         )
                         continuation.resume(returning: .success(item))
                     } else {
+                        let message = graphQLResult.errors?.first?.message ?? "Не удалось обновить желание"
                         let error = NSError(
                             domain: "WishlistService",
                             code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: "Не удалось обновить желание"]
+                            userInfo: [NSLocalizedDescriptionKey: message]
                         )
                         continuation.resume(returning: .failure(error))
                     }
@@ -244,13 +248,13 @@ final class WishlistService {
             }
             return updatedItem
         case .failure(let error):
-            errorMessage = error.localizedDescription
+            lastMutationError = error
             return nil
         }
     }
     
     func deleteWish(id: String) async -> Bool {
-        errorMessage = nil
+        lastMutationError = nil
         
         let result: Result<Bool, Error> = await withCheckedContinuation { continuation in
             apolloClient.perform(
@@ -261,10 +265,11 @@ final class WishlistService {
                     if let success = graphQLResult.data?.deleteWishItem {
                         continuation.resume(returning: .success(success))
                     } else {
+                        let message = graphQLResult.errors?.first?.message ?? "Не удалось удалить желание"
                         let error = NSError(
                             domain: "WishlistService",
                             code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: "Не удалось удалить желание"]
+                            userInfo: [NSLocalizedDescriptionKey: message]
                         )
                         continuation.resume(returning: .failure(error))
                     }
@@ -282,7 +287,7 @@ final class WishlistService {
             }
             return success
         case .failure(let error):
-            errorMessage = error.localizedDescription
+            lastMutationError = error
             return false
         }
     }

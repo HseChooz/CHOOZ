@@ -30,4 +30,12 @@ enum AppConfig {
         }
         return apiKey
     }
+    
+    // MARK: - Image Cache
+    
+    enum ImageCache {
+        static let memoryCacheSizeLimit: Int = 100 * 1024 * 1024
+        static let diskCacheSizeLimit: UInt = 500 * 1024 * 1024
+        static let cacheExpirationDays: Int = 7
+    }
 }

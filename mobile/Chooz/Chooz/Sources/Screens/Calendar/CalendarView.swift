@@ -18,7 +18,7 @@ struct CalendarView: View {
                 toolbarContentView
             }
             .onAppear {
-                viewModel.getEvents()
+                viewModel.onCalendarAppear()
             }
     }
     

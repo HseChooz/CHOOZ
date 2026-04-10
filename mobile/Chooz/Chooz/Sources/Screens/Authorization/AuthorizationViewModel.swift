@@ -30,6 +30,8 @@ final class AuthorizationViewModel {
         isLoading = true
         
         signInTask = Task {
+            defer { isLoading = false }
+            
             do {
                 try await interactor.signInWithGoogle()
                 analytics.trackAuthCompleted(provider: "google")
@@ -42,8 +44,6 @@ final class AuthorizationViewModel {
             } catch {
                 toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
             }
-            
-            isLoading = false
         }
     }
     
@@ -52,6 +52,8 @@ final class AuthorizationViewModel {
         isLoading = true
         
         signInTask = Task {
+            defer { isLoading = false }
+            
             do {
                 try await interactor.signInWithYandex()
                 analytics.trackAuthCompleted(provider: "yandex")
@@ -64,8 +66,6 @@ final class AuthorizationViewModel {
             } catch {
                 toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
             }
-            
-            isLoading = false
         }
     }
     

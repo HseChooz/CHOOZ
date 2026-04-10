@@ -162,12 +162,8 @@ struct EventFormView: View {
     
     private var titleView: some View {
         TextField(
-            "",
-            text: $title,
-            prompt:
-                Text("Заголовок")
-                .font(.velaSans(size: 20.0, weight: .bold))
-                .foregroundStyle(Colors.Common.black)
+            "Заголовок",
+            text: $title
         )
         .lineLimit(1)
         .font(.velaSans(size: 20.0, weight: .bold))

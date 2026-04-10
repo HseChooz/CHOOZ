@@ -11,14 +11,32 @@ struct EventItem: Hashable, Identifiable {
 
     // MARK: - Internal Properties
 
+    /// Дата для отображения и сортировки: для `repeatYearly` с датой в прошлом — ближайшая будущая годовщина (тот же месяц/день).
+    var calendarDisplayDate: Date {
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: Date())
+        let startOfEvent = calendar.startOfDay(for: date)
+        guard repeatYearly, startOfEvent < startOfToday else {
+            return date
+        }
+        var d = startOfEvent
+        while d < startOfToday {
+            guard let next = calendar.date(byAdding: .year, value: 1, to: d) else {
+                return date
+            }
+            d = calendar.startOfDay(for: next)
+        }
+        return d
+    }
+
     var dayString: String {
-        "\(Calendar.current.component(.day, from: date))"
+        "\(Calendar.current.component(.day, from: calendarDisplayDate))"
     }
 
     var daysRemainingString: String {
         let calendar = Calendar.current
         let startOfToday = calendar.startOfDay(for: .now)
-        let startOfEvent = calendar.startOfDay(for: date)
+        let startOfEvent = calendar.startOfDay(for: calendarDisplayDate)
         let days = calendar.dateComponents([.day], from: startOfToday, to: startOfEvent).day ?? 0
 
         if days == 0 {
@@ -43,8 +61,8 @@ struct EventItem: Hashable, Identifiable {
     }
 
     var fullDateString: String {
-        let day = Calendar.current.component(.day, from: date)
-        let month = Calendar.current.component(.month, from: date)
+        let day = Calendar.current.component(.day, from: calendarDisplayDate)
+        let month = Calendar.current.component(.month, from: calendarDisplayDate)
         let monthName: String
         switch month {
         case 1: monthName = "января"
@@ -65,7 +83,7 @@ struct EventItem: Hashable, Identifiable {
     }
 
     var shortMonthString: String {
-        let month = Calendar.current.component(.month, from: date)
+        let month = Calendar.current.component(.month, from: calendarDisplayDate)
         switch month {
         case 1: return "Янв"
         case 2: return "Фев"

@@ -45,6 +45,9 @@ final class WishlistViewModel {
     var selectedWishItem: WishlistItem?
     var wishFormMode: WishFormMode = .create
     
+    private(set) var isWishFormSaving: Bool = false
+    private(set) var shouldDismissWishForm: Bool = false
+    
     var selectedItem: WishlistItem {
         guard let selectedWishItem else {
             return WishlistItem(id: "", title: "", description: nil, link: nil, price: nil, currency: nil, imageUrl: nil)
@@ -63,7 +66,7 @@ final class WishlistViewModel {
     private(set) var isImageUploading: Bool = false
     
     var isSaveEnabled: Bool {
-        !title.trimmingCharacters(in: .whitespaces).isEmpty
+        !title.trimmingCharacters(in: .whitespaces).isEmpty && !isWishFormSaving
     }
     
     var imageSelection: PhotosPickerItem? {
@@ -92,6 +95,7 @@ final class WishlistViewModel {
     func showCreateWishForm() {
         wishFormMode = .create
         resetForm()
+        resetWishFormSaveState()
         isWishFormSheetPresented = true
     }
     
@@ -99,6 +103,7 @@ final class WishlistViewModel {
         guard let item = selectedWishItem else { return }
         wishFormMode = .edit
         populateForm(from: item)
+        resetWishFormSaveState()
         pendingFormPresentation = true
         isWishSheetPresented = false
     }
@@ -110,17 +115,48 @@ final class WishlistViewModel {
         }
     }
     
-    @discardableResult
-    func saveWish() -> Bool {
-        guard validateForm() else { return false }
+    func saveWish() {
+        guard validateForm() else { return }
+        guard !isWishFormSaving else { return }
         
-        switch wishFormMode {
-        case .create:
-            createWish()
-        case .edit:
-            updateWish()
+        saveWishTask?.cancel()
+        saveWishTask = Task { @MainActor in
+            isWishFormSaving = true
+            defer {
+                if !shouldDismissWishForm {
+                    isWishFormSaving = false
+                }
+            }
+            
+            guard !Task.isCancelled else { return }
+            
+            let success: Bool
+            switch wishFormMode {
+            case .create:
+                success = await createWish()
+            case .edit:
+                success = await updateWish()
+            }
+            
+            guard !Task.isCancelled else { return }
+            
+            if success {
+                shouldDismissWishForm = true
+            }
         }
-        return true
+    }
+    
+    func acknowledgeWishFormDismiss() {
+        shouldDismissWishForm = false
+        isWishFormSaving = false
+    }
+    
+    func wishFormDidDisappear() {
+        saveWishTask?.cancel()
+        saveWishTask = nil
+        if isWishFormSaving {
+            isWishFormSaving = false
+        }
     }
     
     func showDeleteConfirmation() {
@@ -135,8 +171,8 @@ final class WishlistViewModel {
                 analytics.trackWishDeleted(itemId: id)
                 isWishSheetPresented = false
                 selectedWishItem = nil
-            } else if let error = wishlistService.errorMessage {
-                toastManager.showError(error)
+            } else {
+                presentMutationError(wishlistService.lastMutationError, fallbackTitle: "Не удалось удалить желание")
             }
         }
     }
@@ -147,8 +183,16 @@ final class WishlistViewModel {
     private let toastManager: ToastManager
     private let analytics: WishlistAnalytics
     private var pendingFormPresentation: Bool = false
+    private var saveWishTask: Task<Void, Never>?
     
     // MARK: - Private Methods
+    
+    private func resetWishFormSaveState() {
+        saveWishTask?.cancel()
+        saveWishTask = nil
+        isWishFormSaving = false
+        shouldDismissWishForm = false
+    }
     
     private func validateForm() -> Bool {
         let trimmedLink = link.trimmingCharacters(in: .whitespaces)
@@ -161,66 +205,80 @@ final class WishlistViewModel {
             }
         }
         
-        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
-        if !trimmedPrice.isEmpty {
-            guard let value = Double(trimmedPrice), value >= 0 else {
-                toastManager.showError("Некорректная цена")
-                return false
-            }
-        }
-        
         return true
     }
     
-    private func createWish() {
-        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
-        let imageData = prepareImageDataForUpload()
-        Task {
-            guard let createdItem = await wishlistService.addWish(
-                title: title,
-                description: description,
-                link: link.trimmingCharacters(in: .whitespaces),
-                price: trimmedPrice.isEmpty ? nil : trimmedPrice,
-                currency: selectedCurrency
-            ) else { return }
-            
-            if let imageData {
-                let updatedItem = await uploadImage(for: createdItem.id, data: imageData)
-                selectedWishItem = updatedItem ?? createdItem
-            } else {
-                selectedWishItem = createdItem
-            }
-            
-            if wishlistService.errorMessage == nil {
-                analytics.trackWishAdded(title: self.title)
-                toastManager.showSuccessBlue("Добавлена новая заметка")
-            }
+    private func presentMutationError(_ error: Error?, fallbackTitle: String) {
+        guard let error else {
+            toastManager.showError(fallbackTitle)
+            return
         }
+        let presentation = WishlistMutationErrorMessage.presentation(for: error)
+        toastManager.showError(presentation.title, subtitle: presentation.subtitle)
     }
     
-    private func updateWish() {
-        guard let id = selectedWishItem?.id else { return }
+    private func createWish() async -> Bool {
         let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
         let imageData = prepareImageDataForUpload()
-        Task {
-            guard let updatedItem = await wishlistService.updateWish(
-                id: id,
-                title: title,
-                description: description,
-                link: link.trimmingCharacters(in: .whitespaces),
-                price: trimmedPrice.isEmpty ? nil : trimmedPrice,
-                currency: selectedCurrency
-            ) else { return }
-            
-            analytics.trackWishEdited(itemId: id)
-            
-            if let imageData {
-                let itemWithImage = await uploadImage(for: id, data: imageData)
-                selectedWishItem = itemWithImage ?? updatedItem
-            } else {
-                selectedWishItem = updatedItem
-            }
+        
+        guard let createdItem = await wishlistService.addWish(
+            title: title,
+            description: description,
+            link: link.trimmingCharacters(in: .whitespaces),
+            price: trimmedPrice.isEmpty ? nil : trimmedPrice,
+            currency: selectedCurrency
+        ) else {
+            presentMutationError(wishlistService.lastMutationError, fallbackTitle: "Не удалось создать желание")
+            return false
         }
+        
+        if let imageData {
+            let updatedItem = await uploadImage(for: createdItem.id, data: imageData)
+            if updatedItem == nil {
+                selectedWishItem = createdItem
+                return false
+            }
+            selectedWishItem = updatedItem
+        } else {
+            selectedWishItem = createdItem
+        }
+        
+        analytics.trackWishAdded(title: self.title)
+        toastManager.showSuccessBlue("Добавлена новая заметка")
+        return true
+    }
+    
+    private func updateWish() async -> Bool {
+        guard let id = selectedWishItem?.id else { return false }
+        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
+        let imageData = prepareImageDataForUpload()
+        
+        guard let updatedItem = await wishlistService.updateWish(
+            id: id,
+            title: title,
+            description: description,
+            link: link.trimmingCharacters(in: .whitespaces),
+            price: trimmedPrice.isEmpty ? nil : trimmedPrice,
+            currency: selectedCurrency
+        ) else {
+            presentMutationError(wishlistService.lastMutationError, fallbackTitle: "Не удалось сохранить желание")
+            return false
+        }
+        
+        analytics.trackWishEdited(itemId: id)
+        
+        if let imageData {
+            let itemWithImage = await uploadImage(for: id, data: imageData)
+            if itemWithImage == nil {
+                selectedWishItem = updatedItem
+                return false
+            }
+            selectedWishItem = itemWithImage
+        } else {
+            selectedWishItem = updatedItem
+        }
+        
+        return true
     }
     
     private func resetForm() {
@@ -291,7 +349,8 @@ final class WishlistViewModel {
             return updatedItem
         } catch {
             print("[WishlistViewModel] Image upload failed: \(error)")
-            toastManager.showError("Не удалось загрузить изображение")
+            let presentation = WishlistMutationErrorMessage.presentation(for: error)
+            toastManager.showError("Не удалось загрузить изображение", subtitle: presentation.subtitle ?? presentation.title)
             return nil
         }
     }

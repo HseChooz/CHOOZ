@@ -85,7 +85,8 @@ let project = Project(
                 .external(name: "AppMetricaCore"),
                 .external(name: "AppMetricaCrashes"),
                 .external(name: "GoogleSignIn"),
-                .external(name: "YandexLoginSDK")
+                .external(name: "YandexLoginSDK"),
+                .external(name: "Kingfisher")
             ],
             settings: .settings(
                 base: [

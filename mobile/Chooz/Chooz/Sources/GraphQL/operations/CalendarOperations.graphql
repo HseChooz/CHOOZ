@@ -1,5 +1,5 @@
-query Events {
-  events(onlyUpcoming: true) {
+query Events($onlyUpcoming: Boolean!) {
+  events(onlyUpcoming: $onlyUpcoming) {
     id
     title
     description
