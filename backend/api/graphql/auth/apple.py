@@ -1,9 +1,18 @@
+import logging
 import os
 
 import jwt
 from django.contrib.auth import get_user_model
 from jwt import PyJWKClient
-from jwt.exceptions import InvalidTokenError, PyJWKClientConnectionError
+from jwt.exceptions import (
+    DecodeError,
+    ExpiredSignatureError,
+    InvalidAudienceError,
+    InvalidIssuerError,
+    InvalidSignatureError,
+    InvalidTokenError,
+    PyJWKClientConnectionError,
+)
 
 from api.graphql.errors import gql_error
 from api.models import AppleAccount
@@ -13,6 +22,7 @@ APPLE_JWKS_URL = "https://appleid.apple.com/auth/keys"
 APPLE_JWK_CLIENT = PyJWKClient(APPLE_JWKS_URL, cache_jwk_set=True, lifespan=300, timeout=10)
 
 UserModel = get_user_model()
+logger = logging.getLogger(__name__)
 
 
 def _to_bool(value) -> bool:
@@ -39,13 +49,17 @@ def get_apple_client_ids() -> list[str]:
 
 
 def verify_apple_identity_token(identity_token: str) -> dict:
+    identity_token = (identity_token or "").strip()
     client_ids = get_apple_client_ids()
 
     try:
         signing_key = APPLE_JWK_CLIENT.get_signing_key_from_jwt(identity_token)
     except PyJWKClientConnectionError:
         gql_error("APPLE_UNAVAILABLE", "Apple is unavailable")
-    except Exception:
+    except DecodeError:
+        gql_error("INVALID_APPLE_TOKEN", "Apple identity token is malformed")
+    except Exception as exc:
+        logger.warning("Failed to read Apple signing key: %s", exc.__class__.__name__)
         gql_error("INVALID_APPLE_TOKEN", "Invalid Apple token")
 
     try:
@@ -56,6 +70,16 @@ def verify_apple_identity_token(identity_token: str) -> dict:
             audience=client_ids,
             issuer=APPLE_ISSUER,
         )
+    except InvalidAudienceError:
+        gql_error("INVALID_APPLE_AUDIENCE", "Apple token audience does not match APPLE_CLIENT_ID")
+    except InvalidIssuerError:
+        gql_error("INVALID_APPLE_ISSUER", "Apple token issuer is invalid")
+    except ExpiredSignatureError:
+        gql_error("EXPIRED_APPLE_TOKEN", "Apple token has expired")
+    except InvalidSignatureError:
+        gql_error("INVALID_APPLE_SIGNATURE", "Apple token signature is invalid")
+    except DecodeError:
+        gql_error("INVALID_APPLE_TOKEN", "Apple identity token is malformed")
     except InvalidTokenError:
         gql_error("INVALID_APPLE_TOKEN", "Invalid Apple token")
 
