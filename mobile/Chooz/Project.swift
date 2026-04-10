@@ -69,6 +69,9 @@ let project = Project(
             sources: ["Chooz/Sources/**"],
             resources: ["Chooz/Resources/**"],
             entitlements: .dictionary([
+                "com.apple.developer.applesignin": .array([
+                    .string("Default")
+                ]),
                 "keychain-access-groups": .array([
                     .string("$(AppIdentifierPrefix)io.appmetrica")
                 ])
