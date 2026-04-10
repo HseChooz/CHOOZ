@@ -6,6 +6,7 @@ enum AuthError: Error {
     case serverOverloaded
     case serverNotResponding
     case accountDeleted
+    case invalidAppleToken
     case unknown
     
     var isCancelled: Bool {
@@ -25,6 +26,8 @@ enum AuthError: Error {
             return ("Сервер не отвечает", "Попробуйте еще раз позже")
         case .accountDeleted:
             return ("Ваш аккаунт удален", "Все ваши данные были стерты")
+        case .invalidAppleToken:
+            return ("Не удалось войти через Apple", "Сервер не принял токен. Попробуйте снова или войдите другим способом.")
         case .unknown:
             return ("Что-то пошло не так", "Произошла непредвиденная ошибка")
         }
