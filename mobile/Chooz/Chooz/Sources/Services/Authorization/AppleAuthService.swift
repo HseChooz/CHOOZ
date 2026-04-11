@@ -36,8 +36,14 @@ final class AppleAuthService {
                             continuation.resume(throwing: AuthError.unknown)
                             return
                         }
+                        let normalizedToken = tokenString.trimmingCharacters(in: .whitespacesAndNewlines)
+                        appleAuthLogCredentialMetadata(
+                            credential,
+                            identityToken: normalizedToken,
+                            apiBaseURL: AppConfig.apiBaseURL
+                        )
                         do {
-                            let authPayload = try await self.loginWithApple(identityToken: tokenString)
+                            let authPayload = try await self.loginWithApple(identityToken: normalizedToken)
                             self.tokenStorage.accessToken = authPayload.accessToken
                             self.tokenStorage.refreshToken = authPayload.refreshToken
                             continuation.resume()
@@ -91,7 +97,7 @@ final class AppleAuthService {
                         continuation.resume(returning: data)
                     } else if let error = graphQLResult.errors?.first {
                         appleAuthLogGraphQLErrors(graphQLResult.errors, context: "AppleAuth GraphQL (loginWithApple nil path)")
-                        continuation.resume(throwing: self.mapGraphQLError(error.message))
+                        continuation.resume(throwing: self.mapGraphQLError(error))
                     } else {
                         appleAuthLogGraphQLErrors(graphQLResult.errors, context: "AppleAuth GraphQL empty loginWithApple")
                         print("😭 AppleAuth GraphQL hasData=\(graphQLResult.data != nil) dataLoginWithApple=\(String(describing: graphQLResult.data?.loginWithApple))")
@@ -125,10 +131,26 @@ final class AppleAuthService {
         }
     }
     
-    private func mapGraphQLError(_ message: String?) -> AuthError {
-        guard let message = message?.lowercased() else {
+    private func mapGraphQLError(_ error: GraphQLError?) -> AuthError {
+        guard let error else {
             print("😭 AppleAuth mapGraphQLError: message is nil")
             return .unknown
+        }
+        let message = error.message?.lowercased() ?? ""
+        let code = (error.extensions?["code"] as? String)?.uppercased()
+        
+        if code == "APPLE_UNAVAILABLE" {
+            return .serverNotResponding
+        }
+        
+        if [
+            "INVALID_APPLE_AUDIENCE",
+            "INVALID_APPLE_ISSUER",
+            "EXPIRED_APPLE_TOKEN",
+            "INVALID_APPLE_SIGNATURE",
+            "INVALID_APPLE_TOKEN"
+        ].contains(code) {
+            return .invalidAppleToken
         }
         
         if message.contains("invalid apple token") || message.contains("invalid apple") {
@@ -232,6 +254,88 @@ fileprivate func appleAuthLogGraphQLErrors(_ errors: [GraphQLError]?, context: S
         return
     }
     for (index, err) in errors.enumerated() {
-        print("😭 \(context) [\(index)] message=\(err.message ?? "nil") description=\(String(describing: err))")
+        let code = err.extensions?["code"] as? String ?? "nil"
+        print("😭 \(context) [\(index)] code=\(code) message=\(err.message ?? "nil") description=\(String(describing: err))")
     }
+}
+
+fileprivate func appleAuthLogCredentialMetadata(
+    _ credential: ASAuthorizationAppleIDCredential,
+    identityToken: String,
+    apiBaseURL: URL
+) {
+    print("😭 AppleAuth request apiBaseURL=\(apiBaseURL.absoluteString)")
+    print(
+        "😭 AppleAuth credential user=\(appleMask(credential.user)) identityTokenBytes=\(credential.identityToken?.count ?? 0) authCodeBytes=\(credential.authorizationCode?.count ?? 0)"
+    )
+    
+    let parts = identityToken.split(separator: ".", omittingEmptySubsequences: false)
+    guard parts.count == 3 else {
+        print("😭 AppleAuth token metadata invalidPartsCount=\(parts.count)")
+        return
+    }
+    
+    let header = appleDecodeJWTPart(String(parts[0])) ?? [:]
+    let payload = appleDecodeJWTPart(String(parts[1])) ?? [:]
+    
+    let kid = header["kid"] as? String ?? "nil"
+    let alg = header["alg"] as? String ?? "nil"
+    let aud = appleStringifyJSONValue(payload["aud"])
+    let iss = appleStringifyJSONValue(payload["iss"])
+    let exp = appleUnixTimestampDescription(payload["exp"])
+    let iat = appleUnixTimestampDescription(payload["iat"])
+    let sub = appleMask(appleStringifyJSONValue(payload["sub"]))
+    
+    print(
+        "😭 AppleAuth token header kid=\(kid) alg=\(alg) payload aud=\(aud) iss=\(iss) sub=\(sub) iat=\(iat) exp=\(exp)"
+    )
+}
+
+fileprivate func appleDecodeJWTPart(_ part: String) -> [String: Any]? {
+    var base64 = part.replacingOccurrences(of: "-", with: "+")
+        .replacingOccurrences(of: "_", with: "/")
+    
+    let padding = (4 - base64.count % 4) % 4
+    if padding > 0 {
+        base64.append(String(repeating: "=", count: padding))
+    }
+    
+    guard let data = Data(base64Encoded: base64) else {
+        return nil
+    }
+    
+    guard let object = try? JSONSerialization.jsonObject(with: data),
+          let dictionary = object as? [String: Any] else {
+        return nil
+    }
+    
+    return dictionary
+}
+
+fileprivate func appleUnixTimestampDescription(_ value: Any?) -> String {
+    if let number = value as? NSNumber {
+        let date = Date(timeIntervalSince1970: number.doubleValue)
+        return ISO8601DateFormatter().string(from: date)
+    }
+    return "nil"
+}
+
+fileprivate func appleStringifyJSONValue(_ value: Any?) -> String {
+    switch value {
+    case let string as String:
+        return string
+    case let array as [String]:
+        return array.joined(separator: ",")
+    case let number as NSNumber:
+        return number.stringValue
+    default:
+        return "nil"
+    }
+}
+
+fileprivate func appleMask(_ value: String) -> String {
+    guard value.count > 10 else { return value }
+    let prefix = value.prefix(4)
+    let suffix = value.suffix(4)
+    return "\(prefix)…\(suffix)"
 }
