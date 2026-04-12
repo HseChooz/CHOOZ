@@ -28,6 +28,7 @@ final class SettingsViewModel {
         sessionService: SessionService,
         userDefaultsService: UserDefaultsService,
         notificationService: NotificationService,
+        calendarInteractor: CalendarInteractor,
         toastManager: ToastManager,
         analytics: SettingsAnalytics
     ) {
@@ -35,6 +36,7 @@ final class SettingsViewModel {
         self.sessionService = sessionService
         self.userDefaultsService = userDefaultsService
         self.notificationService = notificationService
+        self.calendarInteractor = calendarInteractor
         self.toastManager = toastManager
         self.analytics = analytics
         self.notificationsEnabled = userDefaultsService.notificationsEnabled
@@ -78,12 +80,22 @@ final class SettingsViewModel {
     private let sessionService: SessionService
     private let userDefaultsService: UserDefaultsService
     private let notificationService: NotificationService
+    private let calendarInteractor: CalendarInteractor
     private let toastManager: ToastManager
     private let analytics: SettingsAnalytics
     
     private var deleteAccountTask: Task<Void, Never>?
     
     // MARK: - Private Methods
+    
+    private func rescheduleNotificationsFromCalendar() async {
+        do {
+            let events = try await calendarInteractor.getEvents()
+            notificationService.rescheduleNotifications(for: events)
+        } catch {
+            // Календарь обновит расписание при следующем успешном запросе или pull-to-refresh.
+        }
+    }
     
     private func handleNotificationsEnable() {
         Task {
@@ -99,6 +111,7 @@ final class SettingsViewModel {
             userDefaultsService.notificationsEnabled = granted
             if granted {
                 analytics.trackNotificationsToggled(enabled: true, source: "settings")
+                await rescheduleNotificationsFromCalendar()
             } else {
                 notificationsEnabled = false
             }

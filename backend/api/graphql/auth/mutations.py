@@ -1,15 +1,18 @@
+from typing import Annotated
+
+import strawberry
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-import strawberry
 
-from api.graphql.auth.google import verify_google_id_token, get_or_create_user_from_google
+from api.graphql.auth import apple as apple_auth
+from api.graphql.auth.queries import to_user_type
 from api.graphql.auth.yandex import fetch_yandex_user_info, get_or_create_user_from_yandex
 from api.graphql.errors import gql_error
 from api.graphql.types import AuthPayload, TokenPair
-from api.graphql.auth.queries import to_user_type
 
 UserModel = get_user_model()
+
 
 def require_user(info):
     user = info.context.request.user
@@ -17,14 +20,23 @@ def require_user(info):
         gql_error("UNAUTHORIZED", "Unauthorized")
     return user
 
+
 @strawberry.type
 class AuthMutation:
-    @strawberry.mutation(name="loginWithGoogle")
-    def login_with_google(
-        self, info, id_token: str = strawberry.argument(name="idToken")
+    @strawberry.mutation(name="loginWithApple")
+    def login_with_apple(
+        self,
+        info,
+        identity_token: Annotated[str, strawberry.argument(name="identityToken")],
+        first_name: Annotated[str | None, strawberry.argument(name="firstName")] = None,
+        last_name: Annotated[str | None, strawberry.argument(name="lastName")] = None,
     ) -> AuthPayload:
-        idinfo = verify_google_id_token(id_token)
-        user = get_or_create_user_from_google(idinfo)
+        payload = apple_auth.verify_apple_identity_token(identity_token)
+        user = apple_auth.get_or_create_user_from_apple(
+            payload,
+            first_name=first_name or "",
+            last_name=last_name or "",
+        )
 
         refresh = RefreshToken.for_user(user)
         access = refresh.access_token
@@ -37,7 +49,7 @@ class AuthMutation:
 
     @strawberry.mutation(name="loginWithYandex")
     def login_with_yandex(
-        self, info, oauth_token: str = strawberry.argument(name="oauthToken")
+        self, info, oauth_token: Annotated[str, strawberry.argument(name="oauthToken")]
     ) -> AuthPayload:
         data = fetch_yandex_user_info(oauth_token)
         user = get_or_create_user_from_yandex(data)
@@ -53,7 +65,7 @@ class AuthMutation:
 
     @strawberry.mutation(name="refreshToken")
     def refresh_token(
-        self, info, refresh_token: str = strawberry.argument(name="refreshToken")
+        self, info, refresh_token: Annotated[str, strawberry.argument(name="refreshToken")]
     ) -> TokenPair:
         try:
             old_refresh = RefreshToken(refresh_token)

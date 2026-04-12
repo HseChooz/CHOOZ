@@ -29,13 +29,14 @@ final class ToastManager {
     // MARK: - Private Methods
     
     private func show(model: ToastModel) {
-        if toastView != nil {
-            dismissAnimated { [weak self] in
-                self?.presentToast(model: model)
-            }
-        } else {
-            presentToast(model: model)
+        dismissTask?.cancel()
+        dismissTask = nil
+        
+        if let existing = toastView {
+            existing.removeFromSuperview()
+            toastView = nil
         }
+        presentToast(model: model)
     }
     
     private func presentToast(model: ToastModel) {
@@ -92,13 +93,15 @@ final class ToastManager {
             completion?()
             return
         }
-        toastView = nil
         
         UIView.animate(withDuration: 0.3, animations: {
             view.alpha = 0
             view.transform = CGAffineTransform(translationX: 0, y: -50)
-        }, completion: { _ in
+        }, completion: { [weak self] _ in
             view.removeFromSuperview()
+            if self?.toastView === view {
+                self?.toastView = nil
+            }
             completion?()
         })
     }

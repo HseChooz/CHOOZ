@@ -14,12 +14,14 @@ final class CalendarService {
     func fetchEvents() async throws -> [EventItem] {
         let result: Result<[EventItem], Error> = await withCheckedContinuation { continuation in
             apolloClient.fetch(
-                query: ChoozAPI.EventsQuery(),
+                query: ChoozAPI.EventsQuery(onlyUpcoming: false),
                 cachePolicy: .fetchIgnoringCacheCompletely
             ) { [dateFormatter] result in
                 switch result {
                 case .success(let graphQLResult):
                     let rawEvents = graphQLResult.data?.events ?? []
+                    let calendar = Calendar.current
+                    let startOfToday = calendar.startOfDay(for: Date())
                     let items = rawEvents.compactMap { event -> EventItem? in
                         guard let date = dateFormatter.date(from: event.date) else {
                             return nil
@@ -34,7 +36,13 @@ final class CalendarService {
                             date: date
                         )
                     }
-                    continuation.resume(returning: .success(items))
+                    let visible = items.filter {
+                        calendar.startOfDay(for: $0.calendarDisplayDate) >= startOfToday
+                    }
+                    let sorted = visible.sorted {
+                        $0.calendarDisplayDate < $1.calendarDisplayDate
+                    }
+                    continuation.resume(returning: .success(sorted))
                     
                 case .failure(let error):
                     continuation.resume(returning: .failure(error))

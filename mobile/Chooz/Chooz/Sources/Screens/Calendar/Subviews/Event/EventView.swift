@@ -10,8 +10,6 @@ struct EventView: View {
     ) {
         self.event = event
         self.eventsHandler = eventsHandler
-        _isNotificationEnabled = State(initialValue: event.notifyEnabled)
-        _isRepeatEnabled = State(initialValue: event.repeatYearly)
     }
     
     // MARK: - Body
@@ -37,6 +35,14 @@ struct EventView: View {
         )
     }
     
+    // MARK: - Private Types
+    
+    private enum Layout {
+        static let descriptionLineHeight: CGFloat = 22.0
+        static let maxLines: Int = 8
+        static let descriptionMaxHeight: CGFloat = descriptionLineHeight * CGFloat(maxLines)
+    }
+    
     // MARK: - Private Properties
     
     @Environment(\.dismiss) private var dismiss
@@ -45,9 +51,6 @@ struct EventView: View {
     private let eventsHandler: EventViewEventsHandler
     
     @State private var isDeleteConfirmationPresented: Bool = false
-    
-    @State private var isNotificationEnabled: Bool
-    @State private var isRepeatEnabled: Bool
     
     // MARK: - Private Views
     
@@ -94,10 +97,11 @@ struct EventView: View {
     @ViewBuilder
     private var descriptionView: some View {
         if let description = event.description, !description.isEmpty {
-            Text(description)
-                .font(.velaSans(size: 16.0, weight: .bold))
-                .foregroundStyle(Colors.Neutral.grey600)
-                .lineLimit(20)
+            FadeScrollView(maxHeight: Layout.descriptionMaxHeight) {
+                Text(description)
+                    .font(.velaSans(size: 16.0, weight: .bold))
+                    .foregroundStyle(Colors.Neutral.grey600)
+            }
         }
     }
     
@@ -115,8 +119,8 @@ struct EventView: View {
             EventViewBottomToggleView(
                 icon: Images.Icons.notification,
                 activeIcon: Images.Icons.notificationBlue,
-                isActive: $isNotificationEnabled,
-                action: { enabled in
+                isActive: event.notifyEnabled,
+                onToggle: { enabled in
                     eventsHandler.toggleNotification(for: event.id, enabled: enabled)
                 }
             )
@@ -126,8 +130,8 @@ struct EventView: View {
             EventViewBottomToggleView(
                 icon: Images.Icons.repeatIcon,
                 activeIcon: Images.Icons.reapetIconPurple,
-                isActive: $isRepeatEnabled,
-                action: { enabled in
+                isActive: event.repeatYearly,
+                onToggle: { enabled in
                     eventsHandler.toggleRepeatYearly(for: event.id, enabled: enabled)
                 }
             )

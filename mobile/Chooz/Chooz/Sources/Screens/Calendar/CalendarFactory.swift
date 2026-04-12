@@ -10,6 +10,7 @@ final class CalendarFactory {
         appRouter: AppRouter,
         profileFactory: ProfileFactory,
         calendarService: CalendarService,
+        userDefaultsService: UserDefaultsService,
         notificationService: NotificationService,
         toastManager: ToastManager,
         analyticsService: AnalyticsService
@@ -17,6 +18,7 @@ final class CalendarFactory {
         self.appRouter = appRouter
         self.profileFactory = profileFactory
         self.calendarService = calendarService
+        self.userDefaultsService = userDefaultsService
         self.notificationService = notificationService
         self.toastManager = toastManager
         self.analyticsService = analyticsService
@@ -31,6 +33,7 @@ final class CalendarFactory {
         let viewModel = CalendarViewModel(
             router: router,
             interactor: interactor,
+            userDefaultsService: userDefaultsService,
             notificationService: notificationService,
             toastManager: toastManager,
             analytics: analytics
@@ -49,6 +52,7 @@ final class CalendarFactory {
     private let appRouter: AppRouter
     private let profileFactory: ProfileFactory
     private let calendarService: CalendarService
+    private let userDefaultsService: UserDefaultsService
     private let notificationService: NotificationService
     private let toastManager: ToastManager
     private let analyticsService: AnalyticsService

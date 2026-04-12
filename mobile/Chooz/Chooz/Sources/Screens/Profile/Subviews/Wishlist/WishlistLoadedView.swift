@@ -17,10 +17,9 @@ struct WishlistLoadedView: View {
                 let availableWidth = geometry.size.width - Layout.padding * 2
                 let columns = columns(for: availableWidth)
                 
-                ScrollView {
+                FadeScrollView(fadePercentage: 0.05) {
                     gridView(columns: columns)
                 }
-                .scrollIndicators(.hidden)
                 .refreshable {
                     await viewModel.refreshWishes()
                 }

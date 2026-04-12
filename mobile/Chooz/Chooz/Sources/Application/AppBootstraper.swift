@@ -1,5 +1,6 @@
 import UIKit
 import SwiftUI
+import Kingfisher
 
 @MainActor
 final class AppBootstraper {
@@ -15,6 +16,7 @@ final class AppBootstraper {
     func start() {
         clearKeychainIfNeeded()
         trackLifecycleEvents()
+        configureImageCache()
         
         let splashVC = UIHostingController(rootView: SplashView())
         appContainer.appRouter.setRoot(splashVC)
@@ -44,6 +46,13 @@ final class AppBootstraper {
     private let appContainer: AppContainer
     
     // MARK: - Private Methods
+    
+    private func configureImageCache() {
+        ImageCache.default.memoryStorage.config.totalCostLimit = AppConfig.ImageCache.memoryCacheSizeLimit
+        ImageCache.default.memoryStorage.config.expiration = .days(AppConfig.ImageCache.cacheExpirationDays)
+        ImageCache.default.diskStorage.config.sizeLimit = AppConfig.ImageCache.diskCacheSizeLimit
+        ImageCache.default.diskStorage.config.expiration = .days(AppConfig.ImageCache.cacheExpirationDays)
+    }
     
     private func clearKeychainIfNeeded() {
         guard appContainer.userDefaultsService.isFirstLaunchAfterInstall else { return }

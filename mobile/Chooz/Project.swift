@@ -68,11 +68,7 @@ let project = Project(
             ]),
             sources: ["Chooz/Sources/**"],
             resources: ["Chooz/Resources/**"],
-            entitlements: .dictionary([
-                "keychain-access-groups": .array([
-                    .string("$(AppIdentifierPrefix)io.appmetrica")
-                ])
-            ]),
+            entitlements: .file(path: "Chooz/Chooz.entitlements"),
             scripts: [
                 .pre(
                     path: .relativeToRoot("../tools/graphql/apollo_codegen.sh"),
@@ -85,7 +81,8 @@ let project = Project(
                 .external(name: "AppMetricaCore"),
                 .external(name: "AppMetricaCrashes"),
                 .external(name: "GoogleSignIn"),
-                .external(name: "YandexLoginSDK")
+                .external(name: "YandexLoginSDK"),
+                .external(name: "Kingfisher")
             ],
             settings: .settings(
                 base: [
