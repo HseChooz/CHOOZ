@@ -185,10 +185,21 @@ def verify_apple_identity_token(identity_token: str) -> dict:
     return payload
 
 
-def get_or_create_user_from_apple(payload: dict) -> UserModel:
+def _normalized_name(value: str | None) -> str:
+    return (value or "").strip()
+
+
+def get_or_create_user_from_apple(
+    payload: dict,
+    *,
+    first_name: str = "",
+    last_name: str = "",
+) -> UserModel:
     apple_user_id = str(payload["sub"]).strip()
     email = (payload.get("email") or "").strip().lower()
     is_private_email = _to_bool(payload.get("is_private_email"))
+    first_name = _normalized_name(first_name)
+    last_name = _normalized_name(last_name)
 
     if email and not _to_bool(payload.get("email_verified", True)):
         gql_error("EMAIL_NOT_VERIFIED", "Email is not verified")
@@ -204,6 +215,14 @@ def get_or_create_user_from_apple(payload: dict) -> UserModel:
         if email and user.email != email:
             user.email = email
             user_fields_to_update.append("email")
+
+        if first_name and user.first_name != first_name:
+            user.first_name = first_name
+            user_fields_to_update.append("first_name")
+
+        if last_name and user.last_name != last_name:
+            user.last_name = last_name
+            user_fields_to_update.append("last_name")
 
         if email and apple_account.email != email:
             apple_account.email = email
@@ -221,7 +240,20 @@ def get_or_create_user_from_apple(payload: dict) -> UserModel:
         return user
 
     user = UserModel.objects.filter(email=email).first() if email else None
-    if not user:
+    if user:
+        user_fields_to_update = []
+
+        if first_name and user.first_name != first_name:
+            user.first_name = first_name
+            user_fields_to_update.append("first_name")
+
+        if last_name and user.last_name != last_name:
+            user.last_name = last_name
+            user_fields_to_update.append("last_name")
+
+        if user_fields_to_update:
+            user.save(update_fields=user_fields_to_update)
+    else:
         base_username = email.split("@")[0] if email else f"apple_{apple_user_id[:12]}"
         username = base_username
         i = 1
@@ -232,6 +264,8 @@ def get_or_create_user_from_apple(payload: dict) -> UserModel:
         user = UserModel.objects.create(
             username=username,
             email=email,
+            first_name=first_name,
+            last_name=last_name,
         )
 
     AppleAccount.objects.create(

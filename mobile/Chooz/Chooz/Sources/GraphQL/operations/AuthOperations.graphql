@@ -10,14 +10,16 @@ mutation LoginWithGoogle($idToken: String!) {
   }
 }
 
-mutation LoginWithApple($identityToken: String!) {
-  loginWithApple(identityToken: $identityToken) {
+mutation LoginWithApple($identityToken: String!, $firstName: String, $lastName: String) {
+  loginWithApple(identityToken: $identityToken, firstName: $firstName, lastName: $lastName) {
     accessToken
     refreshToken
     user {
       id
       email
       username
+      firstName
+      lastName
     }
   }
 }

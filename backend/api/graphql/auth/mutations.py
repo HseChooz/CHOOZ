@@ -1,3 +1,5 @@
+from typing import Annotated
+
 import strawberry
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -23,10 +25,18 @@ def require_user(info):
 class AuthMutation:
     @strawberry.mutation(name="loginWithApple")
     def login_with_apple(
-        self, info, identity_token: str = strawberry.argument(name="identityToken")
+        self,
+        info,
+        identity_token: Annotated[str, strawberry.argument(name="identityToken")],
+        first_name: Annotated[str | None, strawberry.argument(name="firstName")] = None,
+        last_name: Annotated[str | None, strawberry.argument(name="lastName")] = None,
     ) -> AuthPayload:
         payload = apple_auth.verify_apple_identity_token(identity_token)
-        user = apple_auth.get_or_create_user_from_apple(payload)
+        user = apple_auth.get_or_create_user_from_apple(
+            payload,
+            first_name=first_name or "",
+            last_name=last_name or "",
+        )
 
         refresh = RefreshToken.for_user(user)
         access = refresh.access_token
@@ -39,7 +49,7 @@ class AuthMutation:
 
     @strawberry.mutation(name="loginWithYandex")
     def login_with_yandex(
-        self, info, oauth_token: str = strawberry.argument(name="oauthToken")
+        self, info, oauth_token: Annotated[str, strawberry.argument(name="oauthToken")]
     ) -> AuthPayload:
         data = fetch_yandex_user_info(oauth_token)
         user = get_or_create_user_from_yandex(data)
@@ -55,7 +65,7 @@ class AuthMutation:
 
     @strawberry.mutation(name="refreshToken")
     def refresh_token(
-        self, info, refresh_token: str = strawberry.argument(name="refreshToken")
+        self, info, refresh_token: Annotated[str, strawberry.argument(name="refreshToken")]
     ) -> TokenPair:
         try:
             old_refresh = RefreshToken(refresh_token)

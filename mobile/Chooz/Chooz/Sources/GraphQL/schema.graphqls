@@ -11,7 +11,7 @@ type Query {
 
 type Mutation {
   loginWithGoogle(idToken: String!): AuthPayload!
-  loginWithApple(identityToken: String!): AuthPayload!
+  loginWithApple(identityToken: String!, firstName: String = null, lastName: String = null): AuthPayload!
   loginWithYandex(oauthToken: String!): AuthPayload!
   refreshToken(refreshToken: String!): TokenPair!
   createWishItem(title: String!, description: String! = "", link: String! = "", price: Decimal = null, currency: String! = ""): WishItemType!
