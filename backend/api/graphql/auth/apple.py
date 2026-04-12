@@ -8,8 +8,10 @@ from jwt import PyJWKClient
 from jwt.exceptions import (
     DecodeError,
     ExpiredSignatureError,
+    ImmatureSignatureError,
     InvalidAlgorithmError,
     InvalidAudienceError,
+    InvalidIssuedAtError,
     InvalidIssuerError,
     InvalidKeyError,
     InvalidSignatureError,
@@ -23,6 +25,7 @@ from api.models import AppleAccount
 
 APPLE_ISSUER = "https://appleid.apple.com"
 APPLE_JWKS_URL = "https://appleid.apple.com/auth/keys"
+APPLE_TOKEN_LEEWAY_SECONDS = 60
 APPLE_JWK_CLIENT = PyJWKClient(APPLE_JWKS_URL, cache_jwk_set=True, lifespan=300, timeout=10)
 
 UserModel = get_user_model()
@@ -142,6 +145,7 @@ def verify_apple_identity_token(identity_token: str) -> dict:
             algorithms=["RS256"],
             audience=client_ids,
             issuer=APPLE_ISSUER,
+            leeway=APPLE_TOKEN_LEEWAY_SECONDS,
         )
     except InvalidAudienceError:
         gql_error("INVALID_APPLE_AUDIENCE", "Apple token audience does not match APPLE_CLIENT_ID")
@@ -149,6 +153,13 @@ def verify_apple_identity_token(identity_token: str) -> dict:
         gql_error("INVALID_APPLE_ISSUER", "Apple token issuer is invalid")
     except ExpiredSignatureError:
         gql_error("EXPIRED_APPLE_TOKEN", "Apple token has expired")
+    except (ImmatureSignatureError, InvalidIssuedAtError) as exc:
+        logger.warning(
+            "Apple token issue time validation failed: %s; context=%s",
+            exc,
+            debug_context,
+        )
+        gql_error("INVALID_APPLE_IAT", "Apple token issue time is invalid")
     except InvalidSignatureError:
         gql_error("INVALID_APPLE_SIGNATURE", "Apple token signature is invalid")
     except InvalidAlgorithmError:
