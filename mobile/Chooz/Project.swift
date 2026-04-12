@@ -68,14 +68,7 @@ let project = Project(
             ]),
             sources: ["Chooz/Sources/**"],
             resources: ["Chooz/Resources/**"],
-            entitlements: .dictionary([
-                "com.apple.developer.applesignin": .array([
-                    .string("Default")
-                ]),
-                "keychain-access-groups": .array([
-                    .string("$(AppIdentifierPrefix)io.appmetrica")
-                ])
-            ]),
+            entitlements: .file(path: "Chooz/Chooz.entitlements"),
             scripts: [
                 .pre(
                     path: .relativeToRoot("../tools/graphql/apollo_codegen.sh"),

@@ -42,12 +42,12 @@ struct AuthorizationView: View {
                 action: viewModel.signInWithApple
             )
             
-            AuthScreenButtonView(
-                image: Images.Icons.google,
-                title: "Войти через Google",
-                style: .secondary,
-                action: viewModel.signInWithGoogle
-            )
+//            AuthScreenButtonView(
+//                image: Images.Icons.google,
+//                title: "Войти через Google",
+//                style: .secondary,
+//                action: viewModel.signInWithGoogle
+//            )
             
             AuthScreenButtonView(
                 image: Images.Icons.yandex,
