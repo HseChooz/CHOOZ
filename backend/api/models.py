@@ -53,11 +53,75 @@ class WishItem(models.Model):
     description = models.TextField(blank=True)
     link = models.URLField(blank=True, default="")
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    currency = models.CharField(max_length=8, choices=Currency.choices, blank=True, default="")
+    currency = models.CharField(
+        max_length=8,
+        choices=Currency.choices,
+        blank=True,
+        default="",
+    )
     image_key = models.CharField(max_length=512, blank=True, default="")
+    collection_item = models.ForeignKey(
+        "CollectionItem",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="wish_items",
+    )
 
     def __str__(self):
         return self.title
+
+
+class Collection(models.Model):
+    class Section(models.TextChoices):
+        FOR_YOU = "for_you", "Подборки для вас"
+        BY_CHARACTER = "by_character", "Подборки по характеру"
+        EDITORIAL = "editorial", "Редакторские подборки"
+
+    slug = models.SlugField(max_length=128, unique=True)
+    title = models.CharField(max_length=255)
+    subtitle = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
+    section = models.CharField(max_length=32, choices=Section.choices)
+    badge = models.CharField(max_length=64, blank=True)
+    cover_image_url = models.URLField(blank=True, default="")
+    tags = models.JSONField(default=list, blank=True)
+    items_total = models.PositiveIntegerField(default=0)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["section", "sort_order", "id"]
+        indexes = [
+            models.Index(fields=["section", "sort_order"]),
+        ]
+
+    def __str__(self):
+        return self.title
+
+
+class CollectionItem(models.Model):
+    collection = models.ForeignKey(Collection, on_delete=models.CASCADE, related_name="items")
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    link = models.URLField(blank=True, default="")
+    price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    currency = models.CharField(
+        max_length=8,
+        choices=WishItem.Currency.choices,
+        blank=True,
+        default="",
+    )
+    image_url = models.URLField(blank=True, default="")
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["sort_order", "id"]
+        indexes = [
+            models.Index(fields=["collection", "sort_order"]),
+        ]
+
+    def __str__(self):
+        return f"{self.collection.title}: {self.title}"
 
 
 class Event(models.Model):
