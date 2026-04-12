@@ -22,7 +22,7 @@ final class AppleAuthService {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             coordinator.onCredentialResult = { [weak self] result in
                 guard let self else {
-                    print("😭 AppleAuth credential callback: self is nil, cannot resume")
+                    print("AppleAuth credential callback: self is nil, cannot resume")
                     continuation.resume(throwing: AuthError.unknown)
                     return
                 }
@@ -32,7 +32,7 @@ final class AppleAuthService {
                     case .success(let credential):
                         guard let tokenData = credential.identityToken,
                               let tokenString = String(data: tokenData, encoding: .utf8) else {
-                            print("😭 AppleAuth missing identityToken bytes=\(credential.identityToken?.count ?? 0)")
+                            print("AppleAuth missing identityToken bytes=\(credential.identityToken?.count ?? 0)")
                             continuation.resume(throwing: AuthError.unknown)
                             return
                         }
@@ -100,7 +100,7 @@ final class AppleAuthService {
                         continuation.resume(throwing: self.mapGraphQLError(error))
                     } else {
                         appleAuthLogGraphQLErrors(graphQLResult.errors, context: "AppleAuth GraphQL empty loginWithApple")
-                        print("😭 AppleAuth GraphQL hasData=\(graphQLResult.data != nil) dataLoginWithApple=\(String(describing: graphQLResult.data?.loginWithApple))")
+                        print("AppleAuth GraphQL hasData=\(graphQLResult.data != nil) dataLoginWithApple=\(String(describing: graphQLResult.data?.loginWithApple))")
                         continuation.resume(throwing: AuthError.unknown)
                     }
                 case .failure(let error):
@@ -133,7 +133,7 @@ final class AppleAuthService {
     
     private func mapGraphQLError(_ error: GraphQLError?) -> AuthError {
         guard let error else {
-            print("😭 AppleAuth mapGraphQLError: message is nil")
+            print("AppleAuth mapGraphQLError: message is nil")
             return .unknown
         }
         let message = error.message?.lowercased() ?? ""
@@ -169,7 +169,7 @@ final class AppleAuthService {
             return .serverNotResponding
         }
         
-        print("😭 AppleAuth mapGraphQLError unmapped: \(message)")
+        print("AppleAuth mapGraphQLError unmapped: \(message)")
         return .unknown
     }
 }
@@ -206,7 +206,7 @@ private final class AppleSignInCoordinator: NSObject, ASAuthorizationControllerD
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
                 self.onCredentialResult?(.success(appleIDCredential))
             default:
-                print("😭 AppleAuth delegate success but credential is not ASAuthorizationAppleIDCredential type=\(type(of: authorization.credential))")
+                print("AppleAuth delegate success but credential is not ASAuthorizationAppleIDCredential type=\(type(of: authorization.credential))")
                 self.onCredentialResult?(.failure(AuthError.unknown))
             }
         }
@@ -228,34 +228,34 @@ private final class AppleSignInCoordinator: NSObject, ASAuthorizationControllerD
 // MARK: - Apple auth debug logging
 
 fileprivate func appleAuthLogAuthError(_ error: AuthError, context: String) {
-    print("😭 \(context) AuthError=\(error) toastContent=\(String(describing: error.toastContent))")
+    print("\(context) AuthError=\(error) toastContent=\(String(describing: error.toastContent))")
 }
 
 fileprivate func appleAuthLogDetailedError(_ error: Error, context: String) {
-    print("😭 \(context) type=\(Swift.type(of: error)) String(describing)=\(String(describing: error)) localized=\(error.localizedDescription)")
+    print("\(context) type=\(Swift.type(of: error)) String(describing)=\(String(describing: error)) localized=\(error.localizedDescription)")
     let ns = error as NSError
-    print("😭 \(context) NSError domain=\(ns.domain) code=\(ns.code)")
+    print("\(context) NSError domain=\(ns.domain) code=\(ns.code)")
     if !ns.userInfo.isEmpty {
-        print("😭 \(context) NSError userInfo=\(ns.userInfo)")
+        print("\(context) NSError userInfo=\(ns.userInfo)")
     }
     if let underlying = ns.userInfo[NSUnderlyingErrorKey] as? Error {
-        print("😭 \(context) underlying String(describing)=\(String(describing: underlying)) localized=\(underlying.localizedDescription)")
+        print("\(context) underlying String(describing)=\(String(describing: underlying)) localized=\(underlying.localizedDescription)")
         let u = underlying as NSError
-        print("😭 \(context) underlying NSError domain=\(u.domain) code=\(u.code) userInfo=\(u.userInfo)")
+        print("\(context) underlying NSError domain=\(u.domain) code=\(u.code) userInfo=\(u.userInfo)")
     }
     if let auth = error as? ASAuthorizationError {
-        print("😭 \(context) ASAuthorizationError code=\(auth.code) description=\(auth.localizedDescription)")
+        print("\(context) ASAuthorizationError code=\(auth.code) description=\(auth.localizedDescription)")
     }
 }
 
 fileprivate func appleAuthLogGraphQLErrors(_ errors: [GraphQLError]?, context: String) {
     guard let errors, !errors.isEmpty else {
-        print("😭 \(context) GraphQL errors: nil or empty")
+        print("\(context) GraphQL errors: nil or empty")
         return
     }
     for (index, err) in errors.enumerated() {
         let code = err.extensions?["code"] as? String ?? "nil"
-        print("😭 \(context) [\(index)] code=\(code) message=\(err.message ?? "nil") description=\(String(describing: err))")
+        print("\(context) [\(index)] code=\(code) message=\(err.message ?? "nil") description=\(String(describing: err))")
     }
 }
 
@@ -264,14 +264,14 @@ fileprivate func appleAuthLogCredentialMetadata(
     identityToken: String,
     apiBaseURL: URL
 ) {
-    print("😭 AppleAuth request apiBaseURL=\(apiBaseURL.absoluteString)")
+    print("AppleAuth request apiBaseURL=\(apiBaseURL.absoluteString)")
     print(
-        "😭 AppleAuth credential user=\(appleMask(credential.user)) identityTokenBytes=\(credential.identityToken?.count ?? 0) authCodeBytes=\(credential.authorizationCode?.count ?? 0)"
+        "AppleAuth credential user=\(appleMask(credential.user)) identityTokenBytes=\(credential.identityToken?.count ?? 0) authCodeBytes=\(credential.authorizationCode?.count ?? 0)"
     )
     
     let parts = identityToken.split(separator: ".", omittingEmptySubsequences: false)
     guard parts.count == 3 else {
-        print("😭 AppleAuth token metadata invalidPartsCount=\(parts.count)")
+        print("AppleAuth token metadata invalidPartsCount=\(parts.count)")
         return
     }
     
@@ -287,7 +287,7 @@ fileprivate func appleAuthLogCredentialMetadata(
     let sub = appleMask(appleStringifyJSONValue(payload["sub"]))
     
     print(
-        "😭 AppleAuth token header kid=\(kid) alg=\(alg) payload aud=\(aud) iss=\(iss) sub=\(sub) iat=\(iat) exp=\(exp)"
+        "AppleAuth token header kid=\(kid) alg=\(alg) payload aud=\(aud) iss=\(iss) sub=\(sub) iat=\(iat) exp=\(exp)"
     )
 }
 
