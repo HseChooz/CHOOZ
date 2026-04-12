@@ -62,18 +62,28 @@ def test_login_with_apple_creates_user_and_returns_tokens(gql, monkeypatch):
 
     response = gql(
         """
-        mutation($identityToken: String!) {
-          loginWithApple(identityToken: $identityToken) {
+        mutation($identityToken: String!, $firstName: String, $lastName: String) {
+          loginWithApple(
+            identityToken: $identityToken
+            firstName: $firstName
+            lastName: $lastName
+          ) {
             accessToken
             refreshToken
             user {
               email
               username
+              firstName
+              lastName
             }
           }
         }
         """,
-        variables={"identityToken": "valid-apple-token"},
+        variables={
+            "identityToken": "valid-apple-token",
+            "firstName": "Alex",
+            "lastName": "Parker",
+        },
     )
     payload = response.json()
 
@@ -82,11 +92,15 @@ def test_login_with_apple_creates_user_and_returns_tokens(gql, monkeypatch):
     assert payload["data"]["loginWithApple"]["accessToken"]
     assert payload["data"]["loginWithApple"]["refreshToken"]
     assert payload["data"]["loginWithApple"]["user"]["email"] == "relay@privaterelay.appleid.com"
+    assert payload["data"]["loginWithApple"]["user"]["firstName"] == "Alex"
+    assert payload["data"]["loginWithApple"]["user"]["lastName"] == "Parker"
 
     user = User.objects.get(email="relay@privaterelay.appleid.com")
     apple_account = AppleAccount.objects.get(user=user)
     assert apple_account.apple_user_id == "apple-user-123"
     assert apple_account.is_private_email is True
+    assert user.first_name == "Alex"
+    assert user.last_name == "Parker"
 
 
 def test_login_with_apple_reuses_existing_account_without_email_claim(gql, monkeypatch, user):
@@ -124,6 +138,115 @@ def test_login_with_apple_reuses_existing_account_without_email_claim(gql, monke
     assert "errors" not in payload
     assert payload["data"]["loginWithApple"]["user"]["id"] == str(user.id)
     assert payload["data"]["loginWithApple"]["user"]["email"] == user.email
+
+
+def test_login_with_apple_updates_names_from_client_payload(gql, monkeypatch, user):
+    user.first_name = ""
+    user.last_name = ""
+    user.save(update_fields=["first_name", "last_name"])
+
+    AppleAccount.objects.create(
+        user=user,
+        apple_user_id="apple-user-123",
+        email=user.email,
+        is_private_email=False,
+    )
+
+    monkeypatch.setattr(
+        apple_auth,
+        "verify_apple_identity_token",
+        lambda _token: {
+            "sub": "apple-user-123",
+        },
+    )
+
+    response = gql(
+        """
+        mutation($identityToken: String!, $firstName: String, $lastName: String) {
+          loginWithApple(
+            identityToken: $identityToken
+            firstName: $firstName
+            lastName: $lastName
+          ) {
+            user {
+              id
+              firstName
+              lastName
+            }
+          }
+        }
+        """,
+        variables={
+            "identityToken": "valid-apple-token",
+            "firstName": "Taylor",
+            "lastName": "Stone",
+        },
+    )
+    payload = response.json()
+
+    user.refresh_from_db()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    assert payload["data"]["loginWithApple"]["user"]["id"] == str(user.id)
+    assert payload["data"]["loginWithApple"]["user"]["firstName"] == "Taylor"
+    assert payload["data"]["loginWithApple"]["user"]["lastName"] == "Stone"
+    assert user.first_name == "Taylor"
+    assert user.last_name == "Stone"
+
+
+def test_login_with_apple_updates_existing_user_found_by_email(gql, monkeypatch, user):
+    user.first_name = ""
+    user.last_name = ""
+    user.save(update_fields=["first_name", "last_name"])
+
+    monkeypatch.setattr(
+        apple_auth,
+        "verify_apple_identity_token",
+        lambda _token: {
+            "sub": "apple-user-123",
+            "email": user.email,
+            "email_verified": "true",
+        },
+    )
+
+    response = gql(
+        """
+        mutation($identityToken: String!, $firstName: String, $lastName: String) {
+          loginWithApple(
+            identityToken: $identityToken
+            firstName: $firstName
+            lastName: $lastName
+          ) {
+            user {
+              id
+              email
+              firstName
+              lastName
+            }
+          }
+        }
+        """,
+        variables={
+            "identityToken": "valid-apple-token",
+            "firstName": "Jordan",
+            "lastName": "Lee",
+        },
+    )
+    payload = response.json()
+
+    user.refresh_from_db()
+    apple_account = AppleAccount.objects.get(user=user)
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    assert payload["data"]["loginWithApple"]["user"]["id"] == str(user.id)
+    assert payload["data"]["loginWithApple"]["user"]["email"] == user.email
+    assert payload["data"]["loginWithApple"]["user"]["firstName"] == "Jordan"
+    assert payload["data"]["loginWithApple"]["user"]["lastName"] == "Lee"
+    assert user.first_name == "Jordan"
+    assert user.last_name == "Lee"
+    assert apple_account.apple_user_id == "apple-user-123"
 
 
 def test_google_login_mutation_is_not_exposed_in_schema(gql):

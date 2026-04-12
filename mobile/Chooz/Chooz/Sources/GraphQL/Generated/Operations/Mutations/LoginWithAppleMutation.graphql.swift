@@ -8,16 +8,28 @@ extension ChoozAPI {
     static let operationName: String = "LoginWithApple"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"mutation LoginWithApple($identityToken: String!) { loginWithApple(identityToken: $identityToken) { __typename accessToken refreshToken user { __typename id email username } } }"#
+        #"mutation LoginWithApple($identityToken: String!, $firstName: String, $lastName: String) { loginWithApple( identityToken: $identityToken firstName: $firstName lastName: $lastName ) { __typename accessToken refreshToken user { __typename id email username firstName lastName } } }"#
       ))
 
     public var identityToken: String
+    public var firstName: GraphQLNullable<String>
+    public var lastName: GraphQLNullable<String>
 
-    public init(identityToken: String) {
+    public init(
+      identityToken: String,
+      firstName: GraphQLNullable<String>,
+      lastName: GraphQLNullable<String>
+    ) {
       self.identityToken = identityToken
+      self.firstName = firstName
+      self.lastName = lastName
     }
 
-    public var __variables: Variables? { ["identityToken": identityToken] }
+    public var __variables: Variables? { [
+      "identityToken": identityToken,
+      "firstName": firstName,
+      "lastName": lastName
+    ] }
 
     struct Data: ChoozAPI.SelectionSet {
       let __data: DataDict
@@ -25,7 +37,11 @@ extension ChoozAPI {
 
       static var __parentType: any ApolloAPI.ParentType { ChoozAPI.Objects.Mutation }
       static var __selections: [ApolloAPI.Selection] { [
-        .field("loginWithApple", LoginWithApple.self, arguments: ["identityToken": .variable("identityToken")]),
+        .field("loginWithApple", LoginWithApple.self, arguments: [
+          "identityToken": .variable("identityToken"),
+          "firstName": .variable("firstName"),
+          "lastName": .variable("lastName")
+        ]),
       ] }
       static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
         LoginWithAppleMutation.Data.self
@@ -68,6 +84,8 @@ extension ChoozAPI {
             .field("id", ChoozAPI.ID.self),
             .field("email", String.self),
             .field("username", String.self),
+            .field("firstName", String.self),
+            .field("lastName", String.self),
           ] }
           static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
             LoginWithAppleMutation.Data.LoginWithApple.User.self
@@ -76,6 +94,8 @@ extension ChoozAPI {
           var id: ChoozAPI.ID { __data["id"] }
           var email: String { __data["email"] }
           var username: String { __data["username"] }
+          var firstName: String { __data["firstName"] }
+          var lastName: String { __data["lastName"] }
         }
       }
     }

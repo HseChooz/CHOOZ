@@ -43,7 +43,11 @@ final class AppleAuthService {
                             apiBaseURL: AppConfig.apiBaseURL
                         )
                         do {
-                            let authPayload = try await self.loginWithApple(identityToken: normalizedToken)
+                            let authPayload = try await self.loginWithApple(
+                                identityToken: normalizedToken,
+                                firstName: credential.fullName?.givenName.map { .some($0) } ?? .null,
+                                lastName: credential.fullName?.familyName.map { .some($0) } ?? .null
+                            )
                             self.tokenStorage.accessToken = authPayload.accessToken
                             self.tokenStorage.refreshToken = authPayload.refreshToken
                             continuation.resume()
@@ -87,10 +91,18 @@ final class AppleAuthService {
     // MARK: - Private Methods
     
     private func loginWithApple(
-        identityToken: String
+        identityToken: String,
+        firstName: GraphQLNullable<String>,
+        lastName: GraphQLNullable<String>
     ) async throws -> ChoozAPI.LoginWithAppleMutation.Data.LoginWithApple {
         try await withCheckedThrowingContinuation { continuation in
-            apolloClient.perform(mutation: ChoozAPI.LoginWithAppleMutation(identityToken: identityToken)) { result in
+            apolloClient.perform(
+                mutation: ChoozAPI.LoginWithAppleMutation(
+                    identityToken: identityToken,
+                    firstName: firstName,
+                    lastName: lastName
+                )
+            ) { result in
                 switch result {
                 case .success(let graphQLResult):
                     if let data = graphQLResult.data?.loginWithApple {
