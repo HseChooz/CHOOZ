@@ -16,6 +16,7 @@ from jwt.exceptions import (
     InvalidKeyError,
     InvalidSignatureError,
     InvalidTokenError,
+    MissingCryptographyError,
     PyJWKClientConnectionError,
     PyJWKClientError,
 )
@@ -160,6 +161,12 @@ def verify_apple_identity_token(identity_token: str) -> dict:
             debug_context,
         )
         gql_error("INVALID_APPLE_IAT", "Apple token issue time is invalid")
+    except MissingCryptographyError as exc:
+        logger.error("Apple token verification is unavailable: %s", exc)
+        gql_error(
+            "SERVER_MISCONFIGURED",
+            "Apple token verification is not available on the server",
+        )
     except InvalidSignatureError:
         gql_error("INVALID_APPLE_SIGNATURE", "Apple token signature is invalid")
     except InvalidAlgorithmError:

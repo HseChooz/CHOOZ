@@ -9,6 +9,7 @@ from jwt import (
     InvalidAudienceError,
     PyJWKClientError,
 )
+from jwt.exceptions import MissingCryptographyError
 
 from api.graphql.auth import apple as apple_auth
 
@@ -116,3 +117,23 @@ def test_verify_apple_identity_token_reports_invalid_algorithm(monkeypatch):
 
     assert exc_info.value.extensions["code"] == "INVALID_APPLE_ALGORITHM"
     assert exc_info.value.message == "Apple token algorithm is invalid"
+
+
+def test_verify_apple_identity_token_reports_missing_cryptography(monkeypatch):
+    monkeypatch.setenv("APPLE_CLIENT_ID", "com.chooz.app")
+    monkeypatch.setattr(
+        apple_auth.APPLE_JWK_CLIENT,
+        "get_signing_key_from_jwt",
+        lambda _token: type("SigningKey", (), {"key": "stub-key"})(),
+    )
+
+    def raise_missing_crypto(*_args, **_kwargs):
+        raise MissingCryptographyError("cryptography is required")
+
+    monkeypatch.setattr(apple_auth.jwt, "decode", raise_missing_crypto)
+
+    with pytest.raises(GraphQLError) as exc_info:
+        apple_auth.verify_apple_identity_token("header.payload.signature")
+
+    assert exc_info.value.extensions["code"] == "SERVER_MISCONFIGURED"
+    assert exc_info.value.message == "Apple token verification is not available on the server"
