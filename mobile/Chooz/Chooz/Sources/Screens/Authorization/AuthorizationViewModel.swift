@@ -41,11 +41,11 @@ final class AuthorizationViewModel {
                 if let content = error.toastContent {
                     toastManager.showError(content.title, subtitle: content.subtitle)
                 }
-                print("😭 AuthorizationViewModel signInWithApple AuthError=\(error) toastShown=\(error.toastContent != nil)")
+                print("AuthorizationViewModel signInWithApple AuthError=\(error) toastShown=\(error.toastContent != nil)")
             } catch {
                 let ns = error as NSError
-                print("😭 AuthorizationViewModel signInWithApple non-AuthError type=\(Swift.type(of: error)) describing=\(String(describing: error))")
-                print("😭 AuthorizationViewModel signInWithApple NSError domain=\(ns.domain) code=\(ns.code) userInfo=\(ns.userInfo)")
+                print("AuthorizationViewModel signInWithApple non-AuthError type=\(Swift.type(of: error)) describing=\(String(describing: error))")
+                print("AuthorizationViewModel signInWithApple NSError domain=\(ns.domain) code=\(ns.code) userInfo=\(ns.userInfo)")
                 toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
             }
         }
