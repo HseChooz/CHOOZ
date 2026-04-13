@@ -62,6 +62,7 @@ def test_collection_query_returns_items_and_added_state(gql, access_token, user)
             items {
               id
               title
+              tags
               isAdded
               wishItemId
             }
@@ -81,8 +82,65 @@ def test_collection_query_returns_items_and_added_state(gql, access_token, user)
     assert result["itemsCount"] == 18
     assert result["tags"] == ["Женщине", "Мужчине"]
     assert result["items"][0]["id"] == str(first_item.id)
+    assert result["items"][0]["tags"] == ["Женщине"]
     assert result["items"][0]["isAdded"] is True
     assert result["items"][0]["wishItemId"] == str(linked_wish.id)
+
+
+def test_collection_query_filters_items_by_single_tag(gql, access_token):
+    response = gql(
+        """
+        query($slug: String!, $tags: [String!]) {
+          collection(slug: $slug, tags: $tags) {
+            tags
+            items {
+              title
+              tags
+            }
+          }
+        }
+        """,
+        variables={"slug": "book-lovers", "tags": ["Саморазвитие"]},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    result = payload["data"]["collection"]
+    assert result["tags"] == ["Саморазвитие", "Для детей", "Фантастика"]
+    assert [item["title"] for item in result["items"]] == [
+        "Kindle Paperwhite",
+        "Подписка на аудиокниги",
+    ]
+
+
+def test_collection_query_supports_match_all_tags(gql, access_token):
+    response = gql(
+        """
+        query($slug: String!, $tags: [String!], $matchAllTags: Boolean!) {
+          collection(slug: $slug, tags: $tags, matchAllTags: $matchAllTags) {
+            items {
+              title
+              tags
+            }
+          }
+        }
+        """,
+        variables={
+            "slug": "book-lovers",
+            "tags": ["Саморазвитие", "Фантастика"],
+            "matchAllTags": True,
+        },
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    assert [item["title"] for item in payload["data"]["collection"]["items"]] == [
+        "Подписка на аудиокниги",
+    ]
 
 
 def test_add_collection_item_to_wishlist_creates_linked_wish_item(gql, access_token, user):

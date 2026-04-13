@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Annotated, Optional
 
 import strawberry
 
@@ -21,10 +21,23 @@ class CollectionsQuery:
         return to_collections_home_type(collections)
 
     @strawberry.field(name="collection")
-    def collection(self, info, slug: str) -> Optional[CollectionType]:
+    def collection(
+        self,
+        info,
+        slug: str,
+        tags: Annotated[Optional[list[str]], strawberry.argument(name="tags")] = None,
+        match_all_tags: Annotated[
+            bool,
+            strawberry.argument(name="matchAllTags"),
+        ] = False,
+    ) -> Optional[CollectionType]:
         user = require_user(info)
         collection = get_collection_by_slug(slug)
         if collection is None:
             return None
-        return to_collection_type(collection, user)
-
+        return to_collection_type(
+            collection,
+            user,
+            selected_tags=tags,
+            match_all_tags=match_all_tags,
+        )

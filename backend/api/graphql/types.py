@@ -91,6 +91,7 @@ class CollectionItemType:
     link: Optional[str]
     price: Optional[float]
     currency: Optional[str]
+    tags: list[str]
     image_url: Optional[str] = strawberry.field(name="imageUrl")
     is_added: bool = strawberry.field(name="isAdded")
     wish_item_id: Optional[strawberry.ID] = strawberry.field(name="wishItemId")
