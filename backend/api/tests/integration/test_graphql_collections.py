@@ -35,6 +35,33 @@ def test_collections_home_returns_sections_with_hardcoded_collections(gql, acces
     assert sections[2]["collections"][0]["title"] == "Spooky Seasons"
 
 
+def test_collections_home_filters_collections_by_search_query(gql, access_token):
+    response = gql(
+        """
+        query($search: String) {
+          collectionsHome(search: $search) {
+            sections {
+              key
+              collections {
+                slug
+                title
+              }
+            }
+          }
+        }
+        """,
+        variables={"search": "  paperwhite "},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    sections = payload["data"]["collectionsHome"]["sections"]
+    assert [section["key"] for section in sections] == ["for_you"]
+    assert [collection["slug"] for collection in sections[0]["collections"]] == ["book-lovers"]
+
+
 def test_collection_query_returns_items_and_added_state(gql, access_token, user):
     collection = Collection.objects.get(slug="for-second-half")
     first_item = collection.items.order_by("sort_order", "id").first()
@@ -140,6 +167,29 @@ def test_collection_query_supports_match_all_tags(gql, access_token):
     assert "errors" not in payload
     assert [item["title"] for item in payload["data"]["collection"]["items"]] == [
         "Подписка на аудиокниги",
+    ]
+
+
+def test_collection_query_filters_items_by_search_query(gql, access_token):
+    response = gql(
+        """
+        query($slug: String!, $search: String) {
+          collection(slug: $slug, search: $search) {
+            items {
+              title
+            }
+          }
+        }
+        """,
+        variables={"slug": "for-second-half", "search": " spa "},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    assert [item["title"] for item in payload["data"]["collection"]["items"]] == [
+        "Набор ухода за кожей",
     ]
 
 

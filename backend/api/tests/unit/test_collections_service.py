@@ -1,6 +1,7 @@
 import pytest
 
 from api.graphql.collections.service import (
+    filter_collection_items_by_search,
     filter_collection_items_by_tags,
     to_collection_item_type,
     to_collection_type,
@@ -88,6 +89,33 @@ def test_filter_collection_items_by_tags_matches_any_selected_tag():
     assert [item.title for item in result] == ["Reader", "Novel", "Audio"]
 
 
+def test_filter_collection_items_by_search_matches_title_description_and_tags():
+    collection = Collection.objects.create(
+        slug="search-books",
+        title="Search Books",
+        section=Collection.Section.FOR_YOU,
+    )
+    first = CollectionItem.objects.create(
+        collection=collection,
+        title="Чайный набор",
+        description="Для неспешных домашних вечеров",
+        tags=["Уют"],
+    )
+    second = CollectionItem.objects.create(
+        collection=collection,
+        title="Настольная лампа",
+        description="Мягкий свет для работы",
+        tags=["Дом"],
+    )
+
+    result = filter_collection_items_by_search(
+        [first, second],
+        "  чай   уют ",
+    )
+
+    assert [item.title for item in result] == ["Чайный набор"]
+
+
 def test_to_collection_type_can_filter_items_by_all_selected_tags(user):
     collection = Collection.objects.create(
         slug="filter-all-books",
@@ -119,3 +147,30 @@ def test_to_collection_type_can_filter_items_by_all_selected_tags(user):
     assert result.tags == ["Саморазвитие", "Фантастика"]
     assert result.items_count == 12
     assert [item.id for item in result.items] == [str(matching_item.id)]
+
+
+def test_to_collections_home_type_can_filter_by_search_query_using_item_data():
+    matching = Collection.objects.create(
+        slug="reader-picks",
+        title="Reader Picks",
+        section=Collection.Section.FOR_YOU,
+        sort_order=10,
+    )
+    CollectionItem.objects.create(
+        collection=matching,
+        title="Редкий ридер Aurora",
+    )
+    Collection.objects.create(
+        slug="home-picks",
+        title="Home Picks",
+        section=Collection.Section.BY_CHARACTER,
+        sort_order=10,
+    )
+
+    result = to_collections_home_type(
+        Collection.objects.order_by("section", "sort_order", "id"),
+        search_query="aurora",
+    )
+
+    assert [section.key for section in result.sections] == ["for_you"]
+    assert [collection.slug for collection in result.sections[0].collections] == ["reader-picks"]
