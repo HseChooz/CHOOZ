@@ -42,6 +42,159 @@ def get_collection_item(collection_item_id: str) -> CollectionItem:
         gql_error("COLLECTION_ITEM_NOT_FOUND", "Collection item not found")
 
 
+def normalize_tags(tags: Iterable[str] | None) -> list[str]:
+    normalized_tags: list[str] = []
+    seen_tags: set[str] = set()
+
+    for tag in tags or []:
+        value = (tag or "").strip()
+        if not value:
+            continue
+        key = value.casefold()
+        if key in seen_tags:
+            continue
+        seen_tags.add(key)
+        normalized_tags.append(value)
+
+    return normalized_tags
+
+
+def normalize_search_terms(search_query: str | None) -> list[str]:
+    normalized_terms: list[str] = []
+    seen_terms: set[str] = set()
+
+    for part in (search_query or "").split():
+        value = part.strip().casefold()
+        if not value or value in seen_terms:
+            continue
+        seen_terms.add(value)
+        normalized_terms.append(value)
+
+    return normalized_terms
+
+
+def matches_search_terms(search_terms: Iterable[str], values: Iterable[str | None]) -> bool:
+    normalized_terms = list(search_terms)
+    if not normalized_terms:
+        return True
+
+    haystack = " ".join(value.casefold() for value in values if value)
+    return all(term in haystack for term in normalized_terms)
+
+
+def collection_available_tags(
+    collection: Collection,
+    collection_items: Iterable[CollectionItem] | None = None,
+) -> list[str]:
+    available_tags = normalize_tags(collection.tags or [])
+    if available_tags:
+        return available_tags
+
+    inferred_tags: list[str] = []
+    seen_tags: set[str] = set()
+
+    for item in collection_items or collection.items.all():
+        for tag in normalize_tags(getattr(item, "tags", []) or []):
+            key = tag.casefold()
+            if key in seen_tags:
+                continue
+            seen_tags.add(key)
+            inferred_tags.append(tag)
+
+    return inferred_tags
+
+
+def filter_collection_items_by_tags(
+    collection_items: Iterable[CollectionItem],
+    selected_tags: Iterable[str] | None,
+    *,
+    match_all_tags: bool = False,
+) -> list[CollectionItem]:
+    normalized_selected_tags = normalize_tags(selected_tags)
+    if not normalized_selected_tags:
+        return list(collection_items)
+
+    selected_tag_keys = {tag.casefold() for tag in normalized_selected_tags}
+    filtered_items: list[CollectionItem] = []
+
+    for item in collection_items:
+        item_tag_keys = {
+            tag.casefold()
+            for tag in normalize_tags(getattr(item, "tags", []) or [])
+        }
+        if not item_tag_keys:
+            continue
+
+        if match_all_tags and selected_tag_keys.issubset(item_tag_keys):
+            filtered_items.append(item)
+            continue
+
+        if not match_all_tags and item_tag_keys.intersection(selected_tag_keys):
+            filtered_items.append(item)
+
+    return filtered_items
+
+
+def filter_collection_items_by_search(
+    collection_items: Iterable[CollectionItem],
+    search_query: str | None,
+) -> list[CollectionItem]:
+    normalized_terms = normalize_search_terms(search_query)
+    if not normalized_terms:
+        return list(collection_items)
+
+    filtered_items: list[CollectionItem] = []
+
+    for item in collection_items:
+        if matches_search_terms(
+            normalized_terms,
+            [
+                item.title,
+                item.description,
+                item.link,
+                *normalize_tags(getattr(item, "tags", []) or []),
+            ],
+        ):
+            filtered_items.append(item)
+
+    return filtered_items
+
+
+def filter_collections_by_search(
+    collections: Iterable[Collection],
+    search_query: str | None,
+) -> list[Collection]:
+    normalized_terms = normalize_search_terms(search_query)
+    if not normalized_terms:
+        return list(collections)
+
+    filtered_collections: list[Collection] = []
+
+    for collection in collections:
+        collection_items = list(collection.items.all())
+        search_values = [
+            collection.title,
+            collection.subtitle,
+            collection.description,
+            collection.badge,
+            *normalize_tags(collection.tags or []),
+        ]
+        for item in collection_items:
+            search_values.extend(
+                [
+                    item.title,
+                    item.description,
+                    item.link,
+                    *normalize_tags(getattr(item, "tags", []) or []),
+                ]
+            )
+
+        if matches_search_terms(normalized_terms, search_values):
+            filtered_collections.append(collection)
+
+    return filtered_collections
+
+
 def build_collection_item_wish_map(
     user,
     collection_items: Iterable[CollectionItem],
@@ -95,14 +248,28 @@ def to_collection_item_type(
         link=item.link or None,
         price=float(item.price) if item.price is not None else None,
         currency=item.currency or None,
+        tags=normalize_tags(item.tags or []),
         image_url=item.image_url or None,
         is_added=wish_item is not None,
         wish_item_id=str(wish_item.id) if wish_item is not None else None,
     )
 
 
-def to_collection_type(collection: Collection, user) -> CollectionType:
-    items = list(collection.items.all())
+def to_collection_type(
+    collection: Collection,
+    user,
+    *,
+    selected_tags: Iterable[str] | None = None,
+    match_all_tags: bool = False,
+    search_query: str | None = None,
+) -> CollectionType:
+    all_items = list(collection.items.all())
+    items = filter_collection_items_by_tags(
+        all_items,
+        selected_tags,
+        match_all_tags=match_all_tags,
+    )
+    items = filter_collection_items_by_search(items, search_query)
     wish_map = build_collection_item_wish_map(user, items)
     return CollectionType(
         id=str(collection.id),
@@ -114,19 +281,24 @@ def to_collection_type(collection: Collection, user) -> CollectionType:
         cover_image_url=collection.cover_image_url or None,
         section_key=collection.section,
         section_title=collection.get_section_display(),
-        tags=[str(tag) for tag in (collection.tags or [])],
+        tags=collection_available_tags(collection, all_items),
         items_count=_items_count(collection),
         items=[to_collection_item_type(item, wish_map.get(item.id)) for item in items],
     )
 
 
-def to_collections_home_type(collections: Iterable[Collection]) -> CollectionsHomeType:
+def to_collections_home_type(
+    collections: Iterable[Collection],
+    *,
+    search_query: str | None = None,
+) -> CollectionsHomeType:
     sections_map: OrderedDict[str, CollectionSectionType] = OrderedDict()
+    filtered_collections = filter_collections_by_search(collections, search_query)
 
     for section in SECTION_ORDER:
         section_collections = [
             collection
-            for collection in collections
+            for collection in filtered_collections
             if collection.section == section
         ]
         if not section_collections:

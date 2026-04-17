@@ -112,6 +112,7 @@ class CollectionItem(models.Model):
         default="",
     )
     image_url = models.URLField(blank=True, default="")
+    tags = models.JSONField(default=list, blank=True)
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:

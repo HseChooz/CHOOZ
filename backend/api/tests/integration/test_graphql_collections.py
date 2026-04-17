@@ -35,6 +35,33 @@ def test_collections_home_returns_sections_with_hardcoded_collections(gql, acces
     assert sections[2]["collections"][0]["title"] == "Spooky Seasons"
 
 
+def test_collections_home_filters_collections_by_search_query(gql, access_token):
+    response = gql(
+        """
+        query($search: String) {
+          collectionsHome(search: $search) {
+            sections {
+              key
+              collections {
+                slug
+                title
+              }
+            }
+          }
+        }
+        """,
+        variables={"search": "  paperwhite "},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    sections = payload["data"]["collectionsHome"]["sections"]
+    assert [section["key"] for section in sections] == ["for_you"]
+    assert [collection["slug"] for collection in sections[0]["collections"]] == ["book-lovers"]
+
+
 def test_collection_query_returns_items_and_added_state(gql, access_token, user):
     collection = Collection.objects.get(slug="for-second-half")
     first_item = collection.items.order_by("sort_order", "id").first()
@@ -62,6 +89,7 @@ def test_collection_query_returns_items_and_added_state(gql, access_token, user)
             items {
               id
               title
+              tags
               isAdded
               wishItemId
             }
@@ -81,8 +109,88 @@ def test_collection_query_returns_items_and_added_state(gql, access_token, user)
     assert result["itemsCount"] == 18
     assert result["tags"] == ["Женщине", "Мужчине"]
     assert result["items"][0]["id"] == str(first_item.id)
+    assert result["items"][0]["tags"] == ["Женщине"]
     assert result["items"][0]["isAdded"] is True
     assert result["items"][0]["wishItemId"] == str(linked_wish.id)
+
+
+def test_collection_query_filters_items_by_single_tag(gql, access_token):
+    response = gql(
+        """
+        query($slug: String!, $tags: [String!]) {
+          collection(slug: $slug, tags: $tags) {
+            tags
+            items {
+              title
+              tags
+            }
+          }
+        }
+        """,
+        variables={"slug": "book-lovers", "tags": ["Саморазвитие"]},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    result = payload["data"]["collection"]
+    assert result["tags"] == ["Саморазвитие", "Для детей", "Фантастика"]
+    assert [item["title"] for item in result["items"]] == [
+        "Kindle Paperwhite",
+        "Подписка на аудиокниги",
+    ]
+
+
+def test_collection_query_supports_match_all_tags(gql, access_token):
+    response = gql(
+        """
+        query($slug: String!, $tags: [String!], $matchAllTags: Boolean!) {
+          collection(slug: $slug, tags: $tags, matchAllTags: $matchAllTags) {
+            items {
+              title
+              tags
+            }
+          }
+        }
+        """,
+        variables={
+            "slug": "book-lovers",
+            "tags": ["Саморазвитие", "Фантастика"],
+            "matchAllTags": True,
+        },
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    assert [item["title"] for item in payload["data"]["collection"]["items"]] == [
+        "Подписка на аудиокниги",
+    ]
+
+
+def test_collection_query_filters_items_by_search_query(gql, access_token):
+    response = gql(
+        """
+        query($slug: String!, $search: String) {
+          collection(slug: $slug, search: $search) {
+            items {
+              title
+            }
+          }
+        }
+        """,
+        variables={"slug": "for-second-half", "search": " spa "},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert "errors" not in payload
+    assert [item["title"] for item in payload["data"]["collection"]["items"]] == [
+        "Набор ухода за кожей",
+    ]
 
 
 def test_add_collection_item_to_wishlist_creates_linked_wish_item(gql, access_token, user):
