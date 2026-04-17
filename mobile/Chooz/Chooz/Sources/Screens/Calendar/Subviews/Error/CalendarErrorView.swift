@@ -27,7 +27,7 @@ struct CalendarErrorView: View {
                 title: "Попробовать ещё раз",
                 backgroundColor: Colors.Blue.blue500,
                 foregroundColor: Colors.Common.white,
-                action: { eventsHandler.getEvents() }
+                action: { eventsHandler.getEvents(force: true) }
             )
         }
         .padding(.horizontal, 52.0)

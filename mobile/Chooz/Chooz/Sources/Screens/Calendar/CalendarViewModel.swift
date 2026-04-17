@@ -15,6 +15,7 @@ final class CalendarViewModel:
     var selectedEvent: EventItem?
     var isEventFormPresented: Bool = false
     private(set) var pendingEditEvent: EventItem?
+    private var isDataLoaded: Bool = false
     
     var eventFormType: EventFormType {
         pendingEditEvent.map { .edit($0) } ?? .add
@@ -32,12 +33,14 @@ final class CalendarViewModel:
     init(
         router: CalendarRouter,
         interactor: CalendarInteractor,
+        userDefaultsService: UserDefaultsService,
         notificationService: NotificationService,
         toastManager: ToastManager,
         analytics: CalendarAnalytics
     ) {
         self.router = router
         self.interactor = interactor
+        self.userDefaultsService = userDefaultsService
         self.notificationService = notificationService
         self.toastManager = toastManager
         self.analytics = analytics
@@ -45,7 +48,14 @@ final class CalendarViewModel:
     
     // MARK: - Internal Methods
     
-    func getEvents() {
+    func onCalendarAppear() {
+        getEvents()
+        rescheduleNotificationsFromLoadedStateIfNeeded()
+    }
+    
+    func getEvents(force: Bool = false) {
+        guard force || !isDataLoaded else { return }
+        
         getEventsTask?.cancel()
         
         getEventsTask = Task {
@@ -55,6 +65,7 @@ final class CalendarViewModel:
                 let events = try await interactor.getEvents()
                 viewState = events.isEmpty ? .empty : .loaded(events)
                 notificationService.rescheduleNotifications(for: events)
+                isDataLoaded = true
             } catch {
                 if !Task.isCancelled {
                     viewState = .error
@@ -110,7 +121,6 @@ final class CalendarViewModel:
                         repeatYearly: false
                     )
                     mutateEvents { $0.append(newItem) }
-                    notificationService.scheduleNotification(for: newItem)
                     analytics.trackEventAdded(title: title)
                     toastManager.showSuccessBlue("Добавлено новое событие")
                 }
@@ -162,8 +172,8 @@ final class CalendarViewModel:
     }
     
     func toggleNotification(for eventId: String, enabled: Bool) {
-        toggleEventTask?.cancel()
-        toggleEventTask = Task {
+        toggleNotificationTask?.cancel()
+        toggleNotificationTask = Task {
             do {
                 let updatedItem = try await interactor.updateEvent(id: eventId, notifyEnabled: enabled)
                 mutateEvents { items in
@@ -188,8 +198,8 @@ final class CalendarViewModel:
     }
     
     func toggleRepeatYearly(for eventId: String, enabled: Bool) {
-        toggleEventTask?.cancel()
-        toggleEventTask = Task {
+        toggleRepeatYearlyTask?.cancel()
+        toggleRepeatYearlyTask = Task {
             do {
                 let updatedItem = try await interactor.updateEvent(id: eventId, repeatYearly: enabled)
                 mutateEvents { items in
@@ -198,6 +208,8 @@ final class CalendarViewModel:
                     }
                 }
                 selectedEvent = updatedItem
+                notificationService.cancelNotification(for: updatedItem.id)
+                notificationService.scheduleNotification(for: updatedItem)
             } catch {
                 if !Task.isCancelled {
                     toastManager.showError("Не удалось обновить повтор")
@@ -210,6 +222,7 @@ final class CalendarViewModel:
     
     private let router: CalendarRouter
     private let interactor: CalendarInteractor
+    private let userDefaultsService: UserDefaultsService
     private let notificationService: NotificationService
     private let toastManager: ToastManager
     private let analytics: CalendarAnalytics
@@ -217,14 +230,21 @@ final class CalendarViewModel:
     private var getEventsTask: Task<Void, Never>?
     private var saveEventTask: Task<Void, Never>?
     private var deleteEventTask: Task<Void, Never>?
-    private var toggleEventTask: Task<Void, Never>?
+    private var toggleNotificationTask: Task<Void, Never>?
+    private var toggleRepeatYearlyTask: Task<Void, Never>?
     
     // MARK: - Private Methods
+    
+    private func rescheduleNotificationsFromLoadedStateIfNeeded() {
+        guard userDefaultsService.notificationsEnabled else { return }
+        guard case .loaded(let events) = viewState else { return }
+        notificationService.rescheduleNotifications(for: events)
+    }
     
     private func mutateEvents(_ transform: (inout [EventItem]) -> Void) {
         var current = events
         transform(&current)
-        current.sort { $0.date < $1.date }
+        current.sort { $0.calendarDisplayDate < $1.calendarDisplayDate }
         withAnimation(.easeInOut(duration: 0.3)) {
             viewState = current.isEmpty ? .empty : .loaded(current)
         }

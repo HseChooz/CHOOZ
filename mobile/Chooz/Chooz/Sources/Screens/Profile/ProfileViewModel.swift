@@ -33,15 +33,20 @@ final class ProfileViewModel {
     
     var selectedSegment: ProfileSegment = .wishlist
     
+    private var isDataLoaded: Bool = false
+    
     // MARK: - Internal Methods
     
-    func fetchProfile() {
+    func fetchProfile(force: Bool = false) {
+        guard force || !isDataLoaded else { return }
+        
         analytics.trackScreenViewed()
         Task {
             await profileService.fetchMe()
             if let userId = profileService.userId {
                 analytics.setUserProfileID(userId)
             }
+            isDataLoaded = true
         }
     }
     

@@ -4,10 +4,10 @@
 
 Репозиторий состоит из двух основных частей:
 
-- `backend/` — backend на Django с GraphQL API;
-- `mobile/Chooz/` — iOS-приложение на SwiftUI и Tuist.
+- `backend/` — Django backend с единым GraphQL API;
+- `mobile/Chooz/` — iOS-клиент на SwiftUI, UIKit и Tuist.
 
-На текущем этапе проект представляет собой продуктовый монолит с отдельным мобильным клиентом.
+По архитектурному смыслу это продуктовый монолит с отдельным мобильным клиентом. Backend и iOS развиваются в одном репозитории и синхронизируются через GraphQL-контракт.
 
 ## Backend
 
@@ -21,70 +21,96 @@ Backend построен как Django-проект `config` с одним ос�
 - `/admin/` — Django admin;
 - `/api/graphql/` — основной GraphQL endpoint.
 
+Маршрут `/api/graphql/` обслуживает кастомный `AuthGraphQLView`, который пытается поднять пользователя из JWT перед обработкой запроса. Это означает, что для клиента весь основной backend-сценарий сконцентрирован в одном GraphQL endpoint, а контекст пользователя пробрасывается прямо в резолверы.
+
 ### Слои backend
 
 #### 1. Конфигурация проекта
 
-- `backend/config/settings.py` — настройки Django, БД, middleware и окружения;
-- `backend/config/urls.py` — корневые маршруты;
-- `backend/config/asgi.py` и `backend/config/wsgi.py` — entrypoints для запуска.
+- `backend/config/settings.py` — базовые настройки Django, БД, middleware и интеграций;
+- `backend/config/settings_test.py` — отдельные настройки для тестов;
+- `backend/config/urls.py` — корневые URL;
+- `backend/config/asgi.py` и `backend/config/wsgi.py` — точки запуска.
 
 #### 2. Доменные модели
 
-Ключевые модели сейчас находятся в `backend/api/models.py`:
+Основные доменные сущности сейчас сосредоточены в `backend/api/models.py`:
 
-- `GoogleAccount` и `YandexAccount` — связи пользователя с внешними провайдерами авторизации;
-- `WishItem` — элементы вишлиста;
-- `Event` — события календаря.
+- `AppleAccount` и `YandexAccount` — привязки пользователя к внешним провайдерам авторизации;
+- `WishItem` — элементы личного вишлиста с ценой, валютой, ссылкой, изображением и опциональной связью с элементом подборки;
+- `Event` — события календаря с флагами напоминания и ежегодного повтора;
+- `Collection` — подборка подарков;
+- `CollectionItem` — отдельный элемент подборки.
+
+Связь `WishItem -> CollectionItem` показывает важный архитектурный сдвиг: подборки уже не изолированный read-only-контент, а часть сценария добавления подарков в личный вишлист.
 
 #### 3. API-слой
 
-GraphQL-схема собирается в `backend/api/graphql/schema.py` из отдельных модулей:
+GraphQL-схема собирается в `backend/api/graphql/schema.py` из отдельных доменных модулей:
 
 - `auth`;
 - `wish_items`;
-- `events`.
+- `events`;
+- `collections`.
 
-Внутри каждого доменного модуля логика разделена на:
+Внутри каждого доменного модуля логика разделена на три уровня:
 
 - `queries.py` — GraphQL queries;
 - `mutations.py` — GraphQL mutations;
-- `service.py` — прикладные helper/service-функции.
+- `service.py` — прикладная логика и преобразование моделей в GraphQL-типы.
 
-Это даёт простую модульную структуру: transport и schema-описание лежат рядом с прикладной логикой по домену.
+Это оставляет transport-слой тонким и удерживает бизнес-логику рядом с конкретным доменом.
 
-#### 4. Аутентификация
+#### 4. Аутентификация и сессии
 
-Запросы приходят через кастомный `AuthGraphQLView` в `backend/api/urls.py`.
+Backend опирается на `djangorestframework-simplejwt` и поддерживает:
 
-Аутентификация опирается на:
+- вход через Apple;
+- вход через Яндекс;
+- refresh access token;
+- удаление собственного аккаунта.
 
-- `djangorestframework-simplejwt`;
-- `backend/api/middleware.py`;
-- доменные auth-модули для внешних провайдеров, включая Яндекс и Google.
-
-С точки зрения клиента backend сейчас предоставляет единый GraphQL endpoint, а пользовательский контекст пробрасывается в resolvers через JWT.
+На backend сейчас нет опубликованной GraphQL-мутации `loginWithGoogle`, поэтому рабочий серверный auth-контракт ограничен Apple и Яндексом.
 
 #### 5. Работа с файлами
 
-Для файлов и изображений используется S3-совместимое хранилище через MinIO:
+Для изображений вишлиста используется S3-совместимое хранилище через `backend/api/storage/minio.py`.
 
-- `backend/api/storage/minio.py`.
+Сценарий выглядит так:
 
-Для `WishItem` backend хранит ключ объекта, а наружу отдаёт presigned URL.
+1. клиент запрашивает presigned upload URL;
+2. загружает файл напрямую в объектное хранилище;
+3. вызывает отдельную мутацию привязки ключа к `WishItem`.
 
-#### 6. Тесты
+На стороне модели хранится `image_key`, а наружу GraphQL отдаёт готовый `imageUrl`.
+
+#### 6. Подборки
+
+Домен `collections` уже оформлен как отдельный backend-срез:
+
+- есть `collectionsHome` для выдачи секций подборок;
+- есть `collection(slug: ...)` для детального экрана подборки;
+- есть мутации добавления и удаления элемента подборки из вишлиста;
+- порядок секций фиксирован через enum `Collection.Section`;
+- в миграциях и тестах уже присутствуют seed-данные для подборок.
+
+Это сейчас самый явный backend-след второй версии продукта.
+
+#### 7. Тесты
 
 Тесты разделены на:
 
-- `backend/api/tests/unit/` — unit-тесты сервисного слоя и middleware;
+- `backend/api/tests/unit/` — unit-тесты сервисов, middleware и доменной логики;
 - `backend/api/tests/integration/` — интеграционные тесты GraphQL API.
+
+Покрываются auth, wishlist, events и collections.
 
 ### Архитектурные особенности backend
 
-- Backend сейчас организован как один Django app без выделения на несколько приложений по bounded context.
-- Основной публичный интерфейс — GraphQL.
-- Доменные модули уже отделены по функциональности, что упрощает дальнейшее расширение под v2.
+- Backend остаётся одним Django app без разбиения на несколько приложений по bounded context.
+- Основной внешний контракт — GraphQL, а не REST.
+- Домены уже выделены по папкам, даже если физически живут в одном приложении.
+- Подборки встроены в существующий сценарий вишлиста, а не развиваются как отдельный subsystem.
 
 ## iOS
 
@@ -92,45 +118,48 @@ GraphQL-схема собирается в `backend/api/graphql/schema.py` из 
 
 iOS-приложение собирается через Tuist и использует смешанную архитектуру:
 
-- SwiftUI — для экранов и UI;
-- UIKit — для корневой навигации, `UINavigationController`, `UITabBarController` и hosting-контейнеров.
+- SwiftUI — для экранов и большей части интерфейса;
+- UIKit — для root-навигации, таббара, контейнеров и lifecycle-интеграции.
 
 ### Composition Root
 
 Главная точка сборки зависимостей — `mobile/Chooz/Chooz/Sources/Application/AppContainer.swift`.
 
-Именно здесь создаются:
+В `AppContainer` создаются:
 
-- сетевой слой;
-- сервисы;
+- `ApolloClient` и цепочка сетевых interceptor-ов;
+- сервисы домена и инфраструктуры;
 - фабрики экранов;
-- shared-state зависимости вроде `TokenStorage`, `ToastManager`, `UserDefaultsService`.
+- shared-state зависимости вроде `TokenStorage`, `UserDefaultsService`, `ToastManager`, `AnalyticsService`.
 
 Запуск приложения начинается через `AppBootstraper`, который:
 
+- чистит keychain при первом запуске после установки;
+- настраивает кеш изображений;
+- отправляет lifecycle-аналитику;
 - показывает splash;
-- решает, вести ли пользователя в onboarding;
-- проверяет наличие сессии;
-- роутит пользователя в авторизацию или в основную часть приложения.
+- выбирает маршрут в onboarding, авторизацию или основную часть приложения;
+- валидирует сессию и при необходимости разлогинивает пользователя.
 
 ### Навигация
 
 Навигация централизована в `AppRouter`:
 
 - root построен на `UINavigationController`;
-- таббар инкапсулирован в `MainTabBarController`;
-- активный navigation stack отслеживается внутри роутера.
+- основная пользовательская зона инкапсулирована в `MainTabBarController`;
+- роутер умеет `setRoot`, `push`, `pop`, `present`;
+- активный navigation stack переключается между корневым стеком и текущим табом.
 
-Дополнительно есть `DeepLinkService`, который сейчас умеет открывать social profile по схеме `chooz://profile/:userId`.
+Отдельно есть `DeepLinkService`, который обрабатывает deep link `chooz://profile/:userId` и открывает social profile.
 
 ### Структура экранных модулей
 
-Экранные модули в основном собраны по повторяющемуся паттерну:
+Экранные модули в основном следуют одному и тому же паттерну:
 
-- `Factory` — собирает модуль и зависимости;
-- `Router` — отвечает за навигационные переходы;
-- `Interactor` — координирует прикладные действия экрана;
-- `ViewModel` — управляет состоянием UI;
+- `Factory` — собирает зависимости и экран;
+- `Router` — описывает навигацию внутри модуля;
+- `Interactor` — инкапсулирует прикладные действия;
+- `ViewModel` — держит состояние и side effects UI;
 - `View` — SwiftUI-представление.
 
 Этот паттерн хорошо виден на модулях:
@@ -139,43 +168,57 @@ iOS-приложение собирается через Tuist и использ
 - `Calendar`;
 - `Onboarding`;
 - `Profile`;
-- `Settings`.
+- `Settings`;
+- `SocialProfile`.
 
 ### Сетевой слой
 
-Основной клиент — Apollo GraphQL.
+Клиентский networking построен на Apollo GraphQL.
 
-Ключевые части:
+Ключевые элементы:
 
-- `AppContainer` создаёт `ApolloClient`;
-- `AuthInterceptorProvider` добавляет interceptors;
+- `AppContainer` создаёт основной `ApolloClient` и отдельный `refreshClient`;
+- `AuthInterceptorProvider` собирает цепочку interceptor-ов;
 - `AuthorizationInterceptor` подставляет access token;
-- `TokenRefreshInterceptor` занимается обновлением токена и обработкой истечения сессии.
-
-GraphQL-операции лежат в:
-
-- `mobile/Chooz/Chooz/Sources/GraphQL/operations/`.
-
-Сгенерированный код лежит в:
-
-- `mobile/Chooz/Chooz/Sources/GraphQL/Generated/`.
+- `TokenRefreshInterceptor` обновляет токены и сообщает о протухшей сессии;
+- GraphQL-операции лежат в `mobile/Chooz/Chooz/Sources/GraphQL/operations/`;
+- сгенерированный код лежит в `mobile/Chooz/Chooz/Sources/GraphQL/Generated/`.
 
 ### Прикладные сервисы
 
-В отдельные сервисы вынесены основные cross-cutting и domain-specific зависимости:
+В отдельные сервисы вынесены основные domain и cross-cutting зависимости:
 
 - `WishlistService`;
 - `CalendarService`;
 - `ProfileService`;
-- `YandexAuthService`;
-- `GoogleAuthService`;
 - `SessionService`;
 - `NotificationService`;
 - `AnalyticsService`;
-- `DeepLinkService`.
+- `DeepLinkService`;
+- `AppleAuthService`;
+- `YandexAuthService`;
+- `GoogleAuthService`.
 
-### Текущее состояние клиентской архитектуры
+При этом важно различать уровень готовности:
 
-- Основной каркас приложения уже готов под MVP.
-- Часть направлений v2 уже отражена в структуре проекта, но ещё не полностью реализована в UI и backend.
-- На текущем этапе архитектура iOS ориентирована на быстрое развитие продуктовых модулей через фабрики и изолированные сервисы.
+- инфраструктура под Google Sign-In в клиенте есть;
+- экран авторизации сейчас показывает вход через Apple и Яндекс;
+- backend-контракт на данный момент тоже опирается именно на Apple и Яндекс.
+
+### Пользовательские сценарии, уже закреплённые в архитектуре
+
+Текущая клиентская архитектура уже обслуживает несколько устойчивых сценариев:
+
+- onboarding;
+- авторизация;
+- личный вишлист с загрузкой изображений;
+- календарь событий с локальными уведомлениями и ежегодным повтором;
+- профиль и настройки;
+- удаление аккаунта;
+- просмотр чужого вишлиста через social profile.
+
+### Текущее состояние архитектуры
+
+- Core-сценарии мобильного приложения уже собраны и изолированы по сервисам и модулям.
+- Backend ушёл дальше MVP и уже содержит отдельный домен подборок.
+- Основное асинхронное расхождение между слоями сейчас в том, что backend-подборки уже оформлены, а основной iOS UI ещё сосредоточен на wishlist/calendar/profile flow.

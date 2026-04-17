@@ -48,6 +48,10 @@ final class AppContainer {
         return ApolloClient(networkTransport: transport, store: store)
     }()
     
+    lazy var appleAuthService: AppleAuthService = AppleAuthService(
+        apolloClient: apolloClient,
+        tokenStorage: tokenStorage
+    )
     lazy var googleAuthService: GoogleAuthService = GoogleAuthService(
         apolloClient: apolloClient,
         tokenStorage: tokenStorage
@@ -94,6 +98,7 @@ final class AppContainer {
         sessionServiceProvider: { [unowned self] in self.sessionService },
         userDefaultsService: userDefaultsService,
         notificationService: notificationService,
+        calendarService: calendarService,
         toastManager: toastManager,
         analyticsService: analyticsService
     )
@@ -108,6 +113,7 @@ final class AppContainer {
         appRouter: appRouter,
         profileFactory: profileFactory,
         calendarService: calendarService,
+        userDefaultsService: userDefaultsService,
         notificationService: notificationService,
         toastManager: toastManager,
         analyticsService: analyticsService
@@ -118,6 +124,7 @@ final class AppContainer {
     )
     lazy var authorizationFactory: AuthorizationFactory = AuthorizationFactory(
         appRouter: appRouter,
+        appleAuthService: appleAuthService,
         googleAuthService: googleAuthService,
         yandexAuthService: yandexAuthService,
         toastManager: toastManager,

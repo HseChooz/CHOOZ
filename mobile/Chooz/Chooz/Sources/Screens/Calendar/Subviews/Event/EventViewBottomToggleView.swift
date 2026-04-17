@@ -7,13 +7,13 @@ struct EventViewBottomToggleView: View {
     init(
         icon: Image,
         activeIcon: Image,
-        isActive: Binding<Bool>,
-        action: @escaping (Bool) -> Void
+        isActive: Bool,
+        onToggle: @escaping (Bool) -> Void
     ) {
         self.icon = icon
         self.activeIcon = activeIcon
-        self._isActive = isActive
-        self.action = action
+        self.isActive = isActive
+        self.onToggle = onToggle
     }
     
     // MARK: - Body
@@ -21,8 +21,7 @@ struct EventViewBottomToggleView: View {
     var body: some View {
         Button(
             action: {
-                isActive.toggle()
-                action(isActive)
+                onToggle(!isActive)
             },
             label: {
                 (isActive ? activeIcon : icon)
@@ -39,6 +38,6 @@ struct EventViewBottomToggleView: View {
     
     private let icon: Image
     private let activeIcon: Image
-    @Binding private var isActive: Bool
-    private let action: @MainActor (Bool) -> Void
+    private let isActive: Bool
+    private let onToggle: @MainActor (Bool) -> Void
 }

@@ -1,5 +1,6 @@
-import SwiftUI
+import Foundation
 import Observation
+import SwiftUI
 
 @MainActor
 @Observable
@@ -25,11 +26,38 @@ final class AuthorizationViewModel {
     
     // MARK: - Internal Methods
     
+    func signInWithApple() {
+        signInTask?.cancel()
+        isLoading = true
+        
+        signInTask = Task {
+            defer { isLoading = false }
+            
+            do {
+                try await interactor.signInWithApple()
+                analytics.trackAuthCompleted(provider: "apple")
+                router.routeToMainScreen()
+            } catch let error as AuthError {
+                if let content = error.toastContent {
+                    toastManager.showError(content.title, subtitle: content.subtitle)
+                }
+                print("AuthorizationViewModel signInWithApple AuthError=\(error) toastShown=\(error.toastContent != nil)")
+            } catch {
+                let ns = error as NSError
+                print("AuthorizationViewModel signInWithApple non-AuthError type=\(Swift.type(of: error)) describing=\(String(describing: error))")
+                print("AuthorizationViewModel signInWithApple NSError domain=\(ns.domain) code=\(ns.code) userInfo=\(ns.userInfo)")
+                toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
+            }
+        }
+    }
+    
     func signInWithGoogle() {
         signInTask?.cancel()
         isLoading = true
         
         signInTask = Task {
+            defer { isLoading = false }
+            
             do {
                 try await interactor.signInWithGoogle()
                 analytics.trackAuthCompleted(provider: "google")
@@ -42,8 +70,6 @@ final class AuthorizationViewModel {
             } catch {
                 toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
             }
-            
-            isLoading = false
         }
     }
     
@@ -52,6 +78,8 @@ final class AuthorizationViewModel {
         isLoading = true
         
         signInTask = Task {
+            defer { isLoading = false }
+            
             do {
                 try await interactor.signInWithYandex()
                 analytics.trackAuthCompleted(provider: "yandex")
@@ -64,8 +92,6 @@ final class AuthorizationViewModel {
             } catch {
                 toastManager.showError("Что-то пошло не так", subtitle: "Произошла непредвиденная ошибка")
             }
-            
-            isLoading = false
         }
     }
     

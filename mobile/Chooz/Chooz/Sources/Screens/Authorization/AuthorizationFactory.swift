@@ -8,6 +8,7 @@ struct AuthorizationFactory {
     
     init(
         appRouter: AppRouter,
+        appleAuthService: AppleAuthService,
         googleAuthService: GoogleAuthService,
         yandexAuthService: YandexAuthService,
         toastManager: ToastManager,
@@ -15,6 +16,7 @@ struct AuthorizationFactory {
         analyticsService: AnalyticsService
     ) {
         self.appRouter = appRouter
+        self.appleAuthService = appleAuthService
         self.googleAuthService = googleAuthService
         self.yandexAuthService = yandexAuthService
         self.toastManager = toastManager
@@ -28,6 +30,7 @@ struct AuthorizationFactory {
         let router = AuthorizationRouter(appRouter: appRouter, mainTabBarFactory: mainTabBarFactory)
         let interactor = AuthorizationInteractor(
             appRouter: appRouter,
+            appleAuthService: appleAuthService,
             googleAuthService: googleAuthService,
             yandexAuthService: yandexAuthService
         )
@@ -46,6 +49,7 @@ struct AuthorizationFactory {
     // MARK: - Private Properties
     
     private let appRouter: AppRouter
+    private let appleAuthService: AppleAuthService
     private let googleAuthService: GoogleAuthService
     private let yandexAuthService: YandexAuthService
     private let toastManager: ToastManager

@@ -10,6 +10,20 @@ mutation LoginWithGoogle($idToken: String!) {
   }
 }
 
+mutation LoginWithApple($identityToken: String!, $firstName: String, $lastName: String) {
+  loginWithApple(identityToken: $identityToken, firstName: $firstName, lastName: $lastName) {
+    accessToken
+    refreshToken
+    user {
+      id
+      email
+      username
+      firstName
+      lastName
+    }
+  }
+}
+
 mutation LoginWithYandex($oauthToken: String!) {
   loginWithYandex(oauthToken: $oauthToken) {
     accessToken

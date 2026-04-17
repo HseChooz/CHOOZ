@@ -33,6 +33,15 @@ struct WishlistFormView: View {
         .padding(Layout.bottomPadding.value(for: interfaceLayout))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .background(Colors.Common.white)
+        .onChange(of: viewModel.shouldDismissWishForm) { _, shouldDismiss in
+            if shouldDismiss {
+                dismiss()
+                viewModel.acknowledgeWishFormDismiss()
+            }
+        }
+        .onDisappear {
+            viewModel.wishFormDidDisappear()
+        }
     }
     
     // MARK: - Private Types
@@ -69,6 +78,7 @@ struct WishlistFormView: View {
                 }
             )
             .buttonStyle(ScaleButtonStyle())
+            .disabled(viewModel.isWishFormSaving)
         }
         .frame(height: 24.0)
         .frame(maxWidth: .infinity)
@@ -76,12 +86,8 @@ struct WishlistFormView: View {
     
     private var titleRowView: some View {
         TextField(
-            "",
+            "Заголовок",
             text: $viewModel.title,
-            prompt:
-                Text("Заголовок")
-                .font(.velaSans(size: 20.0, weight: .bold))
-                .foregroundStyle(Colors.Common.black)
         )
         .lineLimit(1)
         .font(.velaSans(size: 20.0, weight: .bold))
@@ -105,9 +111,7 @@ struct WishlistFormView: View {
             backgroundColor: viewModel.isSaveEnabled ? Colors.Blue.blue500 : Colors.Neutral.grey200,
             foregroundColor: viewModel.isSaveEnabled ? Colors.Common.white : Colors.Neutral.grey400,
             action: {
-                if viewModel.saveWish() {
-                    dismiss()
-                }
+                viewModel.saveWish()
             }
         )
         .disabled(!viewModel.isSaveEnabled)

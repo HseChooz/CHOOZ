@@ -1,3 +1,4 @@
+import Foundation
 import UserNotifications
 
 @MainActor
@@ -41,17 +42,21 @@ final class NotificationService: NSObject {
     }
     
     func scheduleNotification(for event: EventItem) {
-        guard userDefaultsService.notificationsEnabled,
-              event.notifyEnabled,
-              isEventDateEligible(event.date) else {
+        guard userDefaultsService.notificationsEnabled, event.notifyEnabled else {
             return
         }
         
-        scheduleAllReminders(for: event)
+        if event.repeatYearly {
+            scheduleYearlyReminders(for: event)
+        } else {
+            guard isEventDateEligible(event.date) else { return }
+            scheduleAllReminders(for: event)
+        }
     }
     
     func cancelNotification(for eventId: String) {
-        let identifiers = Static.offsets.map { notificationIdentifier(for: eventId, offset: $0) }
+        var identifiers = Static.offsets.map { notificationIdentifier(for: eventId, offset: $0) }
+        identifiers.append(fallbackNotificationIdentifier(for: eventId))
         center.removePendingNotificationRequests(withIdentifiers: identifiers)
     }
     
@@ -77,8 +82,12 @@ final class NotificationService: NSObject {
     // MARK: - Private Methods
     
     private func scheduleNotificationIgnoringGlobalFlag(for event: EventItem) {
-        guard isEventDateEligible(event.date) else { return }
-        scheduleAllReminders(for: event)
+        if event.repeatYearly {
+            scheduleYearlyReminders(for: event)
+        } else {
+            guard isEventDateEligible(event.date) else { return }
+            scheduleAllReminders(for: event)
+        }
     }
     
     private func scheduleAllReminders(for event: EventItem) {
@@ -88,6 +97,8 @@ final class NotificationService: NSObject {
         eventDateComponents.minute = 0
         
         guard let eventDate = calendar.date(from: eventDateComponents) else { return }
+        
+        var scheduledAny = false
         
         for offset in Static.offsets {
             guard let fireDate = calendar.date(byAdding: .minute, value: -offset.totalMinutes, to: eventDate),
@@ -108,8 +119,90 @@ final class NotificationService: NSObject {
                 trigger: trigger
             )
             
-            center.add(request)
+            addRequest(request)
+            scheduledAny = true
         }
+        
+        if !scheduledAny, eventDate > .now {
+            scheduleFallbackReminder(for: event, eventDate: eventDate)
+        }
+    }
+    
+    /// Ежегодные напоминания по month/day/hour/minute (тот же `event.id` и суффиксы оффсетов, что и у одноразовых).
+    private func scheduleYearlyReminders(for event: EventItem) {
+        let calendar = Calendar.current
+        let displayDay = calendar.startOfDay(for: event.calendarDisplayDate)
+        var dayComponents = calendar.dateComponents([.year, .month, .day], from: displayDay)
+        dayComponents.hour = Static.eventHour
+        dayComponents.minute = 0
+        guard let eventDateTime = calendar.date(from: dayComponents) else { return }
+        
+        var scheduledAny = false
+        
+        for offset in Static.offsets {
+            guard let fireDate = calendar.date(byAdding: .minute, value: -offset.totalMinutes, to: eventDateTime) else {
+                continue
+            }
+            
+            let matchComponents = calendar.dateComponents([.month, .day, .hour, .minute], from: fireDate)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: matchComponents, repeats: true)
+            
+            let content = UNMutableNotificationContent()
+            content.title = event.title
+            content.body = offset.body(eventTitle: event.title)
+            content.sound = .default
+            
+            let request = UNNotificationRequest(
+                identifier: notificationIdentifier(for: event.id, offset: offset),
+                content: content,
+                trigger: trigger
+            )
+            
+            addRequest(request)
+            scheduledAny = true
+        }
+        
+        if !scheduledAny {
+            let matchComponents = calendar.dateComponents([.month, .day, .hour, .minute], from: eventDateTime)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: matchComponents, repeats: true)
+            
+            let content = UNMutableNotificationContent()
+            content.title = event.title
+            content.body = "Событие \(event.title) скоро начнётся"
+            content.sound = .default
+            
+            let request = UNNotificationRequest(
+                identifier: fallbackNotificationIdentifier(for: event.id),
+                content: content,
+                trigger: trigger
+            )
+            
+            addRequest(request)
+        }
+    }
+    
+    private func scheduleFallbackReminder(for event: EventItem, eventDate: Date) {
+        let secondsUntilEvent = eventDate.timeIntervalSinceNow
+        guard secondsUntilEvent > Static.minimumFireDelaySeconds else { return }
+        
+        let interval = max(
+            Static.minimumFireDelaySeconds,
+            min(Static.fallbackLeadSeconds, secondsUntilEvent - 1)
+        )
+        
+        let content = UNMutableNotificationContent()
+        content.title = event.title
+        content.body = "Событие \(event.title) скоро начнётся"
+        content.sound = .default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: fallbackNotificationIdentifier(for: event.id),
+            content: content,
+            trigger: trigger
+        )
+        
+        addRequest(request)
     }
     
     private func isEventDateEligible(_ date: Date) -> Bool {
@@ -121,6 +214,20 @@ final class NotificationService: NSObject {
     
     private func notificationIdentifier(for eventId: String, offset: ReminderOffset) -> String {
         "event_\(eventId)_\(offset.suffix)"
+    }
+    
+    private func fallbackNotificationIdentifier(for eventId: String) -> String {
+        "event_\(eventId)_fallback"
+    }
+    
+    private func addRequest(_ request: UNNotificationRequest) {
+        center.add(request) { error in
+            #if DEBUG
+            if let error {
+                print("Notification scheduling failed: \(error.localizedDescription)")
+            }
+            #endif
+        }
     }
     
     // MARK: - Private Types
@@ -147,6 +254,8 @@ final class NotificationService: NSObject {
     
     private enum Static {
         static let eventHour = 10
+        static let fallbackLeadSeconds: TimeInterval = 60
+        static let minimumFireDelaySeconds: TimeInterval = 1
         
         static let offsets: [ReminderOffset] = [
             ReminderOffset(hours: 12, suffix: "12h", label: "Через 12 часов"),

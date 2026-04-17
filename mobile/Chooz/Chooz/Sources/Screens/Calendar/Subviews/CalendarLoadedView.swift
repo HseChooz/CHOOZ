@@ -23,7 +23,7 @@ struct CalendarLoadedView: View {
             }
             .scrollIndicators(.hidden)
             .refreshable {
-                viewModel.getEvents()
+                viewModel.getEvents(force: true)
             }
             
             MainActionButton(
@@ -65,6 +65,7 @@ struct CalendarLoadedView: View {
                 event: event,
                 eventsHandler: viewModel
             )
+            .id("\(event.id)-\(event.notifyEnabled)-\(event.repeatYearly)")
         }
     }
     

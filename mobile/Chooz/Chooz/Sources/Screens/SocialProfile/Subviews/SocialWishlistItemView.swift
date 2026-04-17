@@ -35,7 +35,7 @@ struct SocialWishlistItemView: View {
     
     private enum Layout {
         static let descriptionLineHeight: CGFloat = 22.0
-        static let maxLines: Int = 5
+        static let maxLines: Int = 8
         static let descriptionMaxHeight: CGFloat = descriptionLineHeight * CGFloat(maxLines)
     }
     
@@ -44,6 +44,7 @@ struct SocialWishlistItemView: View {
     private let item: WishlistItem
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     
     private var shareContent: String {
         var text = item.title
@@ -56,28 +57,16 @@ struct SocialWishlistItemView: View {
     // MARK: - Private Views
     
     private var imageView: some View {
-        Group {
-            if let imageUrl = item.imageUrl, let url = URL(string: imageUrl) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    case .failure:
-                        imagePlaceholder
-                    default:
-                        imagePlaceholder
-                            .overlay { ProgressView() }
-                    }
+        imagePlaceholder
+            .overlay {
+                CachedAsyncImage(url: item.imageUrl.flatMap { URL(string: $0) }) {
+                    Color.clear
                 }
-            } else {
-                imagePlaceholder
+                .scaledToFill()
             }
-        }
-        .frame(height: 387.0)
-        .frame(maxWidth: .infinity)
-        .clipped()
+            .frame(height: 387.0)
+            .frame(maxWidth: .infinity)
+            .clipped()
     }
     
     private var imagePlaceholder: some View {
@@ -102,44 +91,42 @@ struct SocialWishlistItemView: View {
             }
             
             if let description = item.description, !description.isEmpty {
-                ScrollView {
+                FadeScrollView(maxHeight: Layout.descriptionMaxHeight) {
                     Text(description)
                         .font(.velaSans(size: 16.0, weight: .semiBold))
                         .foregroundStyle(Colors.Neutral.grey500)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .scrollIndicators(.hidden)
-                .frame(maxHeight: Layout.descriptionMaxHeight)
             }
         }
         .padding(.horizontal, 16.0)
     }
     
     private var toolbarView: some View {
-        HStack(spacing: 16.0) {
-            ShareLink(item: shareContent) {
-                Images.Icons.share
-                    .resizable()
-                    .scaledToFill()
-            }
-            .buttonStyle(ScaleButtonStyle())
-            
-            Button(action: { dismiss() }) {
-                Images.Icons.crossLarge
-                    .resizable()
-                    .scaledToFill()
-                    .foregroundStyle(Colors.Neutral.grey600)
-            }
-            .buttonStyle(ScaleButtonStyle())
+        // TODO: uncomment when ready
+//        HStack(spacing: 16.0) {
+//            ShareLink(item: shareContent) {
+//                Images.Icons.share
+//                    .resizable()
+//                    .scaledToFill()
+//            }
+//            .buttonStyle(ScaleButtonStyle())
+//        }
+//        .frame(width: 64.0, height: 24.0)
+        
+        Button(action: { dismiss() }) {
+            Images.Icons.crossLarge
+                .resizable()
+                .scaledToFill()
+                .frame(width: 24.0, height: 24.0)
         }
-        .frame(width: 64.0, height: 24.0)
+        .buttonStyle(ScaleButtonStyle())
     }
     
     @ViewBuilder
     private var linkButtonView: some View {
-        if item.link != nil {
+        if let link = item.link, let url = URL(string: link) {
             Button(
-                action: { },
+                action: { openURL(url) },
                 label: {
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Colors.Blue.blue500)

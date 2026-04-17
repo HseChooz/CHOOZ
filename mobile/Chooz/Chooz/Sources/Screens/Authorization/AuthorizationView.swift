@@ -36,20 +36,25 @@ struct AuthorizationView: View {
     private var loginButtonsView: some View {
         VStack(spacing: 8.0) {
             AuthScreenButtonView(
-                image: Images.Icons.yandex,
-                title: "Войти через Яндекс",
+                image: Images.Icons.apple,
+                title: "Войти через Apple",
                 style: .primary,
-                action: viewModel.signInWithYandex
+                action: viewModel.signInWithApple
             )
-            .disabled(viewModel.isLoading)
+            
+//            AuthScreenButtonView(
+//                image: Images.Icons.google,
+//                title: "Войти через Google",
+//                style: .secondary,
+//                action: viewModel.signInWithGoogle
+//            )
             
             AuthScreenButtonView(
-                image: Images.Icons.google,
-                title: "Войти через Google",
+                image: Images.Icons.yandex,
+                title: "Войти через Яндекс",
                 style: .secondary,
-                action: viewModel.signInWithGoogle
+                action: viewModel.signInWithYandex
             )
-            .disabled(viewModel.isLoading)
         }
         .padding(.horizontal, 32.0)
     }

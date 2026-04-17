@@ -2,5 +2,5 @@ import Foundation
 
 @MainActor
 protocol CalendarErrorViewEventsHandler {
-    func getEvents()
+    func getEvents(force: Bool)
 }
