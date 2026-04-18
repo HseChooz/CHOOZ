@@ -11,6 +11,15 @@ CHOOZ – мобильное приложение-помощник в подбо
 2. Придумать идею подарка.
 3. Найти объект, который подходит по критериям.
 
+## Основные экраны
+
+<p align="center">
+  <img src="docs/screenshots/main.png" alt="Главный экран" width="24%" />
+  <img src="docs/screenshots/events.png" alt="Экран событий" width="24%" />
+  <img src="docs/screenshots/wish.png" alt="Экран добавления желания" width="24%" />
+  <img src="docs/screenshots/wishlist.png" alt="Экран вишлиста" width="24%" />
+</p>
+
 ## Статус
 
 ### MVP:
