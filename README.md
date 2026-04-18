@@ -14,10 +14,10 @@ CHOOZ – мобильное приложение-помощник в подбо
 ## Основные экраны
 
 <p align="center">
-  <img src="docs/screenshots/main.png" alt="Главный экран" width="245" />
-  <img src="docs/screenshots/events.png" alt="Экран событий" width="245" />
-  <img src="docs/screenshots/wishlist.png" alt="Экран вишлиста" width="245" />
-  <img src="docs/screenshots/wish.png" alt="Экран добавления желания" width="245" />
+  <img src="docs/screenshots/main.png" alt="Главный экран" width="200" />
+  <img src="docs/screenshots/events.png" alt="Экран событий" width="200" />
+  <img src="docs/screenshots/wishlist.png" alt="Экран вишлиста" width="200" />
+  <img src="docs/screenshots/wish.png" alt="Экран добавления желания" width="200" />
 </p>
 
 ## Статус
