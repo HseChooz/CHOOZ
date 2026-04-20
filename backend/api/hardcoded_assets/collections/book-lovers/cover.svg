@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+<rect width="600" height="600" rx="48" fill="#F6EFE7"/>
+<rect x="40" y="40" width="520" height="520" rx="40" fill="#FFFDFB"/>
+<circle cx="458" cy="142" r="86" fill="#E9D9CB"/>
+<path d="M98 420C178 328 256 284 382 250C456 230 506 188 534 132" fill="none" stroke="#795742" stroke-linecap="round" stroke-width="18"/>
+<text x="92" y="468" fill="#201914" font-family="Arial, sans-serif" font-size="34" font-weight="700">BOOK LOVERS</text>
+<text x="92" y="514" fill="#6B6057" font-family="Arial, sans-serif" font-size="22">CHOOZ COLLECTION</text>
+</svg>

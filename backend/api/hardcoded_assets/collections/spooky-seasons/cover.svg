@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+<rect width="600" height="600" rx="48" fill="#F6EDE7"/>
+<rect x="40" y="40" width="520" height="520" rx="40" fill="#FFFDF9"/>
+<circle cx="458" cy="142" r="86" fill="#F0C9AE"/>
+<path d="M98 420C176 330 258 286 390 248C460 226 510 180 540 124" fill="none" stroke="#8A4E24" stroke-linecap="round" stroke-width="18"/>
+<text x="92" y="468" fill="#25160C" font-family="Arial, sans-serif" font-size="34" font-weight="700">SPOOKY</text>
+<text x="92" y="514" fill="#6F5E53" font-family="Arial, sans-serif" font-size="22">CHOOZ COLLECTION</text>
+</svg>

@@ -16,6 +16,7 @@ def test_collections_home_returns_sections_with_hardcoded_collections(gql, acces
               collections {
                 slug
                 title
+                coverImageUrl
                 itemsCount
               }
             }
@@ -31,6 +32,9 @@ def test_collections_home_returns_sections_with_hardcoded_collections(gql, acces
     sections = payload["data"]["collectionsHome"]["sections"]
     assert [section["key"] for section in sections] == ["for_you", "by_character", "editorial"]
     assert sections[0]["collections"][0]["slug"] == "book-lovers"
+    assert sections[0]["collections"][0]["coverImageUrl"] == (
+        "http://testserver/api/assets/collections/book-lovers/cover.svg"
+    )
     assert sections[0]["collections"][0]["itemsCount"] == 15
     assert sections[2]["collections"][0]["title"] == "Spooky Seasons"
 
@@ -83,6 +87,7 @@ def test_collection_query_returns_items_and_added_state(gql, access_token, user)
           collection(slug: $slug) {
             slug
             title
+            coverImageUrl
             sectionKey
             itemsCount
             tags
@@ -90,6 +95,7 @@ def test_collection_query_returns_items_and_added_state(gql, access_token, user)
               id
               title
               tags
+              imageUrl
               isAdded
               wishItemId
             }
@@ -105,11 +111,17 @@ def test_collection_query_returns_items_and_added_state(gql, access_token, user)
     assert "errors" not in payload
     result = payload["data"]["collection"]
     assert result["slug"] == "for-second-half"
+    assert result["coverImageUrl"] == (
+        "http://testserver/api/assets/collections/for-second-half/cover.svg"
+    )
     assert result["sectionKey"] == "editorial"
     assert result["itemsCount"] == 18
     assert result["tags"] == ["Женщине", "Мужчине"]
     assert result["items"][0]["id"] == str(first_item.id)
     assert result["items"][0]["tags"] == ["Женщине"]
+    assert result["items"][0]["imageUrl"] == (
+        "http://testserver/api/assets/collections/for-second-half/lip-tint.svg"
+    )
     assert result["items"][0]["isAdded"] is True
     assert result["items"][0]["wishItemId"] == str(linked_wish.id)
 
@@ -207,6 +219,7 @@ def test_add_collection_item_to_wishlist_creates_linked_wish_item(gql, access_to
           addCollectionItemToWishlist(collectionItemId: $collectionItemId) {
             id
             title
+            imageUrl
             isAdded
             wishItemId
           }
@@ -223,10 +236,22 @@ def test_add_collection_item_to_wishlist_creates_linked_wish_item(gql, access_to
     wish_item = WishItem.objects.get(owner=user, collection_item=collection_item)
     assert result["id"] == str(collection_item.id)
     assert result["title"] == collection_item.title
+    assert result["imageUrl"] == (
+        "http://testserver/api/assets/collections/book-lovers/kindle-paperwhite.svg"
+    )
     assert result["isAdded"] is True
     assert result["wishItemId"] == str(wish_item.id)
     assert wish_item.title == collection_item.title
     assert wish_item.link == collection_item.link
+
+
+def test_hardcoded_asset_endpoint_serves_collection_svg(client):
+    response = client.get("/api/assets/collections/book-lovers/cover.svg")
+
+    assert response.status_code == 200
+    assert response["Content-Type"] == "image/svg+xml"
+    body = b"".join(response.streaming_content)
+    assert b"BOOK LOVERS" in body
 
 
 def test_remove_collection_item_from_wishlist_deletes_linked_wish_item(gql, access_token, user):

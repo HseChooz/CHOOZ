@@ -1,8 +1,10 @@
 import pytest
+from django.test import RequestFactory
 
 from api.graphql.collections.service import (
     filter_collection_items_by_search,
     filter_collection_items_by_tags,
+    resolve_collection_asset_url,
     to_collection_item_type,
     to_collection_type,
     to_collections_home_type,
@@ -57,6 +59,17 @@ def test_to_collection_item_type_marks_item_as_added_when_linked_wish_exists(use
     assert result.wish_item_id == str(wish_item.id)
     assert result.price == 14990.0
     assert result.tags == []
+
+
+def test_resolve_collection_asset_url_builds_absolute_url_for_hardcoded_asset():
+    request = RequestFactory().get("/api/graphql/")
+
+    result = resolve_collection_asset_url(
+        "collections/book-lovers/cover.svg",
+        request=request,
+    )
+
+    assert result == "http://testserver/api/assets/collections/book-lovers/cover.svg"
 
 
 def test_filter_collection_items_by_tags_matches_any_selected_tag():
@@ -174,3 +187,32 @@ def test_to_collections_home_type_can_filter_by_search_query_using_item_data():
 
     assert [section.key for section in result.sections] == ["for_you"]
     assert [collection.slug for collection in result.sections[0].collections] == ["reader-picks"]
+
+
+def test_to_collection_item_type_resolves_hardcoded_image_url(user):
+    request = RequestFactory().get("/api/graphql/")
+    collection = Collection.objects.create(
+        slug="service-images",
+        title="Service Images",
+        section=Collection.Section.FOR_YOU,
+    )
+    collection_item = CollectionItem.objects.create(
+        collection=collection,
+        title="Reader",
+        image_url="collections/book-lovers/kindle-paperwhite.svg",
+    )
+    wish_item = WishItem.objects.create(
+        owner=user,
+        collection_item=collection_item,
+        title=collection_item.title,
+    )
+
+    result = to_collection_item_type(
+        collection_item,
+        wish_item,
+        request=request,
+    )
+
+    assert result.image_url == (
+        "http://testserver/api/assets/collections/book-lovers/kindle-paperwhite.svg"
+    )

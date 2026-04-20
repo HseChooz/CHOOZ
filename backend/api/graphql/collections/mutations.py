@@ -33,7 +33,11 @@ class CollectionsMutation:
                 price=collection_item.price,
                 currency=collection_item.currency,
             )
-        return to_collection_item_type(collection_item, wish_item)
+        return to_collection_item_type(
+            collection_item,
+            wish_item,
+            request=info.context.request,
+        )
 
     @strawberry.mutation(name="removeCollectionItemFromWishlist")
     def remove_collection_item_from_wishlist(
@@ -49,4 +53,8 @@ class CollectionsMutation:
         ).first()
         if wish_item is not None:
             wish_item.delete()
-        return to_collection_item_type(collection_item, None)
+        return to_collection_item_type(
+            collection_item,
+            None,
+            request=info.context.request,
+        )

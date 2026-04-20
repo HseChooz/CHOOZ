@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
+<rect width="600" height="800" rx="48" fill="#F5F1EA"/>
+<rect x="48" y="48" width="504" height="704" rx="40" fill="#FFFFFF"/>
+<circle cx="438" cy="180" r="96" fill="#DDD0BF"/>
+<path d="M116 512C192 428 278 366 414 328" fill="none" stroke="#7B634F" stroke-linecap="round" stroke-width="20"/>
+<text x="92" y="618" fill="#211914" font-family="Arial, sans-serif" font-size="35" font-weight="700">TEA SET</text>
+<text x="92" y="664" fill="#6E635A" font-family="Arial, sans-serif" font-size="22">CHOOZ PICKS</text>
+</svg>

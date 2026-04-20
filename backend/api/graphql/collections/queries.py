@@ -22,7 +22,11 @@ class CollectionsQuery:
     ) -> CollectionsHomeType:
         require_user(info)
         collections = list(collections_qs().order_by("section", "sort_order", "id"))
-        return to_collections_home_type(collections, search_query=search)
+        return to_collections_home_type(
+            collections,
+            request=info.context.request,
+            search_query=search,
+        )
 
     @strawberry.field(name="collection")
     def collection(
@@ -43,6 +47,7 @@ class CollectionsQuery:
         return to_collection_type(
             collection,
             user,
+            request=info.context.request,
             search_query=search,
             selected_tags=tags,
             match_all_tags=match_all_tags,

@@ -4,6 +4,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from strawberry.django.views import GraphQLView
 
 from api.graphql.schema import schema
+from api.views import hardcoded_asset
 
 
 class AuthGraphQLView(GraphQLView):
@@ -20,6 +21,7 @@ class AuthGraphQLView(GraphQLView):
 
 
 urlpatterns = [
+    path("assets/<path:asset_path>", hardcoded_asset),
     path(
         "graphql/",
         csrf_exempt(

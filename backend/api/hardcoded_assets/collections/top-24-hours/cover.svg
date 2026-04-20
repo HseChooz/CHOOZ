@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+<rect width="600" height="600" rx="48" fill="#EEF4F2"/>
+<rect x="40" y="40" width="520" height="520" rx="40" fill="#FCFFFE"/>
+<circle cx="458" cy="142" r="86" fill="#CCE1DB"/>
+<path d="M98 420C176 334 258 288 388 250C460 228 508 184 536 128" fill="none" stroke="#486D63" stroke-linecap="round" stroke-width="18"/>
+<text x="92" y="468" fill="#18211F" font-family="Arial, sans-serif" font-size="34" font-weight="700">TOP 24 HRS</text>
+<text x="92" y="514" fill="#596B66" font-family="Arial, sans-serif" font-size="22">CHOOZ COLLECTION</text>
+</svg>
