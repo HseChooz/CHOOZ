@@ -4,12 +4,7 @@ from typing import Optional
 import strawberry
 
 from api.graphql.types import PresignedUpload, WishItemType
-from api.graphql.wish_items.service import (
-    get_owned_wish_item,
-    normalize_wish_note_fields,
-    require_user,
-    to_wish_item_type,
-)
+from api.graphql.wish_items.service import get_owned_wish_item, require_user, to_wish_item_type
 from api.models import WishItem
 from api.storage.minio import make_image_key, presigned_put_url
 
@@ -27,12 +22,11 @@ class WishItemsMutation:
         currency: str = "",
     ) -> WishItemType:
         user = require_user(info)
-        normalized_description, normalized_link = normalize_wish_note_fields(description, link)
         item = WishItem.objects.create(
             owner=user,
             title=title,
-            description=normalized_description,
-            link=normalized_link,
+            description=description,
+            link=(link or "").strip(),
             price=price,
             currency=(currency or "").strip(),
         )
@@ -79,14 +73,9 @@ class WishItemsMutation:
             item.title = title
             updated_fields.append("title")
         if description is not None:
-            normalized_description, normalized_link = normalize_wish_note_fields(description, link)
-            item.description = normalized_description
+            item.description = description
             updated_fields.append("description")
-
-            if normalized_link != item.link:
-                item.link = normalized_link
-                updated_fields.append("link")
-        elif link is not None:
+        if link is not None:
             item.link = (link or "").strip()
             updated_fields.append("link")
         if price is not None:

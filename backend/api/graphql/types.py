@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from typing import Optional
 
 import strawberry
@@ -22,6 +22,17 @@ class WishItemType:
     price: Optional[float]
     currency: Optional[str]
     image_url: Optional[str] = strawberry.field(name="imageUrl")
+
+
+@strawberry.type
+class NoteType:
+    id: strawberry.ID
+    title: str
+    description: str
+    link: Optional[str]
+    is_favorite: bool = strawberry.field(name="isFavorite")
+    created_at: datetime = strawberry.field(name="createdAt")
+    updated_at: datetime = strawberry.field(name="updatedAt")
 
 
 @strawberry.type
