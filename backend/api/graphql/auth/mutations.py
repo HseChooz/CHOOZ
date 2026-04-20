@@ -4,6 +4,7 @@ import strawberry
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
+from strawberry.types import Info
 
 from api.graphql.auth import apple as apple_auth
 from api.graphql.auth.queries import to_user_type
@@ -14,7 +15,7 @@ from api.graphql.types import AuthPayload, TokenPair
 UserModel = get_user_model()
 
 
-def require_user(info):
+def require_user(info: Info):
     user = info.context.request.user
     if not user or not user.is_authenticated:
         gql_error("UNAUTHORIZED", "Unauthorized")
@@ -26,7 +27,7 @@ class AuthMutation:
     @strawberry.mutation(name="loginWithApple")
     def login_with_apple(
         self,
-        info,
+        info: Info,
         identity_token: Annotated[str, strawberry.argument(name="identityToken")],
         first_name: Annotated[str | None, strawberry.argument(name="firstName")] = None,
         last_name: Annotated[str | None, strawberry.argument(name="lastName")] = None,
@@ -49,7 +50,7 @@ class AuthMutation:
 
     @strawberry.mutation(name="loginWithYandex")
     def login_with_yandex(
-        self, info, oauth_token: Annotated[str, strawberry.argument(name="oauthToken")]
+        self, info: Info, oauth_token: Annotated[str, strawberry.argument(name="oauthToken")]
     ) -> AuthPayload:
         data = fetch_yandex_user_info(oauth_token)
         user = get_or_create_user_from_yandex(data)
@@ -65,7 +66,7 @@ class AuthMutation:
 
     @strawberry.mutation(name="refreshToken")
     def refresh_token(
-        self, info, refresh_token: Annotated[str, strawberry.argument(name="refreshToken")]
+        self, info: Info, refresh_token: Annotated[str, strawberry.argument(name="refreshToken")]
     ) -> TokenPair:
         try:
             old_refresh = RefreshToken(refresh_token)
@@ -95,7 +96,7 @@ class AuthMutation:
         )
 
     @strawberry.mutation(name="deleteMyAccount")
-    def delete_my_account(self, info) -> bool:
+    def delete_my_account(self, info: Info) -> bool:
         user = require_user(info)
         user.delete()
         return True

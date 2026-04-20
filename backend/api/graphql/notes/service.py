@@ -1,5 +1,7 @@
 import re
 
+from strawberry.types import Info
+
 from api.graphql.errors import gql_error
 from api.graphql.types import NoteType
 from api.models import Note
@@ -8,7 +10,7 @@ INLINE_URL_RE = re.compile(r"https?://[^\s]+", re.IGNORECASE)
 TRAILING_URL_PUNCTUATION = ".,!?;:)]}>"
 
 
-def require_user(info):
+def require_user(info: Info):
     user = info.context.request.user
     if not user or not user.is_authenticated:
         gql_error("UNAUTHORIZED", "Unauthorized")

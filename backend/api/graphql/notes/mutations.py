@@ -1,6 +1,7 @@
 from typing import Annotated, Optional
 
 import strawberry
+from strawberry.types import Info
 
 from api.graphql.notes.service import (
     get_owned_note,
@@ -17,7 +18,7 @@ class NotesMutation:
     @strawberry.mutation(name="createNote")
     def create_note(
         self,
-        info,
+        info: Info,
         title: str,
         description: str = "",
         link: str = "",
@@ -37,7 +38,7 @@ class NotesMutation:
     @strawberry.mutation(name="updateNote")
     def update_note(
         self,
-        info,
+        info: Info,
         id: strawberry.ID,
         title: Optional[str] = None,
         description: Optional[str] = None,
@@ -73,7 +74,7 @@ class NotesMutation:
         return to_note_type(note)
 
     @strawberry.mutation(name="deleteNote")
-    def delete_note(self, info, id: strawberry.ID) -> bool:
+    def delete_note(self, info: Info, id: strawberry.ID) -> bool:
         user = require_user(info)
         note = get_owned_note(user, str(id))
         note.delete()

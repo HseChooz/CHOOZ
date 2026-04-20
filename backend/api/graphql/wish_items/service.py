@@ -1,10 +1,12 @@
+from strawberry.types import Info
+
 from api.graphql.errors import gql_error
 from api.graphql.types import WishItemType
 from api.models import WishItem
 from api.storage.minio import presigned_get_url
 
 
-def require_user(info):
+def require_user(info: Info):
     user = info.context.request.user
     if not user or not user.is_authenticated:
         gql_error("UNAUTHORIZED", "Unauthorized")

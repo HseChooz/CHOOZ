@@ -1,6 +1,7 @@
 from typing import Annotated, Optional
 
 import strawberry
+from strawberry.types import Info
 
 from api.graphql.collections.service import (
     collections_qs,
@@ -17,7 +18,7 @@ class CollectionsQuery:
     @strawberry.field(name="collectionsHome")
     def collections_home(
         self,
-        info,
+        info: Info,
         search: Annotated[Optional[str], strawberry.argument(name="search")] = None,
     ) -> CollectionsHomeType:
         require_user(info)
@@ -27,7 +28,7 @@ class CollectionsQuery:
     @strawberry.field(name="collection")
     def collection(
         self,
-        info,
+        info: Info,
         slug: str,
         search: Annotated[Optional[str], strawberry.argument(name="search")] = None,
         tags: Annotated[Optional[list[str]], strawberry.argument(name="tags")] = None,

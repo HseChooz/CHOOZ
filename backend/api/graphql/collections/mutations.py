@@ -1,4 +1,5 @@
 import strawberry
+from strawberry.types import Info
 
 from api.graphql.collections.service import (
     get_collection_item,
@@ -14,7 +15,7 @@ class CollectionsMutation:
     @strawberry.mutation(name="addCollectionItemToWishlist")
     def add_collection_item_to_wishlist(
         self,
-        info,
+        info: Info,
         collection_item_id: strawberry.ID,
     ) -> CollectionItemType:
         user = require_user(info)
@@ -38,7 +39,7 @@ class CollectionsMutation:
     @strawberry.mutation(name="removeCollectionItemFromWishlist")
     def remove_collection_item_from_wishlist(
         self,
-        info,
+        info: Info,
         collection_item_id: strawberry.ID,
     ) -> CollectionItemType:
         user = require_user(info)
