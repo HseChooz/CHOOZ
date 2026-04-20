@@ -40,13 +40,10 @@ struct WishlistFormPhotoSectionView: View {
                 .resizable()
                 .scaledToFit()
         } else if let imageUrl = viewModel.existingImageUrl {
-            placeholderView
-                .overlay {
-                    CachedAsyncImage(url: URL(string: imageUrl)) {
-                        Color.clear
-                    }
-                    .scaledToFit()
-                }
+            CachedAsyncImage(url: URL(string: imageUrl)) {
+                placeholderView
+            }
+            .scaledToFit()
         } else {
             placeholderView
         }

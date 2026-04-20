@@ -18,33 +18,20 @@ struct OnboardingActionsView: View {
     
     var body: some View {
         HStack(spacing: 1.0) {
-            Button(
-                action: primaryAction,
-                label: {
-                    Text(primaryActionTitle)
-                        .font(.velaSans(size: 16.0, weight: .bold))
-                        .foregroundStyle(Colors.Common.white)
-                        .padding(.vertical, 10.0)
-                        .padding(.horizontal, 16.0)
-                        .frame(minHeight: 50.0)
-                        .frame(maxWidth: .infinity)
-                        .background(Colors.Blue.blue500)
-                        .clipShape(RoundedRectangle(cornerRadius: 14.0))
-                }
+            MainActionButton(
+                title: primaryActionTitle,
+                backgroundColor: Colors.Blue.blue500,
+                foregroundColor: Colors.Common.white,
+                action: primaryAction
             )
-            .buttonStyle(ScaleButtonStyle())
                         
             if let skipAction = skipAction {
-                Button(
-                    action: skipAction,
-                    label: {
-                        Text("Пропустить")
-                            .font(.velaSans(size: 16.0, weight: .semiBold))
-                            .foregroundStyle(Colors.Neutral.grey600)
-                            .frame(maxWidth: .infinity)
-                    }
+                MainActionButton(
+                    title: "Пропустить",
+                    backgroundColor: Color.clear,
+                    foregroundColor: Colors.Neutral.grey600,
+                    action: skipAction
                 )
-                .buttonStyle(ScaleButtonStyle())
             }
         }
     }
