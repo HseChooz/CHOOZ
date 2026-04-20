@@ -216,16 +216,24 @@ final class WishlistViewModel {
         let presentation = WishlistMutationErrorMessage.presentation(for: error)
         toastManager.showError(presentation.title, subtitle: presentation.subtitle)
     }
+
+    private func normalizedPrice() -> String? {
+        let normalized = price
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: ",", with: ".")
+
+        return normalized.isEmpty ? nil : normalized
+    }
     
     private func createWish() async -> Bool {
-        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
+        let normalizedPrice = normalizedPrice()
         let imageData = prepareImageDataForUpload()
         
         guard let createdItem = await wishlistService.addWish(
             title: title,
             description: description,
             link: link.trimmingCharacters(in: .whitespaces),
-            price: trimmedPrice.isEmpty ? nil : trimmedPrice,
+            price: normalizedPrice,
             currency: selectedCurrency
         ) else {
             presentMutationError(wishlistService.lastMutationError, fallbackTitle: "Не удалось создать желание")
@@ -250,7 +258,7 @@ final class WishlistViewModel {
     
     private func updateWish() async -> Bool {
         guard let id = selectedWishItem?.id else { return false }
-        let trimmedPrice = price.trimmingCharacters(in: .whitespaces)
+        let normalizedPrice = normalizedPrice()
         let imageData = prepareImageDataForUpload()
         
         guard let updatedItem = await wishlistService.updateWish(
@@ -258,7 +266,7 @@ final class WishlistViewModel {
             title: title,
             description: description,
             link: link.trimmingCharacters(in: .whitespaces),
-            price: trimmedPrice.isEmpty ? nil : trimmedPrice,
+            price: normalizedPrice,
             currency: selectedCurrency
         ) else {
             presentMutationError(wishlistService.lastMutationError, fallbackTitle: "Не удалось сохранить желание")

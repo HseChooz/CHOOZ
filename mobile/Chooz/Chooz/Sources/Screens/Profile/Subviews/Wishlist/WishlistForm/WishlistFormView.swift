@@ -107,7 +107,7 @@ struct WishlistFormView: View {
     
     private var saveButtonView: some View {
         MainActionButton(
-            title: isEditMode ? "Сохранить" : "Создать событие",
+            title: isEditMode ? "Сохранить" : "Создать желание",
             backgroundColor: viewModel.isSaveEnabled ? Colors.Blue.blue500 : Colors.Neutral.grey200,
             foregroundColor: viewModel.isSaveEnabled ? Colors.Common.white : Colors.Neutral.grey400,
             action: {
