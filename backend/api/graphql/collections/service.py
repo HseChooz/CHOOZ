@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from collections.abc import Iterable
+from urllib.parse import urlsplit
 
 from django.db.models import Count
 
@@ -18,6 +19,8 @@ SECTION_ORDER = [
     Collection.Section.BY_CHARACTER,
     Collection.Section.EDITORIAL,
 ]
+HARDCODED_ASSET_ROUTE_PREFIX = "/api/assets/"
+HARDCODED_COLLECTIONS_ASSET_PREFIX = "collections/"
 
 
 def require_user(info):
@@ -80,6 +83,31 @@ def matches_search_terms(search_terms: Iterable[str], values: Iterable[str | Non
 
     haystack = " ".join(value.casefold() for value in values if value)
     return all(term in haystack for term in normalized_terms)
+
+
+def resolve_collection_asset_url(
+    value: str | None,
+    *,
+    request=None,
+) -> str | None:
+    raw_value = (value or "").strip()
+    if not raw_value:
+        return None
+
+    parsed = urlsplit(raw_value)
+    if parsed.scheme and parsed.netloc:
+        return raw_value
+
+    normalized_value = raw_value.lstrip("/")
+    if normalized_value.startswith(HARDCODED_COLLECTIONS_ASSET_PREFIX):
+        resolved_path = f"{HARDCODED_ASSET_ROUTE_PREFIX}{normalized_value}"
+    else:
+        resolved_path = f"/{normalized_value}"
+
+    if request is None:
+        return resolved_path
+
+    return request.build_absolute_uri(resolved_path)
 
 
 def collection_available_tags(
@@ -225,14 +253,17 @@ def _items_count(collection: Collection) -> int:
     return collection.items.count()
 
 
-def to_collection_preview_type(collection: Collection) -> CollectionPreviewType:
+def to_collection_preview_type(collection: Collection, *, request=None) -> CollectionPreviewType:
     return CollectionPreviewType(
         id=str(collection.id),
         slug=collection.slug,
         title=collection.title,
         subtitle=collection.subtitle,
         badge=collection.badge or None,
-        cover_image_url=collection.cover_image_url or None,
+        cover_image_url=resolve_collection_asset_url(
+            collection.cover_image_url,
+            request=request,
+        ),
         items_count=_items_count(collection),
     )
 
@@ -240,6 +271,8 @@ def to_collection_preview_type(collection: Collection) -> CollectionPreviewType:
 def to_collection_item_type(
     item: CollectionItem,
     wish_item: WishItem | None = None,
+    *,
+    request=None,
 ) -> CollectionItemType:
     return CollectionItemType(
         id=str(item.id),
@@ -249,7 +282,7 @@ def to_collection_item_type(
         price=float(item.price) if item.price is not None else None,
         currency=item.currency or None,
         tags=normalize_tags(item.tags or []),
-        image_url=item.image_url or None,
+        image_url=resolve_collection_asset_url(item.image_url, request=request),
         is_added=wish_item is not None,
         wish_item_id=str(wish_item.id) if wish_item is not None else None,
     )
@@ -259,6 +292,7 @@ def to_collection_type(
     collection: Collection,
     user,
     *,
+    request=None,
     selected_tags: Iterable[str] | None = None,
     match_all_tags: bool = False,
     search_query: str | None = None,
@@ -278,18 +312,29 @@ def to_collection_type(
         subtitle=collection.subtitle,
         description=collection.description,
         badge=collection.badge or None,
-        cover_image_url=collection.cover_image_url or None,
+        cover_image_url=resolve_collection_asset_url(
+            collection.cover_image_url,
+            request=request,
+        ),
         section_key=collection.section,
         section_title=collection.get_section_display(),
         tags=collection_available_tags(collection, all_items),
         items_count=_items_count(collection),
-        items=[to_collection_item_type(item, wish_map.get(item.id)) for item in items],
+        items=[
+            to_collection_item_type(
+                item,
+                wish_map.get(item.id),
+                request=request,
+            )
+            for item in items
+        ],
     )
 
 
 def to_collections_home_type(
     collections: Iterable[Collection],
     *,
+    request=None,
     search_query: str | None = None,
 ) -> CollectionsHomeType:
     sections_map: OrderedDict[str, CollectionSectionType] = OrderedDict()
@@ -307,7 +352,7 @@ def to_collections_home_type(
             key=str(section),
             title=section.label,
             collections=[
-                to_collection_preview_type(collection)
+                to_collection_preview_type(collection, request=request)
                 for collection in section_collections
             ],
         )

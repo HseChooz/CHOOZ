@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
+<rect width="600" height="800" rx="48" fill="#F8F2EC"/>
+<rect x="48" y="48" width="504" height="704" rx="40" fill="#FFFFFF"/>
+<circle cx="438" cy="180" r="96" fill="#E9D8CB"/>
+<path d="M116 512C186 418 274 360 412 326" fill="none" stroke="#7A5A46" stroke-linecap="round" stroke-width="20"/>
+<text x="92" y="618" fill="#211A16" font-family="Arial, sans-serif" font-size="36" font-weight="700">KINDLE</text>
+<text x="92" y="664" fill="#6A5D54" font-family="Arial, sans-serif" font-size="22">CHOOZ PICKS</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800">
+<rect width="600" height="800" rx="48" fill="#F0F5F4"/>
+<rect x="48" y="48" width="504" height="704" rx="40" fill="#FFFFFF"/>
+<circle cx="438" cy="180" r="96" fill="#CFE4DE"/>
+<path d="M116 512C194 426 280 368 416 330" fill="none" stroke="#4D6F67" stroke-linecap="round" stroke-width="20"/>
+<text x="92" y="618" fill="#17211F" font-family="Arial, sans-serif" font-size="28" font-weight="700">HEADPHONES</text>
+<text x="92" y="664" fill="#5B6B67" font-family="Arial, sans-serif" font-size="22">CHOOZ PICKS</text>
+</svg>
