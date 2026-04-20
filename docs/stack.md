@@ -10,6 +10,8 @@
 - JWT-аутентификация через `djangorestframework-simplejwt`
 - PostgreSQL через `psycopg[binary]`
 - S3-совместимое файловое хранилище / MinIO через `boto3`
+- `python-dotenv` для конфигурации окружения
+- `requests`, `cryptography`, `pyjwt`, `urllib3`, `filelock` как инфраструктурные зависимости backend-слоя
 - Pillow для работы с изображениями на backend-стороне
 - Gunicorn и Uvicorn для запуска приложения
 - Docker и отдельные `compose.dev.yml`, `compose.stage.yml`, `compose.prod.yml`
@@ -22,7 +24,7 @@
 - SwiftUI как основа экранов
 - UIKit для root-навигации, контейнеров и интеграции со сценами приложения
 - Tuist для описания проекта и сборки
-- Swift Package Manager для внешних зависимостей
+- Swift Package Manager для внешних зависимостей через `Project.swift` и `Tuist/Package.swift`
 - Apollo iOS для GraphQL-клиента и генерации кода
 - Kingfisher для загрузки и кеширования изображений
 - Yandex Login SDK
@@ -35,4 +37,5 @@
 
 - Репозиторий монореповый: backend и iOS-клиент живут вместе.
 - Основной контракт между клиентом и сервером — GraphQL.
+- Для подборок backend дополнительно раздаёт hardcoded SVG-ассеты через собственный HTTP-маршрут.
 - В проекте нет отдельного Android-клиента или выделенного frontend web-приложения.
