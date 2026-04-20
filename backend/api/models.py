@@ -72,6 +72,28 @@ class WishItem(models.Model):
         return self.title
 
 
+class Note(models.Model):
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notes"
+    )
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    link = models.URLField(blank=True, default="")
+    is_favorite = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-updated_at", "-id"]
+        indexes = [
+            models.Index(fields=["owner", "is_favorite"]),
+            models.Index(fields=["owner", "updated_at"]),
+        ]
+
+    def __str__(self):
+        return self.title
+
+
 class Collection(models.Model):
     class Section(models.TextChoices):
         FOR_YOU = "for_you", "Подборки для вас"

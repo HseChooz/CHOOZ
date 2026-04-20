@@ -1,13 +1,14 @@
 from datetime import date
 
 from django.utils.timezone import localdate
+from strawberry.types import Info
 
 from api.graphql.errors import gql_error
 from api.graphql.types import EventType
 from api.models import Event
 
 
-def require_user(info):
+def require_user(info: Info):
     user = info.context.request.user
     if not user or not user.is_authenticated:
         gql_error("UNAUTHORIZED", "Unauthorized")

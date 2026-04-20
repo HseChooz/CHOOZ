@@ -2,14 +2,10 @@ from decimal import Decimal
 from typing import Optional
 
 import strawberry
+from strawberry.types import Info
 
 from api.graphql.types import PresignedUpload, WishItemType
-from api.graphql.wish_items.service import (
-    get_owned_wish_item,
-    normalize_wish_note_fields,
-    require_user,
-    to_wish_item_type,
-)
+from api.graphql.wish_items.service import get_owned_wish_item, require_user, to_wish_item_type
 from api.models import WishItem
 from api.storage.minio import make_image_key, presigned_put_url
 
@@ -19,7 +15,7 @@ class WishItemsMutation:
     @strawberry.mutation(name="createWishItem")
     def create_wish_item(
         self,
-        info,
+        info: Info,
         title: str,
         description: str = "",
         link: str = "",
@@ -27,12 +23,11 @@ class WishItemsMutation:
         currency: str = "",
     ) -> WishItemType:
         user = require_user(info)
-        normalized_description, normalized_link = normalize_wish_note_fields(description, link)
         item = WishItem.objects.create(
             owner=user,
             title=title,
-            description=normalized_description,
-            link=normalized_link,
+            description=description,
+            link=(link or "").strip(),
             price=price,
             currency=(currency or "").strip(),
         )
@@ -41,7 +36,7 @@ class WishItemsMutation:
     @strawberry.mutation(name="createWishItemImageUpload")
     def create_wish_item_image_upload(
         self,
-        info,
+        info: Info,
         id: strawberry.ID,
         filename: str,
         content_type: str = strawberry.argument(name="contentType"),
@@ -53,7 +48,7 @@ class WishItemsMutation:
         return PresignedUpload(key=key, upload_url=upload_url)
 
     @strawberry.mutation(name="attachWishItemImage")
-    def attach_wish_item_image(self, info, id: strawberry.ID, key: str) -> WishItemType:
+    def attach_wish_item_image(self, info: Info, id: strawberry.ID, key: str) -> WishItemType:
         user = require_user(info)
         item = get_owned_wish_item(user, str(id))
         item.image_key = (key or "").strip()
@@ -63,7 +58,7 @@ class WishItemsMutation:
     @strawberry.mutation(name="updateWishItem")
     def update_wish_item(
         self,
-        info,
+        info: Info,
         id: strawberry.ID,
         title: Optional[str] = None,
         description: Optional[str] = None,
@@ -79,14 +74,9 @@ class WishItemsMutation:
             item.title = title
             updated_fields.append("title")
         if description is not None:
-            normalized_description, normalized_link = normalize_wish_note_fields(description, link)
-            item.description = normalized_description
+            item.description = description
             updated_fields.append("description")
-
-            if normalized_link != item.link:
-                item.link = normalized_link
-                updated_fields.append("link")
-        elif link is not None:
+        if link is not None:
             item.link = (link or "").strip()
             updated_fields.append("link")
         if price is not None:
@@ -102,7 +92,7 @@ class WishItemsMutation:
         return to_wish_item_type(item)
 
     @strawberry.mutation(name="deleteWishItem")
-    def delete_wish_item(self, info, id: strawberry.ID) -> bool:
+    def delete_wish_item(self, info: Info, id: strawberry.ID) -> bool:
         user = require_user(info)
         item = get_owned_wish_item(user, str(id))
         item.delete()

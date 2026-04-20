@@ -2,9 +2,17 @@ from datetime import date
 from typing import Annotated, List, Optional
 
 import strawberry
+from strawberry.types import Info
 
 from api.graphql.types import EventType
-from .service import get_owned_event, require_user, to_event_type, upcoming_events_qs, sorted_events_qs
+
+from .service import (
+    get_owned_event,
+    require_user,
+    sorted_events_qs,
+    to_event_type,
+    upcoming_events_qs,
+)
 
 
 @strawberry.type
@@ -12,7 +20,7 @@ class EventsQuery:
     @strawberry.field(name="events")
     def events(
         self,
-        info,
+        info: Info,
         only_upcoming: Annotated[bool, strawberry.argument(name="onlyUpcoming")] = True,
         from_date: Annotated[Optional[date], strawberry.argument(name="fromDate")] = None,
         limit: int = 200,
@@ -25,7 +33,7 @@ class EventsQuery:
         return [to_event_type(e) for e in sorted_events_qs(user)]
 
     @strawberry.field(name="event")
-    def event(self, info, id: strawberry.ID) -> EventType:
+    def event(self, info: Info, id: strawberry.ID) -> EventType:
         from datetime import date
         user = require_user(info)
         e = get_owned_event(user, str(id))

@@ -2,9 +2,11 @@ from datetime import date
 from typing import Optional
 
 import strawberry
+from strawberry.types import Info
 
 from api.graphql.types import EventType
 from api.models import Event
+
 from .service import get_owned_event, require_user, to_event_type
 
 
@@ -13,7 +15,7 @@ class EventsMutation:
     @strawberry.mutation(name="createEvent")
     def create_event(
         self,
-        info,
+        info: Info,
         title: str,
         date: date,
         description: str = "",
@@ -36,7 +38,7 @@ class EventsMutation:
     @strawberry.mutation(name="updateEvent")
     def update_event(
         self,
-        info,
+        info: Info,
         id: strawberry.ID,
         title: Optional[str] = None,
         description: Optional[str] = None,
@@ -74,7 +76,7 @@ class EventsMutation:
         return to_event_type(e)
 
     @strawberry.mutation(name="deleteEvent")
-    def delete_event(self, info, id: strawberry.ID) -> bool:
+    def delete_event(self, info: Info, id: strawberry.ID) -> bool:
         user = require_user(info)
         e = get_owned_event(user, str(id))
         e.delete()

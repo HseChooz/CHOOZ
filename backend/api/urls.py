@@ -25,7 +25,7 @@ urlpatterns = [
     path(
         "graphql/",
         csrf_exempt(
-            AuthGraphQLView.as_view(schema=schema, graphiql=True)
+            AuthGraphQLView.as_view(schema=schema, graphql_ide="graphiql")
         ),
     ),
 ]

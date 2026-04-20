@@ -3,6 +3,7 @@ from collections.abc import Iterable
 from urllib.parse import urlsplit
 
 from django.db.models import Count
+from strawberry.types import Info
 
 from api.graphql.errors import gql_error
 from api.graphql.types import (
@@ -23,7 +24,7 @@ HARDCODED_ASSET_ROUTE_PREFIX = "/api/assets/"
 HARDCODED_COLLECTIONS_ASSET_PREFIX = "collections/"
 
 
-def require_user(info):
+def require_user(info: Info):
     user = info.context.request.user
     if not user or not user.is_authenticated:
         gql_error("UNAUTHORIZED", "Unauthorized")
