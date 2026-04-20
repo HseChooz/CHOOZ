@@ -3,9 +3,12 @@ from decimal import Decimal
 import pytest
 from graphql import GraphQLError
 
-from api.graphql.wish_items.service import get_owned_wish_item, to_wish_item_type
+from api.graphql.wish_items.service import (
+    get_owned_wish_item,
+    normalize_wish_note_fields,
+    to_wish_item_type,
+)
 from api.models import WishItem
-
 
 pytestmark = pytest.mark.django_db
 
@@ -25,6 +28,26 @@ def test_get_owned_wish_item_raises_for_not_owner(user, another_user):
         get_owned_wish_item(another_user, str(item.id))
 
     assert exc.value.extensions["code"] == "WISH_ITEM_NOT_FOUND"
+
+
+def test_normalize_wish_note_fields_extracts_link_from_description():
+    description, link = normalize_wish_note_fields(
+        "Посмотреть тут https://example.com/deck",
+        "",
+    )
+
+    assert description == "Посмотреть тут"
+    assert link == "https://example.com/deck"
+
+
+def test_normalize_wish_note_fields_keeps_explicit_link_priority():
+    description, link = normalize_wish_note_fields(
+        "Посмотреть тут https://example.com/deck",
+        "  https://example.com/explicit  ",
+    )
+
+    assert description == "Посмотреть тут https://example.com/deck"
+    assert link == "https://example.com/explicit"
 
 
 def test_to_wish_item_type_generates_presigned_image_url(user, monkeypatch):
