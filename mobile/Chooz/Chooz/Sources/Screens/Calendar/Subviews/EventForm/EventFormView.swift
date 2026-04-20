@@ -58,6 +58,11 @@ struct EventFormView: View {
             large: 32.0,
             compact: .zero
         )
+        
+        static let datePickerSheetPresentationDetents: InterfaceLayoutValue<PresentationDetent> = InterfaceLayoutValue(
+            large: .large,
+            compact: .medium
+        )
     }
     
     // MARK: - Private Properties
@@ -132,7 +137,7 @@ struct EventFormView: View {
         }
         .sheet(isPresented: $isDatePickerPresented) {
             datePickerSheet
-                .presentationDetents([.medium])
+                .presentationDetents([Static.datePickerSheetPresentationDetents.value(for: interfaceLayout)])
         }
     }
     

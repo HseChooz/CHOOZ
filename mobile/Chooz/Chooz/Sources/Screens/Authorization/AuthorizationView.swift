@@ -60,7 +60,7 @@ struct AuthorizationView: View {
     }
     
     private var termsAgreementView: some View {
-        Text("Нажимая на кнопку, вы соглашаетесь\nс **[условиями](https://oliverfoggin.com)** использования сервиса\nChooz и **[обработки](https://oliverfoggin.com)** персональных данных")
+        Text("Нажимая на кнопку, вы соглашаетесь\nс **[условиями](https://sites.google.com/view/choozprivacy/главная-страница)** использования сервиса\nChooz и **[обработки](https://sites.google.com/view/choozprivacy/главная-страница)** персональных данных")
             .multilineTextAlignment(.center)
             .font(.velaSans(size: 12.0, weight: .bold))
             .tint(Colors.Blue.blue500)
