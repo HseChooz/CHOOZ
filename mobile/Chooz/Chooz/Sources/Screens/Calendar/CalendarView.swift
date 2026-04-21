@@ -52,16 +52,7 @@ struct CalendarView: View {
         }
         
         ToolbarItem(placement: .topBarTrailing) {
-            Button(
-                action: viewModel.openProfile,
-                label: {
-                    Images.Icons.profile
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 36.0, height: 36.0)
-                }
-            )
-            .buttonStyle(ScaleButtonStyle())
+            ProfileButtonView(action: viewModel.openProfile)
         }
     }
 }

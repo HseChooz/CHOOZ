@@ -90,7 +90,7 @@ struct EventView: View {
                 .font(.velaSans(size: 16.0, weight: .bold))
                 .foregroundStyle(Colors.Neutral.grey700)
             
-            EventDaysRemainingView(event: event)
+            EventDaysRemainingView(daysRemainingString: event.daysRemainingString)
         }
     }
     

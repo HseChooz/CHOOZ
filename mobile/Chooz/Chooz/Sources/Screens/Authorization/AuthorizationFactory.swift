@@ -2,44 +2,33 @@ import UIKit
 import SwiftUI
 
 @MainActor
+protocol AuthorizationFactoryDeps:
+    AuthorizationInteractorDeps,
+    AuthorizationRouterDeps,
+    AuthorizationAnalyticsDeps,
+    AuthorizationViewModelDeps
+{}
+
+@MainActor
 struct AuthorizationFactory {
     
     // MARK: - Init
     
-    init(
-        appRouter: AppRouter,
-        appleAuthService: AppleAuthService,
-        googleAuthService: GoogleAuthService,
-        yandexAuthService: YandexAuthService,
-        toastManager: ToastManager,
-        mainTabBarFactory: MainTabBarFactory,
-        analyticsService: AnalyticsService
-    ) {
-        self.appRouter = appRouter
-        self.appleAuthService = appleAuthService
-        self.googleAuthService = googleAuthService
-        self.yandexAuthService = yandexAuthService
-        self.toastManager = toastManager
-        self.mainTabBarFactory = mainTabBarFactory
-        self.analyticsService = analyticsService
+    init(deps: AuthorizationFactoryDeps) {
+        self.deps = deps
     }
     
     // MARK: - Public Methods
     
     func makeScreen() -> UIViewController {
-        let router = AuthorizationRouter(appRouter: appRouter, mainTabBarFactory: mainTabBarFactory)
-        let interactor = AuthorizationInteractor(
-            appRouter: appRouter,
-            appleAuthService: appleAuthService,
-            googleAuthService: googleAuthService,
-            yandexAuthService: yandexAuthService
-        )
-        let analytics = AuthorizationAnalytics(analyticsService: analyticsService)
+        let router = AuthorizationRouter(deps: deps)
+        let interactor = AuthorizationInteractor(deps: deps)
+        let analytics = AuthorizationAnalytics(deps: deps)
         let viewModel = AuthorizationViewModel(
             interactor: interactor,
             router: router,
-            toastManager: toastManager,
-            analytics: analytics
+            analytics: analytics,
+            deps: deps
         )
         let view = AuthorizationView(viewModel: viewModel)
         let vc = UIHostingController(rootView: view)
@@ -48,11 +37,6 @@ struct AuthorizationFactory {
     
     // MARK: - Private Properties
     
-    private let appRouter: AppRouter
-    private let appleAuthService: AppleAuthService
-    private let googleAuthService: GoogleAuthService
-    private let yandexAuthService: YandexAuthService
-    private let toastManager: ToastManager
-    private let mainTabBarFactory: MainTabBarFactory
-    private let analyticsService: AnalyticsService
+    private let deps: AuthorizationFactoryDeps
+    
 }

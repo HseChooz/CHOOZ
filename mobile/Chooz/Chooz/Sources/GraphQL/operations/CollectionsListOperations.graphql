@@ -1,0 +1,15 @@
+query CollectionsListSections($search: String = null) {
+  collectionSections(search: $search) {
+    key
+    title
+    collections {
+      id
+      slug
+      title
+      subtitle
+      badge
+      coverImageUrl
+      itemsCount
+    }
+  }
+}

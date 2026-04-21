@@ -1,52 +1,49 @@
 import Foundation
 
 @MainActor
+protocol AuthorizationInteractorDeps {
+    var appRouter: AppRouter { get }
+    var appleAuthService: AppleAuthService { get }
+    var googleAuthService: GoogleAuthService { get }
+    var yandexAuthService: YandexAuthService { get }
+}
+
+@MainActor
 final class AuthorizationInteractor {
     
     // MARK: Init
     
-    init(
-        appRouter: AppRouter,
-        appleAuthService: AppleAuthService,
-        googleAuthService: GoogleAuthService,
-        yandexAuthService: YandexAuthService
-    ) {
-        self.appRouter = appRouter
-        self.appleAuthService = appleAuthService
-        self.googleAuthService = googleAuthService
-        self.yandexAuthService = yandexAuthService
+    init(deps: AuthorizationInteractorDeps) {
+        self.deps = deps
     }
     
     // MARK: - Internal Methods
     
     func signInWithApple() async throws {
-        guard let topViewController = appRouter.topViewController else {
+        guard let topViewController = deps.appRouter.topViewController else {
             throw AuthError.unknown
         }
         
-        try await appleAuthService.signIn(presenting: topViewController)
+        try await deps.appleAuthService.signIn(presenting: topViewController)
     }
     
     func signInWithGoogle() async throws {
-        guard let topViewController = appRouter.topViewController else {
+        guard let topViewController = deps.appRouter.topViewController else {
             throw AuthError.unknown
         }
         
-        try await googleAuthService.signIn(presenting: topViewController)
+        try await deps.googleAuthService.signIn(presenting: topViewController)
     }
     
     func signInWithYandex() async throws {
-        guard let topViewController = appRouter.topViewController else {
+        guard let topViewController = deps.appRouter.topViewController else {
             throw AuthError.unknown
         }
         
-        try await yandexAuthService.signIn(presenting: topViewController)
+        try await deps.yandexAuthService.signIn(presenting: topViewController)
     }
     
     // MARK: - Private Properties
     
-    private let appRouter: AppRouter
-    private let appleAuthService: AppleAuthService
-    private let googleAuthService: GoogleAuthService
-    private let yandexAuthService: YandexAuthService
+    private let deps: AuthorizationInteractorDeps
 }

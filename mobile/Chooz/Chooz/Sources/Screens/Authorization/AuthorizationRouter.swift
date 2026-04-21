@@ -1,24 +1,29 @@
 import Foundation
 
 @MainActor
+protocol AuthorizationRouterDeps {
+    var appRouter: AppRouter { get }
+    var appTabBarFactory: AppTabBarFactory { get }
+}
+
+@MainActor
 final class AuthorizationRouter {
     
     // MARK: - Init
     
-    init(appRouter: AppRouter, mainTabBarFactory: MainTabBarFactory) {
-        self.appRouter = appRouter
-        self.mainTabBarFactory = mainTabBarFactory
+    init(deps: AuthorizationRouterDeps) {
+        self.deps = deps
     }
     
     // MARK: - Internal Methods
     
     func routeToMainScreen() {
-        let vc = mainTabBarFactory.makeScreen()
-        appRouter.setRoot(vc, animated: true)
+        let vc = deps.appTabBarFactory.makeScreen()
+        deps.appRouter.setRoot(vc, animated: true)
     }
     
     // MARK: - Private Properties
     
-    private let appRouter: AppRouter
-    private let mainTabBarFactory: MainTabBarFactory
+    private let deps: AuthorizationRouterDeps
+    
 }

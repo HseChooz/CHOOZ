@@ -35,7 +35,7 @@ struct WishlistItemCardView: View {
     // MARK: - Private Views
     
     private var imageView: some View {
-        imagePlaceholder
+        Colors.Neutral.grey200
             .overlay {
                 CachedAsyncImage(url: item.imageUrl.flatMap { URL(string: $0) }) {
                     Color.clear
@@ -46,10 +46,6 @@ struct WishlistItemCardView: View {
             .frame(height: 193.0)
             .clipped()
             .clipShape(RoundedRectangle(cornerRadius: 20.0))
-    }
-    
-    private var imagePlaceholder: some View {
-        Colors.Neutral.grey200
     }
     
     private var titleView: some View {

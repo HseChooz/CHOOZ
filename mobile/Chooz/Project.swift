@@ -13,6 +13,8 @@ let project = Project(
             bundleId: "com.chooz.app",
             deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(with: [
+                "CFBundleShortVersionString": .string("$(MARKETING_VERSION)"),
+                "CFBundleVersion": .string("$(CURRENT_PROJECT_VERSION)"),
                 "UILaunchScreen": .dictionary([:]),
                 "UIUserInterfaceStyle": .string("Light"),
                 "UISupportedInterfaceOrientations": .array([
@@ -86,7 +88,9 @@ let project = Project(
             ],
             settings: .settings(
                 base: [
-                    "OTHER_LDFLAGS": "-ObjC"
+                    "OTHER_LDFLAGS": "-ObjC",
+                    "MARKETING_VERSION": "1.1",
+                    "CURRENT_PROJECT_VERSION": "2"
                 ],
                 configurations: [
                     .debug(name: "Debug", settings: [

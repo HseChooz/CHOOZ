@@ -30,6 +30,9 @@ extension ChoozAPI {
     static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
       switch typename {
       case "AuthPayload": return ChoozAPI.Objects.AuthPayload
+      case "CollectionPreviewType": return ChoozAPI.Objects.CollectionPreviewType
+      case "CollectionSectionType": return ChoozAPI.Objects.CollectionSectionType
+      case "CollectionsHomeType": return ChoozAPI.Objects.CollectionsHomeType
       case "EventType": return ChoozAPI.Objects.EventType
       case "Mutation": return ChoozAPI.Objects.Mutation
       case "PresignedUpload": return ChoozAPI.Objects.PresignedUpload

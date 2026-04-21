@@ -1,29 +1,36 @@
 import Foundation
 
+@MainActor
+protocol AuthorizationAnalyticsDeps {
+    var analyticsService: AnalyticsService { get }
+}
+
+@MainActor
 final class AuthorizationAnalytics {
     
     // MARK: - Init
     
-    init(analyticsService: AnalyticsService) {
-        self.analyticsService = analyticsService
+    init(deps: AuthorizationAnalyticsDeps) {
+        self.deps = deps
     }
     
     // MARK: - Internal Methods
     
     func trackAuthCompleted(provider: String) {
-        analyticsService.track(.authCompleted(provider: provider))
-        analyticsService.sendEventsBuffer()
+        deps.analyticsService.track(.authCompleted(provider: provider))
+        deps.analyticsService.sendEventsBuffer()
     }
     
     func trackScreenViewed() {
-        analyticsService.trackScreen(.authorization)
+        deps.analyticsService.trackScreen(.authorization)
     }
     
     func setUserProfileID(_ profileID: String) {
-        analyticsService.setUserProfileID(profileID)
+        deps.analyticsService.setUserProfileID(profileID)
     }
     
     // MARK: - Private Properties
     
-    private let analyticsService: AnalyticsService
+    private let deps: AuthorizationAnalyticsDeps
+    
 }

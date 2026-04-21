@@ -52,10 +52,12 @@ final class AppContainer {
         apolloClient: apolloClient,
         tokenStorage: tokenStorage
     )
+    
     lazy var googleAuthService: GoogleAuthService = GoogleAuthService(
         apolloClient: apolloClient,
         tokenStorage: tokenStorage
     )
+    
     lazy var yandexAuthService: YandexAuthService = {
         let service = YandexAuthService(
             apolloClient: apolloClient,
@@ -77,6 +79,9 @@ final class AppContainer {
         socialProfileFactory: socialProfileFactory
     )
     
+    lazy var mainTabService: MainTabService = MainTabServiceImpl(apolloClient: apolloClient)
+    lazy var collectionsListService: CollectionsListService = CollectionsListServiceImpl(apolloClient: apolloClient)
+    
     // MARK: - ViewModels
     
     lazy var wishlistAnalytics: WishlistAnalytics = WishlistAnalytics(analyticsService: analyticsService)
@@ -89,10 +94,27 @@ final class AppContainer {
     
     // MARK: - Factories
     
+    lazy var mainTabFactory: MainTabFactory = MainTabFactory(
+        deps: MainTabFactoryDepsImpl(
+            appRouter: appRouter,
+            profileFactory: profileFactory,
+            mainTabService: mainTabService,
+            calendarFactory: calendarFactory,
+            collectionsListFactory: collectionsListFactory
+        )
+    )
+    
+    lazy var collectionsListFactory: CollectionsListFactory = CollectionsListFactory(
+        deps: CollectionsListFactoryDepsImpl(
+            collectionsListService: collectionsListService
+        )
+    )
+    
     lazy var socialProfileFactory: SocialProfileFactory = SocialProfileFactory(
         appRouter: appRouter,
         wishlistService: wishlistService
     )
+    
     lazy var settingsFactory: SettingsFactory = SettingsFactory(
         appRouter: appRouter,
         sessionServiceProvider: { [unowned self] in self.sessionService },
@@ -102,6 +124,7 @@ final class AppContainer {
         toastManager: toastManager,
         analyticsService: analyticsService
     )
+    
     lazy var profileFactory: ProfileFactory = ProfileFactory(
         appRouter: appRouter,
         profileService: profileService,
@@ -109,6 +132,7 @@ final class AppContainer {
         settingsFactory: settingsFactory,
         analyticsService: analyticsService
     )
+    
     lazy var calendarFactory: CalendarFactory = CalendarFactory(
         appRouter: appRouter,
         profileFactory: profileFactory,
@@ -118,23 +142,32 @@ final class AppContainer {
         toastManager: toastManager,
         analyticsService: analyticsService
     )
-    lazy var mainTabBarFactory: MainTabBarFactory = MainTabBarFactory(
-        appRouter: appRouter,
-        calendarFactory: calendarFactory
+    
+    lazy var appTabBarFactory: AppTabBarFactory = AppTabBarFactory(
+        appTabBarDeps: AppTabBarDepsImpl(
+            appRouter: appRouter,
+            mainTabViewController: mainTabFactory.makeScreen(),
+            calendarViewController: calendarFactory.makeScreen()
+        )
     )
+    
     lazy var authorizationFactory: AuthorizationFactory = AuthorizationFactory(
-        appRouter: appRouter,
-        appleAuthService: appleAuthService,
-        googleAuthService: googleAuthService,
-        yandexAuthService: yandexAuthService,
-        toastManager: toastManager,
-        mainTabBarFactory: mainTabBarFactory,
-        analyticsService: analyticsService
+        deps: AuthorizationFactoryDepsImpl(
+            appRouter: appRouter,
+            appleAuthService: appleAuthService,
+            googleAuthService: googleAuthService,
+            yandexAuthService: yandexAuthService,
+            appTabBarFactory: appTabBarFactory,
+            analyticsService: analyticsService,
+            toastManager: toastManager
+        )
     )
+    
     lazy var onboardingFactory: OnboardingFactory = OnboardingFactory(
         appRouter: appRouter,
         userDefaultsService: userDefaultsService,
         authorizationFactory: authorizationFactory,
         analyticsService: analyticsService
     )
+    
 }

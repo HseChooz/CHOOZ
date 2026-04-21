@@ -1,0 +1,29 @@
+query MainTabUpcomingEvent {
+  events(onlyUpcoming: true, limit: 1) {
+    id
+    title
+    description
+    link
+    notifyEnabled
+    repeatYearly
+    date
+  }
+}
+
+query MainTabCollectionsHome {
+  collectionsHome {
+    sections {
+      key
+      title
+      collections {
+        id
+        slug
+        title
+        subtitle
+        badge
+        coverImageUrl
+        itemsCount
+      }
+    }
+  }
+}

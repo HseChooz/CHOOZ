@@ -17,7 +17,7 @@ final class AppRouter {
     // MARK: - Internal Properties
     
     weak var activeTabNavigationController: UINavigationController?
-    weak var mainTabBarController: MainTabBarController?
+    weak var appTabBarController: AppTabBarController?
     
     var topViewController: UIViewController? {
         let nav = activeNavigationController
@@ -49,8 +49,8 @@ final class AppRouter {
         topViewController?.present(viewController, animated: animated)
     }
     
-    func setTabSelected(_ selected: Bool) {
-        mainTabBarController?.setTabSelected(selected)
+    func selectTab(_ tab: AppTab, popToRoot: Bool = false) {
+        appTabBarController?.selectTab(tab, popToRoot: popToRoot)
     }
     
     // MARK: - Private Properties

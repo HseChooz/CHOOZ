@@ -28,7 +28,6 @@ struct ProfileView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Colors.Common.white)
-        .navigationBarBackButtonHidden()
         .toolbar {
             toolbarContentView
         }
