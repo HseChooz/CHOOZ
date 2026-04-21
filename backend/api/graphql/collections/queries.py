@@ -19,7 +19,7 @@ class CollectionsQuery:
     @strawberry.field(name="collectionSections")
     def collection_sections(
         self,
-        info,
+        info: Info,
         search: Annotated[Optional[str], strawberry.argument(name="search")] = None,
     ) -> list[CollectionSectionType]:
         require_user(info)
