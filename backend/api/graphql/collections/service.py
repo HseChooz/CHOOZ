@@ -359,3 +359,16 @@ def to_collections_home_type(
         )
 
     return CollectionsHomeType(sections=list(sections_map.values()))
+
+
+def to_collection_sections(
+    collections: Iterable[Collection],
+    *,
+    request=None,
+    search_query: str | None = None,
+) -> list[CollectionSectionType]:
+    return to_collections_home_type(
+        collections,
+        request=request,
+        search_query=search_query,
+    ).sections

@@ -7,14 +7,29 @@ from api.graphql.collections.service import (
     collections_qs,
     get_collection_by_slug,
     require_user,
+    to_collection_sections,
     to_collection_type,
     to_collections_home_type,
 )
-from api.graphql.types import CollectionsHomeType, CollectionType
+from api.graphql.types import CollectionSectionType, CollectionsHomeType, CollectionType
 
 
 @strawberry.type
 class CollectionsQuery:
+    @strawberry.field(name="collectionSections")
+    def collection_sections(
+        self,
+        info,
+        search: Annotated[Optional[str], strawberry.argument(name="search")] = None,
+    ) -> list[CollectionSectionType]:
+        require_user(info)
+        collections = list(collections_qs().order_by("section", "sort_order", "id"))
+        return to_collection_sections(
+            collections,
+            request=info.context.request,
+            search_query=search,
+        )
+
     @strawberry.field(name="collectionsHome")
     def collections_home(
         self,

@@ -65,11 +65,11 @@ def test_resolve_collection_asset_url_builds_absolute_url_for_hardcoded_asset():
     request = RequestFactory().get("/api/graphql/")
 
     result = resolve_collection_asset_url(
-        "collections/book-lovers/cover.svg",
+        "collections/shared/funny-cat.png",
         request=request,
     )
 
-    assert result == "http://testserver/api/assets/collections/book-lovers/cover.svg"
+    assert result == "http://testserver/api/assets/collections/shared/funny-cat.png"
 
 
 def test_filter_collection_items_by_tags_matches_any_selected_tag():
@@ -199,7 +199,7 @@ def test_to_collection_item_type_resolves_hardcoded_image_url(user):
     collection_item = CollectionItem.objects.create(
         collection=collection,
         title="Reader",
-        image_url="collections/book-lovers/kindle-paperwhite.svg",
+        image_url="collections/shared/funny-cat.png",
     )
     wish_item = WishItem.objects.create(
         owner=user,
@@ -214,5 +214,5 @@ def test_to_collection_item_type_resolves_hardcoded_image_url(user):
     )
 
     assert result.image_url == (
-        "http://testserver/api/assets/collections/book-lovers/kindle-paperwhite.svg"
+        "http://testserver/api/assets/collections/shared/funny-cat.png"
     )
