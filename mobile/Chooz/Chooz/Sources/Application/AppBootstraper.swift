@@ -74,7 +74,7 @@ final class AppBootstraper {
             
             switch result {
             case .valid, .networkError:
-                let vc = appContainer.mainTabBarFactory.makeScreen()
+                let vc = appContainer.appTabBarFactory.makeScreen()
                 appContainer.appRouter.setRoot(vc)
                 await setUserProfileIDFromProfile()
             case .invalid:

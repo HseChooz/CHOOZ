@@ -4,14 +4,14 @@ struct EventDaysRemainingView: View {
     
     // MARK: - Init
     
-    init(event: EventItem) {
-        self.event = event
+    init(daysRemainingString: String) {
+        self.daysRemainingString = daysRemainingString
     }
     
     // MARK: - Body
     
     var body: some View {
-        Text(event.daysRemainingString)
+        Text(daysRemainingString)
             .font(.velaSans(size: 12.0, weight: .semiBold))
             .foregroundStyle(Colors.Blue.blue500)
             .padding(.top, 2.0)
@@ -23,5 +23,5 @@ struct EventDaysRemainingView: View {
     
     // MARK: - Private Properties
     
-    private let event: EventItem
+    private let daysRemainingString: String
 }

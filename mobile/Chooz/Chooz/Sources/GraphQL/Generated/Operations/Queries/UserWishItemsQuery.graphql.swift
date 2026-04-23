@@ -25,13 +25,13 @@ extension ChoozAPI {
 
       static var __parentType: any ApolloAPI.ParentType { ChoozAPI.Objects.Query }
       static var __selections: [ApolloAPI.Selection] { [
-        .field("userWishItems", UserWishItems.self, arguments: ["userId": .variable("userId")]),
+        .field("userWishItems", UserWishItems?.self, arguments: ["userId": .variable("userId")]),
       ] }
       static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
         UserWishItemsQuery.Data.self
       ] }
 
-      var userWishItems: UserWishItems { __data["userWishItems"] }
+      var userWishItems: UserWishItems? { __data["userWishItems"] }
 
       /// UserWishItems
       ///

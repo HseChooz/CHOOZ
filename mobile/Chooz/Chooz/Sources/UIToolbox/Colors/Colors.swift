@@ -41,4 +41,12 @@ enum Colors {
         static let redOrange400 = Color("red_orange400", bundle: .module)
     }
     
+    enum Pink {
+        static let pink100 = Color("pink100", bundle: .module)
+        static let pink300 = Color("pink300", bundle: .module)
+        static let pink400 = Color("pink400", bundle: .module)
+        static let pink500 = Color("pink500", bundle: .module)
+        static let pinkF0 = Color("pinkF0", bundle: .module)
+    }
+    
 }

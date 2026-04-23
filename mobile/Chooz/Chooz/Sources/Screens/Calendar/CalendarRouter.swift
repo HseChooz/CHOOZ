@@ -20,8 +20,7 @@ final class CalendarRouter {
         switch destination {
         case .profile:
             let vc = profileFactory.makeScreen()
-            appRouter.setTabSelected(false)
-            appRouter.push(vc, hideBackButton: true)
+            appRouter.push(vc)
         }
     }
     
@@ -29,4 +28,5 @@ final class CalendarRouter {
     
     private let appRouter: AppRouter
     private let profileFactory: ProfileFactory
+    
 }

@@ -1,12 +1,19 @@
 scalar Date
+scalar DateTime
 scalar Decimal
 
 type Query {
   me: UserType
   wishItems: [WishItemType!]!
   wishItem(id: ID!): WishItemType!
-  userWishItems(userId: ID!): UserWishItemsResult!
-  events(onlyUpcoming: Boolean! = false, fromDate: Date = null, limit: Int! = 200): [EventType!]!
+  userWishItems(userId: ID!): UserWishItemsResult
+  notes(onlyFavorites: Boolean! = false): [NoteType!]!
+  note(id: ID!): NoteType!
+  events(onlyUpcoming: Boolean! = true, fromDate: Date = null, limit: Int! = 200): [EventType!]!
+  event(id: ID!): EventType!
+  collectionsHome(search: String = null): CollectionsHomeType!
+  collectionSections(search: String = null): [CollectionSectionType!]!
+  collection(slug: String!, search: String = null, tags: [String!] = null, matchAllTags: Boolean! = false): CollectionType
 }
 
 type Mutation {
@@ -17,12 +24,17 @@ type Mutation {
   createWishItem(title: String!, description: String! = "", link: String! = "", price: Decimal = null, currency: String! = ""): WishItemType!
   updateWishItem(id: ID!, title: String = null, description: String = null, link: String = null, price: Decimal = null, currency: String = null): WishItemType!
   deleteWishItem(id: ID!): Boolean!
+  createNote(title: String!, description: String! = "", link: String! = "", isFavorite: Boolean! = false): NoteType!
+  updateNote(id: ID!, title: String = null, description: String = null, link: String = null, isFavorite: Boolean = null): NoteType!
+  deleteNote(id: ID!): Boolean!
   createEvent(title: String!, date: Date!, description: String! = "", link: String! = "", notifyEnabled: Boolean! = false, repeatYearly: Boolean! = false): EventType!
   updateEvent(id: ID!, title: String = null, description: String = null, link: String = null, date: Date = null, notifyEnabled: Boolean = null, repeatYearly: Boolean = null): EventType!
   deleteEvent(id: ID!): Boolean!
   deleteMyAccount: Boolean!
   createWishItemImageUpload(id: ID!, filename: String!, contentType: String! = "image/png"): PresignedUpload!
   attachWishItemImage(id: ID!, key: String!): WishItemType!
+  addCollectionItemToWishlist(collectionItemId: ID!): CollectionItemType!
+  removeCollectionItemFromWishlist(collectionItemId: ID!): CollectionItemType!
 }
 
 type UserType {
@@ -41,6 +53,16 @@ type WishItemType {
   price: Float
   currency: String
   imageUrl: String
+}
+
+type NoteType {
+  id: ID!
+  title: String!
+  description: String!
+  link: String
+  isFavorite: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type EventType {
@@ -72,4 +94,52 @@ type TokenPair {
 type UserWishItemsResult {
   user: UserType!
   items: [WishItemType!]!
+}
+
+type CollectionPreviewType {
+  id: ID!
+  slug: String!
+  title: String!
+  subtitle: String!
+  badge: String
+  coverImageUrl: String
+  itemsCount: Int!
+}
+
+type CollectionSectionType {
+  key: String!
+  title: String!
+  collections: [CollectionPreviewType!]!
+}
+
+type CollectionsHomeType {
+  sections: [CollectionSectionType!]!
+}
+
+type CollectionItemType {
+  id: ID!
+  title: String!
+  description: String!
+  link: String
+  price: Float
+  currency: String
+  tags: [String!]!
+  imageUrl: String
+  isAdded: Boolean!
+  wishItemId: ID
+}
+
+type CollectionType {
+  id: ID!
+  slug: String!
+  title: String!
+  subtitle: String!
+  description: String!
+  badge: String
+  coverImageUrl: String
+  sectionKey: String!
+  sectionTitle: String!
+  tags: [String!]!
+  itemsCount: Int!
+  items: [CollectionItemType!]!
 }
