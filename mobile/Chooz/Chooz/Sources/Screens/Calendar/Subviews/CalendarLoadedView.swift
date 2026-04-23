@@ -14,12 +14,35 @@ struct CalendarLoadedView: View {
         VStack(spacing: .zero) {
             ScrollView {
                 LazyVStack(spacing: 8.0) {
+                    if viewModel.isInfoBannerPresented {
+                        InfoBannerView(
+                            model: InfoBannerView.Model(
+                                title: "Поделитесь своим мнением о приложении",
+                                mainAction: {
+                                    viewModel.markAsClicked()
+                                    if let url = Static.evalLink {
+                                        openURL(url)
+                                    }
+                                },
+                                closeAction: {
+                                    viewModel.markAsClicked()
+                                }
+                            )
+                        )
+                        .transition(.asymmetric(
+                            insertion: .identity,
+                            removal: .move(edge: .trailing).combined(with: .opacity)
+                        ))
+                        .padding(.bottom, 16.0)
+                    }
+                    
                     ForEach(viewModel.events) { event in
                         eventRowView(for: event)
                     }
                 }
                 .padding(.top, 24.0)
                 .padding(.horizontal, 16.0)
+                .animation(.easeInOut(duration: 0.3), value: viewModel.isInfoBannerPresented)
             }
             .scrollIndicators(.hidden)
             .refreshable {
@@ -69,9 +92,19 @@ struct CalendarLoadedView: View {
         }
     }
     
+    // MARK: - Private Types
+    
+    enum Static {
+        
+        static let evalLink: URL? = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSetkxJYjFc0kthnIx1VUZUGOQNdkTadsITgm4ptjqpcbqcypQ/viewform?usp=dialog")
+        
+    }
+    
     // MARK: - Private Properties
     
     @Bindable private var viewModel: CalendarViewModel
+    
+    @Environment(\.openURL) private var openURL
         
     // MARK: - Private Methods
     

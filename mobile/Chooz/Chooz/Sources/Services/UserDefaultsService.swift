@@ -25,6 +25,14 @@ final class UserDefaultsService {
         !userDefaults.bool(forKey: Keys.hasLaunchedBefore)
     }
     
+    var isInfoBannerClicked: Bool {
+        get {
+            userDefaults.bool(forKey: Keys.infoBannerClicked)
+        } set {
+            userDefaults.set(newValue, forKey: Keys.infoBannerClicked)
+        }
+    }
+    
     // MARK: - Internal Methods
     
     func markAsLaunched() {
@@ -37,6 +45,7 @@ final class UserDefaultsService {
         static let hasSeenOnboarding = "hasSeenOnboarding"
         static let hasLaunchedBefore = "hasLaunchedBefore"
         static let notificationsEnabled = "notificationsEnabled"
+        static let infoBannerClicked = "infoBannerClicked"
     }
     
     // MARK: - Private Properties
