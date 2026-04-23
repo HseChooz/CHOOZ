@@ -14,6 +14,7 @@ final class CalendarViewModel:
     private(set) var viewState: CalendarViewState = .empty
     var selectedEvent: EventItem?
     var isEventFormPresented: Bool = false
+    var isInfoBannerPresented: Bool = true
     private(set) var pendingEditEvent: EventItem?
     private var isDataLoaded: Bool = false
     
@@ -49,6 +50,7 @@ final class CalendarViewModel:
     // MARK: - Internal Methods
     
     func onCalendarAppear() {
+        isInfoBannerPresented = !userDefaultsService.isInfoBannerClicked
         getEvents()
         rescheduleNotificationsFromLoadedStateIfNeeded()
     }
@@ -216,6 +218,11 @@ final class CalendarViewModel:
                 }
             }
         }
+    }
+    
+    func markAsClicked() {        
+        userDefaultsService.isInfoBannerClicked = true
+        isInfoBannerPresented = false
     }
     
     // MARK: - Private Properties

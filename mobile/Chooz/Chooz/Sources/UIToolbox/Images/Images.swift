@@ -28,6 +28,7 @@ enum Images {
         static let edit = Image("icon_edit", bundle: .module)
         static let lock = Image("icon_lock", bundle: .module)
         static let lockRed = Image("icon_lock_red", bundle: .module)
+        static let human = Image("icon_human", bundle: .module)
     }
     
     enum Logo {
