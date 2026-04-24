@@ -270,6 +270,26 @@ def test_add_collection_item_to_wishlist_creates_linked_wish_item(gql, access_to
     assert wish_item.title == collection_item.title
     assert wish_item.link == collection_item.link
 
+    list_response = gql(
+        """
+        query {
+          wishItems {
+            id
+            title
+            imageUrl
+          }
+        }
+        """,
+        token=access_token,
+    )
+    list_payload = list_response.json()
+
+    assert list_response.status_code == 200
+    assert "errors" not in list_payload
+    assert list_payload["data"]["wishItems"][0]["imageUrl"] == (
+        "/api/assets/collections/shared/funny-cat.png"
+    )
+
 
 def test_hardcoded_asset_endpoint_serves_collection_png(client):
     response = client.get("/api/assets/collections/shared/funny-cat.png")

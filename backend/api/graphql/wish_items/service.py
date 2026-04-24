@@ -1,5 +1,6 @@
 from strawberry.types import Info
 
+from api.graphql.collections.service import resolve_collection_asset_url
 from api.graphql.errors import gql_error
 from api.graphql.types import WishItemType
 from api.models import WishItem
@@ -23,6 +24,11 @@ def get_owned_wish_item(user, wish_item_id: str) -> WishItem:
 def to_wish_item_type(item: WishItem) -> WishItemType:
     key = (getattr(item, "image_key", "") or "").strip()
     url = presigned_get_url(key) if key else None
+    if url is None and getattr(item, "collection_item_id", None):
+        collection_item = getattr(item, "collection_item", None)
+        if collection_item is None:
+            collection_item = item.collection_item
+        url = resolve_collection_asset_url(collection_item.image_url)
     return WishItemType(
         id=str(item.id),
         title=item.title,

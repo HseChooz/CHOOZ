@@ -1,0 +1,65 @@
+              Центр практик и проектной работы ФКН                                                               2021
+
+                                                 Пример оформления                           Список источников
+                                                                                             составляется по
+                                                                                             алфавиту
+                                       Список использованных источников
+
+              1.   Aggarwal, C. Mining text data / Charu C. Aggarwal, Checng X. Zha. – USA: Springer
+                   Publisher Company, 2012 – 522 с.                                                 Книга
+              2.   Agrawal, S. Dbxplorer: a system for keyword-based search over relational databases / S.
+                   Agrawal, S. Chaudhuri, and G. Das // Proceeding of the 18th Intl. Conference on Data
+                   Engineering. – IEEE Computer Society – 2002 – С. 5-16.              Статья в трудах конференции
+
+              3.   Banerjee, A. A generalized maximum entropy approach to Bregman co-clustering and
+                   matrix approximation / A. Banerjee, I. Dhillon, J. Ghosh, S. Merugu, D. Modha // Journal of
+                   Machine Learning Research – 2007 – vol. 8 – С. 1919-1986.                  Статья в журнале
+
+              4.   Brin, S. The pagerank citation ranking: Bringing order to the web / L. Page, S. Brin, R.
+                   Motwani, and T. Winograd // [Электронный ресурс]: Stanford InfoLab, Technical Report
+                   1999-66. – Режим доступа: http://ilpubs.stanford.edu:8090/422/, свободный. (дата
+                   обращения: 05.04.15).                                                      Статья в интернет
+
+              5.   Dhillon, I. Co-clustering documents and words using bipartite spectral graph partitioning / I.
+                   Dhillon // Proceedings of the Seventh ACM SIGKDD International Conference on
+                   Knowledge Discovery and Data Mining – New York, NY, USA: ACM – 2001 – С. 269–
+                   274.                                               Статья в трудах конференции
+
+              6.   Hadoop      MapReduce      [Электронный       ресурс]    /     Apache.      Режим        доступа:
+                   http://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html, свободный. (дата обращения:
+                   25.05.15)                                                                Интернет-источник
+
+              7.   Kramarenko, A. Approximate bicluster and tricluster boxes in the analysis of binary data /
+                   B. Mirkin, A. Kramarenko // Rough Sets, Fuzzy Sets, Data Mining and Granular
+                   Computing, ser. Lecture Notes in Computer Science / S. Kuznetsov, D. lzak, D. Hepting,
+   Статья в
+сборнике / глава   and B. Mirkin (редакторы). – Springer Berlin Heidelberg, 2011. – С. 248–256.
+     книги
+              8.   Manning, C. Introduction to Information Retrieval / C. Manning, P. Raghavan, and H.
+                   Schutze. – New York, NY, USA: Cambridge University Press, 2008 – 544 c.                   Книга
+
+              9.   Ramos, J. Using TF-IDF to Determine Word Relevance in Document Queries
+                   [Электронный       ресурс]:     Technical     Report,        2003   –      Режим         доступа:
+                   http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.121.1424&rep=rep1&type=pdf,
+                   свободный. (дата обращения: 15.04.15).                                    Статья в интернет
+
+              10. Дубов, М.С. Аннотированные суффиксные деревья: особенности реализации / М.С.
+                   Дубов, Е.Л. Черняк // Доклады по компьютерным наукам и информационным
+                   технологиям – 2013 – №2 – Доклады всероссийской научной конференции «Анализ
+
+                                                                                  Статья в трудах конференции
+Центр практик и проектной работы ФКН                                                         2021
+    изображений, сетей и текстов» (АИСТ 2013). М: Национальный Открытый
+    Университет ИНТУИТ, апрель 2013 – С. 49-57.
+11. Маркин, А.К. Bianalyzer is a Python package for bicluster analysis over unstructured text
+    data      [Электронный         ресурс]        /       GitHub.        Режим            доступа:
+    https://github.com/luntos/bianalyzer, свободный. (дата обращения: 25.05.15) Интернет-источник
+12. Миркин, Б.Г. Использование мер релевантности строка-текст для автоматизации
+    рубрикации научных статей / Е.Л. Черняк, Б.Г. Миркин // Бизнес-информатика – 2014
+    – №2 (28) – С. 51–62.                                              Статья в журнале
+
+
+
+
+                             Все символы в описании источника важны.
+
