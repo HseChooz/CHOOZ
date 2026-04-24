@@ -22,6 +22,7 @@ class WishItemType:
     price: Optional[float]
     currency: Optional[str]
     image_url: Optional[str] = strawberry.field(name="imageUrl")
+    is_from_collection: bool = strawberry.field(name="isFromCollection")
 
 
 @strawberry.type
