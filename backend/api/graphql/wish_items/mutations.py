@@ -31,7 +31,7 @@ class WishItemsMutation:
             price=price,
             currency=(currency or "").strip(),
         )
-        return to_wish_item_type(item)
+        return to_wish_item_type(item, request=info.context.request)
 
     @strawberry.mutation(name="createWishItemImageUpload")
     def create_wish_item_image_upload(
@@ -53,7 +53,7 @@ class WishItemsMutation:
         item = get_owned_wish_item(user, str(id))
         item.image_key = (key or "").strip()
         item.save(update_fields=["image_key"])
-        return to_wish_item_type(item)
+        return to_wish_item_type(item, request=info.context.request)
 
     @strawberry.mutation(name="updateWishItem")
     def update_wish_item(
@@ -89,7 +89,7 @@ class WishItemsMutation:
         if updated_fields:
             item.save(update_fields=updated_fields)
 
-        return to_wish_item_type(item)
+        return to_wish_item_type(item, request=info.context.request)
 
     @strawberry.mutation(name="deleteWishItem")
     def delete_wish_item(self, info: Info, id: strawberry.ID) -> bool:

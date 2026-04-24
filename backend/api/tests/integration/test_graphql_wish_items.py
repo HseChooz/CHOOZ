@@ -52,6 +52,7 @@ def test_create_and_list_wish_items_for_current_user_only(gql, user, another_use
           wishItems {
             id
             title
+            isFromCollection
           }
         }
         """,
@@ -61,3 +62,47 @@ def test_create_and_list_wish_items_for_current_user_only(gql, user, another_use
 
     assert list_response.status_code == 200
     assert [item["title"] for item in list_payload["data"]["wishItems"]] == ["Steam Deck"]
+    assert list_payload["data"]["wishItems"][0]["isFromCollection"] is False
+
+
+def test_wish_items_marks_items_added_from_collection(gql, user, access_token):
+    from api.models import Collection, CollectionItem
+
+    collection = Collection.objects.create(
+        slug="wishlist-source",
+        title="Wishlist Source",
+        section=Collection.Section.FOR_YOU,
+    )
+    collection_item = CollectionItem.objects.create(
+        collection=collection,
+        title="Collection Lamp",
+        image_url="collections/shared/funny-cat.png",
+    )
+    WishItem.objects.create(
+        owner=user,
+        title="Collection Lamp",
+        collection_item=collection_item,
+    )
+
+    response = gql(
+        """
+        query {
+          wishItems {
+            title
+            imageUrl
+            isFromCollection
+          }
+        }
+        """,
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert payload["data"]["wishItems"] == [
+        {
+            "title": "Collection Lamp",
+            "imageUrl": "http://testserver/api/assets/collections/shared/funny-cat.png",
+            "isFromCollection": True,
+        }
+    ]

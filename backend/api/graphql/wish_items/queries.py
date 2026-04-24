@@ -18,13 +18,14 @@ class WishItemsQuery:
     def wish_items(self, info: Info) -> List[WishItemType]:
         user = require_user(info)
         wishes = WishItem.objects.filter(owner=user).order_by("-id")
-        return [to_wish_item_type(item) for item in wishes]
+        request = info.context.request
+        return [to_wish_item_type(item, request=request) for item in wishes]
 
     @strawberry.field(name="wishItem")
     def wish_item(self, info: Info, id: strawberry.ID) -> WishItemType:
         user = require_user(info)
         item = get_owned_wish_item(user, str(id))
-        return to_wish_item_type(item)
+        return to_wish_item_type(item, request=info.context.request)
 
     @strawberry.field(name="userWishItems")
     def user_wish_items(self, info: Info, user_id: strawberry.ID) -> UserWishItemsResult | None:
@@ -33,7 +34,8 @@ class WishItemsQuery:
         if target_user is None:
             return None
         wishes = WishItem.objects.filter(owner=target_user).order_by("-id")
-        items = [to_wish_item_type(item) for item in wishes]
+        request = info.context.request
+        items = [to_wish_item_type(item, request=request) for item in wishes]
         return UserWishItemsResult(
             user=UserType(
                 id=strawberry.ID(str(target_user.id)),

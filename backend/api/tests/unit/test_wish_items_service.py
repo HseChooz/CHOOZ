@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 import pytest
+from django.test import RequestFactory
 from graphql import GraphQLError
 
 from api.graphql.wish_items.service import get_owned_wish_item, to_wish_item_type
@@ -51,6 +52,7 @@ def test_to_wish_item_type_generates_presigned_image_url(user, monkeypatch):
     assert result.price == 999.9
     assert result.currency == "usd"
     assert result.image_url == "https://cdn.local/images/camera.png"
+    assert result.is_from_collection is False
 
 
 def test_to_wish_item_type_skips_presigned_url_when_no_image_key(user, monkeypatch):
@@ -69,6 +71,7 @@ def test_to_wish_item_type_skips_presigned_url_when_no_image_key(user, monkeypat
     result = to_wish_item_type(item)
 
     assert result.image_url is None
+    assert result.is_from_collection is False
     assert calls == []
 
 
@@ -102,7 +105,9 @@ def test_to_wish_item_type_falls_back_to_collection_item_image(user, monkeypatch
         fake_presigned_get_url,
     )
 
-    result = to_wish_item_type(item)
+    request = RequestFactory().get("/api/graphql/")
+    result = to_wish_item_type(item, request=request)
 
-    assert result.image_url == "/api/assets/collections/shared/funny-cat.png"
+    assert result.image_url == "http://testserver/api/assets/collections/shared/funny-cat.png"
+    assert result.is_from_collection is True
     assert calls == []

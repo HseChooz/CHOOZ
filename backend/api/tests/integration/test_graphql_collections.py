@@ -287,7 +287,7 @@ def test_add_collection_item_to_wishlist_creates_linked_wish_item(gql, access_to
     assert list_response.status_code == 200
     assert "errors" not in list_payload
     assert list_payload["data"]["wishItems"][0]["imageUrl"] == (
-        "/api/assets/collections/shared/funny-cat.png"
+        "http://testserver/api/assets/collections/shared/funny-cat.png"
     )
 
 

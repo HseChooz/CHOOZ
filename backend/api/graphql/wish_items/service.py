@@ -21,14 +21,15 @@ def get_owned_wish_item(user, wish_item_id: str) -> WishItem:
         gql_error("WISH_ITEM_NOT_FOUND", "Wish item not found")
 
 
-def to_wish_item_type(item: WishItem) -> WishItemType:
+def to_wish_item_type(item: WishItem, *, request=None) -> WishItemType:
     key = (getattr(item, "image_key", "") or "").strip()
     url = presigned_get_url(key) if key else None
+    is_from_collection = bool(getattr(item, "collection_item_id", None))
     if url is None and getattr(item, "collection_item_id", None):
         collection_item = getattr(item, "collection_item", None)
         if collection_item is None:
             collection_item = item.collection_item
-        url = resolve_collection_asset_url(collection_item.image_url)
+        url = resolve_collection_asset_url(collection_item.image_url, request=request)
     return WishItemType(
         id=str(item.id),
         title=item.title,
@@ -37,4 +38,5 @@ def to_wish_item_type(item: WishItem) -> WishItemType:
         price=float(item.price) if item.price is not None else None,
         currency=item.currency or None,
         image_url=url,
+        is_from_collection=is_from_collection,
     )
