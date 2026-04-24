@@ -70,3 +70,39 @@ def test_to_wish_item_type_skips_presigned_url_when_no_image_key(user, monkeypat
 
     assert result.image_url is None
     assert calls == []
+
+
+def test_to_wish_item_type_falls_back_to_collection_item_image(user, monkeypatch):
+    from api.models import Collection, CollectionItem
+
+    collection = Collection.objects.create(
+        slug="service-collection",
+        title="Service Collection",
+        section=Collection.Section.FOR_YOU,
+    )
+    collection_item = CollectionItem.objects.create(
+        collection=collection,
+        title="Cat card",
+        image_url="collections/shared/funny-cat.png",
+    )
+    item = WishItem.objects.create(
+        owner=user,
+        title="Cat card",
+        image_key="",
+        collection_item=collection_item,
+    )
+    calls: list[str] = []
+
+    def fake_presigned_get_url(key: str) -> str:
+        calls.append(key)
+        return "unused"
+
+    monkeypatch.setattr(
+        "api.graphql.wish_items.service.presigned_get_url",
+        fake_presigned_get_url,
+    )
+
+    result = to_wish_item_type(item)
+
+    assert result.image_url == "/api/assets/collections/shared/funny-cat.png"
+    assert calls == []
