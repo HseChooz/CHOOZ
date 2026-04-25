@@ -7,6 +7,7 @@ query WishItems {
     price
     currency
     imageUrl
+    isFromCollection
   }
 }
 
@@ -19,6 +20,7 @@ query WishItem($id: ID!) {
     price
     currency
     imageUrl
+    isFromCollection
   }
 }
 
@@ -31,6 +33,7 @@ mutation CreateWishItem($title: String!, $description: String! = "", $link: Stri
     price
     currency
     imageUrl
+    isFromCollection
   }
 }
 
@@ -43,6 +46,7 @@ mutation UpdateWishItem($id: ID!, $title: String, $description: String, $link: S
     price
     currency
     imageUrl
+    isFromCollection
   }
 }
 
@@ -62,6 +66,7 @@ mutation AttachWishItemImage($id: ID!, $key: String!) {
     price
     currency
     imageUrl
+    isFromCollection
   }
 }
 
@@ -81,6 +86,7 @@ query UserWishItems($userId: ID!) {
       price
       currency
       imageUrl
+      isFromCollection
     }
   }
 }

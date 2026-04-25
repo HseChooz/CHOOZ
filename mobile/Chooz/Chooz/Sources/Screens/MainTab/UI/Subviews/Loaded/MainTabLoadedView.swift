@@ -20,15 +20,13 @@ struct MainTabLoadedView: View {
                 ForEach(model.sections, id: \.self) { section in
                     switch section {
                     case .upcomingEventSection(let model):
-                        MainTabUpcomingEventsSectionView(
-                            model: model,
-                            eventsHandler: eventsHandler
-                        )
+                        MainTabUpcomingEventsSectionView(model: model, eventsHandler: eventsHandler)
+                    case .badgeSection(let model):
+                        if let badgeModel = model {
+                            MainTabBadgeView(model: badgeModel, eventsHandler: eventsHandler)
+                        }
                     case .defaultSection(let model):
-                        MainTabDefaultSectionView(
-                            model: model,
-                            eventsHandler: eventsHandler
-                        )
+                        MainTabDefaultSectionView(model: model, eventsHandler: eventsHandler)
                     }
                 }
             }

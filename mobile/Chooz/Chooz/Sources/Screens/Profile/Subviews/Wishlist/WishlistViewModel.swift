@@ -100,7 +100,7 @@ final class WishlistViewModel {
     }
     
     func showEditWishForm() {
-        guard let item = selectedWishItem else { return }
+        guard let item = selectedWishItem, item.isEditable else { return }
         wishFormMode = .edit
         populateForm(from: item)
         resetWishFormSaveState()

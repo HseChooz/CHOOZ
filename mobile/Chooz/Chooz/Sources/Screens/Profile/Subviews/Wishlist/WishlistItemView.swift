@@ -117,29 +117,40 @@ struct WishlistItemView: View {
     }
     
     private var actionsView: some View {
-        HStack(spacing: 8.0) {
-            MainActionButton(
-                title: "Редактировать желание",
-                backgroundColor: Colors.Neutral.grey800,
-                foregroundColor: Colors.Common.white,
-                action: { viewModel.showEditWishForm() }
-            )
-            
-            Button(
-                action: { viewModel.showDeleteConfirmation() },
-                label: {
-                    Circle()
-                        .fill(Colors.Neutral.grey800)
-                        .frame(width: 50)
-                        .overlay {
-                            Images.Icons.trashWhite
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 22.0, height: 22.0)
+        Group {
+            if viewModel.selectedItem.isEditable {
+                HStack(spacing: 8.0) {
+                    MainActionButton(
+                        title: "Редактировать желание",
+                        backgroundColor: Colors.Neutral.grey800,
+                        foregroundColor: Colors.Common.white,
+                        action: { viewModel.showEditWishForm() }
+                    )
+
+                    Button(
+                        action: { viewModel.showDeleteConfirmation() },
+                        label: {
+                            Circle()
+                                .fill(Colors.Neutral.grey800)
+                                .frame(width: 50)
+                                .overlay {
+                                    Images.Icons.trashWhite
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 22.0, height: 22.0)
+                                }
                         }
+                    )
+                    .buttonStyle(ScaleButtonStyle())
                 }
-            )
-            .buttonStyle(ScaleButtonStyle())
+            } else {
+                MainActionButton(
+                    title: "Удалить желание",
+                    backgroundColor: Colors.Neutral.grey800,
+                    foregroundColor: Colors.Common.white,
+                    action: { viewModel.showDeleteConfirmation() }
+                )
+            }
         }
         .padding(.top, 16.0)
         .padding(.horizontal, 16.0)

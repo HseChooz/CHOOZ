@@ -109,17 +109,20 @@ struct CalendarLoadedView: View {
     // MARK: - Private Methods
     
     private func eventRowView(for event: EventItem) -> some View {
-        CalendarEventRowView(
-            model: CalendarEventRowView.Model(
-                title: event.title,
-                shortMonthString: event.shortMonthString,
-                dayString: event.dayString,
-                daysRemainingString: event.daysRemainingString
-            ),
-            action: {
-                viewModel.selectedEvent = event
+        Button(
+            action: { viewModel.selectedEvent = event },
+            label: {
+                CalendarEventRowView(
+                    model: CalendarEventRowView.Model(
+                        title: event.title,
+                        shortMonthString: event.shortMonthString,
+                        dayString: event.dayString,
+                        daysRemainingString: event.daysRemainingString
+                    )
+                )
             }
         )
+        .buttonStyle(ScaleButtonStyle())
         .transition(.asymmetric(
             insertion: .move(edge: .top).combined(with: .opacity),
             removal: .move(edge: .trailing).combined(with: .opacity)

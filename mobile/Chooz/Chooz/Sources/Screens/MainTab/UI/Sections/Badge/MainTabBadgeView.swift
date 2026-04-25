@@ -8,7 +8,7 @@ struct MainTabBadgeView: View {
         
         let title: String
         let subtitle: String
-        let collectionId: String
+        let collectionSlug: String
         
     }
     
@@ -24,7 +24,7 @@ struct MainTabBadgeView: View {
     var body: some View {
         Button(
             action: {
-                eventsHandler.openCollection(with: model.collectionId)
+                eventsHandler.openCollection(with: model.collectionSlug)
             },
             label: {
                 HStack(alignment: .top, spacing: 8.0) {
@@ -58,6 +58,7 @@ struct MainTabBadgeView: View {
             }
         )
         .buttonStyle(ScaleButtonStyle())
+        .padding(.horizontal, 18.0)
     }
     
     // MARK: - Private Properties

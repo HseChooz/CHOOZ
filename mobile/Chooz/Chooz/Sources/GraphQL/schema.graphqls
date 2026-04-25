@@ -53,6 +53,7 @@ type WishItemType {
   price: Float
   currency: String
   imageUrl: String
+  isFromCollection: Boolean!
 }
 
 type NoteType {

@@ -11,6 +11,7 @@ enum MainTabViewState {
         enum MainTabSectionType: Hashable {
             case upcomingEventSection(MainTabUpcomingEventsSectionView.Model)
             case defaultSection(MainTabDefaultSectionView.Model)
+            case badgeSection(MainTabBadgeView.Model?)
         }
         
         let sections: [MainTabSectionType]

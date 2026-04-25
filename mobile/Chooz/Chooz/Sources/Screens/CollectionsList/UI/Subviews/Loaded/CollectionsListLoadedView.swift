@@ -51,7 +51,7 @@ struct CollectionsListLoadedView: View {
     private enum Static {
         
         static let columns = [
-            GridItem(.adaptive(minimum: 150.0, maximum: 150.0), spacing: 16.0)
+            GridItem(.adaptive(minimum: 160.0, maximum: 220.0), spacing: 16.0)
         ]
         
     }

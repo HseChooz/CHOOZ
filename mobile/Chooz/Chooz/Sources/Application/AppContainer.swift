@@ -81,6 +81,9 @@ final class AppContainer {
     
     lazy var mainTabService: MainTabService = MainTabServiceImpl(apolloClient: apolloClient)
     lazy var collectionsListService: CollectionsListService = CollectionsListServiceImpl(apolloClient: apolloClient)
+    lazy var collectionService: CollectionService = CollectionServiceImpl(apolloClient: apolloClient)
+    lazy var collectionWishlistService: CollectionWishlistService = CollectionWishlistServiceImpl(apolloClient: apolloClient)
+    lazy var collectionItemDetailsService: CollectionItemDetailsService = CollectionItemDetailsServiceImpl(apolloClient: apolloClient)
     
     // MARK: - ViewModels
     
@@ -100,13 +103,32 @@ final class AppContainer {
             profileFactory: profileFactory,
             mainTabService: mainTabService,
             calendarFactory: calendarFactory,
-            collectionsListFactory: collectionsListFactory
+            collectionsListFactory: collectionsListFactory,
+            collectionFactory: collectionFactory
         )
     )
     
     lazy var collectionsListFactory: CollectionsListFactory = CollectionsListFactory(
         deps: CollectionsListFactoryDepsImpl(
+            appRouter: appRouter,
+            collectionFactory: collectionFactory,
             collectionsListService: collectionsListService
+        )
+    )
+    
+    lazy var collectionFactory: CollectionFactory = CollectionFactory(
+        deps: CollectionFactoryDepsImpl(
+            collectionService: collectionService,
+            collectionWishlistService: collectionWishlistService,
+            toastManager: toastManager,
+            appRouter: appRouter,
+            collectionItemDetailsFactory: collectionItemDetailsFactory
+        )
+    )
+    
+    lazy var collectionItemDetailsFactory: CollectionItemDetailsFactory = CollectionItemDetailsFactory(
+        deps: CollectionItemDetailsFactoryDepsImpl(
+            collectionItemDetailsService: collectionItemDetailsService
         )
     )
     

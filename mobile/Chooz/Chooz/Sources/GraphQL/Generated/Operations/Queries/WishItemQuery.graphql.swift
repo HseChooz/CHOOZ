@@ -8,7 +8,7 @@ extension ChoozAPI {
     static let operationName: String = "WishItem"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"query WishItem($id: ID!) { wishItem(id: $id) { __typename id title description link price currency imageUrl } }"#
+        #"query WishItem($id: ID!) { wishItem(id: $id) { __typename id title description link price currency imageUrl isFromCollection } }"#
       ))
 
     public var id: ID
@@ -50,6 +50,7 @@ extension ChoozAPI {
           .field("price", Double?.self),
           .field("currency", String?.self),
           .field("imageUrl", String?.self),
+          .field("isFromCollection", Bool.self),
         ] }
         static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           WishItemQuery.Data.WishItem.self
@@ -62,6 +63,7 @@ extension ChoozAPI {
         var price: Double? { __data["price"] }
         var currency: String? { __data["currency"] }
         var imageUrl: String? { __data["imageUrl"] }
+        var isFromCollection: Bool { __data["isFromCollection"] }
       }
     }
   }

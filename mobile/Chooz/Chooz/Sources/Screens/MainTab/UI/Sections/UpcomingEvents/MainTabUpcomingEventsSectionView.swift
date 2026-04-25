@@ -7,7 +7,6 @@ struct MainTabUpcomingEventsSectionView: View {
     struct Model: Hashable {
         let headerModel: MainTabUpcomingEventsSectionHeaderView.Model
         let eventModel: CalendarEventRowView.Model
-        let badgeModel: MainTabBadgeView.Model?
     }
     
     // MARK: - Init
@@ -30,10 +29,6 @@ struct MainTabUpcomingEventsSectionView: View {
             )
             
             CalendarEventRowView(model: model.eventModel)
-            
-            if let badgeModel = model.badgeModel {
-                MainTabBadgeView(model: badgeModel, eventsHandler: eventsHandler)
-            }
         }
         .padding(.horizontal, 18.0)
     }

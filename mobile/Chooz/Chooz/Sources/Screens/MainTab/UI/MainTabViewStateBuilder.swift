@@ -19,15 +19,18 @@ struct MainTabViewStateBuilder {
                         shortMonthString: upcomingEvent.shortMonthString,
                         dayString: upcomingEvent.dayString,
                         daysRemainingString: upcomingEvent.daysRemainingString
-                    ),
-                    badgeModel: MainTabBadgeView.Model(
-                        title: "Что подарить второй половинке?",
-                        subtitle: "Подробнее",
-                        collectionId: "1"
                     )
                 )
             ))
         }
+        
+        sections.append(.badgeSection(
+            MainTabBadgeView.Model(
+                title: "Что подарить второй половинке?",
+                subtitle: "Подробнее",
+                collectionSlug: "for-second-half"
+            )
+        ))
 
         sections.append(contentsOf: payload.sections.map { section in
             .defaultSection(
@@ -38,7 +41,7 @@ struct MainTabViewStateBuilder {
                     ),
                     collectionCards: section.collections.map { collection in
                         MainTabDefaultSectionCollectionCardView.Model(
-                            id: collection.id,
+                            slug: collection.slug,
                             title: collection.title,
                             subtitle: collection.subtitle,
                             imageUrl: collection.coverImageUrl

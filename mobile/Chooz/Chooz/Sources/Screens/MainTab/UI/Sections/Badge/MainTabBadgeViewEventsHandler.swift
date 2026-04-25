@@ -2,5 +2,5 @@ import Foundation
 
 @MainActor
 protocol MainTabBadgeViewEventsHandler {
-    func openCollection(with id: String)
+    func openCollection(with slug: String)
 }

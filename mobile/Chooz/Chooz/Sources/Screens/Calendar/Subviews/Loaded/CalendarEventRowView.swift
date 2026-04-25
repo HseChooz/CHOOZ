@@ -13,42 +13,32 @@ struct CalendarEventRowView: View {
     
     // MARK: - Init
     
-    init(
-        model: Model,
-        action: (() -> Void)? = nil
-    ) {
+    init(model: Model) {
         self.model = model
-        self.action = action
     }
     
     // MARK: - Body
     
     var body: some View {
-        Button(
-            action: { action?() },
-            label: {
-                HStack(spacing: 16.0) {
-                    dateView
-                    
-                    dividerView
-                    
-                    detailsView
-                    
-                    Spacer()
-                }
-                .padding(.vertical, 10.0)
-                .padding(.horizontal, 16.0)
-                .frame(height: 80.0)
-                .frame(maxWidth: .infinity)
-                .contentShape(RoundedRectangle(cornerRadius: 20.0))
-                .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 20.0)
-                        .stroke(Colors.Neutral.grey200, lineWidth: 1.0)
-                }
-            }
-        )
-        .buttonStyle(ScaleButtonStyle())
+        HStack(spacing: 16.0) {
+            dateView
+            
+            dividerView
+            
+            detailsView
+            
+            Spacer()
+        }
+        .padding(.vertical, 10.0)
+        .padding(.horizontal, 16.0)
+        .frame(height: 80.0)
+        .frame(maxWidth: .infinity)
+        .contentShape(RoundedRectangle(cornerRadius: 20.0))
+        .clipShape(RoundedRectangle(cornerRadius: 20.0))
+        .overlay {
+            RoundedRectangle(cornerRadius: 20.0)
+                .stroke(Colors.Neutral.grey200, lineWidth: 1.0)
+        }
     }
     
     // MARK: - Private Views
@@ -85,6 +75,5 @@ struct CalendarEventRowView: View {
     // MARK: - Private Properties
     
     private let model: Model
-    private let action: (@MainActor () -> Void)?
     
 }

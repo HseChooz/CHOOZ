@@ -41,7 +41,8 @@ final class WishlistService {
                             link: item.link,
                             price: item.price.map { String($0) },
                             currency: item.currency.flatMap { WishCurrency(rawValue: $0) },
-                            imageUrl: item.imageUrl
+                            imageUrl: item.imageUrl,
+                            isFromCollection: item.isFromCollection
                         )
                     } ?? []
                     continuation.resume(returning: .success(items))
@@ -78,7 +79,8 @@ final class WishlistService {
                             link: data.link,
                             price: data.price.map { String($0) },
                             currency: data.currency.flatMap { WishCurrency(rawValue: $0) },
-                            imageUrl: data.imageUrl
+                            imageUrl: data.imageUrl,
+                            isFromCollection: data.isFromCollection
                         )
                         continuation.resume(returning: .success(item))
                     } else {
@@ -122,7 +124,8 @@ final class WishlistService {
                                 link: item.link,
                                 price: item.price.map { String($0) },
                                 currency: item.currency.flatMap { WishCurrency(rawValue: $0) },
-                                imageUrl: item.imageUrl
+                                imageUrl: item.imageUrl,
+                                isFromCollection: item.isFromCollection
                             )
                         }
                         continuation.resume(returning: .success((user: user, items: items)))
@@ -168,7 +171,8 @@ final class WishlistService {
                             link: data.link,
                             price: data.price.map { String($0) },
                             currency: data.currency.flatMap { WishCurrency(rawValue: $0) },
-                            imageUrl: data.imageUrl
+                            imageUrl: data.imageUrl,
+                            isFromCollection: data.isFromCollection
                         )
                         continuation.resume(returning: .success(item))
                     } else {
@@ -222,7 +226,8 @@ final class WishlistService {
                             link: data.link,
                             price: data.price.map { String($0) },
                             currency: data.currency.flatMap { WishCurrency(rawValue: $0) },
-                            imageUrl: data.imageUrl
+                            imageUrl: data.imageUrl,
+                            isFromCollection: data.isFromCollection
                         )
                         continuation.resume(returning: .success(item))
                     } else {
@@ -403,7 +408,8 @@ final class WishlistService {
                             link: data.link,
                             price: data.price.map { String($0) },
                             currency: data.currency.flatMap { WishCurrency(rawValue: $0) },
-                            imageUrl: data.imageUrl
+                            imageUrl: data.imageUrl,
+                            isFromCollection: data.isFromCollection
                         )
                         continuation.resume(returning: .success(item))
                     } else {

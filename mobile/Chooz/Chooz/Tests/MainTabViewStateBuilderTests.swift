@@ -29,7 +29,7 @@ struct MainTabViewStateBuilderTests {
             #expect(Bool(false))
         case .defaultSection(let model):
             #expect(model.headerModel.sectionId == "editorial")
-            #expect(model.collectionCards.first?.id == "collection-1")
+            #expect(model.collectionCards.first?.slug == "collection-1")
         }
     }
     
@@ -49,7 +49,7 @@ struct MainTabViewStateBuilderTests {
         case .upcomingEventSection:
             #expect(Bool(false))
         case .defaultSection(let model):
-            #expect(model.collectionCards.first?.id == "collection-1")
+            #expect(model.collectionCards.first?.slug == "collection-1")
         }
     }
     
