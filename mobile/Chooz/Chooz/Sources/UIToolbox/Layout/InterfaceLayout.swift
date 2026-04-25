@@ -6,7 +6,7 @@ import UIKit
 private struct InterfaceLayoutKey: EnvironmentKey {
     static var defaultValue: InterfaceLayout {
         MainActor.assumeIsolated {
-            UIScreen.main.currentInterfaceLayout
+            InterfaceLayout.screen
         }
     }
 }
@@ -45,6 +45,12 @@ public enum InterfaceLayout: Equatable, Sendable {
 // MARK: - Init
 
 extension InterfaceLayout {
+    
+    /// InterfaceLayout of device's main screen.
+    @MainActor
+    public static var screen: InterfaceLayout {
+        UIScreen.main.currentInterfaceLayout
+    }
 
     @MainActor
     public init() {
@@ -95,6 +101,24 @@ extension InterfaceLayout: CaseIterable {
 // MARK: - Comparing Without Orientation
 
 extension InterfaceLayout {
+    
+    public var isLarge: Bool {
+        switch self {
+        case .compact:
+            return false
+        case .large:
+            return true
+        }
+    }
+    
+    public var isCompact: Bool {
+        switch self {
+        case .compact:
+            return true
+        case .large:
+            return false
+        }
+    }
 
     public func isEqualIgnoringOrientation(to otherLayout: InterfaceLayout) -> Bool {
 

@@ -27,6 +27,7 @@ struct CollectionsListFactory {
         )
         let rootView = CollectionsListView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)
+        vc.hidesBottomBarWhenPushed = true
         return vc
     }
     

@@ -57,7 +57,8 @@ final class MainTabViewModelImpl: MainTabViewModel {
         forceRequestSections()
     }
     
-    func openCollection(with id: String) {
+    func openCollection(with slug: String) {
+        router.routeTo(destination: .collection(slug: slug))
     }
         
     func openCollectionsList(with sectionId: String) {

@@ -17,6 +17,8 @@ enum Colors {
         static let grey800 = Color("grey800", bundle: .module)
         static let grey900 = Color("grey900", bundle: .module)
         static let grey5b = Color("grey5b", bundle: .module)
+        static let greyAB = Color("greyAB", bundle: .module)
+        static let greyEE = Color("greyEE", bundle: .module)
     }
     
     enum Blue {

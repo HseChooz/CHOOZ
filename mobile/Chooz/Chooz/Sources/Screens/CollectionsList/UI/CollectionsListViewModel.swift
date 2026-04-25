@@ -52,8 +52,8 @@ final class CollectionsListViewModelImpl: CollectionsListViewModel {
         forceRequestCollectionsList()
     }
     
-    func openCollection(with collectionId: String) {
-        router.routeTo(destination: .collection(id: collectionId))
+    func openCollection(with collectionSlug: String) {
+        router.routeTo(destination: .collection(slug: collectionSlug))
     }
     
     // MARK: - Private Properties

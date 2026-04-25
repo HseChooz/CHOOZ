@@ -5,7 +5,7 @@ struct CollectionsListCollectionCardView: View {
     // MARK: - Internal Types
     
     struct Model: Hashable {
-        let id: String
+        let slug: String
         let title: String
         let subtitle: String
         let imageUrl: URL?
@@ -26,11 +26,12 @@ struct CollectionsListCollectionCardView: View {
     var body: some View {
         Button(
             action: {
-                eventsHandler.openCollection(with: model.id)
+                eventsHandler.openCollection(with: model.slug)
             },
             label: {
                 VStack(alignment: .leading, spacing: 12.0) {
                     imagePlaceholderView
+                        .frame(height: 193.0)
                         .overlay(alignment: .top) {
                             CachedAsyncImage(url: model.imageUrl) {
                                 imagePlaceholderView
@@ -50,7 +51,7 @@ struct CollectionsListCollectionCardView: View {
                             .lineLimit(1)
                     }
                 }
-                .frame(height: 203.0)
+                .frame(height: 254.0)
             }
         )
         .buttonStyle(ScaleButtonStyle())

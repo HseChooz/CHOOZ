@@ -7,11 +7,13 @@ protocol MainTabRouterDeps {
     var profileFactory: ProfileFactory { get }
     var calendarFactory: CalendarFactory { get }
     var collectionsListFactory: CollectionsListFactory { get }
+    var collectionFactory: CollectionFactory { get }
 }
 
 enum MainTabDestination {
     case profile
     case calendar
+    case collection(slug: String)
     case collectionsList(id: String)
 }
 
@@ -33,6 +35,9 @@ final class MainTabRouter {
             deps.appRouter.push(vc)
         case .calendar:
             deps.appRouter.selectTab(.calendar, popToRoot: true)
+        case .collection(let slug):
+            let vc = deps.collectionFactory.makeScreen(with: slug)
+            deps.appRouter.push(vc)
         case .collectionsList(let id):
             let vc = deps.collectionsListFactory.makeScreen(with: id)
             deps.appRouter.push(vc)

@@ -53,6 +53,35 @@ final class AppRouter {
         appTabBarController?.selectTab(tab, popToRoot: popToRoot)
     }
     
+    func presentAdaptivePopup(_ viewController: UIViewController, animated: Bool = true) {
+        guard let topViewController else {
+            return
+        }
+        
+        let currentInterfaceLayout = topViewController.currentInterfaceLayout
+        let targetWidth: CGFloat = currentInterfaceLayout.isLarge ? 440.0 : topViewController.view.bounds.width
+        let targetHeight = viewController.view.sizeThatFits(
+            CGSize(width: targetWidth, height: .infinity)
+        ).height
+
+        if currentInterfaceLayout.isLarge {
+            viewController.modalPresentationStyle = .formSheet
+            viewController.preferredContentSize = CGSize(width: targetWidth, height: targetHeight)
+        } else {
+            viewController.modalPresentationStyle = .pageSheet
+
+            if let sheet = viewController.sheetPresentationController {
+                let customDetent = UISheetPresentationController.Detent.custom { _ in
+                    return targetHeight
+                }
+                sheet.detents = [customDetent]
+                sheet.prefersGrabberVisible = true
+            }
+        }
+
+        topViewController.present(viewController, animated: true)
+    }
+    
     // MARK: - Private Properties
     
     private let window: UIWindow

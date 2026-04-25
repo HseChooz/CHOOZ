@@ -5,7 +5,7 @@ struct MainTabDefaultSectionCollectionCardView: View {
     // MARK: - Internal Types
     
     struct Model: Hashable {
-        let id: String
+        let slug: String
         let title: String
         let subtitle: String
         let imageUrl: URL?
@@ -26,7 +26,7 @@ struct MainTabDefaultSectionCollectionCardView: View {
     var body: some View {
         Button(
             action: {
-                eventsHandler.openCollection(with: model.id)
+                eventsHandler.openCollection(with: model.slug)
             },
             label: {
                 VStack(alignment: .leading, spacing: 12.0) {

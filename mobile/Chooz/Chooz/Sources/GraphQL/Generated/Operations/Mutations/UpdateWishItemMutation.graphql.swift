@@ -8,7 +8,7 @@ extension ChoozAPI {
     static let operationName: String = "UpdateWishItem"
     static let operationDocument: ApolloAPI.OperationDocument = .init(
       definition: .init(
-        #"mutation UpdateWishItem($id: ID!, $title: String, $description: String, $link: String, $price: Decimal, $currency: String) { updateWishItem( id: $id title: $title description: $description link: $link price: $price currency: $currency ) { __typename id title description link price currency imageUrl } }"#
+        #"mutation UpdateWishItem($id: ID!, $title: String, $description: String, $link: String, $price: Decimal, $currency: String) { updateWishItem( id: $id title: $title description: $description link: $link price: $price currency: $currency ) { __typename id title description link price currency imageUrl isFromCollection } }"#
       ))
 
     public var id: ID
@@ -81,6 +81,7 @@ extension ChoozAPI {
           .field("price", Double?.self),
           .field("currency", String?.self),
           .field("imageUrl", String?.self),
+          .field("isFromCollection", Bool.self),
         ] }
         static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           UpdateWishItemMutation.Data.UpdateWishItem.self
@@ -93,6 +94,7 @@ extension ChoozAPI {
         var price: Double? { __data["price"] }
         var currency: String? { __data["currency"] }
         var imageUrl: String? { __data["imageUrl"] }
+        var isFromCollection: Bool { __data["isFromCollection"] }
       }
     }
   }

@@ -15,6 +15,7 @@ struct CollectionsListView<ViewModel: CollectionsListViewModel>: View {
             .onAppear {
                 viewModel.requestCollectionsList()
             }
+            .toolbar(.hidden, for: .tabBar)
     }
     
     // MARK: - Private Views

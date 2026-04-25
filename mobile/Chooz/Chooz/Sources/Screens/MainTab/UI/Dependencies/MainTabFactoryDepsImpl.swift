@@ -8,4 +8,5 @@ struct MainTabFactoryDepsImpl: MainTabFactoryDeps {
     let mainTabService: MainTabService
     let calendarFactory: CalendarFactory
     let collectionsListFactory: CollectionsListFactory
+    let collectionFactory: CollectionFactory
 }

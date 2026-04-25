@@ -1,0 +1,43 @@
+query Collection($slug: String!) {
+  collection(slug: $slug) {
+    id
+    slug
+    title
+    subtitle
+    description
+    badge
+    coverImageUrl
+    sectionKey
+    sectionTitle
+    tags
+    itemsCount
+    items {
+      id
+      title
+      description
+      link
+      price
+      currency
+      tags
+      imageUrl
+      isAdded
+      wishItemId
+    }
+  }
+}
+
+mutation AddCollectionItemToWishlist($collectionItemId: ID!) {
+  addCollectionItemToWishlist(collectionItemId: $collectionItemId) {
+    id
+    isAdded
+    wishItemId
+  }
+}
+
+mutation RemoveCollectionItemFromWishlist($collectionItemId: ID!) {
+  removeCollectionItemFromWishlist(collectionItemId: $collectionItemId) {
+    id
+    isAdded
+    wishItemId
+  }
+}

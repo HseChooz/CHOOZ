@@ -2,11 +2,12 @@ import Foundation
 
 @MainActor
 protocol CollectionsListRouterDeps {
-    
+    var appRouter: AppRouter { get }
+    var collectionFactory: CollectionFactory { get }
 }
 
 enum CollectionsListDestination {
-    case collection(id: String)
+    case collection(slug: String)
 }
 
 @MainActor
@@ -20,7 +21,9 @@ final class CollectionsListRouter {
     
     func routeTo(destination: CollectionsListDestination) {
         switch destination {
-        case .collection(let id): break
+        case .collection(let slug):
+            let vc = deps.collectionFactory.makeScreen(with: slug)
+            deps.appRouter.push(vc)
         }
     }
     
