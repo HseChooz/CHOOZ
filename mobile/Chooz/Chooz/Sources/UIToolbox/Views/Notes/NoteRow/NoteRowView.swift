@@ -56,7 +56,7 @@ struct NoteRowView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20.0))
                 .overlay {
                     RoundedRectangle(cornerRadius: 20.0)
-                        .stroke(Colors.Neutral.grey200)
+                        .stroke(Colors.Neutral.grey200, lineWidth: 1.0)
                 }
             }
         )

@@ -74,9 +74,14 @@ final class AppContainer {
         authorizationFactory: authorizationFactory
     )
 
+    lazy var socialProfileService: SocialProfileService = SocialProfileServiceImpl(
+        wishlistService: wishlistService
+    )
+
     lazy var deepLinkService: DeepLinkService = DeepLinkService(
         appRouter: appRouter,
-        socialProfileFactory: socialProfileFactory
+        socialProfileFactory: socialProfileFactory,
+        tokenStorage: tokenStorage
     )
 
     lazy var mainTabService: MainTabService = MainTabServiceImpl(apolloClient: apolloClient)
@@ -141,8 +146,11 @@ final class AppContainer {
     )
 
     lazy var socialProfileFactory: SocialProfileFactory = SocialProfileFactory(
-        appRouter: appRouter,
-        wishlistService: wishlistService
+        deps: SocialProfileFactoryDepsImpl(
+            socialProfileService: socialProfileService,
+            appRouter: appRouter,
+            analyticsService: analyticsService
+        )
     )
 
     lazy var settingsFactory: SettingsFactory = SettingsFactory(
@@ -240,6 +248,7 @@ final class AppContainer {
             googleAuthService: googleAuthService,
             yandexAuthService: yandexAuthService,
             appTabBarFactory: appTabBarFactory,
+            deepLinkService: deepLinkService,
             analyticsService: analyticsService,
             toastManager: toastManager
         )

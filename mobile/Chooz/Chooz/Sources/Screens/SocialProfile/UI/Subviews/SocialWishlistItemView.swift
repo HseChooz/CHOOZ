@@ -102,17 +102,6 @@ struct SocialWishlistItemView: View {
     }
     
     private var toolbarView: some View {
-        // TODO: uncomment when ready
-//        HStack(spacing: 16.0) {
-//            ShareLink(item: shareContent) {
-//                Images.Icons.share
-//                    .resizable()
-//                    .scaledToFill()
-//            }
-//            .buttonStyle(ScaleButtonStyle())
-//        }
-//        .frame(width: 64.0, height: 24.0)
-        
         Button(action: { dismiss() }) {
             Images.Icons.crossLarge
                 .resizable()
