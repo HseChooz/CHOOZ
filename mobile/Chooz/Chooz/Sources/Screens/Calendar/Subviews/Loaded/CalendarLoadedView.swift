@@ -17,7 +17,7 @@ struct CalendarLoadedView: View {
                     if viewModel.isInfoBannerPresented {
                         InfoBannerView(
                             model: InfoBannerView.Model(
-                                title: "Поделитесь своим мнением о приложении",
+                                title: "Поделитесь своим мнением\nо приложении",
                                 mainAction: {
                                     viewModel.markAsClicked()
                                     if let url = Static.evalLink {

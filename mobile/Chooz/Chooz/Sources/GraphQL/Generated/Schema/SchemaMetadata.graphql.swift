@@ -37,6 +37,7 @@ extension ChoozAPI {
       case "CollectionsHomeType": return ChoozAPI.Objects.CollectionsHomeType
       case "EventType": return ChoozAPI.Objects.EventType
       case "Mutation": return ChoozAPI.Objects.Mutation
+      case "NoteType": return ChoozAPI.Objects.NoteType
       case "PresignedUpload": return ChoozAPI.Objects.PresignedUpload
       case "Query": return ChoozAPI.Objects.Query
       case "TokenPair": return ChoozAPI.Objects.TokenPair

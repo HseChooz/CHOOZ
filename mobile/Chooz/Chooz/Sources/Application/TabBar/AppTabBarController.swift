@@ -5,6 +5,7 @@ protocol AppTabBarControllerDeps {
     var appRouter: AppRouter { get }
     var calendarViewController: UIViewController { get }
     var mainTabViewController: UIViewController { get }
+    var notesTabViewController: UIViewController { get }
 }
 
 enum AppTab: Int {
@@ -65,10 +66,16 @@ final class AppTabBarController: UITabBarController {
             image: UIImages.Icons.calendar,
             selectedImage: UIImages.Icons.calendar
         )
+        deps.notesTabViewController.tabBarItem = UITabBarItem(
+            title: nil,
+            image: UIImages.Icons.notes,
+            selectedImage: UIImages.Icons.notes
+        )
         
         viewControllers = [
             deps.mainTabViewController,
-            deps.calendarViewController
+            deps.calendarViewController,
+            deps.notesTabViewController
         ]
         delegate = self
     }

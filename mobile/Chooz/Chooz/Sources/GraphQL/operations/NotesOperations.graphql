@@ -1,0 +1,63 @@
+query Notes($onlyFavorites: Boolean!) {
+  notes(onlyFavorites: $onlyFavorites) {
+    id
+    title
+    description
+    link
+    isFavorite
+    createdAt
+    updatedAt
+  }
+}
+
+mutation CreateNote($title: String!, $description: String! = "", $link: String! = "", $isFavorite: Boolean! = false) {
+  createNote(title: $title, description: $description, link: $link, isFavorite: $isFavorite) {
+    id
+    title
+    description
+    link
+    isFavorite
+    createdAt
+    updatedAt
+  }
+}
+
+mutation UpdateNoteFavorite($id: ID!, $isFavorite: Boolean!) {
+  updateNote(id: $id, isFavorite: $isFavorite) {
+    id
+    title
+    description
+    link
+    isFavorite
+    createdAt
+    updatedAt
+  }
+}
+
+mutation UpdateNote(
+  $id: ID!
+  $title: String = null
+  $description: String = null
+  $link: String = null
+  $isFavorite: Boolean = null
+) {
+  updateNote(
+    id: $id
+    title: $title
+    description: $description
+    link: $link
+    isFavorite: $isFavorite
+  ) {
+    id
+    title
+    description
+    link
+    isFavorite
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteNote($id: ID!) {
+  deleteNote(id: $id)
+}
