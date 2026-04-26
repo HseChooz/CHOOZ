@@ -16,6 +16,29 @@ enum AnalyticsEvent {
     case wishlistItemEdited(itemId: String)
     case wishlistItemDeleted(itemId: String)
     
+    // MARK: - Notes
+    
+    case noteCreated(title: String)
+    case noteEdited(noteId: String)
+    case noteDeleted(noteId: String)
+    case noteFavoriteToggled(noteId: String, enabled: Bool)
+    case noteLinkOpened(noteId: String)
+    case noteDetailsOpened(noteId: String, source: String)
+    case noteFormOpened(mode: String, source: String)
+    
+    // MARK: - Main Tab
+    
+    case mainTabCollectionOpened(collectionSlug: String)
+    case mainTabCollectionsListOpened(sectionId: String)
+    case mainTabUpcomingEventsOpened
+    
+    // MARK: - Collections
+    
+    case collectionOpened(collectionSlug: String, source: String)
+    case collectionFilterToggled(collectionSlug: String, tag: String, enabled: Bool)
+    case collectionItemOpened(collectionSlug: String, itemId: String)
+    case collectionItemWishlistToggled(collectionSlug: String, itemId: String, enabled: Bool, source: String)
+    
     // MARK: - Calendar
     
     case calendarEventAdded(title: String)
@@ -47,6 +70,7 @@ enum AnalyticsEvent {
     // MARK: - Referral
     
     case profileShared(userId: String)
+    case profileOpened(source: String)
     
     // MARK: - Screen Views
     
@@ -66,6 +90,34 @@ enum AnalyticsEvent {
             return "wishlist_item_edited"
         case .wishlistItemDeleted:
             return "wishlist_item_deleted"
+        case .noteCreated:
+            return "note_created"
+        case .noteEdited:
+            return "note_edited"
+        case .noteDeleted:
+            return "note_deleted"
+        case .noteFavoriteToggled:
+            return "note_favorite_toggled"
+        case .noteLinkOpened:
+            return "note_link_opened"
+        case .noteDetailsOpened:
+            return "note_details_opened"
+        case .noteFormOpened:
+            return "note_form_opened"
+        case .mainTabCollectionOpened:
+            return "main_tab_collection_opened"
+        case .mainTabCollectionsListOpened:
+            return "main_tab_collections_list_opened"
+        case .mainTabUpcomingEventsOpened:
+            return "main_tab_upcoming_events_opened"
+        case .collectionOpened:
+            return "collection_opened"
+        case .collectionFilterToggled:
+            return "collection_filter_toggled"
+        case .collectionItemOpened:
+            return "collection_item_opened"
+        case .collectionItemWishlistToggled:
+            return "collection_item_wishlist_toggled"
         case .calendarEventAdded:
             return "calendar_event_added"
         case .calendarEventEdited:
@@ -94,6 +146,8 @@ enum AnalyticsEvent {
             return "app_session_started"
         case .profileShared:
             return "profile_shared"
+        case .profileOpened:
+            return "profile_opened"
         case .screenViewed:
             return "screen_viewed"
         }
@@ -111,6 +165,39 @@ enum AnalyticsEvent {
             return ["item_id": itemId]
         case .wishlistItemDeleted(let itemId):
             return ["item_id": itemId]
+        case .noteCreated(let title):
+            return ["note_title": title]
+        case .noteEdited(let noteId):
+            return ["note_id": noteId]
+        case .noteDeleted(let noteId):
+            return ["note_id": noteId]
+        case .noteFavoriteToggled(let noteId, let enabled):
+            return ["note_id": noteId, "enabled": String(enabled)]
+        case .noteLinkOpened(let noteId):
+            return ["note_id": noteId]
+        case .noteDetailsOpened(let noteId, let source):
+            return ["note_id": noteId, "source": source]
+        case .noteFormOpened(let mode, let source):
+            return ["mode": mode, "source": source]
+        case .mainTabCollectionOpened(let collectionSlug):
+            return ["collection_slug": collectionSlug]
+        case .mainTabCollectionsListOpened(let sectionId):
+            return ["section_id": sectionId]
+        case .mainTabUpcomingEventsOpened:
+            return nil
+        case .collectionOpened(let collectionSlug, let source):
+            return ["collection_slug": collectionSlug, "source": source]
+        case .collectionFilterToggled(let collectionSlug, let tag, let enabled):
+            return ["collection_slug": collectionSlug, "tag": tag, "enabled": String(enabled)]
+        case .collectionItemOpened(let collectionSlug, let itemId):
+            return ["collection_slug": collectionSlug, "item_id": itemId]
+        case .collectionItemWishlistToggled(let collectionSlug, let itemId, let enabled, let source):
+            return [
+                "collection_slug": collectionSlug,
+                "item_id": itemId,
+                "enabled": String(enabled),
+                "source": source
+            ]
         case .calendarEventAdded(let title):
             return ["event_title": title]
         case .calendarEventEdited(let eventId):
@@ -139,6 +226,8 @@ enum AnalyticsEvent {
             return ["timestamp": ISO8601DateFormatter().string(from: Date())]
         case .profileShared(let userId):
             return ["user_id": userId]
+        case .profileOpened(let source):
+            return ["source": source]
         case .screenViewed(let screen):
             return ["screen": screen.rawValue]
         case .firstLaunch, .appSessionStarted:

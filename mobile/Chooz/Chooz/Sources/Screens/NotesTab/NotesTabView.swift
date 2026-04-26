@@ -22,6 +22,9 @@ struct NotesTabView<
     
     var body: some View {
         contentView
+            .onAppear {
+                viewModel.onAppear()
+            }
             .toolbar {
                 NotesTabToolbarContent(
                     selectedSegment: Binding(

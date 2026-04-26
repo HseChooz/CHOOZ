@@ -27,13 +27,15 @@ final class FavoriteNotesViewModelImpl: FavoriteNotesViewModel {
         router: FavoriteNotesRouter,
         viewStateBuilder: NotesViewStateBuilder,
         notePerformer: any NoteActionPerformer,
-        noteReporter: any NoteActionReporter
+        noteReporter: any NoteActionReporter,
+        analytics: FavoriteNotesAnalytics? = nil
     ) {
         self.interactor = interactor
         self.router = router
         self.viewStateBuilder = viewStateBuilder
         self.notePerformer = notePerformer
         self.noteReporter = noteReporter
+        self.analytics = analytics
 
         let observer = NoteObserver()
         self.noteObserver = observer
@@ -54,6 +56,8 @@ final class FavoriteNotesViewModelImpl: FavoriteNotesViewModel {
     // MARK: - Internal Methods
 
     func requestFavoriteNotes() {
+        trackScreenViewedIfNeeded()
+        
         guard !hasRequestedFavoriteNotes else {
             return
         }
@@ -68,6 +72,7 @@ final class FavoriteNotesViewModelImpl: FavoriteNotesViewModel {
     }
 
     func createNote() {
+        analytics?.trackNoteFormOpened(mode: "create")
         router.routeTo(destination: .noteForm(
             formType: .create,
             notePerformer: notePerformer,
@@ -76,6 +81,7 @@ final class FavoriteNotesViewModelImpl: FavoriteNotesViewModel {
     }
 
     func openNoteDetails(noteModel: NoteModel) {
+        analytics?.trackNoteDetailsOpened(noteId: noteModel.id)
         router.routeTo(destination: .noteDetails(noteModel: noteModel))
     }
 
@@ -96,8 +102,10 @@ final class FavoriteNotesViewModelImpl: FavoriteNotesViewModel {
     private let notePerformer: any NoteActionPerformer
     private let noteReporter: any NoteActionReporter
     private let noteObserver: NoteObserver
+    private let analytics: FavoriteNotesAnalytics?
 
     private var hasRequestedFavoriteNotes = false
+    private var hasTrackedScreenView = false
     private var requestFavoriteNotesTask: Task<Void, Never>?
     private var noteActionTask: Task<Void, Never>?
     private var sourcePayload: [NotePayload] = []
@@ -227,6 +235,13 @@ final class FavoriteNotesViewModelImpl: FavoriteNotesViewModel {
         } else {
             viewState = newState
         }
+    }
+    
+    private func trackScreenViewedIfNeeded() {
+        guard !hasTrackedScreenView else { return }
+        
+        hasTrackedScreenView = true
+        analytics?.trackScreenViewed()
     }
 
 }

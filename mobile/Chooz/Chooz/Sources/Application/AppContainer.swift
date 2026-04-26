@@ -108,7 +108,8 @@ final class AppContainer {
             mainTabService: mainTabService,
             calendarFactory: calendarFactory,
             collectionsListFactory: collectionsListFactory,
-            collectionFactory: collectionFactory
+            collectionFactory: collectionFactory,
+            analyticsService: analyticsService
         )
     )
 
@@ -116,7 +117,8 @@ final class AppContainer {
         deps: CollectionsListFactoryDepsImpl(
             appRouter: appRouter,
             collectionFactory: collectionFactory,
-            collectionsListService: collectionsListService
+            collectionsListService: collectionsListService,
+            analyticsService: analyticsService
         )
     )
 
@@ -126,13 +128,15 @@ final class AppContainer {
             collectionWishlistService: collectionWishlistService,
             toastManager: toastManager,
             appRouter: appRouter,
-            collectionItemDetailsFactory: collectionItemDetailsFactory
+            collectionItemDetailsFactory: collectionItemDetailsFactory,
+            analyticsService: analyticsService
         )
     )
 
     lazy var collectionItemDetailsFactory: CollectionItemDetailsFactory = CollectionItemDetailsFactory(
         deps: CollectionItemDetailsFactoryDepsImpl(
-            collectionItemDetailsService: collectionItemDetailsService
+            collectionItemDetailsService: collectionItemDetailsService,
+            analyticsService: analyticsService
         )
     )
 
@@ -170,7 +174,10 @@ final class AppContainer {
     )
 
     lazy var noteFormFactory: NoteFormFactory = NoteFormFactory(
-        deps: NoteFormFactoryDepsImpl(toastManager: toastManager)
+        deps: NoteFormFactoryDepsImpl(
+            toastManager: toastManager,
+            analyticsService: analyticsService
+        )
     )
 
     lazy var noteDetailsFactory: NoteDetailsFactory = NoteDetailsFactory(
@@ -178,7 +185,8 @@ final class AppContainer {
             appRouter: appRouter,
             noteFormFactory: noteFormFactory,
             noteActionPerformerProducer: noteActionPerformerProducer,
-            toastManager: toastManager
+            toastManager: toastManager,
+            analyticsService: analyticsService
         )
     )
 
@@ -188,7 +196,8 @@ final class AppContainer {
             noteFormFactory: noteFormFactory,
             notesService: notesService,
             noteActionPerformerProducer: noteActionPerformerProducer,
-            noteDetailsFactory: noteDetailsFactory
+            noteDetailsFactory: noteDetailsFactory,
+            analyticsService: analyticsService
         )
     )
 
@@ -198,7 +207,8 @@ final class AppContainer {
             noteFormFactory: noteFormFactory,
             noteDetailsFactory: noteDetailsFactory,
             notesService: notesService,
-            noteActionPerformerProducer: noteActionPerformerProducer
+            noteActionPerformerProducer: noteActionPerformerProducer,
+            analyticsService: analyticsService
         )
     )
 
@@ -209,7 +219,8 @@ final class AppContainer {
             notesFactory: notesFactory,
             favoriteNotesFactory: favoriteNotesFactory,
             noteActionPerformerProducer: noteActionPerformerProducer,
-            toastManager: toastManager
+            toastManager: toastManager,
+            analyticsService: analyticsService
         )
     )
 

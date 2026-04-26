@@ -19,12 +19,14 @@ struct NoteDetailsFactory {
         let router = NoteDetailsRouter(deps: deps)
         let notePerformer = deps.noteActionPerformerProducer.makePerformer()
         let noteReporter = deps.noteActionPerformerProducer.reporter
+        let analytics = NoteDetailsAnalytics(analyticsService: deps.analyticsService)
         let viewModel = NoteDetailsViewModelImpl(
             noteModel: noteModel,
             router: router,
             notePerformer: notePerformer,
             noteReporter: noteReporter,
-            toastManager: deps.toastManager
+            toastManager: deps.toastManager,
+            analytics: analytics
         )
         let rootView = NoteDetailsView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)

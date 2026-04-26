@@ -15,10 +15,12 @@ struct NotesTabFactory {
     
     func makeScreen() -> UIViewController {
         let router = NotesTabRouter(deps: deps)
+        let analytics = NotesTabAnalytics(analyticsService: deps.analyticsService)
         let viewModel = NotesTabViewModelImpl(
             router: router,
             noteReporter: deps.noteActionPerformerProducer.reporter,
-            toastManager: deps.toastManager
+            toastManager: deps.toastManager,
+            analytics: analytics
         )
         let notesView = deps.notesFactory.makeView()
         let favoriteNotesFactory = deps.favoriteNotesFactory.makeView()

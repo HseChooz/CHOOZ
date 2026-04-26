@@ -18,12 +18,14 @@ struct FavoriteNotesFactory {
         let viewStateBuilder = NotesViewStateBuilder()
         let notePerformer = deps.noteActionPerformerProducer.makePerformer()
         let noteReporter = deps.noteActionPerformerProducer.reporter
+        let analytics = FavoriteNotesAnalytics(analyticsService: deps.analyticsService)
         let viewModel = FavoriteNotesViewModelImpl(
             interactor: interactor,
             router: router,
             viewStateBuilder: viewStateBuilder,
             notePerformer: notePerformer,
-            noteReporter: noteReporter
+            noteReporter: noteReporter,
+            analytics: analytics
         )
         let view = FavoriteNotesView(viewModel: viewModel)
         return view

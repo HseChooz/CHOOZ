@@ -23,12 +23,15 @@ struct CollectionFactory {
         let wishlistProducer = CollectionWishlistActionPerformerProducer(deps: deps)
         let wishlistPerformer = wishlistProducer.makePerformer()
         let wishlistReporter = wishlistProducer.reporter
+        let analytics = CollectionAnalytics(analyticsService: deps.analyticsService)
         let viewModel = CollectionViewModelImpl(
             interactor: interactor,
             router: router,
             viewStateBuilder: viewStateBuilder,
             wishlistPerformer: wishlistPerformer,
-            wishlistReporter: wishlistReporter
+            wishlistReporter: wishlistReporter,
+            analytics: analytics,
+            collectionSlug: slug
         )
         let rootView = CollectionView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)

@@ -42,6 +42,9 @@ struct NoteFormView<ViewModel: NoteFormViewModel>: View {
         .padding(.top, 24.0)
         .padding(.horizontal, 16.0)
         .padding(.bottom, Layout.bottomPadding.value(for: interfaceLayout))
+        .onAppear {
+            viewModel.onAppear()
+        }
         .onChange(of: viewModel.shouldDismissForm) { _, shouldDismiss in
             if shouldDismiss {
                 dismiss()
