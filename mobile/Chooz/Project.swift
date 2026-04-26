@@ -89,8 +89,8 @@ let project = Project(
             settings: .settings(
                 base: [
                     "OTHER_LDFLAGS": "-ObjC",
-                    "MARKETING_VERSION": "1.1",
-                    "CURRENT_PROJECT_VERSION": "2"
+                    "MARKETING_VERSION": "2.0",
+                    "CURRENT_PROJECT_VERSION": "1"
                 ],
                 configurations: [
                     .debug(name: "Debug", settings: [
