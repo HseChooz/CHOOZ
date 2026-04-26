@@ -77,6 +77,7 @@ final class AppBootstraper {
                 let vc = appContainer.appTabBarFactory.makeScreen()
                 appContainer.appRouter.setRoot(vc)
                 await setUserProfileIDFromProfile()
+                appContainer.deepLinkService.consumePendingDeepLink()
             case .invalid:
                 appContainer.sessionService.handleSessionExpired()
             }
