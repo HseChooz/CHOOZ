@@ -6,7 +6,9 @@ import Apollo
 protocol MainTabFactoryDeps:
     MainTabRouterDeps,
     MainTabInteractorDeps
-{}
+{
+    var analyticsService: AnalyticsService { get }
+}
 
 @MainActor
 struct MainTabFactory {
@@ -23,10 +25,12 @@ struct MainTabFactory {
         let router = MainTabRouter(deps: deps)
         let interactor = MainTabInteractor(deps: deps)
         let viewStateBuilder = MainTabViewStateBuilder()
+        let analytics = MainTabAnalytics(analyticsService: deps.analyticsService)
         let viewModel = MainTabViewModelImpl(
             router: router,
             interactor: interactor,
-            viewStateBuilder: viewStateBuilder
+            viewStateBuilder: viewStateBuilder,
+            analytics: analytics
         )
         let rootView = MainTabView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: rootView)

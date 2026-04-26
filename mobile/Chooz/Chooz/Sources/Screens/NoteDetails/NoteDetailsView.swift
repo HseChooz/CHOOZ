@@ -33,7 +33,7 @@ struct NoteDetailsView<ViewModel: NoteDetailsViewModel>: View {
                     if let url = viewModel.noteModel.url {
                         Button(
                             action: {
-                                openURL(url)
+                                viewModel.openNoteLink(url, openURL: openURL)
                             },
                             label: {
                                 VStack(alignment: .leading, spacing: 8.0) {
@@ -72,6 +72,9 @@ struct NoteDetailsView<ViewModel: NoteDetailsViewModel>: View {
                 dismiss()
                 viewModel.acknowledgeDetailsDismiss()
             }
+        }
+        .onAppear {
+            viewModel.onAppear()
         }
         .padding(.top, 24.0)
         .padding(.bottom, Layout.bottomPadding.value(for: interfaceLayout))

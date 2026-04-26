@@ -26,16 +26,20 @@ final class MainTabViewModelImpl: MainTabViewModel {
     init(
         router: MainTabRouter,
         interactor: MainTabInteractor,
-        viewStateBuilder: MainTabViewStateBuilder
+        viewStateBuilder: MainTabViewStateBuilder,
+        analytics: MainTabAnalytics? = nil
     ) {
         self.router = router
         self.interactor = interactor
         self.viewStateBuilder = viewStateBuilder
+        self.analytics = analytics
     }
     
     // MARK: - Internal Methods
     
     func requestSections() {
+        trackScreenViewedIfNeeded()
+        
         guard !hasRequestedSections else {
             return
         }
@@ -47,6 +51,7 @@ final class MainTabViewModelImpl: MainTabViewModel {
     // MARK: - MainTabToolbarContentEventsHandler
     
     func openProfile() {
+        analytics?.trackProfileOpened()
         router.routeTo(destination: .profile)
     }
     
@@ -58,14 +63,17 @@ final class MainTabViewModelImpl: MainTabViewModel {
     }
     
     func openCollection(with slug: String) {
+        analytics?.trackCollectionOpened(collectionSlug: slug)
         router.routeTo(destination: .collection(slug: slug))
     }
         
     func openCollectionsList(with sectionId: String) {
+        analytics?.trackCollectionsListOpened(sectionId: sectionId)
         router.routeTo(destination: .collectionsList(id: sectionId))
     }
     
     func openUpcomingEvents() {
+        analytics?.trackUpcomingEventsOpened()
         router.routeTo(destination: .calendar)
     }
     
@@ -81,8 +89,10 @@ final class MainTabViewModelImpl: MainTabViewModel {
     private let router: MainTabRouter
     private let interactor: MainTabInteractor
     private let viewStateBuilder: MainTabViewStateBuilder
+    private let analytics: MainTabAnalytics?
     
     private var hasRequestedSections = false
+    private var hasTrackedScreenView = false
     private var requestSectionsTask: Task<Void, Never>? = nil
     
     // MARK: - Private Methods
@@ -102,6 +112,13 @@ final class MainTabViewModelImpl: MainTabViewModel {
                 viewState = .error(viewStateBuilder.buildErrorViewState(from: .unknown))
             }
         }
+    }
+    
+    private func trackScreenViewedIfNeeded() {
+        guard !hasTrackedScreenView else { return }
+        
+        hasTrackedScreenView = true
+        analytics?.trackScreenViewed()
     }
 
 }

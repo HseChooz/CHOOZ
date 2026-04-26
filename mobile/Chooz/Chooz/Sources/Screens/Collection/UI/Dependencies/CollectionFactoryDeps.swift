@@ -5,7 +5,9 @@ protocol CollectionFactoryDeps:
     CollectionInteractorDeps,
     CollectionRouterDeps,
     CollectionWishlistActionPerformerProducerDeps
-{}
+{
+    var analyticsService: AnalyticsService { get }
+}
 
 @MainActor
 struct CollectionFactoryDepsImpl: CollectionFactoryDeps {
@@ -14,4 +16,5 @@ struct CollectionFactoryDepsImpl: CollectionFactoryDeps {
     let toastManager: ToastManager
     let appRouter: AppRouter
     let collectionItemDetailsFactory: CollectionItemDetailsFactory
+    let analyticsService: AnalyticsService
 }

@@ -6,6 +6,7 @@ protocol NotesFactoryDeps:
     NotesInteractorDeps
 {
     var noteActionPerformerProducer: NoteActionPerformerProducer { get }
+    var analyticsService: AnalyticsService { get }
 }
 
 @MainActor
@@ -15,4 +16,5 @@ struct NotesFactoryDepsImpl: NotesFactoryDeps {
     let notesService: NotesService
     let noteActionPerformerProducer: NoteActionPerformerProducer
     let noteDetailsFactory: NoteDetailsFactory
+    let analyticsService: AnalyticsService
 }

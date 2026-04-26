@@ -28,13 +28,15 @@ final class NotesViewModelImpl: NotesViewModel {
         router: NotesRouter,
         viewStateBuilder: NotesViewStateBuilder,
         notePerformer: any NoteActionPerformer,
-        noteReporter: any NoteActionReporter
+        noteReporter: any NoteActionReporter,
+        analytics: NotesAnalytics? = nil
     ) {
         self.interactor = interactor
         self.router = router
         self.viewStateBuilder = viewStateBuilder
         self.notePerformer = notePerformer
         self.noteReporter = noteReporter
+        self.analytics = analytics
 
         let observer = NoteObserver()
         self.noteObserver = observer
@@ -55,6 +57,8 @@ final class NotesViewModelImpl: NotesViewModel {
     // MARK: - Internal Methods
 
     func requestNotes() {
+        trackScreenViewedIfNeeded()
+        
         guard !hasRequestedNotes else {
             return
         }
@@ -69,6 +73,7 @@ final class NotesViewModelImpl: NotesViewModel {
     }
 
     func createNote() {
+        analytics?.trackNoteFormOpened(mode: "create")
         router.routeTo(destination: .noteForm(
             formType: .create,
             notePerformer: notePerformer,
@@ -77,6 +82,7 @@ final class NotesViewModelImpl: NotesViewModel {
     }
 
     func openNoteDetails(noteModel: NoteModel) {
+        analytics?.trackNoteDetailsOpened(noteId: noteModel.id)
         router.routeTo(destination: .noteDetails(noteModel: noteModel))
     }
 
@@ -97,8 +103,10 @@ final class NotesViewModelImpl: NotesViewModel {
     private let notePerformer: any NoteActionPerformer
     private let noteReporter: any NoteActionReporter
     private let noteObserver: NoteObserver
+    private let analytics: NotesAnalytics?
 
     private var hasRequestedNotes = false
+    private var hasTrackedScreenView = false
     private var requestNotesTask: Task<Void, Never>?
     private var noteActionTask: Task<Void, Never>?
     private var sourcePayload: [NotePayload] = []
@@ -213,6 +221,13 @@ final class NotesViewModelImpl: NotesViewModel {
         } else {
             viewState = newState
         }
+    }
+    
+    private func trackScreenViewedIfNeeded() {
+        guard !hasTrackedScreenView else { return }
+        
+        hasTrackedScreenView = true
+        analytics?.trackScreenViewed()
     }
 
 }

@@ -20,10 +20,12 @@ struct CollectionsListFactory {
         )
         let router = CollectionsListRouter(deps: deps)
         let viewStateBuilder = CollectionsListViewStateBuilder()
+        let analytics = CollectionsListAnalytics(analyticsService: deps.analyticsService)
         let viewModel = CollectionsListViewModelImpl(
             interactor: interactor,
             router: router,
-            viewStateBuilder: viewStateBuilder
+            viewStateBuilder: viewStateBuilder,
+            analytics: analytics
         )
         let rootView = CollectionsListView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)

@@ -8,6 +8,7 @@ protocol NotesTabFactoryDeps:
     var favoriteNotesFactory: FavoriteNotesFactory { get }
     var noteActionPerformerProducer: NoteActionPerformerProducer { get }
     var toastManager: ToastManager { get }
+    var analyticsService: AnalyticsService { get }
 }
 
 @MainActor
@@ -18,4 +19,5 @@ struct NotesTabFactoryDepsImpl: NotesTabFactoryDeps {
     let favoriteNotesFactory: FavoriteNotesFactory
     let noteActionPerformerProducer: NoteActionPerformerProducer
     let toastManager: ToastManager
+    let analyticsService: AnalyticsService
 }

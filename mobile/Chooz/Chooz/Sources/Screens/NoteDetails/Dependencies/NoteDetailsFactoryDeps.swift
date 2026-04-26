@@ -6,6 +6,7 @@ protocol NoteDetailsFactoryDeps:
 {
     var noteActionPerformerProducer: NoteActionPerformerProducer { get }
     var toastManager: ToastManager { get }
+    var analyticsService: AnalyticsService { get }
 }
 
 @MainActor
@@ -14,4 +15,5 @@ struct NoteDetailsFactoryDepsImpl: NoteDetailsFactoryDeps {
     let noteFormFactory: NoteFormFactory
     let noteActionPerformerProducer: NoteActionPerformerProducer
     let toastManager: ToastManager
+    let analyticsService: AnalyticsService
 }

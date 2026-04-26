@@ -18,12 +18,14 @@ struct NotesFactory {
         let viewStateBuilder = NotesViewStateBuilder()
         let notePerformer = deps.noteActionPerformerProducer.makePerformer()
         let noteReporter = deps.noteActionPerformerProducer.reporter
+        let analytics = NotesAnalytics(analyticsService: deps.analyticsService)
         let viewModel = NotesViewModelImpl(
             interactor: interactor,
             router: router,
             viewStateBuilder: viewStateBuilder,
             notePerformer: notePerformer,
-            noteReporter: noteReporter
+            noteReporter: noteReporter,
+            analytics: analytics
         )
         let view = NotesView(viewModel: viewModel)
         return view

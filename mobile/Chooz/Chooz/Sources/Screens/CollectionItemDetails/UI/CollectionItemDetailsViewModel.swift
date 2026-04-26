@@ -26,18 +26,27 @@ final class CollectionItemDetailsViewModelImpl: CollectionItemDetailsViewModel {
         interactor: CollectionItemDetailsInteractor,
         viewStateBuilder: CollectionItemDetailsViewStateBuilder,
         wishlistPerformer: any CollectionWishlistActionPerformer,
-        wishlistReporter: any CollectionWishlistActionReporter
+        wishlistReporter: any CollectionWishlistActionReporter,
+        analytics: CollectionItemDetailsAnalytics? = nil,
+        collectionSlug: String? = nil,
+        itemId: String? = nil
     ) {
         self.interactor = interactor
         self.viewStateBuilder = viewStateBuilder
         self.wishlistPerformer = wishlistPerformer
         self.wishlistReporter = wishlistReporter
+        self.analytics = analytics
+        self.collectionSlug = collectionSlug
+        self.itemId = itemId
         
         let observer = WishlistObserver()
         self.wishlistObserver = observer
         
         observer.onWillPerform = { [weak self] action, itemId in
             self?.handleWillPerform(action: action, itemId: itemId)
+        }
+        observer.onDidPerform = { [weak self] action, itemId in
+            self?.handleDidPerform(action: action, itemId: itemId)
         }
         observer.onFailPerform = { [weak self] action, itemId in
             self?.handleFailPerform(action: action, itemId: itemId)
@@ -49,6 +58,8 @@ final class CollectionItemDetailsViewModelImpl: CollectionItemDetailsViewModel {
     // MARK: - Internal Methods
     
     func requestCollectionItemDetails() {
+        trackScreenViewedIfNeeded()
+        
         guard !hasRequestedCollectionItemDetails else {
             return
         }
@@ -77,11 +88,16 @@ final class CollectionItemDetailsViewModelImpl: CollectionItemDetailsViewModel {
     private let wishlistPerformer: any CollectionWishlistActionPerformer
     private let wishlistReporter: any CollectionWishlistActionReporter
     private let wishlistObserver: WishlistObserver
+    private let analytics: CollectionItemDetailsAnalytics?
+    private let collectionSlug: String?
+    private let itemId: String?
     
     private var hasRequestedCollectionItemDetails = false
+    private var hasTrackedScreenView = false
     private var requestCollectionItemDetailsTask: Task<Void, Never>? = nil
     private var wishlistTask: Task<Void, Never>? = nil
     private var sourcePayload: CollectionItemDetailsPayload?
+    private var pendingAnalyticsWishlistActions: [String: CollectionWishlistAction] = [:]
     
     // MARK: - Private Methods
     
@@ -107,10 +123,17 @@ final class CollectionItemDetailsViewModelImpl: CollectionItemDetailsViewModel {
         _ action: CollectionWishlistAction,
         collectionItemId: String
     ) {
+        pendingAnalyticsWishlistActions[collectionItemId] = action
         wishlistTask?.cancel()
         
         wishlistTask = Task(priority: .userInitiated) {
-            try? await wishlistPerformer.perform(action: action, for: collectionItemId)
+            do {
+                try await wishlistPerformer.perform(action: action, for: collectionItemId)
+            } catch {
+                if Task.isCancelled {
+                    pendingAnalyticsWishlistActions[collectionItemId] = nil
+                }
+            }
         }
     }
     
@@ -118,7 +141,29 @@ final class CollectionItemDetailsViewModelImpl: CollectionItemDetailsViewModel {
         updateItemIsAdded(collectionItemId: itemId, isAdded: action == .add)
     }
     
+    private func handleDidPerform(action: CollectionWishlistAction, itemId: String) {
+        guard pendingAnalyticsWishlistActions[itemId] == action else {
+            return
+        }
+        
+        pendingAnalyticsWishlistActions[itemId] = nil
+        
+        guard let collectionSlug else {
+            return
+        }
+        
+        let trackedItemId = self.itemId ?? itemId
+        analytics?.trackWishlistToggled(
+            collectionSlug: collectionSlug,
+            itemId: trackedItemId,
+            enabled: action == .add
+        )
+    }
+    
     private func handleFailPerform(action: CollectionWishlistAction, itemId: String) {
+        if pendingAnalyticsWishlistActions[itemId] == action {
+            pendingAnalyticsWishlistActions[itemId] = nil
+        }
         updateItemIsAdded(collectionItemId: itemId, isAdded: action != .add)
     }
     
@@ -134,6 +179,13 @@ final class CollectionItemDetailsViewModelImpl: CollectionItemDetailsViewModel {
         viewState = .loaded(viewStateBuilder.buildLoadedContentViewState(from: payload))
     }
     
+    private func trackScreenViewedIfNeeded() {
+        guard !hasTrackedScreenView else { return }
+        
+        hasTrackedScreenView = true
+        analytics?.trackScreenViewed()
+    }
+    
 }
 
 // MARK: - WishlistObserver
@@ -145,6 +197,7 @@ extension CollectionItemDetailsViewModelImpl {
         // MARK: - Internal Properties
         
         var onWillPerform: (@MainActor (CollectionWishlistAction, String) -> Void)?
+        var onDidPerform: (@MainActor (CollectionWishlistAction, String) -> Void)?
         var onFailPerform: (@MainActor (CollectionWishlistAction, String) -> Void)?
         
         // MARK: - ActionPerformerObserver
@@ -164,7 +217,11 @@ extension CollectionItemDetailsViewModelImpl {
             for target: String,
             with result: Void,
             in performer: any ActionPerformer<CollectionWishlistAction, String, Void>
-        ) {}
+        ) {
+            Task { @MainActor [onDidPerform] in
+                onDidPerform?(action, target)
+            }
+        }
         
         func failPerform(
             action: CollectionWishlistAction,

@@ -24,16 +24,20 @@ final class CollectionsListViewModelImpl: CollectionsListViewModel {
     init(
         interactor: CollectionsListInteractor,
         router: CollectionsListRouter,
-        viewStateBuilder: CollectionsListViewStateBuilder
+        viewStateBuilder: CollectionsListViewStateBuilder,
+        analytics: CollectionsListAnalytics? = nil
     ) {
         self.interactor = interactor
         self.router = router
         self.viewStateBuilder = viewStateBuilder
+        self.analytics = analytics
     }
     
     // MARK: - Internal Methods
     
     func requestCollectionsList() {
+        trackScreenViewedIfNeeded()
+        
         guard !hasRequestedCollectionsList else {
             return
         }
@@ -53,6 +57,7 @@ final class CollectionsListViewModelImpl: CollectionsListViewModel {
     }
     
     func openCollection(with collectionSlug: String) {
+        analytics?.trackCollectionOpened(collectionSlug: collectionSlug)
         router.routeTo(destination: .collection(slug: collectionSlug))
     }
     
@@ -61,8 +66,10 @@ final class CollectionsListViewModelImpl: CollectionsListViewModel {
     private let interactor: CollectionsListInteractor
     private let router: CollectionsListRouter
     private let viewStateBuilder: CollectionsListViewStateBuilder
+    private let analytics: CollectionsListAnalytics?
     
     private var hasRequestedCollectionsList = false
+    private var hasTrackedScreenView = false
     private var requestCollectionsListTask: Task<Void, Never>? = nil
     
     // MARK: - Private Methods
@@ -82,6 +89,13 @@ final class CollectionsListViewModelImpl: CollectionsListViewModel {
                 viewState = .error(viewStateBuilder.buildErrorViewState(from: .unknown))
             }
         }
+    }
+    
+    private func trackScreenViewedIfNeeded() {
+        guard !hasTrackedScreenView else { return }
+        
+        hasTrackedScreenView = true
+        analytics?.trackScreenViewed()
     }
     
 }

@@ -25,11 +25,15 @@ struct CollectionItemDetailsFactory {
             itemId: itemId
         )
         let viewStateBuilder = CollectionItemDetailsViewStateBuilder()
+        let analytics = CollectionItemDetailsAnalytics(analyticsService: deps.analyticsService)
         let viewModel = CollectionItemDetailsViewModelImpl(
             interactor: interactor,
             viewStateBuilder: viewStateBuilder,
             wishlistPerformer: wishlistPerformer,
-            wishlistReporter: wishlistReporter
+            wishlistReporter: wishlistReporter,
+            analytics: analytics,
+            collectionSlug: collectionSlug,
+            itemId: itemId
         )
         let rootView = CollectionItemDetailsView(viewModel: viewModel)
         return UIHostingController(rootView: rootView)

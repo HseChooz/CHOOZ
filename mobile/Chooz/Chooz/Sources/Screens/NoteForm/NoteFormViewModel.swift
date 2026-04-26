@@ -12,6 +12,7 @@ protocol NoteFormViewModel:
 
     func createNote()
     func updateNote()
+    func onAppear()
     func acknowledgeFormDismiss()
     func formDidDisappear()
 }
@@ -36,12 +37,14 @@ final class NoteFormViewModelImpl: NoteFormViewModel {
         formType: NoteFormType,
         formModel: NoteFormModel,
         notePerformer: any NoteActionPerformer,
-        toastManager: ToastManager
+        toastManager: ToastManager,
+        analytics: NoteFormAnalytics? = nil
     ) {
         self.formType = formType
         self.formModel = formModel
         self.notePerformer = notePerformer
         self.toastManager = toastManager
+        self.analytics = analytics
     }
 
     // MARK: - Internal Methods
@@ -96,6 +99,10 @@ final class NoteFormViewModelImpl: NoteFormViewModel {
             }
         }
     }
+    
+    func onAppear() {
+        trackScreenViewedIfNeeded()
+    }
 
     func acknowledgeFormDismiss() {
         shouldDismissForm = false
@@ -112,7 +119,9 @@ final class NoteFormViewModelImpl: NoteFormViewModel {
 
     private let notePerformer: any NoteActionPerformer
     private let toastManager: ToastManager
+    private let analytics: NoteFormAnalytics?
     private var isLoading: Bool = false
+    private var hasTrackedScreenView: Bool = false
     private var noteActionTask: Task<Void, Never>?
 
     // MARK: - Private Methods
@@ -138,6 +147,13 @@ final class NoteFormViewModelImpl: NoteFormViewModel {
 
     private func present(error: NoteFormError) {
         toastManager.showError(error.title, subtitle: error.subtitle)
+    }
+    
+    private func trackScreenViewedIfNeeded() {
+        guard !hasTrackedScreenView else { return }
+        
+        hasTrackedScreenView = true
+        analytics?.trackScreenViewed()
     }
 
 }

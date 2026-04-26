@@ -9,7 +9,9 @@ protocol NoteDetailsViewModel:
     var isDeleteConfirmationPresented: Bool { get set }
     var shouldDismissDetails: Bool { get }
 
+    func onAppear()
     func openEditNoteForm()
+    func openNoteLink(_ url: URL, openURL: OpenURLAction)
     func deleteNote()
     func toggleFavorite()
     func acknowledgeDetailsDismiss()
@@ -26,8 +28,13 @@ final class NoteDetailsViewModelImpl: NoteDetailsViewModel {
     private(set) var shouldDismissDetails: Bool = false
 
     // MARK: - Internal Methods
+    
+    func onAppear() {
+        trackScreenViewedIfNeeded()
+    }
 
     func openEditNoteForm() {
+        analytics?.trackNoteFormOpened(mode: "edit")
         router.routeTo(
             destination: .noteForm(
                 formType: .edit(NoteFormModel(
@@ -40,6 +47,11 @@ final class NoteDetailsViewModelImpl: NoteDetailsViewModel {
                 noteReporter: noteReporter
             )
         )
+    }
+    
+    func openNoteLink(_ url: URL, openURL: OpenURLAction) {
+        analytics?.trackNoteLinkOpened(noteId: noteModel.id)
+        openURL(url)
     }
 
     func deleteNote() {
@@ -98,13 +110,15 @@ final class NoteDetailsViewModelImpl: NoteDetailsViewModel {
         router: NoteDetailsRouter,
         notePerformer: any NoteActionPerformer,
         noteReporter: any NoteActionReporter,
-        toastManager: ToastManager
+        toastManager: ToastManager,
+        analytics: NoteDetailsAnalytics? = nil
     ) {
         self.noteModel = noteModel
         self.router = router
         self.notePerformer = notePerformer
         self.noteReporter = noteReporter
         self.toastManager = toastManager
+        self.analytics = analytics
     }
 
     // MARK: - Private Properties
@@ -113,7 +127,9 @@ final class NoteDetailsViewModelImpl: NoteDetailsViewModel {
     private let notePerformer: any NoteActionPerformer
     private let noteReporter: any NoteActionReporter
     private let toastManager: ToastManager
+    private let analytics: NoteDetailsAnalytics?
     private var isDeleteLoading: Bool = false
+    private var hasTrackedScreenView: Bool = false
     private var deleteNoteTask: Task<Void, Never>?
     private var favoriteNoteTask: Task<Void, Never>?
 
@@ -127,6 +143,13 @@ final class NoteDetailsViewModelImpl: NoteDetailsViewModel {
             url: note.link,
             isFavorite: note.isFavorite
         )
+    }
+    
+    private func trackScreenViewedIfNeeded() {
+        guard !hasTrackedScreenView else { return }
+        
+        hasTrackedScreenView = true
+        analytics?.trackScreenViewed()
     }
 
 }

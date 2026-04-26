@@ -18,10 +18,12 @@ struct NoteFormFactory {
         notePerformer: any NoteActionPerformer,
         noteReporter: any NoteActionReporter
     ) -> UIViewController {
+        let analytics = NoteFormAnalytics(analyticsService: deps.analyticsService)
         let viewModel = NoteFormViewModelBuilder.makeViewModel(
             with: formType,
             notePerformer: notePerformer,
-            toastManager: deps.toastManager
+            toastManager: deps.toastManager,
+            analytics: analytics
         )
         _ = noteReporter
         let rootView = NoteFormView(viewModel: viewModel)

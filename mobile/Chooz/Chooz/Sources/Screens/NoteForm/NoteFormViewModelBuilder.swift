@@ -8,7 +8,8 @@ struct NoteFormViewModelBuilder {
     static func makeViewModel(
         with formType: NoteFormType,
         notePerformer: any NoteActionPerformer,
-        toastManager: ToastManager
+        toastManager: ToastManager,
+        analytics: NoteFormAnalytics? = nil
     ) -> NoteFormViewModelImpl {
         switch formType {
         case .create:
@@ -16,14 +17,16 @@ struct NoteFormViewModelBuilder {
                 formType: formType,
                 formModel: NoteFormModel(),
                 notePerformer: notePerformer,
-                toastManager: toastManager
+                toastManager: toastManager,
+                analytics: analytics
             )
         case .edit(let model):
             return NoteFormViewModelImpl(
                 formType: formType,
                 formModel: model,
                 notePerformer: notePerformer,
-                toastManager: toastManager
+                toastManager: toastManager,
+                analytics: analytics
             )
         }
     }
