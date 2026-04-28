@@ -132,7 +132,7 @@ struct NoteDetailsView<ViewModel: NoteDetailsViewModel>: View {
                     Images.Icons.trash
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 18.0, height: 18.0)
+                        .frame(width: 24.0, height: 24.0)
                 }
             )
             .buttonStyle(ScaleButtonStyle())
@@ -148,7 +148,7 @@ struct NoteDetailsView<ViewModel: NoteDetailsViewModel>: View {
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 18.0, height: 18.0)
+                        .frame(width: 24.0, height: 24.0)
                         .foregroundStyle(Colors.Neutral.grey99)
                 }
             )
@@ -164,7 +164,7 @@ struct NoteDetailsView<ViewModel: NoteDetailsViewModel>: View {
                     Images.Icons.edit
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 18.0, height: 18.0)
+                        .frame(width: 24.0, height: 24.0)
                 }
             )
             .buttonStyle(ScaleButtonStyle())

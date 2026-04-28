@@ -6,38 +6,21 @@ final class SettingsFactory {
     
     // MARK: - Init
     
-    init(
-        appRouter: AppRouter,
-        sessionServiceProvider: @escaping () -> SessionService,
-        userDefaultsService: UserDefaultsService,
-        notificationService: NotificationService,
-        calendarService: CalendarService,
-        toastManager: ToastManager,
-        analyticsService: AnalyticsService
-    ) {
-        self.appRouter = appRouter
-        self.sessionServiceProvider = sessionServiceProvider
-        self.userDefaultsService = userDefaultsService
-        self.notificationService = notificationService
-        self.calendarService = calendarService
-        self.toastManager = toastManager
-        self.analyticsService = analyticsService
+    init(deps: SettingsFactoryDeps) {
+        self.deps = deps
     }
     
     // MARK: - Internal Methods
     
     func makeScreen() -> UIViewController {
-        let router = SettingsRouter(appRouter: appRouter)
-        let analytics = SettingsAnalytics(analyticsService: analyticsService)
-        let calendarInteractor = CalendarInteractor(calendarService: calendarService)
-        let viewModel = SettingsViewModel(
+        let router = SettingsRouter(deps: deps)
+        let analytics = SettingsAnalytics(analyticsService: deps.analyticsService)
+        let calendarInteractor = CalendarInteractor(calendarService: deps.calendarService)
+        let viewModel = SettingsViewModelImpl(
             router: router,
-            sessionService: sessionServiceProvider(),
-            userDefaultsService: userDefaultsService,
-            notificationService: notificationService,
+            analytics: analytics,
             calendarInteractor: calendarInteractor,
-            toastManager: toastManager,
-            analytics: analytics
+            deps: deps
         )
         let view = SettingsView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: view)
@@ -53,11 +36,5 @@ final class SettingsFactory {
     
     // MARK: - Private Properties
     
-    private let appRouter: AppRouter
-    private let sessionServiceProvider: () -> SessionService
-    private let userDefaultsService: UserDefaultsService
-    private let notificationService: NotificationService
-    private let calendarService: CalendarService
-    private let toastManager: ToastManager
-    private let analyticsService: AnalyticsService
+    private let deps: SettingsFactoryDeps
 }

@@ -3,6 +3,14 @@ import UserNotifications
 
 @MainActor
 final class NotificationService: NSObject {
+
+    // MARK: - Internal Types
+
+    enum DebugNotificationResult {
+        case scheduled
+        case denied
+        case failed
+    }
     
     // MARK: - Init
     
@@ -71,6 +79,31 @@ final class NotificationService: NSObject {
         
         for event in events where event.notifyEnabled {
             scheduleNotificationIgnoringGlobalFlag(for: event)
+        }
+    }
+
+    func sendDebugNotification() async -> DebugNotificationResult {
+        let status = await getAuthorizationStatus()
+
+        switch status {
+        case .notDetermined:
+            _ = await requestPermission()
+            let updatedStatus = await getAuthorizationStatus()
+
+            switch updatedStatus {
+            case .authorized, .provisional, .ephemeral:
+                return await scheduleDebugNotification()
+            case .denied:
+                return .denied
+            default:
+                return .failed
+            }
+        case .authorized, .provisional, .ephemeral:
+            return await scheduleDebugNotification()
+        case .denied:
+            return .denied
+        @unknown default:
+            return .failed
         }
     }
     
@@ -219,6 +252,32 @@ final class NotificationService: NSObject {
     private func fallbackNotificationIdentifier(for eventId: String) -> String {
         "event_\(eventId)_fallback"
     }
+
+    private func scheduleDebugNotification() async -> DebugNotificationResult {
+        center.removePendingNotificationRequests(withIdentifiers: [Static.debugNotificationIdentifier])
+
+        let content = UNMutableNotificationContent()
+        content.title = Static.debugNotificationTitle
+        content.body = Static.debugNotificationBody
+        content.sound = .default
+
+        let trigger = UNTimeIntervalNotificationTrigger(
+            timeInterval: Static.debugNotificationDelaySeconds,
+            repeats: false
+        )
+        let request = UNNotificationRequest(
+            identifier: Static.debugNotificationIdentifier,
+            content: content,
+            trigger: trigger
+        )
+
+        do {
+            try await addRequestAwaitingResult(request)
+            return .scheduled
+        } catch {
+            return .failed
+        }
+    }
     
     private func addRequest(_ request: UNNotificationRequest) {
         center.add(request) { error in
@@ -227,6 +286,18 @@ final class NotificationService: NSObject {
                 print("Notification scheduling failed: \(error.localizedDescription)")
             }
             #endif
+        }
+    }
+
+    private func addRequestAwaitingResult(_ request: UNNotificationRequest) async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            center.add(request) { error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
         }
     }
     
@@ -256,6 +327,10 @@ final class NotificationService: NSObject {
         static let eventHour = 10
         static let fallbackLeadSeconds: TimeInterval = 60
         static let minimumFireDelaySeconds: TimeInterval = 1
+        static let debugNotificationDelaySeconds: TimeInterval = 1
+        static let debugNotificationIdentifier = "debug_test_push"
+        static let debugNotificationTitle = "Тестовый пуш"
+        static let debugNotificationBody = "Локальное уведомление из дебаг-панели"
         
         static let offsets: [ReminderOffset] = [
             ReminderOffset(hours: 12, suffix: "12h", label: "Через 12 часов"),

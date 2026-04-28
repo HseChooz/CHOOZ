@@ -5,7 +5,6 @@ import UIKit
 protocol MainTabRouterDeps {
     var appRouter: AppRouter { get }
     var profileFactory: ProfileFactory { get }
-    var calendarFactory: CalendarFactory { get }
     var collectionsListFactory: CollectionsListFactory { get }
     var collectionFactory: CollectionFactory { get }
 }

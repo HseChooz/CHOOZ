@@ -29,7 +29,7 @@ final class AppBootstraper {
             validateSessionAndRoute()
         } else {
             routeAfterDelay {
-                self.appContainer.authorizationFactory.makeScreen()
+                self.appContainer.makeAuthorizationScreen()
             }
         }
     }
@@ -74,7 +74,7 @@ final class AppBootstraper {
             
             switch result {
             case .valid, .networkError:
-                let vc = appContainer.appTabBarFactory.makeScreen()
+                let vc = appContainer.makeAppTabBarScreen()
                 appContainer.appRouter.setRoot(vc)
                 await setUserProfileIDFromProfile()
                 appContainer.deepLinkService.consumePendingDeepLink()
