@@ -1,13 +1,15 @@
 import Foundation
 import Apollo
+import UIKit
 
 @MainActor
-final class AppContainer {
+final class AppContainer: AppScreenFactory {
 
     // MARK: - Init
 
     init(appRouter: AppRouter) {
         self.appRouter = appRouter
+        appRouter.screenFactory = self
     }
 
     // MARK: - Router
@@ -70,8 +72,7 @@ final class AppContainer {
     lazy var sessionService: SessionService = SessionService(
         apolloClient: apolloClient,
         tokenStorage: tokenStorage,
-        appRouter: appRouter,
-        authorizationFactory: authorizationFactory
+        appRouter: appRouter
     )
 
     lazy var socialProfileService: SocialProfileService = SocialProfileServiceImpl(
@@ -111,7 +112,6 @@ final class AppContainer {
             appRouter: appRouter,
             profileFactory: profileFactory,
             mainTabService: mainTabService,
-            calendarFactory: calendarFactory,
             collectionsListFactory: collectionsListFactory,
             collectionFactory: collectionFactory,
             analyticsService: analyticsService
@@ -152,15 +152,26 @@ final class AppContainer {
             analyticsService: analyticsService
         )
     )
+    
+    lazy var debugPanelFactory: DebugPanelFactory = DebugPanelFactory(
+        deps: DebugPanelFactoryDepsImpl(
+            notificationService: notificationService,
+            toastManager: toastManager
+        )
+    )
 
     lazy var settingsFactory: SettingsFactory = SettingsFactory(
-        appRouter: appRouter,
-        sessionServiceProvider: { [unowned self] in self.sessionService },
-        userDefaultsService: userDefaultsService,
-        notificationService: notificationService,
-        calendarService: calendarService,
-        toastManager: toastManager,
-        analyticsService: analyticsService
+        deps: SettingsFactoryDepsImpl(
+            appRouter: appRouter,
+            profileService: profileService,
+            sessionService: sessionService,
+            userDefaultsService: userDefaultsService,
+            notificationService: notificationService,
+            toastManager: toastManager,
+            analyticsService: analyticsService,
+            calendarService: calendarService,
+            debugPanelFactory: debugPanelFactory
+        )
     )
 
     lazy var profileFactory: ProfileFactory = ProfileFactory(
@@ -247,7 +258,6 @@ final class AppContainer {
             appleAuthService: appleAuthService,
             googleAuthService: googleAuthService,
             yandexAuthService: yandexAuthService,
-            appTabBarFactory: appTabBarFactory,
             deepLinkService: deepLinkService,
             analyticsService: analyticsService,
             toastManager: toastManager
@@ -261,4 +271,16 @@ final class AppContainer {
         analyticsService: analyticsService
     )
 
+}
+
+// MARK: - AppScreenFactory
+
+extension AppContainer {
+    func makeAuthorizationScreen() -> UIViewController {
+        authorizationFactory.makeScreen()
+    }
+
+    func makeAppTabBarScreen() -> UIViewController {
+        appTabBarFactory.makeScreen()
+    }
 }

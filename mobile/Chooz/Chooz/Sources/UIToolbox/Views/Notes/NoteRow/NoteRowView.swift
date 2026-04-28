@@ -41,7 +41,7 @@ struct NoteRowView: View {
                             bookmarkImage
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 17.0, height: 17.0)
+                                .frame(width: 24.0, height: 24.0)
                         }
                     )
                     .buttonStyle(ScaleButtonStyle())

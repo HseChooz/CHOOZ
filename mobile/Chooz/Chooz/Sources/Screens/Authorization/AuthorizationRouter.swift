@@ -3,7 +3,6 @@ import Foundation
 @MainActor
 protocol AuthorizationRouterDeps {
     var appRouter: AppRouter { get }
-    var appTabBarFactory: AppTabBarFactory { get }
     var deepLinkService: DeepLinkService { get }
 }
 
@@ -19,7 +18,9 @@ final class AuthorizationRouter {
     // MARK: - Internal Methods
     
     func routeToMainScreen() {
-        let vc = deps.appTabBarFactory.makeScreen()
+        guard let vc = deps.appRouter.screenFactory?.makeAppTabBarScreen() else {
+            return
+        }
         deps.appRouter.setRoot(vc, animated: true)
         deps.deepLinkService.consumePendingDeepLink()
     }

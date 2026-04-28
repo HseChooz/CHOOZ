@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct SettingsView: View {
+struct SettingsView<ViewModel: SettingsViewModel>: View {
     
     // MARK: - Init
     
-    init(viewModel: SettingsViewModel) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
     }
     
@@ -23,6 +23,9 @@ struct SettingsView: View {
         .padding(16.0)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Colors.Common.white)
+        .onAppear {
+            viewModel.onAppear()
+        }
         .confirmationDialog(
             isPresented: $isLogoutConfirmationPresented,
             title: "Выход из аккаунта",
@@ -45,7 +48,7 @@ struct SettingsView: View {
     
     // MARK: - Private Properties
     
-    @Bindable private var viewModel: SettingsViewModel
+    private let viewModel: ViewModel
     
     @State private var isLogoutConfirmationPresented: Bool = false
     @State private var isDeleteAccountConfirmationPresented: Bool = false
@@ -59,39 +62,28 @@ struct SettingsView: View {
     }
 
     private var appSettingsSectionView: some View {
-        VStack(spacing: .zero) {
+        VStack(spacing: 16.0) {
             SettingsToggleView(
                 title: "Получать уведомления",
-                isOn: $viewModel.notificationsEnabled
+                isOn: Binding(
+                    get: { viewModel.notificationsEnabled },
+                    set: { viewModel.notificationsEnabled = $0 }
+                )
             )
             .padding(.vertical, 16.0)
             
             dashDivider
             
-            // TODO: uncomment when feature is ready
-//            SettingsToggleView(title: "Получать SMS-рассылки")
-//                .padding(.vertical, 16.0)
-//            
-//            dashDivider
-            
-            // TODO: uncomment when feature is ready
-//            SettingsButtonView(
-//                title: "Пароль и данные",
-//                style: .neutral,
-//                hasChevron: true
-//            )
-//            .padding(.vertical, 16.0)
-//            
-//            dashDivider
-//            
-//            SettingsButtonView(
-//                title: "О приложении",
-//                style: .neutral,
-//                hasChevron: true
-//            )
-//            .padding(.vertical, 16.0)
-            
-            dashDivider
+            if viewModel.isDebugPannelAvailable {
+                SettingsButtonView(
+                    title: "🐞 Дебаг панель",
+                    style: .neutral,
+                    hasChevron: false,
+                    action: {
+                        viewModel.openDebugPanel()
+                    }
+                )
+            }
         }
     }
     

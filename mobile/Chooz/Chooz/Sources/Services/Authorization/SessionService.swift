@@ -16,13 +16,11 @@ final class SessionService {
     init(
         apolloClient: ApolloClient,
         tokenStorage: TokenStorage,
-        appRouter: AppRouter,
-        authorizationFactory: AuthorizationFactory
+        appRouter: AppRouter
     ) {
         self.apolloClient = apolloClient
         self.tokenStorage = tokenStorage
         self.appRouter = appRouter
-        self.authorizationFactory = authorizationFactory
     }
     
     // MARK: - Internal Methods
@@ -61,8 +59,10 @@ final class SessionService {
     func handleSessionExpired() {
         tokenStorage.clear()
         try? YandexLoginSDK.shared.logout()
-        
-        let vc = authorizationFactory.makeScreen()
+
+        guard let vc = appRouter.screenFactory?.makeAuthorizationScreen() else {
+            return
+        }
         appRouter.setRoot(vc, animated: true)
     }
     
@@ -106,7 +106,6 @@ final class SessionService {
     private let apolloClient: ApolloClient
     private let tokenStorage: TokenStorage
     private let appRouter: AppRouter
-    private let authorizationFactory: AuthorizationFactory
     
     // MARK: - Private Methods
     

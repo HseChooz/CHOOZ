@@ -1,6 +1,12 @@
 import UIKit
 
 @MainActor
+protocol AppScreenFactory: AnyObject {
+    func makeAuthorizationScreen() -> UIViewController
+    func makeAppTabBarScreen() -> UIViewController
+}
+
+@MainActor
 final class AppRouter {
 
     // MARK: - Init
@@ -18,6 +24,7 @@ final class AppRouter {
 
     weak var activeTabNavigationController: UINavigationController?
     weak var appTabBarController: AppTabBarController?
+    weak var screenFactory: AppScreenFactory?
 
     var topViewController: UIViewController? {
         let nav = activeNavigationController
