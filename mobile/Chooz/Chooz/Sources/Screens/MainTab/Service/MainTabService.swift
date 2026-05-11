@@ -69,6 +69,7 @@ final class MainTabServiceImpl: MainTabService {
                                     slug: collection.slug,
                                     title: collection.title,
                                     subtitle: collection.subtitle,
+                                    badge: collection.badge,
                                     coverImageUrl: collection.coverImageUrl.flatMap(URL.init(string:)),
                                     itemsCount: collection.itemsCount
                                 )

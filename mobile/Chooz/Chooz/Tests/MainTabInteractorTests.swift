@@ -108,6 +108,7 @@ struct MainTabInteractorTests {
                     slug: slug,
                     title: "Подборка",
                     subtitle: "Короткое описание",
+                    badge: nil,
                     coverImageUrl: URL(string: "https://example.com/image.png"),
                     itemsCount: 10
                 )

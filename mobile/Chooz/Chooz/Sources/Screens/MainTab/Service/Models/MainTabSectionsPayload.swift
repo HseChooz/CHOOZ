@@ -13,6 +13,7 @@ struct MainTabSectionsPayload: Hashable {
         let slug: String
         let title: String
         let subtitle: String
+        let badge: String?
         let coverImageUrl: URL?
         let itemsCount: Int
     }
