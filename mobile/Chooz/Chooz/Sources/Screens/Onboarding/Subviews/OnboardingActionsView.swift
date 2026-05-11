@@ -17,7 +17,7 @@ struct OnboardingActionsView: View {
     // MARK: - Body
     
     var body: some View {
-        HStack(spacing: 1.0) {
+        VStack(alignment: .center, spacing: 8.0) {
             MainActionButton(
                 title: primaryActionTitle,
                 backgroundColor: Colors.Blue.blue500,
@@ -28,8 +28,8 @@ struct OnboardingActionsView: View {
             if let skipAction = skipAction {
                 MainActionButton(
                     title: "Пропустить",
-                    backgroundColor: Color.clear,
-                    foregroundColor: Colors.Neutral.grey600,
+                    backgroundColor: Colors.Neutral.grey200,
+                    foregroundColor: Colors.Neutral.grey800,
                     action: skipAction
                 )
             }

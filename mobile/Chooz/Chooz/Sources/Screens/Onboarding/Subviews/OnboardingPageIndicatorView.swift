@@ -15,8 +15,8 @@ struct OnboardingPageIndicatorView: View {
         HStack(spacing: 4.0) {
             ForEach(0..<totalPages, id: \.self) { index in
                 Capsule()
-                    .fill(index == currentPageIndex ? Colors.Blue.blue500 : Colors.Neutral.grey600)
-                    .frame(width: index == currentPageIndex ? 45.0 : 12.0, height: 12.0)
+                    .fill(index == currentPageIndex ? Colors.Neutral.grey800 : Colors.Neutral.grey300)
+                    .frame(width: index == currentPageIndex ? 16.0 : 6.0, height: 6.0)
             }
         }
         .animation(.easeInOut(duration: 0.2), value: currentPageIndex)
