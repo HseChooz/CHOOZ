@@ -12,21 +12,13 @@ struct MainTabView<ViewModel: MainTabViewModel>: View {
     
     var body: some View {
         contentView
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Colors.Common.white)
             .onAppear {
                  viewModel.requestSections()
             }
             .safeAreaInset(edge: .top) {
-                HStack(spacing: 24.0) {
-                    MainTabSearchBarView(
-                        searchText: Binding(
-                            get: { viewModel.searchText },
-                            set: { viewModel.searchText = $0 }
-                        )
-                    )
-                                    
-                    ProfileButtonView(action: viewModel.openProfile)
-                }
-                .padding(.horizontal, 16.0)
+                toolbarView
             }
     }
     
@@ -42,6 +34,20 @@ struct MainTabView<ViewModel: MainTabViewModel>: View {
         case .error(let model):
             ScreenErrorView(model: model, retryAction: viewModel.retrySectionsRequest)
         }
+    }
+
+    private var toolbarView: some View {
+        HStack(spacing: 24.0) {
+            MainTabSearchBarView(
+                searchText: Binding(
+                    get: { viewModel.searchText },
+                    set: { viewModel.searchText = $0 }
+                )
+            )
+            
+            ProfileButtonView(action: viewModel.openProfile)
+        }
+        .padding(.horizontal, 16.0)
     }
     
     // MARK: - Private Properties
