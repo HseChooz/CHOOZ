@@ -15,8 +15,18 @@ struct MainTabView<ViewModel: MainTabViewModel>: View {
             .onAppear {
                  viewModel.requestSections()
             }
-            .toolbar {
-                MainTabToolbarContent(eventsHandler: viewModel)
+            .safeAreaInset(edge: .top) {
+                HStack(spacing: 24.0) {
+                    MainTabSearchBarView(
+                        searchText: Binding(
+                            get: { viewModel.searchText },
+                            set: { viewModel.searchText = $0 }
+                        )
+                    )
+                                    
+                    ProfileButtonView(action: viewModel.openProfile)
+                }
+                .padding(.horizontal, 16.0)
             }
     }
     

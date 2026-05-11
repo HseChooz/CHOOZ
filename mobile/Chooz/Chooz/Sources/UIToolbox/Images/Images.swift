@@ -32,6 +32,7 @@ enum Images {
         static let heart = Image("icon_heart", bundle: .module)
         static let bookmark = Image("icon_bookmark", bundle: .module)
         static let bookmarked = Image("icon_bookmarked", bundle: .module)
+        static let search = Image("icon_search", bundle: .module)
     }
     
     enum Logo {

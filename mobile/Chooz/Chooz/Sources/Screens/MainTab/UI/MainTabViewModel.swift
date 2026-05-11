@@ -4,11 +4,12 @@ import Observation
 @MainActor
 protocol MainTabViewModel:
     AnyObject,
-    MainTabToolbarContentEventsHandler,
     MainTabLoadedViewEventsHandler
 {
     var viewState: MainTabViewState { get }
+    var searchText: String { get set }
     
+    func openProfile()
     func requestSections()
     func retrySectionsRequest()
 }
@@ -20,6 +21,12 @@ final class MainTabViewModelImpl: MainTabViewModel {
     // MARK: - Internal Properties
     
     private(set) var viewState: MainTabViewState = .loading
+    var searchText: String = "" {
+        didSet {
+            guard searchText != oldValue else { return }
+            applySearchText()
+        }
+    }
     
     // MARK: - Init
     
@@ -47,8 +54,6 @@ final class MainTabViewModelImpl: MainTabViewModel {
         hasRequestedSections = true
         forceRequestSections()
     }
-    
-    // MARK: - MainTabToolbarContentEventsHandler
     
     func openProfile() {
         analytics?.trackProfileOpened()
@@ -93,6 +98,7 @@ final class MainTabViewModelImpl: MainTabViewModel {
     
     private var hasRequestedSections = false
     private var hasTrackedScreenView = false
+    private var payload: MainTabSectionsPayload?
     private var requestSectionsTask: Task<Void, Never>? = nil
     
     // MARK: - Private Methods
@@ -103,7 +109,11 @@ final class MainTabViewModelImpl: MainTabViewModel {
         requestSectionsTask = Task {
             do {
                 let payload = try await interactor.requestSections()
-                viewState = .loaded(viewStateBuilder.buildLoadedContentViewState(from: payload))
+                self.payload = payload
+                viewState = .loaded(viewStateBuilder.buildLoadedContentViewState(
+                    from: payload,
+                    searchText: searchText
+                ))
             } catch let error as MainTabErrorType {
                 print(error.localizedDescription)
                 viewState = .error(viewStateBuilder.buildErrorViewState(from: error))
@@ -112,6 +122,17 @@ final class MainTabViewModelImpl: MainTabViewModel {
                 viewState = .error(viewStateBuilder.buildErrorViewState(from: .unknown))
             }
         }
+    }
+    
+    private func applySearchText() {
+        guard let payload, case .loaded = viewState else {
+            return
+        }
+        
+        viewState = .loaded(viewStateBuilder.buildLoadedContentViewState(
+            from: payload,
+            searchText: searchText
+        ))
     }
     
     private func trackScreenViewedIfNeeded() {

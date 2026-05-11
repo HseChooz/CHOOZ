@@ -34,23 +34,8 @@ struct MainTabFactory {
         )
         let rootView = MainTabView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: rootView)
-        let navigationController = UINavigationController(rootViewController: hostingController)
         
-        configureNavigationBarAppearance(for: navigationController)
-        
-        return navigationController
-    }
-    
-    // MARK: - Private Methods
-    
-    private func configureNavigationBarAppearance(for navigationController: UINavigationController) {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .white
-        appearance.shadowColor = nil
-        
-        navigationController.navigationBar.standardAppearance = appearance
-        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        return hostingController
     }
     
     // MARK: - Private Properties

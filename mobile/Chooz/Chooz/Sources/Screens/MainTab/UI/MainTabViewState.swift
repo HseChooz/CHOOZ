@@ -15,6 +15,7 @@ enum MainTabViewState {
         }
         
         let sections: [MainTabSectionType]
+        let emptyStateTitle: String?
         
     }
     
