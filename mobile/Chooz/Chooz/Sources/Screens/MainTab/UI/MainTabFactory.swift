@@ -34,12 +34,46 @@ struct MainTabFactory {
         )
         let rootView = MainTabView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: rootView)
+        let navigationController = MainTabNavigationController(rootViewController: hostingController)
         
-        return hostingController
+        return navigationController
     }
     
     // MARK: - Private Properties
     
     private let deps: MainTabFactoryDeps
     
+}
+
+@MainActor
+private final class MainTabNavigationController: UINavigationController, UINavigationControllerDelegate {
+
+    // MARK: - Init
+
+    override init(rootViewController: UIViewController) {
+        self.mainTabViewController = rootViewController
+        super.init(rootViewController: rootViewController)
+
+        delegate = self
+        setNavigationBarHidden(true, animated: false)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - UINavigationControllerDelegate
+
+    func navigationController(
+        _ navigationController: UINavigationController,
+        willShow viewController: UIViewController,
+        animated: Bool
+    ) {
+        setNavigationBarHidden(viewController === mainTabViewController, animated: animated)
+    }
+
+    // MARK: - Private Properties
+
+    private weak var mainTabViewController: UIViewController?
+
 }
