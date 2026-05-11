@@ -28,10 +28,14 @@ struct OnboardingView: View {
         switch viewModel.currentPage {
         case .start:
             OnboardingStartContentView()
+        case .collections:
+            OnboardingCollectionsContentView()
         case .wishlist:
             OnboardingWishlistContentView()
         case .calendar:
             OnboardingCalendarContentView()
+        case .notes:
+            OnboardingNotesContentView()
         case .finish:
             OnboardingFinishContentView()
         }

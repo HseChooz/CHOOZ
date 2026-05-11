@@ -58,6 +58,17 @@ enum Images {
         enum Shy {
             static let v1 = Image("mascotte_shy_v1", bundle: .module)
         }
+        
+        enum Substract {
+            static let v1 = Image("mascotte_substract_v1", bundle: .module)
+        }
+    }
+    
+    enum Onboarding {
+        static let collections = Image("onboarding_collections", bundle: .module)
+        static let wishlist = Image("onboarding_wishlist", bundle: .module)
+        static let calendar = Image("onboarding_calendar", bundle: .module)
+        static let notes = Image("onboarding_notes", bundle: .module)
     }
     
     static let onboardingWishlistIcon = Image("onboarding_wishlist", bundle: .module)

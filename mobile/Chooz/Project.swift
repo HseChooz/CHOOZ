@@ -89,7 +89,7 @@ let project = Project(
             settings: .settings(
                 base: [
                     "OTHER_LDFLAGS": "-ObjC",
-                    "MARKETING_VERSION": "2.1",
+                    "MARKETING_VERSION": "2.2",
                     "CURRENT_PROJECT_VERSION": "1"
                 ],
                 configurations: [

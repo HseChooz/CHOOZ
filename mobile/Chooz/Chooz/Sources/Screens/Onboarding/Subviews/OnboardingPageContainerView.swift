@@ -15,14 +15,15 @@ struct OnboardingPageContainerView<Content: View>: View {
     // MARK: - Body
     
     var body: some View {
-        VStack(spacing: .zero) {
+        VStack(spacing: 16.0) {
             content
             
-            Spacer()
-            
             bottomView
+                .padding(.horizontal, 32.0)
         }
-        .padding(.horizontal, 16.0)
+        .padding(.top, 16.0)
+        .padding(.bottom, 16.0)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
     
     // MARK: - Private Properties

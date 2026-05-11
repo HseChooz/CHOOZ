@@ -10,6 +10,7 @@ enum Colors {
     enum Neutral {
         static let grey100 = Color("grey100", bundle: .module)
         static let grey200 = Color("grey200", bundle: .module)
+        static let grey300 = Color("grey300", bundle: .module)
         static let grey400 = Color("grey400", bundle: .module)
         static let grey500 = Color("grey500", bundle: .module)
         static let grey600 = Color("grey600", bundle: .module)

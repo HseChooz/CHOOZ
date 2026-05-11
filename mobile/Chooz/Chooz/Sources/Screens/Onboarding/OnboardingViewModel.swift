@@ -44,11 +44,11 @@ final class OnboardingViewModel {
     var primaryButtonTitle: String {
         switch currentPage {
         case .start:
-            return "Поехали!"
-        case .wishlist, .calendar:
+            return "Ознакомиться с функциями"
+        case .collections, .wishlist, .calendar, .notes:
             return "Дальше"
         case .finish:
-            return "На главный экран"
+            return "Перейти к регистрации"
         }
     }
     

@@ -1,24 +1,24 @@
 import SwiftUI
 
-struct OnboardingCalendarContentView: View {
+struct OnboardingNotesContentView: View {
     
     // MARK: - Body
     
     var body: some View {
         VStack(spacing: 50.0) {
-            Images.Onboarding.calendar
+            Images.Onboarding.notes
                 .resizable()
                 .scaledToFill()
-                .frame(height: 283.0)
+                .frame(height: 274.0)
                 .padding(.leading, Static.leadingImagePadding.value(for: interfaceLayout))
             
             VStack(spacing: .zero) {
-                Text("Календарь")
+                Text("Заметки")
                     .font(.velaSans(size: 28.0, weight: .extraBold))
                     .foregroundStyle(Colors.Neutral.grey900)
                     .multilineTextAlignment(.center)
                 
-                Text("Создавайте события, чтобы не забыть поздравить близкого")
+                Text("А также записывайте предпочтения друзей и идеи подарков")
                     .font(.velaSans(size: 16.0, weight: .regular))
                     .foregroundStyle(Colors.Common.black)
                     .multilineTextAlignment(.center)
@@ -40,10 +40,9 @@ struct OnboardingCalendarContentView: View {
     // MARK: - Private Properties
     
     @Environment(\.interfaceLayout) private var interfaceLayout
-    
 }
 
 #Preview {
-    OnboardingCalendarContentView()
+    OnboardingNotesContentView()
 }
 

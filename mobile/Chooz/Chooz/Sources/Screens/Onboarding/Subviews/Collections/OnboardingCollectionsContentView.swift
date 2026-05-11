@@ -1,23 +1,23 @@
 import SwiftUI
 
-struct OnboardingWishlistContentView: View {
+struct OnboardingCollectionsContentView: View {
     
     // MARK: - Body
     
     var body: some View {
-        VStack(spacing: 30.0) {
-            Images.Onboarding.wishlist
+        VStack(spacing: 50.0) {
+            Images.Onboarding.collections
                 .resizable()
                 .scaledToFill()
-                .frame(width: 251.0, height: 357.0)
+                .frame(width: 249.0, height: 352.0)
             
             VStack(spacing: .zero) {
-                Text("Вишлист")
+                Text("Подборки")
                     .font(.velaSans(size: 28.0, weight: .extraBold))
                     .foregroundStyle(Colors.Neutral.grey900)
                     .multilineTextAlignment(.center)
                 
-                Text("Все товары отобразятся в вашем вишлисте. Поделитесь им с друзьями")
+                Text("Выбирайте товары из подборок на основе ваших предпочтений")
                     .font(.velaSans(size: 16.0, weight: .regular))
                     .foregroundStyle(Colors.Common.black)
                     .multilineTextAlignment(.center)
@@ -28,6 +28,6 @@ struct OnboardingWishlistContentView: View {
 }
 
 #Preview {
-    OnboardingWishlistContentView()
+    OnboardingCollectionsContentView()
 }
 
