@@ -1,0 +1,4040 @@
+{
+  "sections": [
+    {
+      "slug": "for_you",
+      "title": "Подборки для вас",
+      "sort_order": 10
+    },
+    {
+      "slug": "by_character",
+      "title": "Подборки по характеру",
+      "sort_order": 20
+    },
+    {
+      "slug": "editorial",
+      "title": "Редакторские подборки",
+      "sort_order": 30
+    },
+    {
+      "slug": "gift_ideas",
+      "title": "Идеи подарков",
+      "sort_order": 40
+    }
+  ],
+  "collections": [
+    {
+      "slug": "book-lovers",
+      "title": "Книголюбы",
+      "subtitle": "",
+      "description": "Выберите книгу в подарок для любимого человека -- подарите ему возможность отвлечься от рутины и погрузиться в новые миры",
+      "section": "for_you",
+      "section_slugs": [
+        "for_you",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.360.yandex.ru/i/heSKDsKq-QglOA",
+      "tags": [
+        "Саморазвитие",
+        "Книги"
+      ],
+      "items_total": 1,
+      "sort_order": 10,
+      "items": [
+        {
+          "title": "Гарри Поттер",
+          "description": "Гарри Поттер и Орден Феникса",
+          "link": "https://www.chitai-gorod.ru/product/garri-potter-i-orden-feniksa-2451179",
+          "price": "1499.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/nUyEyhcMiNuG7w",
+          "tags": [
+            "Саморазвитие",
+            "Книги"
+          ],
+          "sort_order": 10
+        }
+      ]
+    },
+    {
+      "slug": "selfcare",
+      "title": "Забота о себе",
+      "subtitle": "",
+      "description": "Подарки для отдыха, восстановления и заботы о себе",
+      "section": "for_you",
+      "section_slugs": [
+        "for_you",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/9D9qnA7LNtfr3Q",
+      "tags": [
+        "Спорт",
+        "Здоровье",
+        "Йога",
+        "Гаджеты",
+        "Вода",
+        "Свечи",
+        "Уют",
+        "Релакс",
+        "Спа",
+        "Уход",
+        "Техника",
+        "Услуги",
+        "Подарок"
+      ],
+      "items_total": 7,
+      "sort_order": 100,
+      "items": [
+        {
+          "title": "Коврик для йоги",
+          "description": "Коврик для йоги обеспечивает комфорт во время тренировок",
+          "link": "https://ozon.ru/t/l7jHphN",
+          "price": "1596.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/B3vubJyER3z1uA",
+          "tags": [
+            "Спорт",
+            "Здоровье",
+            "Йога"
+          ],
+          "sort_order": 820
+        },
+        {
+          "title": "Умная бутылка для воды с ароматами",
+          "description": "Умная бутылка для воды помогает следить за гидратацией",
+          "link": "https://goldapple.ru/99000048228-s-aromaticeskimi-kartridzami-fioletovo-zelenaa",
+          "price": "2095.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/UHGQeVY1fHyf2w",
+          "tags": [
+            "Здоровье",
+            "Гаджеты",
+            "Вода"
+          ],
+          "sort_order": 830
+        },
+        {
+          "title": "Набор свечей",
+          "description": "Набор свечей создает расслабляющую атмосферу",
+          "link": "https://goldapple.ru/19000074551-summer-fragrances",
+          "price": "1763.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/0NVGxMp5BT9X7Q",
+          "tags": [
+            "Свечи",
+            "Уют",
+            "Релакс"
+          ],
+          "sort_order": 840
+        },
+        {
+          "title": "Набор для ванны с аромамаслами",
+          "description": "Набор для ванны с аромамаслами подходит для домашнего SPA",
+          "link": "https://goldapple.ru/99000079527-lavandovyj-provans",
+          "price": "1980.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/wY3pwSTp9w5lAg",
+          "tags": [
+            "Спа",
+            "Уход",
+            "Релакс"
+          ],
+          "sort_order": 850
+        },
+        {
+          "title": "Электрическая зубная щетка Revyline",
+          "description": "Электрическая зубная щетка Revyline обеспечивает эффективный уход за зубами",
+          "link": "https://goldapple.ru/19000202295-rl-060-rozovyj",
+          "price": "4968.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/OUG-3bT0tOq1xA",
+          "tags": [
+            "Уход",
+            "Здоровье",
+            "Техника"
+          ],
+          "sort_order": 860
+        },
+        {
+          "title": "Набор бомбочек для ванны",
+          "description": "Набор бомбочек для ванны делает купание более приятным и ароматным",
+          "link": "https://goldapple.ru/99000059686-rose-lavander",
+          "price": "1960.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/CT8WNUl8er8eJA",
+          "tags": [
+            "Спа",
+            "Уход",
+            "Релакс"
+          ],
+          "sort_order": 870
+        },
+        {
+          "title": "Сертификат на массаж",
+          "description": "Сертификат на массаж — возможность расслабиться и восстановить силы",
+          "link": "https://maithai.ru/certificates/?ysclid=mkzrug6493300612015",
+          "price": "5000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ksuI3x_RvyKw7g",
+          "tags": [
+            "Релакс",
+            "Услуги",
+            "Подарок"
+          ],
+          "sort_order": 880
+        }
+      ]
+    },
+    {
+      "slug": "lighting",
+      "title": "Да будет свет",
+      "subtitle": "",
+      "description": "Подарите свет, который согреет душу",
+      "section": "for_you",
+      "section_slugs": [
+        "for_you",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/GkGgqQ9-BFj29Q",
+      "tags": [
+        "Декор",
+        "Дом",
+        "Уют",
+        "Дети"
+      ],
+      "items_total": 8,
+      "sort_order": 190,
+      "items": [
+        {
+          "title": "Светильник \"Тюльпаны в кубе\"",
+          "description": "Нежный подарок не только подарит свет, но и визуальное эстетическое удовольствие",
+          "link": "https://www.wildberries.ru/catalog/404244006/detail.aspx?targetUrl=SN",
+          "price": "399.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/VtSpOalbB6mV0A",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1860
+        },
+        {
+          "title": "Светильник \"Крипер из Майнкрафта\"",
+          "description": "Символ легедарной видеоигры не оставит равнодушными геймеров",
+          "link": "https://www.wildberries.ru/catalog/845094417/detail.aspx?targetUrl=SN",
+          "price": "812.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/N4pmb1vKMB2EFQ",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют",
+            "Дети"
+          ],
+          "sort_order": 1870
+        },
+        {
+          "title": "Светильник-ваза",
+          "description": "Что может быть вазы? Ваза с подстветкой. Наслаждайтесь цветами круглые сутки!",
+          "link": "https://www.wildberries.ru/catalog/265950729/detail.aspx?targetUrl=SN",
+          "price": "1008.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/4un3GcpptWolvw",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1880
+        },
+        {
+          "title": "Лампа \"Закат\"",
+          "description": "Идеальный инстурмент для стильных фотографий или создания умиротворенной атмосферы в комнате",
+          "link": "https://www.wildberries.ru/catalog/82711561/detail.aspx?targetUrl=SN",
+          "price": "482.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/tCt6oCHV0SbB-A",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1890
+        },
+        {
+          "title": "Ночник-космонавт \"Звездное небо\"",
+          "description": "Создайте вайб посиделок под красивым звездным небом у себя в комнате благодаря этому чудному девайсу",
+          "link": "https://www.wildberries.ru/catalog/248103333/detail.aspx?targetUrl=SN",
+          "price": "519.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/RYpq-BEwq7N3aw",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1900
+        },
+        {
+          "title": "Конструктор-ночник \"Замок\"",
+          "description": "Простор для творчества и как итог - еще один светящийся элемент декора",
+          "link": "https://www.wildberries.ru/catalog/544866666/detail.aspx?targetUrl=SN",
+          "price": "2814.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/CoyzxBFyjmlGUg",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют",
+            "Дети"
+          ],
+          "sort_order": 1910
+        },
+        {
+          "title": "Солевая лампа",
+          "description": "Креативный предмет интерьера, который дарит ощущение не только визуальной теплоты, но и душевной",
+          "link": "https://www.vseinstrumenti.ru/product/svetilnik-faza-solyanaya-lampa-3-5-kg-dimmer-5034655-2079143/",
+          "price": "1866.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/_9G149NoTjmh8w",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1920
+        },
+        {
+          "title": "Светильник \"Левитирующая лампочка\"",
+          "description": "Шикарный, а самое главное, необычный светильник, который идеально подойдет в качестве подарка. Никто не останется равнодушным",
+          "link": "https://www.wildberries.ru/catalog/95461588/detail.aspx?targetUrl=SN",
+          "price": "5998.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/x2HLb1s1Hf4RrA",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1930
+        }
+      ]
+    },
+    {
+      "slug": "creative",
+      "title": "Творческая душа",
+      "subtitle": "",
+      "description": "Подарки для тех, кто рисует, пишет, мастерит и превращает идеи в искусство",
+      "section": "by_character",
+      "section_slugs": [
+        "by_character",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/I_ujmEkATuY-7g",
+      "tags": [
+        "Хобби",
+        "Кулинария",
+        "DIY",
+        "Напитки",
+        "Творчество",
+        "Ароматы",
+        "Рукоделие",
+        "Вязание",
+        "Одежда",
+        "Украшения",
+        "Дизайн",
+        "Печать",
+        "Антистресс",
+        "Мастер-класс",
+        "Опыт",
+        "Керамика",
+        "Миниатюры"
+      ],
+      "items_total": 10,
+      "sort_order": 30,
+      "items": [
+        {
+          "title": "Набор для приготовления настоек",
+          "description": "Травяной набор для приготовления настоек — это готовая смесь натуральных ингредиентов для создания домашних напитков с насыщенным вкусом и ароматом",
+          "link": "https://lmbd.ru/chill-drinks/3-travyanoi-nabor-dlya-prigotovleniya-nastoek/",
+          "price": "2950.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/4DmOhWWiMkstLw",
+          "tags": [
+            "Хобби",
+            "Кулинария",
+            "DIY",
+            "Напитки"
+          ],
+          "sort_order": 120
+        },
+        {
+          "title": "Набор для создания духов",
+          "description": "Набор для создания индивидуальных духов позволяет экспериментировать с ароматами и создавать собственные уникальные композиции",
+          "link": "https://perfume-project.com/nabor/tproduct/488684138-329864712181-nabor-dlya-sozdaniya-individualnih-duhov",
+          "price": "7500.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/NCVkiK1E1Q6njA",
+          "tags": [
+            "Творчество",
+            "Ароматы",
+            "DIY",
+            "Хобби"
+          ],
+          "sort_order": 130
+        },
+        {
+          "title": "Ковровая вышивка",
+          "description": "Набор для ковровой вышивки — это все необходимое для создания декоративной текстильной работы в технике тафтинга, подходит даже новичкам",
+          "link": "https://www.ozon.ru/product/nabor-dlya-kovrovoy-vyshivki-kot-1718374923/?at=A6tGO1yj3cr6JqNf9QLjz7sJxxEEYcqLq7KJix42WMR",
+          "price": "2900.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/KGPdX7cRXa4jhQ",
+          "tags": [
+            "Рукоделие",
+            "Хобби",
+            "Творчество"
+          ],
+          "sort_order": 140
+        },
+        {
+          "title": "Набор пряжи для джемпера",
+          "description": "Готовые наборы с пряжей и инструкцией — все, чтобы связать стильную вещь своими руками",
+          "link": "https://italyyarn.ru/collection/nabory-dlya-vyazaniya",
+          "price": "2730.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/gFGCAkP43tGBKQ",
+          "tags": [
+            "Вязание",
+            "Хобби",
+            "Одежда"
+          ],
+          "sort_order": 150
+        },
+        {
+          "title": "Создание украшений из эпоксидной смолы",
+          "description": "Набор молдов и аксессуаров для творчества из эпоксидной смолы — идеальный выбор для создания украшений и декора",
+          "link": "https://market.yandex.ru/card/silikonovyye-moldy-i-aksessuary-dlya-raboty-s-epoksidnoy-smoloy/102103653148?do-waremd5=0XMz-cEarWlLChJqEpvSHg&sponsored=1&cpc=dxSZAXO8-oiO_3KuxLVpEGOSnmn-mycTUIFzoBP1bhRPlxxvRhiEfms3OJl4oO981A48S6lvy0V_h6WrZ7bfetQoMKUcmnHMspMZxLzpbydT3kSPvJottmz-vUgfmktTC8crgnfvTB6Zawz87nuxWhQl1fIgWecnI_IntGpVzh79rEYU_-rL_RJlbfKTMK0CJ0Q5kzzxmyIrEV2XmE6CLuXI_FhM8q0GoJU5_2cJDZypvf8SXtSCj0KMRywyP6YCd6vrTT3Joo3LOr_9bLtFKmiiHac1_ztFAMSsaI2c7Xn3jctG4ZfAefRiQ-ljH15HfR4Z2wGbATj4TeXjK4z-za_8VP7y2mi3TD6PtuwdaJ4RURJBkbEvxrnv1r_cu9UBhRm4Zpn_f8iPuzDtoagYqzlRYzXXX-9mlnz-biGJCLwAh5K6eNa5n_AmEVxyhLqI6fX4uZIcAVR-IQx_QNuXkH_X4Czo0HUW2YtLZrqGSSm8CUwakgZIiw%2C%2C&nid=63920487&ogV=-12",
+          "price": "800.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/xGpGH2Wz1gik8w",
+          "tags": [
+            "Украшения",
+            "DIY",
+            "Творчество"
+          ],
+          "sort_order": 160
+        },
+        {
+          "title": "Набор для шелкографии",
+          "description": "Набор для шелкографии позволяет наносить принты на ткань и бумагу в домашних условиях",
+          "link": "https://www.ozon.ru/product/nabor-dlya-shelkografii-a4-chernaya-i-belaya-kraska-diy-735952835/?__rr=1",
+          "price": "4500.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Z54hYXTHhZikMA",
+          "tags": [
+            "Дизайн",
+            "Печать",
+            "Творчество"
+          ],
+          "sort_order": 170
+        },
+        {
+          "title": "Набор для сбора мозаики",
+          "description": "Набор для создания мозаики — увлекательный процесс сборки яркой картины из множества деталей",
+          "link": "https://rastebina.com/page32081750html",
+          "price": "1800.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/G-CCemF1ufYWMA",
+          "tags": [
+            "Хобби",
+            "Антистресс",
+            "Творчество"
+          ],
+          "sort_order": 180
+        },
+        {
+          "title": "Мастер-класс по созданию кольца",
+          "description": "Практический мастер-класс, где вы создадите собственное украшение под руководством мастера",
+          "link": "https://masterkarl.ru",
+          "price": "5000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ad1Q6VOzuNNFnA",
+          "tags": [
+            "Мастер-класс",
+            "Украшения",
+            "Опыт"
+          ],
+          "sort_order": 190
+        },
+        {
+          "title": "Гончарный мастер-класс",
+          "description": "Гончарный мастер-класс — это возможность познакомиться с работой на круге и создать изделие из глины своими руками",
+          "link": "https://www.kolo.studio/mk",
+          "price": "3400.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/XQAdXb5b-CqTCQ",
+          "tags": [
+            "Керамика",
+            "Мастер-класс",
+            "Творчество"
+          ],
+          "sort_order": 200
+        },
+        {
+          "title": "Румбокс",
+          "description": "Румбокс — это набор для сборки миниатюрного интерьера с высокой детализацией и множеством элементов",
+          "link": "https://www.ozon.ru/category/rumboksy/",
+          "price": "950.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/EKs9mcpy4m8JAA",
+          "tags": [
+            "DIY",
+            "Миниатюры",
+            "Хобби"
+          ],
+          "sort_order": 210
+        }
+      ]
+    },
+    {
+      "slug": "adventure-lovers",
+      "title": "Любит приключения",
+      "subtitle": "",
+      "description": "Подарки тому, кто не сидит на месте: практичные и стильные вещи, готовые к новым маршрутам и открытиям",
+      "section": "by_character",
+      "section_slugs": [
+        "by_character",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/nQyH2Wz2bXO6lg",
+      "tags": [
+        "Походы",
+        "Путешествия",
+        "Аксессуары",
+        "Кемпинг",
+        "Еда",
+        "Отдых",
+        "Природа",
+        "Гаджеты",
+        "Техника",
+        "Комфорт",
+        "Тепло",
+        "Выживание",
+        "Кухня",
+        "Рюкзак"
+      ],
+      "items_total": 10,
+      "sort_order": 50,
+      "items": [
+        {
+          "title": "Термос Stanley",
+          "description": "Термос Stanley Adventure сохраняет тепло и холод в течение длительного времени и подходит для активного отдыха",
+          "link": "https://stanleyrussia.ru/termos-stanley-adventure-1l-10-10819-017-zelenyj",
+          "price": "7655.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Tm6ecaxz67_jqQ",
+          "tags": [
+            "Походы",
+            "Путешествия",
+            "Аксессуары"
+          ],
+          "sort_order": 320
+        },
+        {
+          "title": "Горелка Fire-Maple",
+          "description": "Компактная газовая горелка для приготовления еды в походных условиях",
+          "link": "https://www.fire-maple.ru/fire-maple-gorelki-gazovie-star-fms-x2-black-STAR%20X2%20BLACK/",
+          "price": "10999.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/KaZcGDmkiPGluw",
+          "tags": [
+            "Кемпинг",
+            "Еда",
+            "Походы"
+          ],
+          "sort_order": 330
+        },
+        {
+          "title": "Кемпинговое кресло",
+          "description": "Складное кресло для комфортного отдыха на природе",
+          "link": "https://www.kant.ru/search/?q=кресло",
+          "price": "5352.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/2ggq9JEMBoooHA",
+          "tags": [
+            "Кемпинг",
+            "Отдых",
+            "Природа"
+          ],
+          "sort_order": 340
+        },
+        {
+          "title": "Портативный аккумулятор",
+          "description": "Powerbank — удобное решение для зарядки устройств в дороге",
+          "link": "https://www.dns-shop.ru/catalog/recipe/d5e3da4b7fcba244/50000-mah/",
+          "price": "1299.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/MYVmXUXP9ar14Q",
+          "tags": [
+            "Гаджеты",
+            "Путешествия",
+            "Техника"
+          ],
+          "sort_order": 350
+        },
+        {
+          "title": "Электроодеяло с подогревом",
+          "description": "Электроодеяло с подогревом и несколькими режимами температуры для комфортного использования",
+          "link": "https://market.yandex.ru/card/elektropled-s-rukavam-ecosapiens-comfy-seryy-elektroodeyalo-s-rukavami-9-rezhimov-nagreva-195kh125-sm/4907857023?do-waremd5=vNhOT99GMrNWd5YxMgUxCA&sponsored=1&cpc=LEeRs0T859nefrm2wR6E_wECvFbPTmBEgsaPsz55huONM1LUnXXm37gMuFkWWlO9TAjnq8VzZ5Z0oeBdji9CLobxuU6pZsPio88Nd0o7KDYeMBNsOLMe3a6rgPpzWvtq3_Rc06uE6R0TguNpDAUGp2O8Z7HB4lY833EtpmEM04zx9twk57iXF7zK28LSqXO7Mh3W8wV0CmLH0rctKwzF3BYIoUVJGysNsUvIJ1ZDXYkEz4ldlMeN_hUiMJQzaTCRN6bmTzC1LDTRJdVRbw4IErfstd8Gs459RWJI-VnoG1-VnfufpOTiM4p6wb4Upwety01CVOz636qb_y3KvNZIE3t8XiK29TmL0leA6E5qEwFbI-JpKCqis0pA8Oyc2TyqppKOzsoLomH2b9Q8w_ZcfDE4yhaAf8hpIAMtI6Y_rr303-3xquOJsdOlKkkO_XAExav8HlE1nMXNxkH2IVk_OcJEQsxhHZmUJvGPtR2Dv3M09scvdCw4E8vSiez6qFRsowww5_lyIOwJE0_yezhCTBFFhYJAPS4gJ00KflYbWeTAOhLc9zsWepC12pw1K6qP6olom4o5JKhSwXmiKgGiokJiGJksrsopFjHzt0RfVkF0feV02cLeOjWv2ag2US72VHNDb9p-5BV43OeqhDyFe97CbWgD4m9J4s6y7PlxSOHkQ-lO6Dcr28A1aisWWvz7_dUR54qYij_EN4I3O48c-0vvXl-ppFU5PWtEzumi6QU0CXIq9qAdlrXXsw8Ipg0lkyiRuL4OJqZi1BbzmoBe7Q%2C%2C&nid=60753&ogV=-11",
+          "price": "5204.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/x65eUBGvy4H0VQ",
+          "tags": [
+            "Комфорт",
+            "Тепло",
+            "Походы"
+          ],
+          "sort_order": 360
+        },
+        {
+          "title": "Суточный сухой паек",
+          "description": "Суточный рацион питания для туристов — готовое решение для походов",
+          "link": "https://suhpaytorg.ru/product/suhoy-paek-irp-a-dlya-avariynogo-zapasa-i-bomoboubezhisch",
+          "price": "756.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/HMTN1pLvNqFLtg",
+          "tags": [
+            "Еда",
+            "Походы",
+            "Выживание"
+          ],
+          "sort_order": 370
+        },
+        {
+          "title": "Походный набор посуды Fire-Maple",
+          "description": "Компактный набор посуды для приготовления еды на природе",
+          "link": "https://www.fire-maple.ru/fire-maple-posuda-Nabory-gourmet-set-Gourmet%20Set/",
+          "price": "8899.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/XCd5mQaUBcMTbw",
+          "tags": [
+            "Кемпинг",
+            "Кухня",
+            "Походы"
+          ],
+          "sort_order": 380
+        },
+        {
+          "title": "Походный рюкзак Naturehike Rock",
+          "description": "Легкий и прочный туристический рюкзак для длительных походов",
+          "link": "https://trekking-shop.ru/catalog/ryukzaki_turisticheskie/trekkingovye_ryukzaki/ryukzak_naturehike_rock_60_5l_dyneema_black/",
+          "price": "7785.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/keOrbyOiVrB-CQ",
+          "tags": [
+            "Рюкзак",
+            "Походы",
+            "Путешествия"
+          ],
+          "sort_order": 390
+        },
+        {
+          "title": "Набор складных столовых приборов",
+          "description": "Многофункциональный набор: нож, вилка, ложка и другие инструменты в одном",
+          "link": "https://www.ozon.ru/product/nabor-skladnyh-stolovyh-pohodnyh-priborov-6-v-1-nozh-vilka-lozhka-shtopor-ochen-udobnye-244765650/?at=Eqtkxp641coOgWWPHzr1vEKHPYMqANSmY6z85iqWLyWJ",
+          "price": "395.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/vy3JFmZr0f-JqQ",
+          "tags": [
+            "Аксессуары",
+            "Походы",
+            "Еда"
+          ],
+          "sort_order": 400
+        },
+        {
+          "title": "Обогреватель для палатки",
+          "description": "Газовый обогреватель для поддержания тепла в палатке",
+          "link": "https://market.yandex.ru/card/gazovyy-obogrevatel--plitka-2-v-1/101821636064?do-waremd5=9vyil5R9QXR2O44GfHtn3A&sponsored=1&cpc=RfZrX1U69nTh4oSYS5gmU-mtdFC2OMiDp_4e8j-slLMxXA9mGqHLuanWkLT0PgmvCwG654WQCYXNS4xzvx2OGkWJI9ncS-JAMeMBT_-5nCUBcqqC2-uE5n9zykkchPsduL5xhS7uDeJoXG7r8SHRn5yWsy4yqSDYukBmtPMmPNh8_Ta0E7FW2-P9YTCpH0uDT24J0C5xw0nmr1ejM_PJW8JJfXreDbykdiO8D3uOVQ6hMoYalYWfZAic_0BlUP6eq2yvajefdT6_ii1yrMdYet3upARjKpQKBgDpjRdLzXxs3ne98hFTQYBbfGwn6529OQNoh9ODJ3DcRYWlZgvAO7nRk2VKzlpZsIZ3-GYc_pYiWUb6tbF4_OzawpzR9D35Abmr4fDrhM6Knj5dY6d6ueLwu97ZYEZMX0m-pDqF_oPYvbjxW1_3ovRFkp5lfvF6N0uZekyez8hl56BjjHH1nVy3hzkiyKm4mOKf5Gb0OW23nWB4J7PH5P6v29fg9VEyQ4QN59yMnaUyHPKqzvlep7xttc1pbS5CHTKkKmj1dvz5X3vOEKMz7K0bCOylDR6303gEebzSSzqeDLdipIN9XDLBXEzSLPHuTD3RdfTDM7yy8Tne8sxFMg_CKxw-COjrEHzQtmOJDLMsXzza5spPE_USdjNLEUqL6vupK6qKIkMugxuGJa5Em5xZZneg8KebUg89YlCmP_X-E-SMLBcHLRX_EtNYKHipbzYf0Wdlv_dxt_CTFRZ_rMuzv0XrEejmbULAfwctGqbUyvwuM3e_maeDjtdojEa6-YEPWHALYJrkoDStLO5VDtKYzQQ9fMwwMuOpv1m9yopgk5YXN23kmaJqVaFjQW2KV22bZAUkLcbT9xxg6QWiUpLHq4CJs90_H24MIiVrY6Oshfa4dLN59A%2C%2C&nid=61192023&ogV=-11",
+          "price": "4303.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/qMplTPaRyD6oTw",
+          "tags": [
+            "Кемпинг",
+            "Тепло",
+            "Природа"
+          ],
+          "sort_order": 410
+        }
+      ]
+    },
+    {
+      "slug": "work",
+      "title": "Трудоголику",
+      "subtitle": "",
+      "description": "Практичные и удобные подарки для тех, кто много работает и ценит комфорт",
+      "section": "by_character",
+      "section_slugs": [
+        "by_character",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/dXiZXqOAGWbbQw",
+      "tags": [
+        "Здоровье",
+        "Релакс",
+        "Гаджеты",
+        "Напитки",
+        "Термокружка",
+        "Техника",
+        "Аксессуары",
+        "Книги",
+        "Саморазвитие",
+        "Хобби",
+        "Сертификат",
+        "Подарок",
+        "Уют",
+        "Сон",
+        "Комфорт",
+        "Технологии",
+        "Путешествия"
+      ],
+      "items_total": 9,
+      "sort_order": 80,
+      "items": [
+        {
+          "title": "Мини массажер для шеи",
+          "description": "Мини массажер для шеи помогает снять напряжение и расслабиться после рабочего дня",
+          "link": "https://www.yamaguchi.ru/massazhery-dlya-shei/yamaguchi-axiom-neck.php",
+          "price": "8900.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/XKQtqOIsBSFrtw",
+          "tags": [
+            "Здоровье",
+            "Релакс",
+            "Гаджеты"
+          ],
+          "sort_order": 580
+        },
+        {
+          "title": "Термокружка Xiaomi",
+          "description": "Термокружка Xiaomi сохраняет температуру напитка и удобна для использования в дороге",
+          "link": "https://market.yandex.ru/cc/8ezE2H",
+          "price": "2282.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/CmRygmphd1LsxA",
+          "tags": [
+            "Напитки",
+            "Термокружка",
+            "Гаджеты"
+          ],
+          "sort_order": 590
+        },
+        {
+          "title": "Смарт часы Xiaomi",
+          "description": "Смарт часы Xiaomi отслеживают активность, уведомления и состояние здоровья",
+          "link": "https://www.dns-shop.ru/product/77a353c4bd06d582/smart-casy-xiaomi-redmi-watch-5/",
+          "price": "7699.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Lqfs5Ao-2EEZ5A",
+          "tags": [
+            "Гаджеты",
+            "Здоровье",
+            "Техника"
+          ],
+          "sort_order": 600
+        },
+        {
+          "title": "Подставка для телефона с беспроводной зарядкой",
+          "description": "Подставка с беспроводной зарядкой позволяет удобно разместить телефон и заряжать его без проводов",
+          "link": "https://ozon.ru/t/quUID4w",
+          "price": "3577.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/qGGzDOaY7GzB-Q",
+          "tags": [
+            "Гаджеты",
+            "Аксессуары",
+            "Техника"
+          ],
+          "sort_order": 610
+        },
+        {
+          "title": "Книга Атомные привычки",
+          "description": "Книга Атомные привычки рассказывает о том, как маленькие изменения приводят к большим результатам",
+          "link": "https://www.chitai-gorod.ru/product/atomnye-privychki-kak-priobresti-horoshie-privychki-i-izbavitsya-ot-plohih-3034785",
+          "price": "649.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Vxi91AMSIEbqfg",
+          "tags": [
+            "Книги",
+            "Саморазвитие",
+            "Хобби"
+          ],
+          "sort_order": 620
+        },
+        {
+          "title": "Сертификат Читай город",
+          "description": "Подарочный сертификат Читай город дает возможность выбрать книгу по вкусу",
+          "link": "https://www.chitai-gorod.ru/certificate",
+          "price": "2000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/rY9JqW24X9OVeA",
+          "tags": [
+            "Книги",
+            "Сертификат",
+            "Подарок"
+          ],
+          "sort_order": 630
+        },
+        {
+          "title": "Набор для релакса",
+          "description": "Набор для релакса помогает расслабиться и создать атмосферу спокойствия",
+          "link": "https://ozon.ru/t/T8aiTZQ",
+          "price": "929.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Nz0bzjd9BzayPw",
+          "tags": [
+            "Релакс",
+            "Уют",
+            "Подарок"
+          ],
+          "sort_order": 640
+        },
+        {
+          "title": "Умная подушка",
+          "description": "Умная подушка поддерживает комфортный сон и улучшает качество отдыха",
+          "link": "https://www.askona.ru/podushki/podushka-smart-pillow-comfort-5-0.htm?SELECTED_HASH_SIZE=-d3088aa06777fd00bd8d10d78f0c7f17&utm_source=yandex_sm&utm_medium=cpc&utm_campaign=sm_yd_askona_other_person_perform_god_rk485876gr3785_context_shopping_feed_rus%7C119710113&utm_content=cid%7C119710113%7Cgid%7C5568399787%7Cad%7C17346040775_17346040775%7Cph_id%7C205568399787%7Crtg_id%7C205568399787%7Csrc%7Cnone_search%7Cgeo%7CМосква_213&utm_term=---autotargeting&etext=2202.uOo0-lgDFROGvNSMIQ8I4DIYet_3UNrGN1SRWppd0HVwZWR2enpmY2NieXVkYmp5.c07227c7ed54d95601b4a160933c253f3dc1b532&ybaip=1",
+          "price": "16999.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/FmaDa4AaPEFKXQ",
+          "tags": [
+            "Сон",
+            "Комфорт",
+            "Технологии"
+          ],
+          "sort_order": 650
+        },
+        {
+          "title": "Повербанк",
+          "description": "Повербанк обеспечивает заряд устройств в течение дня",
+          "link": "https://market.yandex.ru/cc/8ezSBG",
+          "price": "1802.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/m73wSlCgg3lmzQ",
+          "tags": [
+            "Гаджеты",
+            "Техника",
+            "Путешествия"
+          ],
+          "sort_order": 660
+        }
+      ]
+    },
+    {
+      "slug": "aesthetic",
+      "title": "Эстету",
+      "subtitle": "",
+      "description": "Эстетичные и стильные вещи для создания красивого и уютного пространства",
+      "section": "by_character",
+      "section_slugs": [
+        "by_character",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/yqDk2iCFvBQpXQ",
+      "tags": [
+        "Декор",
+        "Уют",
+        "Свечи",
+        "Дом",
+        "Комфорт",
+        "Ароматы",
+        "Техника",
+        "Свет",
+        "Посуда",
+        "Чай",
+        "Эстетика",
+        "Подарок",
+        "Растения",
+        "Хранение",
+        "Украшения",
+        "Одежда"
+      ],
+      "items_total": 15,
+      "sort_order": 90,
+      "items": [
+        {
+          "title": "Дизайнерская свеча в гипсе",
+          "description": "Дизайнерская свеча в гипсе сочетает в себе декоративность и уют",
+          "link": "https://www.wildberries.ru/catalog/307790857/detail.aspx?size=466571090",
+          "price": "459.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/cOfeRZYKAGZ9vg",
+          "tags": [
+            "Декор",
+            "Уют",
+            "Свечи"
+          ],
+          "sort_order": 670
+        },
+        {
+          "title": "Набор свечей",
+          "description": "Набор свечей создает теплую атмосферу и подходит для подарка",
+          "link": "https://goldapple.ru/19000074551-summer-fragrances",
+          "price": "1763.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/sTEic4c0gtOVhQ",
+          "tags": [
+            "Свечи",
+            "Уют",
+            "Декор"
+          ],
+          "sort_order": 680
+        },
+        {
+          "title": "Плед из шерсти мериноса",
+          "description": "Плед из шерсти мериноса мягкий, теплый и приятный к телу",
+          "link": "https://www.ozon.ru/product/avinamas-pled-cozy-merino-merinosovaya-sherst-220-sm-h-140-sm-1263254536/?at=57twzpXD1cQ14wKqfG32J5nFwYnp75TWyBOyLuxxjjPz",
+          "price": "6981.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Sl-ZQJzakiR-4A",
+          "tags": [
+            "Уют",
+            "Дом",
+            "Комфорт"
+          ],
+          "sort_order": 690
+        },
+        {
+          "title": "Аромалампа с подсветкой",
+          "description": "Аромалампа с подсветкой наполняет пространство мягким светом и ароматом",
+          "link": "https://ozon.ru/t/vBfCghE",
+          "price": "3125.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/TP3BPGS-GnWySw",
+          "tags": [
+            "Ароматы",
+            "Декор",
+            "Уют"
+          ],
+          "sort_order": 700
+        },
+        {
+          "title": "Увлажнитель воздуха",
+          "description": "Увлажнитель воздуха улучшает микроклимат и создает комфортную атмосферу",
+          "link": "https://www.ozon.ru/product/uvlazhnitel-vozduha-dlya-doma-novorozhdennyh-nastolnyy-s-aromadiffuzorom-4l-2911659659/?__rr=1&at=99tr6Nlpjh3JDA0QCoNJ9YvT2Z51nrfRmGwNkCPo3JD3",
+          "price": "1200.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/d2PeUyAT994p3A",
+          "tags": [
+            "Дом",
+            "Комфорт",
+            "Техника"
+          ],
+          "sort_order": 710
+        },
+        {
+          "title": "Светильник",
+          "description": "Светильник добавляет уюта и мягкого освещения в интерьер",
+          "link": "https://ozon.ru/t/mz2Gnmk",
+          "price": "1302.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/B0baQcYBvxxT3Q",
+          "tags": [
+            "Свет",
+            "Декор",
+            "Дом"
+          ],
+          "sort_order": 720
+        },
+        {
+          "title": "Кружка Kuchenland",
+          "description": "Кружка Kuchenland сочетает стильный дизайн и удобство в использовании",
+          "link": "https://www.kuchenland.ru/product/kruzhka-440-ml-keramika-d-molochnaya-volnistyy-kray-crumple/",
+          "price": "899.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/b15Ek_4zYmvi8A",
+          "tags": [
+            "Посуда",
+            "Дом",
+            "Декор"
+          ],
+          "sort_order": 730
+        },
+        {
+          "title": "Диффузор Zielinski Rozen",
+          "description": "Диффузор Zielinski Rozen наполняет помещение стойким и изысканным ароматом",
+          "link": "https://goldapple.ru/19000426979-pink-pepper-elemi-cinnamon-leather",
+          "price": "3990.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ZIQRBE064FlFjA",
+          "tags": [
+            "Ароматы",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 740
+        },
+        {
+          "title": "Эстетический чайный набор",
+          "description": "Эстетичная чайная пара подходит для красивых и уютных чаепитий",
+          "link": "https://sarahporcelain.art/katalog/chashka-s-bludcem-pion-rozovyj?utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+          "price": "5000.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/beCtggmmdXDZig",
+          "tags": [
+            "Чай",
+            "Эстетика",
+            "Подарок"
+          ],
+          "sort_order": 750
+        },
+        {
+          "title": "Мини флорариум",
+          "description": "Мини флорариум — декоративная композиция с растениями в стекле",
+          "link": "https://florandglass.ru/product/drop-with-a-drop-of-tenderness/",
+          "price": "3300.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/Sjmpgy-oPQ2mQA",
+          "tags": [
+            "Декор",
+            "Растения",
+            "Эстетика"
+          ],
+          "sort_order": 760
+        },
+        {
+          "title": "Органайзер для украшений",
+          "description": "Органайзер для украшений помогает аккуратно хранить аксессуары",
+          "link": "https://musko.ru/product/shkatuluka-eva-interior?color=dark-beech",
+          "price": "4300.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/powGCl9UTZL9Sw",
+          "tags": [
+            "Хранение",
+            "Украшения",
+            "Дом"
+          ],
+          "sort_order": 770
+        },
+        {
+          "title": "Фарфоровый чайник",
+          "description": "Фарфоровый чайник с каменистой фактурой сочетает минимализм и эстетику",
+          "link": "https://se.ozon.ru/t/HDWUqfR",
+          "price": "2980.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/dq5sfIWE0PnMdA",
+          "tags": [
+            "Чай",
+            "Посуда",
+            "Эстетика"
+          ],
+          "sort_order": 780
+        },
+        {
+          "title": "Декоративная подушка",
+          "description": "Декоративная подушка добавляет уют и стиль в интерьер",
+          "link": "https://se.ozon.ru/t/QiHoFY8",
+          "price": "3637.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/ZOJ8tBW75ff57g",
+          "tags": [
+            "Декор",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 790
+        },
+        {
+          "title": "Тапочки плюшевые",
+          "description": "Плюшевые тапочки мягкие и комфортные для дома",
+          "link": "https://www.kuchenland.ru/product/tapochki-zhenskie-domashnie-r-36-37-iskusstvennyy-mekh-bezhevye-bushy/",
+          "price": "1790.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/78BfVYOY_0bWZA",
+          "tags": [
+            "Дом",
+            "Комфорт",
+            "Одежда"
+          ],
+          "sort_order": 800
+        },
+        {
+          "title": "Посуда необычная",
+          "description": "Необычная посуда делает сервировку более интересной и стильной",
+          "link": "https://ozon.ru/t/GcMvJGx",
+          "price": "1290.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/iDjmwijhN-tPVA",
+          "tags": [
+            "Посуда",
+            "Декор",
+            "Дом"
+          ],
+          "sort_order": 810
+        }
+      ]
+    },
+    {
+      "slug": "cinema",
+      "title": "Киноману",
+      "subtitle": "",
+      "description": "Идеи подарков для любителей кино и атмосферных вечеров с фильмами",
+      "section": "by_character",
+      "section_slugs": [
+        "by_character",
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/ggCfKkc3ae2O0g",
+      "tags": [
+        "Одежда",
+        "Кино",
+        "Стиль",
+        "Книги",
+        "Обучение",
+        "Техника",
+        "Путешествия",
+        "Декор",
+        "Интерьер",
+        "Еда",
+        "Развлечения",
+        "Хобби",
+        "Сувениры",
+        "Подарок",
+        "Атмосфера",
+        "Гаджеты",
+        "Комфорт",
+        "Звук"
+      ],
+      "items_total": 10,
+      "sort_order": 130,
+      "items": [
+        {
+          "title": "Футболка/худи с фразой из фильма",
+          "description": "Одежда с фразой из фильма подчеркивает любовь к кино",
+          "link": "https://www.i-maika.ru/product-category/movies/",
+          "price": "2000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/FIuiesk8yhZHzA",
+          "tags": [
+            "Одежда",
+            "Кино",
+            "Стиль"
+          ],
+          "sort_order": 1090
+        },
+        {
+          "title": "Книга \"Голливудский стандарт\"",
+          "description": "Книга \"Голливудский стандарт\" раскрывает основы сценарного мастерства",
+          "link": "https://ozon.ru/t/tkuZD3k",
+          "price": "460.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/LMhigfUVSSD60Q",
+          "tags": [
+            "Книги",
+            "Кино",
+            "Обучение"
+          ],
+          "sort_order": 1100
+        },
+        {
+          "title": "Мини-проектор",
+          "description": "Карманный мини-проектор удобен для просмотра фильмов в поездках",
+          "link": "https://www.ozon.ru/product/proektor-dlya-prosmotra-filmov-so-smart-tv-s-podderzhkoy-razresheniya-1920h1080-full-hd-uhd-3308088992/?__rr=1&from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "3300.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/3LbhFTdpROr9cg",
+          "tags": [
+            "Техника",
+            "Путешествия",
+            "Кино"
+          ],
+          "sort_order": 1110
+        },
+        {
+          "title": "Постер любимого фильма",
+          "description": "Постер фильма добавляет атмосферу любимого кино",
+          "link": "https://ozon.ru/t/7ihqrvJ",
+          "price": "580.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/j6fV6PjKEDaY9g",
+          "tags": [
+            "Декор",
+            "Кино",
+            "Интерьер"
+          ],
+          "sort_order": 1120
+        },
+        {
+          "title": "Миска для попкорна",
+          "description": "Миска для попкорна делает просмотр фильмов еще приятнее",
+          "link": "https://ozon.ru/t/EcWniZ3",
+          "price": "1350.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/kAi58Q41ITqCoA",
+          "tags": [
+            "Кино",
+            "Еда",
+            "Развлечения"
+          ],
+          "sort_order": 1130
+        },
+        {
+          "title": "Тематические носки",
+          "description": "Тематические носки добавляют образу индивидуальности",
+          "link": "https://ozon.ru/t/baZ1mPl",
+          "price": "300.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/VPn3EX9ah6EbBQ",
+          "tags": [
+            "Одежда",
+            "Стиль",
+            "Кино"
+          ],
+          "sort_order": 1140
+        },
+        {
+          "title": "Книга о любимом режиссере",
+          "description": "Книга о режиссере позволяет глубже узнать мир кино",
+          "link": "https://ozon.ru/t/IFcrYrN",
+          "price": "1350.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/9-LnpXI-VjYpqw",
+          "tags": [
+            "Книги",
+            "Кино",
+            "Хобби"
+          ],
+          "sort_order": 1150
+        },
+        {
+          "title": "Кубок \"Настоящему киноману\"",
+          "description": "Кубок киноману — символичный и забавный подарок",
+          "link": "https://ozon.ru/t/tkuZzpb",
+          "price": "1370.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/R9DUpEFR_rHHWw",
+          "tags": [
+            "Сувениры",
+            "Кино",
+            "Подарок"
+          ],
+          "sort_order": 1160
+        },
+        {
+          "title": "Кинохлопушка",
+          "description": "Кинохлопушка создает атмосферу съемочного процесса",
+          "link": "https://ozon.ru/t/4eyXUBF",
+          "price": "380.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/SxontSCgo57UvQ",
+          "tags": [
+            "Кино",
+            "Декор",
+            "Атмосфера"
+          ],
+          "sort_order": 1170
+        },
+        {
+          "title": "Bluetooth-подушка-колонка",
+          "description": "Bluetooth-подушка-колонка позволяет слушать звук с комфортом",
+          "link": "https://ozon.ru/t/jhR8lGW",
+          "price": "990.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ve-RB8zyUhi6FQ",
+          "tags": [
+            "Гаджеты",
+            "Комфорт",
+            "Звук"
+          ],
+          "sort_order": 1180
+        }
+      ]
+    },
+    {
+      "slug": "anna",
+      "title": "Авторская подборка",
+      "subtitle": "",
+      "description": "Подборка подарков от члена нашей команды - Ани",
+      "section": "editorial",
+      "section_slugs": [
+        "editorial"
+      ],
+      "badge": "",
+      "cover_image_url": "230.0",
+      "tags": [
+        "Хобби",
+        "Конструктор",
+        "Коллекция",
+        "Ароматы",
+        "Дом",
+        "Уют",
+        "Комфорт",
+        "Аксессуары",
+        "Практичность",
+        "Стиль",
+        "Сладости",
+        "Еда",
+        "Подарок",
+        "Набор",
+        "Сертификат",
+        "Универсально",
+        "Книги",
+        "Отдых",
+        "Сувениры",
+        "Милота",
+        "Настроение"
+      ],
+      "items_total": 8,
+      "sort_order": 0,
+      "items": [
+        {
+          "title": "LEGO Speed Champions McLaren",
+          "description": "LEGO Speed Champions McLaren добавляет немного скорости, коллекционности и удовольствия от сборки",
+          "link": "https://mir-kubikov.ru/catalog/77251/",
+          "price": "4499.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/2ZQ2PIRWoUjlzw",
+          "tags": [
+            "Хобби",
+            "Конструктор",
+            "Коллекция"
+          ],
+          "sort_order": 1470
+        },
+        {
+          "title": "Aroma Box «Ароматы чистоты»",
+          "description": "Aroma Box «Ароматы чистоты» помогает наполнить дом ощущением свежести и спокойствия",
+          "link": "https://randewoo.ru/product/nabor-55-aromaty-chistoty",
+          "price": "2255.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/bygjHHmjRs0x-g",
+          "tags": [
+            "Ароматы",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1480
+        },
+        {
+          "title": "Постельное белье Cozy Home",
+          "description": "Постельное белье Cozy Home делает спальню мягче, уютнее и приятнее для отдыха",
+          "link": "https://cozyhome.ru/product/postelnoe-bele-gray-dawn-polutoraspalnyy-seryy-A03383",
+          "price": "3299.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/i9h9LtMM1qJmEA",
+          "tags": [
+            "Уют",
+            "Дом",
+            "Комфорт"
+          ],
+          "sort_order": 1490
+        },
+        {
+          "title": "Спортивная сумка Fred Perry",
+          "description": "Спортивная сумка Fred Perry подходит для тренировок, поездок и повседневных дел",
+          "link": "https://www.lamoda.ru/p/rtladi118101/bags-fredperry-sumka-sportivnaya/",
+          "price": "17299.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/Qs-n2lxRUTKrJQ",
+          "tags": [
+            "Аксессуары",
+            "Практичность",
+            "Стиль"
+          ],
+          "sort_order": 1500
+        },
+        {
+          "title": "Набор конфет Reber Mozart",
+          "description": "Набор конфет Reber Mozart - классический сладкий подарок для красивого жеста внимания",
+          "link": "https://amelia.shop/product/322-reber-motsart-podarochnaya-upakovka-shokkonfet-200gr",
+          "price": "1950.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/VLPsDgA48xYsww",
+          "tags": [
+            "Сладости",
+            "Еда",
+            "Подарок"
+          ],
+          "sort_order": 1510
+        },
+        {
+          "title": "Подарочная карта Kuchenland",
+          "description": "Подарочная карта Kuchenland позволяет выбрать что-то для дома под свой вкус",
+          "link": "https://www.kuchenland.ru/podarochnye-karty/",
+          "price": "300.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/fgd1pB3Wq7TInw",
+          "tags": [
+            "Набор",
+            "Сертификат",
+            "Универсально"
+          ],
+          "sort_order": 1520
+        },
+        {
+          "title": "Журнал Seasons",
+          "description": "Журнал Seasons подходит для неспешного чтения, вдохновения и красивых пауз",
+          "link": "https://seasons-project.ru/shop/",
+          "price": "500.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/a2zKEPGRB9L8rA",
+          "tags": [
+            "Книги",
+            "Отдых",
+            "Хобби"
+          ],
+          "sort_order": 1530
+        },
+        {
+          "title": "Фигурка POP MART Hirono Le Petit Prince",
+          "description": "Фигурка POP MART Hirono Le Petit Prince добавляет на полку немного сказочности и настроения",
+          "link": "https://popmart-russia.ru/figurki-pop-mart-hirono-le-petit-prince/",
+          "price": "1600.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/m7IRHx5sQpBunw",
+          "tags": [
+            "Сувениры",
+            "Милота",
+            "Настроение"
+          ],
+          "sort_order": 1540
+        }
+      ]
+    },
+    {
+      "slug": "danya",
+      "title": "Авторская подборка",
+      "subtitle": "",
+      "description": "Подборка подарков от члена нашей команды - Дани",
+      "section": "editorial",
+      "section_slugs": [
+        "editorial"
+      ],
+      "badge": "",
+      "cover_image_url": "260.0",
+      "tags": [
+        "Техника",
+        "Гаджеты",
+        "Книги",
+        "Сладости",
+        "Еда",
+        "Внимание",
+        "Уход",
+        "Релакс",
+        "Спа",
+        "Здоровье",
+        "Ароматы",
+        "Стиль",
+        "Одежда",
+        "Аксессуары",
+        "Музыка",
+        "Хобби"
+      ],
+      "items_total": 7,
+      "sort_order": 0,
+      "items": [
+        {
+          "title": "IRIScan Book 5",
+          "description": "Карманный сканер для тех, кто любит превращать бумажное в цифровое без лишних танцев с принтером",
+          "link": "https://printer-copir.ru/catalog/skanery/ruchnye_skanery/skaner_ruchnoy_iris_iriscan_book_5_iriscan_book_5_red/characteristics/",
+          "price": "10000.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/bo2GpqPIbhWWqA",
+          "tags": [
+            "Техника",
+            "Гаджеты",
+            "Книги"
+          ],
+          "sort_order": 2190
+        },
+        {
+          "title": "Мармелад Chupa Chups",
+          "description": "Клубничная сладость из детства. Маленький презент, который приятно закинуть к чему-то еще",
+          "link": "https://www.ozon.ru/product/marmelad-chupa-chups-straypsy-120-g-284724682/?from_sku=284724682&oos_search=false",
+          "price": "130.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/r_Y4DMIHB07iKQ",
+          "tags": [
+            "Сладости",
+            "Еда",
+            "Внимание"
+          ],
+          "sort_order": 2200
+        },
+        {
+          "title": "Молочко для тела Yves Rocher «Бурбонская ваниль»",
+          "description": "Ванильное молочко для тех, кто любит, когда уход за телом пахнет уютно и немного десертно",
+          "link": "https://www.ozon.ru/product/molochko-dlya-tela-burbonskaya-vanil-390-ml-3331203207/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "590.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/VfByROcRMJ1mVg",
+          "tags": [
+            "Уход",
+            "Релакс",
+            "Спа"
+          ],
+          "sort_order": 2210
+        },
+        {
+          "title": "Ирригатор Aquajet LD-A9",
+          "description": "Практичная штука для тех, кто относится к заботе о себе серьезно",
+          "link": "https://www.ozon.ru/product/irrigator-aquajet-ld-a9-1421570557/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "3325.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/G721pVUsTx60pQ",
+          "tags": [
+            "Уход",
+            "Здоровье",
+            "Техника"
+          ],
+          "sort_order": 2220
+        },
+        {
+          "title": "Набор пробников духов Aroma Box",
+          "description": "Мини-путешествие по ароматам: можно искать тот самый запах без риска промахнуться с большим флаконом",
+          "link": "https://randewoo.ru/brand/aroma-box",
+          "price": "2000.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/UQW1f-rtczahnA",
+          "tags": [
+            "Ароматы",
+            "Релакс",
+            "Стиль"
+          ],
+          "sort_order": 2230
+        },
+        {
+          "title": "Перчатки Shu",
+          "description": "Теплый и аккуратный аксессуар для холодных дней, который не спорит с образом, а спокойно его дополняет",
+          "link": "https://shuclothes.com/ru/accessories/mittens-and-gloves/gloves-light-grey-24",
+          "price": "1200.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/MhYjscZJltiMbw",
+          "tags": [
+            "Одежда",
+            "Стиль",
+            "Аксессуары"
+          ],
+          "sort_order": 2240
+        },
+        {
+          "title": "Миди-клавиатура Arturia MiniLAB 3",
+          "description": "Для того, кто давно хотел делать музыку дома. Маленькая клавиатура, большие творческие планы",
+          "link": "https://doctorhead.ru/product/arturia_minilab_3/",
+          "price": "12000.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/UQW1f-rtczahnA",
+          "tags": [
+            "Музыка",
+            "Хобби",
+            "Техника"
+          ],
+          "sort_order": 2250
+        }
+      ]
+    },
+    {
+      "slug": "egor",
+      "title": "Авторская подборка",
+      "subtitle": "",
+      "description": "Подборка подарков от члена нашей команды - Егора",
+      "section": "editorial",
+      "section_slugs": [
+        "editorial"
+      ],
+      "badge": "",
+      "cover_image_url": "220.0",
+      "tags": [
+        "Фото",
+        "Винтаж",
+        "Хобби",
+        "Свет",
+        "Декор",
+        "Уют",
+        "Дом",
+        "Комфорт",
+        "Техника",
+        "Кухня",
+        "Еда",
+        "Одежда",
+        "Музыка",
+        "Персональный",
+        "Подарок",
+        "Сувениры",
+        "Милота",
+        "Настроение",
+        "Конструктор"
+      ],
+      "items_total": 8,
+      "sort_order": 0,
+      "items": [
+        {
+          "title": "Виниловый проигрыватель",
+          "description": "Виниловый проигрыватель для неспешных вечеров",
+          "link": "https://market.yandex.ru/cc/8zCaAF",
+          "price": "17810.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/gI4VXv2T7mqP1w",
+          "tags": [
+            "Фото",
+            "Винтаж",
+            "Хобби"
+          ],
+          "sort_order": 1390
+        },
+        {
+          "title": "Умный светильник Яндекс",
+          "description": "Умный светильник Яндекс создает мягкий свет под настроение",
+          "link": "https://market.yandex.ru/cc/8zCba4",
+          "price": "6990.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/VcBmVZ3kLhA4sw",
+          "tags": [
+            "Свет",
+            "Декор",
+            "Уют"
+          ],
+          "sort_order": 1400
+        },
+        {
+          "title": "Швабра с распылителем Pragma Talep",
+          "description": "Швабра с распылителем Pragma Talep делает уборку проще и неожиданно приятнее",
+          "link": "https://market.yandex.ru/cc/8zCcJL",
+          "price": "1484.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/XiyUligutt7vmw",
+          "tags": [
+            "Дом",
+            "Комфорт",
+            "Техника"
+          ],
+          "sort_order": 1410
+        },
+        {
+          "title": "Аэрогриль Kitfort",
+          "description": "Аэрогриль Kitfort помогает готовить любимые блюда быстрее и удобнее",
+          "link": "https://market.yandex.ru/cc/8zCd7f",
+          "price": "7654.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/6USKmni5023_UA",
+          "tags": [
+            "Кухня",
+            "Еда",
+            "Дом"
+          ],
+          "sort_order": 1420
+        },
+        {
+          "title": "Пуловер kolmakov",
+          "description": "Пуловер kolmakov - базовая и носибельная вещь на каждый день",
+          "link": "https://market.yandex.ru/cc/8zCdYi",
+          "price": "2392.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/7zdtPAVAXn7NSg",
+          "tags": [
+            "Дом",
+            "Комфорт",
+            "Одежда"
+          ],
+          "sort_order": 1430
+        },
+        {
+          "title": "Винил Ariana Grande",
+          "description": "Винил Ariana Grande - Eternal Sunshine - красиво звучит и эстетично смотрится на полке",
+          "link": "https://www.pult.ru/product/ariana-grande-eternal-sunshine-deluxe-brighter-days-ahead-translucent-marbled-vinyl-2lp",
+          "price": "6790.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/b8KvV-JFFoHl6g",
+          "tags": [
+            "Музыка",
+            "Персональный",
+            "Подарок"
+          ],
+          "sort_order": 1440
+        },
+        {
+          "title": "Funko POP Lamine Yamal",
+          "description": "Funko POP Lamine Yamal - маленькая радость для футбольного фаната",
+          "link": "https://market.yandex.ru/card/figurka-funko-pop-football-fc-barcelona-no9-lewandowski64/4585479192?do-waremd5=GmDd45evPiC-m07gmv2Zfg&cpc=_5fqyS7SYc5aCi60LnCnDOZDqQUPwl_q94KTj30weilzIu5tGkNIVwPkXRjXM9s-LyNeQg-vQ4A80MpSsDCAmrwWLU77Ma4YGva1PCJgyNwDLErOjL53-xS8qhf_NS5SAQSyeDeK_quXHn6wREYcYsU8FsqG7qMJnHmjxI1IncFJhwlkfhwC_1h5BxOwH8Gke94UXT7lKqjS8Df_kDfiDLwpw9_2N0UGjlMAMjug-6cDLAhTu0NLFi-IlXiVieGvlFIAgyqG0glBaSkyRFsUVY72D500acXJJFOl4Z0X2PrRkFVG8591YgBH2XhVA7jGsrlzV_jecf0vm9TW-kxDnwQpB9CD_bRbRVtUY-L0HUS55NOh_BXvI9LSR3bXJ9VoKBIG4l0hGA-2x42uwECTkZnD2WmU9eA3ISV8szBVH4DH5Hg6w-9E-v_COGSZ3r_doJ7MTcqsl0SyV4VLBBIQ8g%2C%2C&ogV=-12&isComfortPlus=false",
+          "price": "2152.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/Uksqgtk3K0yMaQ",
+          "tags": [
+            "Сувениры",
+            "Милота",
+            "Настроение"
+          ],
+          "sort_order": 1450
+        },
+        {
+          "title": "LEGO “Праздник футбольного клуба Барселона”",
+          "description": "LEGO “Праздник футбольного клуба Барселона” добавляет в интерьер игровой и фанатский акцент",
+          "link": "https://ozon.ru/t/ofSOOWI",
+          "price": "4591.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/if_Gq8GJqcVTRQ",
+          "tags": [
+            "Хобби",
+            "Конструктор",
+            "Декор"
+          ],
+          "sort_order": 1460
+        }
+      ]
+    },
+    {
+      "slug": "eva",
+      "title": "Авторская подборка",
+      "subtitle": "",
+      "description": "Подборка подарков от члена нашей команды - Евы",
+      "section": "editorial",
+      "section_slugs": [
+        "editorial"
+      ],
+      "badge": "",
+      "cover_image_url": "240.0",
+      "tags": [
+        "Книги",
+        "Дизайн",
+        "Творчество",
+        "Аксессуары",
+        "Практичность",
+        "Стиль",
+        "Кино",
+        "Хобби",
+        "Одежда",
+        "Декор",
+        "Интерьер",
+        "Дом",
+        "Ароматы",
+        "Релакс",
+        "Свет",
+        "Уют"
+      ],
+      "items_total": 8,
+      "sort_order": 0,
+      "items": [
+        {
+          "title": "Книга “Logo Design” Julius Wiedemann",
+          "description": "Книга “Logo Design” собрала знаковые примеры логотипов и помогает искать вдохновение в визуальном языке брендов",
+          "link": "https://am.ozon.com/t/Wvxaneb",
+          "price": "2175.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/uF3aYJRlhej-Ww",
+          "tags": [
+            "Книги",
+            "Дизайн",
+            "Творчество"
+          ],
+          "sort_order": 1550
+        },
+        {
+          "title": "Шоппер в клетку B.EAUTIFUL",
+          "description": "Шоппер в клетку B.EAUTIFUL дополняет образ и остается удобной вещью на каждый день",
+          "link": "https://kixbox.ru/product/sumka-povsednevnaya-macleod-tartan-reusable-bag",
+          "price": "4490.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/8XAVH1NAmA4-4w",
+          "tags": [
+            "Аксессуары",
+            "Практичность",
+            "Стиль"
+          ],
+          "sort_order": 1560
+        },
+        {
+          "title": "Журнал 032с Выпуск #47",
+          "description": "Журнал 032с — коллекционный журнал для тех, кто следит за модой, культурой и визуальными трендами",
+          "link": "https://www.avito.ru/moskva/knigi_i_zhurnaly/032c_-_issue_47_summer_2025_2hollis_zhurnal_7832801912?context=H4sIAAAAAAAA_wE_AMD_YToyOntzOjEzOiJsb2NhbFByaW9yaXR5IjtiOjA7czoxOiJ4IjtzOjE2OiJnTFJJSHkxWktuc0FjYWU2Ijt9rmvVGT8AAAA",
+          "price": "7200.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/CpRsg2AzTGvvkw",
+          "tags": [
+            "Книги",
+            "Кино",
+            "Хобби"
+          ],
+          "sort_order": 1570
+        },
+        {
+          "title": "Кепка Reversible thisisneverthat",
+          "description": "Кепка Reversible thisisneverthat добавляет образу расслабленный акцент и дает больше вариантов для стилизации",
+          "link": "https://peakstore.ru/product/1832835_kepka-thisisneverthat-reversible-earflap-duckbill-cap/?COLOR=GREY",
+          "price": "7560.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/KWjb7mUGo6j5Hw",
+          "tags": [
+            "Одежда",
+            "Стиль",
+            "Аксессуары"
+          ],
+          "sort_order": 1580
+        },
+        {
+          "title": "Подставка для благовоний “Перчатка” SMELLY TALE",
+          "description": "Подставка для благовоний “Перчатка” работает как необычный арт-объект и деталь для атмосферы дома",
+          "link": "https://peakstore.ru/product/1882683_podstavka-dlya-blagovoniy-smelly-tale-perchatka/?COLOR=WHITE",
+          "price": "10000.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/L11xOG1cP4ku8A",
+          "tags": [
+            "Декор",
+            "Интерьер",
+            "Дом"
+          ],
+          "sort_order": 1590
+        },
+        {
+          "title": "Духи Maison Margiela Replica “Afternoon Delight”",
+          "description": "Духи Maison Margiela Replica “Afternoon Delight” помогают добавить в повседневность личный ароматный ритуал",
+          "link": "https://www.maisonmargiela.com/it-it/eau-de-toilette-replica-afternoon-delight-S33YX0190M10105961.html",
+          "price": "13140.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/XFbZS_O_K4WXcw",
+          "tags": [
+            "Ароматы",
+            "Дом",
+            "Релакс"
+          ],
+          "sort_order": 1600
+        },
+        {
+          "title": "Лампа EBURET",
+          "description": "Лампа EBURET создает выразительный интерьерный акцент и мягкую атмосферу в комнате",
+          "link": "https://peakstore.ru/product/1626642_aksessuar-eburet-nyamba/?COLOR=ORANGE",
+          "price": "19000.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/oBetq9Q7TGH7gA",
+          "tags": [
+            "Свет",
+            "Декор",
+            "Уют"
+          ],
+          "sort_order": 1610
+        },
+        {
+          "title": "Клоги MELISSA x Y/Project",
+          "description": "Клоги MELISSA x Y/Project — смелая fashion-вещь для тех, кто любит необычные формы и заметные детали",
+          "link": "https://www.km20.ru/catalog/product/171422/",
+          "price": "38600.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/AY9JgpRiYHAF1A",
+          "tags": [
+            "Одежда",
+            "Стиль",
+            "Аксессуары"
+          ],
+          "sort_order": 1620
+        }
+      ]
+    },
+    {
+      "slug": "kate",
+      "title": "Авторская подборка",
+      "subtitle": "",
+      "description": "Подборка подарков от члена нашей команды - Кати",
+      "section": "editorial",
+      "section_slugs": [
+        "editorial"
+      ],
+      "badge": "",
+      "cover_image_url": "250.0",
+      "tags": [
+        "Сладости",
+        "Подарок",
+        "Внимание",
+        "Уход",
+        "Косметика",
+        "Стиль",
+        "Цветы",
+        "Романтика",
+        "Декор",
+        "Спа",
+        "Релакс",
+        "Аксессуары",
+        "Практичность",
+        "Уют",
+        "Дом",
+        "Хобби",
+        "Конструктор"
+      ],
+      "items_total": 8,
+      "sort_order": 0,
+      "items": [
+        {
+          "title": "Конфеты «Счастье» сливочная карамель-морская соль",
+          "description": "Маленькая коробочка счастья со вкусом сливочной карамели и морской соли.",
+          "link": "https://schastyesweet.com/shop/domashnie-konfety/petit",
+          "price": "850.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/YpmZQhor_9NZJA",
+          "tags": [
+            "Сладости",
+            "Подарок",
+            "Внимание"
+          ],
+          "sort_order": 2110
+        },
+        {
+          "title": "Набор уходовых средств MYTAUI",
+          "description": "Подарок для домашнего ритуала заботы о себе: красиво, полезно и без лишней суеты",
+          "link": "https://goldapple.ru/19000449112-yume",
+          "price": "2691.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/ILZlpjoxJZ0U-g",
+          "tags": [
+            "Уход",
+            "Косметика",
+            "Стиль"
+          ],
+          "sort_order": 2120
+        },
+        {
+          "title": "Композиция с первоцветами в вазе",
+          "description": "Кусочек весны в вазе. Такой подарок сразу делает дом живее, свежее и немного счастливее",
+          "link": "https://whynot.moscow/flowers/mono/kompoziciya-pervocvetami",
+          "price": "4850.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/lozuLXGoO6Rf9g",
+          "tags": [
+            "Цветы",
+            "Романтика",
+            "Декор"
+          ],
+          "sort_order": 2130
+        },
+        {
+          "title": "Набор скрабов THE ACT",
+          "description": "Набор скрабов подходит для домашнего спа и мягкой заботы о себе",
+          "link": "https://goldapple.ru/19000192801-best-selling-scrub-trio",
+          "price": "1295.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/zzAwMGrIx9sQ3g",
+          "tags": [
+            "Спа",
+            "Уход",
+            "Релакс"
+          ],
+          "sort_order": 2140
+        },
+        {
+          "title": "Брелок Askent",
+          "description": "Небольшая деталь, которая делает ключи или сумку чуть более собранными и стильными",
+          "link": "https://www.lamoda.ru/p/MP002XW1FLD6/",
+          "price": "3000.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/T1VG8rG1FC_kMA",
+          "tags": [
+            "Аксессуары",
+            "Практичность",
+            "Стиль"
+          ],
+          "sort_order": 2150
+        },
+        {
+          "title": "Коврик Mela",
+          "description": "Коврик Mela делает тренировки уютнее и визуально теплее",
+          "link": "https://www.wildberries.ru/catalog/34485022/detail.aspx?size=72581494",
+          "price": "1818.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/lQhl02ZY5PnSBg",
+          "tags": [
+            "Уют",
+            "Дом",
+            "Декор"
+          ],
+          "sort_order": 2160
+        },
+        {
+          "title": "Крем для рук ZIELINSKI & ROZEN",
+          "description": "Ароматный крем, который превращает обычный уход за руками в маленький красивый ритуал",
+          "link": "https://goldapple.ru/90150600002-vetiver-lemon-bergamot",
+          "price": "1320.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/hNwJSyIS0vOSSg",
+          "tags": [
+            "Уход",
+            "Релакс",
+            "Спа"
+          ],
+          "sort_order": 2170
+        },
+        {
+          "title": "LEGO букет",
+          "description": "Цветы, которые не завянут. Собрать приятно, поставить красиво, любоваться можно сколько угодно",
+          "link": "https://mir-kubikov.ru/catalog/10280/?ysclid=mmt0rbtjr0596469378",
+          "price": "8999.00",
+          "currency": "rub",
+          "image_url": "https://disk.360.yandex.ru/i/_G1dmAQxqHP5GQ",
+          "tags": [
+            "Хобби",
+            "Конструктор",
+            "Декор"
+          ],
+          "sort_order": 2180
+        }
+      ]
+    },
+    {
+      "slug": "for_pets",
+      "title": "Для питомца",
+      "subtitle": "",
+      "description": "Забота и радость для хвостатых друзей -- от уютных мелочей до полезных аксессуаров, которые сделают их жизнь ещё счастливее",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/4ysIsbg1-kQ8qQ",
+      "tags": [
+        "Кошки",
+        "Лакомства",
+        "Еда",
+        "Питомцы",
+        "Уход",
+        "Собаки",
+        "Праздник",
+        "Игрушки",
+        "Активность",
+        "Интерактив",
+        "Прогулки",
+        "Безопасность",
+        "Аксессуары",
+        "Птицы",
+        "Здоровье",
+        "Витамины",
+        "Грызуны",
+        "Кормление",
+        "Комфорт",
+        "Дом",
+        "Технологии",
+        "Гаджеты",
+        "Одежда",
+        "Стиль"
+      ],
+      "items_total": 10,
+      "sort_order": 20,
+      "items": [
+        {
+          "title": "Лакомство-пюре для кошек",
+          "description": "Лакомство-пюре Inaba Ciao Churu приготовлено из отборных ингредиентов, подходит для поощрения и помогает восполнить влагу в организме питомца",
+          "link": "https://4lapy.ru/product/inaba-ciao-lakomstvo-pyure-dlya-koshek-assorti-s-moreproduktami-14gh20-sht-85118-1060650/",
+          "price": "1649.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/QQZ3C47yiDdVAA",
+          "tags": [
+            "Кошки",
+            "Лакомства",
+            "Еда",
+            "Питомцы",
+            "Уход"
+          ],
+          "sort_order": 20
+        },
+        {
+          "title": "Торт для собаки",
+          "description": "Праздничные торты для собак создаются индивидуально из безопасных ингредиентов и подходят для особых случаев",
+          "link": "https://flowwow.com/pet-supplies/tort-dlya-sobak/",
+          "price": "3205.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/KLgDEmtaRgYqJQ",
+          "tags": [
+            "Собаки",
+            "Праздник",
+            "Лакомства",
+            "Питомцы"
+          ],
+          "sort_order": 30
+        },
+        {
+          "title": "Интерактивная игрушка для кошек Погоня",
+          "description": "Интерактивная игрушка Погоня — отличное активное развлечение для кошек, развивает охотничьи инстинкты и не дает скучать",
+          "link": "https://4lapy.ru/product/hipet-igrushka-dlya-koshek-interaktivnaya-pogonya-s-distantsionnym-upravleniem-85064-1060622/",
+          "price": "3049.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/sr4QzjOgcQ2Ujw",
+          "tags": [
+            "Кошки",
+            "Игрушки",
+            "Активность",
+            "Интерактив"
+          ],
+          "sort_order": 40
+        },
+        {
+          "title": "Светящийся ошейник для собак",
+          "description": "Светящаяся амуниция делает прогулки безопаснее и заметнее в темное время суток",
+          "link": "https://4lapy.ru/catalog/sobaki/namordniki-osheyniki-povodki/svetyashchayasya-amunitsiya/",
+          "price": "859.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/tYm2CuZnnjtx0A",
+          "tags": [
+            "Собаки",
+            "Прогулки",
+            "Безопасность",
+            "Аксессуары"
+          ],
+          "sort_order": 50
+        },
+        {
+          "title": "Адресник с QR-кодом",
+          "description": "QR адресник помогает быстро вернуть питомца домой и содержит всю необходимую информацию о владельце",
+          "link": "https://myqrcards.com/qr-adresnik-na-osheynik?srsltid=AfmBOopjaGySzhtDV36Mzsoahg0FShzhNxRWw_ML_vTj9Pz6A7Qf0r3D",
+          "price": "815.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/NO1PAFKwn9PPyQ",
+          "tags": [
+            "Безопасность",
+            "Аксессуары",
+            "Собаки",
+            "Кошки"
+          ],
+          "sort_order": 60
+        },
+        {
+          "title": "Витаминный комплекс для птиц",
+          "description": "Витаминный комплекс для птиц предназначен для профилактики гиповитаминозов и поддержания здоровья организма",
+          "link": "https://4lapy.ru/product/avz-radostin-antistress-vitaminnyj-kompleks-dlya-ptits-20ml-10347-1031856/",
+          "price": "659.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/xuRmkxc5Cj_IAw",
+          "tags": [
+            "Птицы",
+            "Здоровье",
+            "Витамины",
+            "Уход"
+          ],
+          "sort_order": 70
+        },
+        {
+          "title": "Миска для грызунов",
+          "description": "Миска для грызунов в форме листа капусты обеспечивает удобное и комфортное кормление питомца",
+          "link": "https://4lapy.ru/product/petmax-miska-dlya-gryzunov-list-kapusty-12-sm-13007-1030772/",
+          "price": "377.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/2Cks0gzycXcfZg",
+          "tags": [
+            "Грызуны",
+            "Аксессуары",
+            "Кормление"
+          ],
+          "sort_order": 80
+        },
+        {
+          "title": "Лежак для собаки",
+          "description": "Лежак создает уютное и безопасное место для отдыха, где питомец чувствует себя защищенно",
+          "link": "https://4lapy.ru/catalog/sobaki/lezhaki-i-domiki/lezhaki-lezhaki/brand-rurri/",
+          "price": "700.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/G1bhy69gb4hBww",
+          "tags": [
+            "Собаки",
+            "Комфорт",
+            "Дом",
+            "Аксессуары"
+          ],
+          "sort_order": 90
+        },
+        {
+          "title": "Умная кормушка",
+          "description": "Умная кормушка Petoneer NutriVue Feeder автоматически подает корм по расписанию и управляется через приложение",
+          "link": "https://petoneer.ru/p/petoneer-nutrivue-feeder",
+          "price": "16990.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/G5gcfubZvvEvWg",
+          "tags": [
+            "Технологии",
+            "Кормление",
+            "Питомцы",
+            "Гаджеты"
+          ],
+          "sort_order": 100
+        },
+        {
+          "title": "Забавный костюм собаке",
+          "description": "Забавные костюмы для собак создают яркий образ и защищают питомца от холода",
+          "link": "https://4lapy.ru/catalog/sobaki/odezhda-i-obuv/smeshnye-kostyumy/",
+          "price": "150.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/VOWgB9trCuO5RA",
+          "tags": [
+            "Собаки",
+            "Одежда",
+            "Стиль",
+            "Аксессуары"
+          ],
+          "sort_order": 110
+        }
+      ]
+    },
+    {
+      "slug": "mood",
+      "title": "Поднять настроение",
+      "subtitle": "",
+      "description": "Маленькие радости, которые вызывают улыбку — теплые и уютные сюрпризы на любой день",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/p0bUwzgZBRDKGA",
+      "tags": [
+        "Handmade",
+        "Внимание",
+        "Подарок",
+        "Сладости",
+        "Еда",
+        "Уют",
+        "Дом",
+        "Декор",
+        "Напитки",
+        "Классика",
+        "Сувениры",
+        "Милота",
+        "Настроение",
+        "Чай",
+        "Уход",
+        "Релакс",
+        "Спа",
+        "Книги",
+        "Отдых",
+        "Хобби",
+        "Цветы",
+        "Романтика",
+        "Комфорт"
+      ],
+      "items_total": 10,
+      "sort_order": 40,
+      "items": [
+        {
+          "title": "Открытка своими руками",
+          "description": "Теплый и личный знак внимания",
+          "link": "",
+          "price": "0.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Hs35Ycvy7flgQQ",
+          "tags": [
+            "Handmade",
+            "Внимание",
+            "Подарок"
+          ],
+          "sort_order": 220
+        },
+        {
+          "title": "Набор сладостей",
+          "description": "Подарочный набор сладостей — ассорти натуральных десертов в стильной упаковке",
+          "link": "https://www.honeyforyou.ru/product/podarochnyy-nabor-sladostey-v-otkrytom-derevyannom-yaschike",
+          "price": "4990.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/xlFF75-sCzhk2A",
+          "tags": [
+            "Сладости",
+            "Еда",
+            "Подарок"
+          ],
+          "sort_order": 230
+        },
+        {
+          "title": "Свеча",
+          "description": "Свеча создает мягкое освещение и уютную атмосферу в доме",
+          "link": "https://foamstore.ru/catalog/product/14915-svecha_matovaya_cora/",
+          "price": "1400.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/2vxAGaWIOoSHvQ",
+          "tags": [
+            "Уют",
+            "Дом",
+            "Декор"
+          ],
+          "sort_order": 240
+        },
+        {
+          "title": "Бутылка вина",
+          "description": "Игристое белое брют с легким и освежающим вкусом — отличный выбор для приятного вечера",
+          "link": "https://vinoteki.ru/product/vino-igristoe-beloe-bryut-cielo-e-terra-bio-bio-bubbles-075l/",
+          "price": "1403.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/BFlaUuiYHDw-CQ",
+          "tags": [
+            "Напитки",
+            "Классика",
+            "Подарок"
+          ],
+          "sort_order": 250
+        },
+        {
+          "title": "Позитивная выдра",
+          "description": "Милый сувенир, который поднимает настроение и вызывает улыбку",
+          "link": "https://www.wildberries.ru/catalog/439337767/detail.aspx?targetUrl=EX",
+          "price": "282.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/-S0hmJ2_RAhfjg",
+          "tags": [
+            "Сувениры",
+            "Милота",
+            "Настроение"
+          ],
+          "sort_order": 260
+        },
+        {
+          "title": "Набор чая Кантата",
+          "description": "Подарочные наборы чая с разнообразием вкусов и ароматов",
+          "link": "https://www.cantata.ru/tea/tematicheskie-nabory",
+          "price": "1580.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/p6hrU7Rb_svt6A",
+          "tags": [
+            "Чай",
+            "Уют",
+            "Напитки"
+          ],
+          "sort_order": 270
+        },
+        {
+          "title": "Соль для ванны",
+          "description": "Соль для ванны помогает расслабиться и устроить домашний SPA ритуал",
+          "link": "https://www.ozon.ru/product/golden-marks-sol-dlya-vanny-510-g-2583415723/",
+          "price": "748.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/qG9rJSLZ0m_wmg",
+          "tags": [
+            "Уход",
+            "Релакс",
+            "Спа"
+          ],
+          "sort_order": 280
+        },
+        {
+          "title": "Новая книга",
+          "description": "Подборка книг об искусстве и культуре для вдохновения и отдыха",
+          "link": "https://shop.garagemca.org/ru/",
+          "price": "349.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ksI_m1ecUaR_ew",
+          "tags": [
+            "Книги",
+            "Отдых",
+            "Хобби"
+          ],
+          "sort_order": 290
+        },
+        {
+          "title": "Букет цветов",
+          "description": "Свежие цветочные композиции с доставкой для любого повода",
+          "link": "https://flowwow.com/moscow/",
+          "price": "1125.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ueKrRc_hjMvXKQ",
+          "tags": [
+            "Цветы",
+            "Романтика",
+            "Подарок"
+          ],
+          "sort_order": 300
+        },
+        {
+          "title": "Теплый плед",
+          "description": "Теплый и мягкий плед для уютных вечеров дома",
+          "link": "https://cozyhome.ru/spalnaya_komnata/pledy",
+          "price": "1799.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/_3OIQdCSFH2U4Q",
+          "tags": [
+            "Уют",
+            "Дом",
+            "Комфорт"
+          ],
+          "sort_order": 310
+        }
+      ]
+    },
+    {
+      "slug": "gratitude",
+      "title": "В знак благодарности",
+      "subtitle": "",
+      "description": "Искренние подарки, которые говорят \"спасибо\" без лишних слов",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/t2rlApYXvOojqA",
+      "tags": [
+        "Напитки",
+        "Благодарность",
+        "Внимание",
+        "Эмоции",
+        "Подарок",
+        "Чай",
+        "Уют",
+        "Сладости",
+        "Опыт",
+        "Ресторан",
+        "Кофе",
+        "Набор",
+        "Развлечения",
+        "Кино",
+        "Уход",
+        "Косметика",
+        "Стиль",
+        "Универсально"
+      ],
+      "items_total": 10,
+      "sort_order": 60,
+      "items": [
+        {
+          "title": "Бутылка вина",
+          "description": "Просекко с легким фруктовым вкусом и свежим ароматом",
+          "link": "https://vinoteki.ru/product/vino-igristoe-beloe-bryut-valdo-marca-oro-valdobbiadene-prosecco-superiore-brut-075l/",
+          "price": "2253.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/1ONh7yHdOI2hWg",
+          "tags": [
+            "Напитки",
+            "Благодарность"
+          ],
+          "sort_order": 420
+        },
+        {
+          "title": "Рукописное письмо с благодарностью",
+          "description": "Искренние слова, которые ценятся больше всего",
+          "link": "",
+          "price": "0.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/brAse3qUOuAGmA",
+          "tags": [
+            "Внимание",
+            "Эмоции",
+            "Подарок"
+          ],
+          "sort_order": 430
+        },
+        {
+          "title": "Набор чая Кантата",
+          "description": "Элегантный подарок с разнообразием чайных вкусов",
+          "link": "https://www.cantata.ru/tea/tematicheskie-nabory",
+          "price": "1580.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/wOrnEJsEyF49TQ",
+          "tags": [
+            "Чай",
+            "Уют",
+            "Благодарность"
+          ],
+          "sort_order": 440
+        },
+        {
+          "title": "Шоколадные конфеты Ameri",
+          "description": "Шоколадные конфеты с нежной пралиновой начинкой в подарочной упаковке",
+          "link": "https://amelia.shop/product/11740018-ameri-shokoladnye-konfety-s-nachinkoy-praline-250-g-up-h-12-rozovaya-upakovka",
+          "price": "900.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/lsbeiX7uAA1P0w",
+          "tags": [
+            "Сладости",
+            "Подарок"
+          ],
+          "sort_order": 450
+        },
+        {
+          "title": "Подарочный сертификат в ресторан",
+          "description": "Подарочный сертификат — возможность выбрать ужин по вкусу",
+          "link": "https://www.novikovgroup.ru/en/certificates/",
+          "price": "3000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/mFpBODCDjyT_mA",
+          "tags": [
+            "Опыт",
+            "Ресторан",
+            "Подарок"
+          ],
+          "sort_order": 460
+        },
+        {
+          "title": "Упаковка дрип-кофе",
+          "description": "Порционный кофе в фильтр пакетах для быстрого приготовления",
+          "link": "https://verleshop.com/drips/",
+          "price": "450.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/AX0AlTVdXD2qlQ",
+          "tags": [
+            "Кофе",
+            "Напитки"
+          ],
+          "sort_order": 470
+        },
+        {
+          "title": "Подарочный набор к чаю",
+          "description": "Набор натуральных продуктов для уютного чаепития",
+          "link": "https://cocco-bello.com/catalog/sets/podarochnyy_nabor_med_chay_varene/",
+          "price": "990.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Fs-qr6tYyly2Ng",
+          "tags": [
+            "Чай",
+            "Набор",
+            "Подарок"
+          ],
+          "sort_order": 480
+        },
+        {
+          "title": "Подарочная карта в кино",
+          "description": "Сертификат на поход в кино — впечатления вместо вещей",
+          "link": "https://kinoteatr.ru/podarok/",
+          "price": "500.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/PoFr9Csilitlng",
+          "tags": [
+            "Развлечения",
+            "Кино"
+          ],
+          "sort_order": 490
+        },
+        {
+          "title": "Крем для рук по мотивам “Twin Peaks”",
+          "description": "Увлажняющий крем с оригинальным ароматом и стильной упаковкой",
+          "link": "https://laboratorium.store/collection/kremy-dlya-tela-i-ruk/product/vishnevyy-pirog",
+          "price": "575.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/9dKKXcun8HZFgQ",
+          "tags": [
+            "Уход",
+            "Косметика",
+            "Стиль"
+          ],
+          "sort_order": 500
+        },
+        {
+          "title": "Подарочная корзина",
+          "description": "Подарочная корзина с продуктами и сладостями в праздничном оформлении",
+          "link": "https://www.ozon.ru/product/podarochnaya-korzina-dlya-vracha-krasnaya-1855290035/?at=6WtZmyGLVhjgXB8KS62vwlCP2AJKncWGzmPOF8jXvz7",
+          "price": "3000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/_vDBVmf7j8WVCw",
+          "tags": [
+            "Набор",
+            "Подарок",
+            "Универсально"
+          ],
+          "sort_order": 510
+        }
+      ]
+    },
+    {
+      "slug": "romantic",
+      "title": "Для второй половинки",
+      "subtitle": "",
+      "description": "Идеи подарков для близкого человека — романтичные, теплые и запоминающиеся",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/FyrzL77F7Ss4lQ",
+      "tags": [
+        "Подарок",
+        "Романтика",
+        "Декор",
+        "Хобби",
+        "Конструктор",
+        "Сладости",
+        "Внимание",
+        "Украшения",
+        "Игры",
+        "Развлечения",
+        "Пара",
+        "Чай",
+        "Кофе"
+      ],
+      "items_total": 6,
+      "sort_order": 70,
+      "items": [
+        {
+          "title": "Набор Lego цветы",
+          "description": "Набор Lego с цветами позволяет собрать декоративный букет, который не требует ухода и долго радует",
+          "link": "https://market.yandex.ru/cc/8eyz8r",
+          "price": "5642.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/wRwCIen1xb0HGw",
+          "tags": [
+            "Подарок",
+            "Романтика",
+            "Декор"
+          ],
+          "sort_order": 520
+        },
+        {
+          "title": "Набор Lego машина",
+          "description": "Конструктор Lego в виде машины — увлекательный процесс сборки и стильный результат",
+          "link": "https://market.yandex.ru/cc/8ez6Ef",
+          "price": "5048.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/2kr5IsTtn-kunw",
+          "tags": [
+            "Хобби",
+            "Конструктор",
+            "Подарок"
+          ],
+          "sort_order": 530
+        },
+        {
+          "title": "Шоколад Счастье",
+          "description": "Шоколад Счастье — подарочный шоколад с оригинальным оформлением и приятным вкусом",
+          "link": "https://schastyesweet.com/shop/mini-pralines/kollekciya-mini-praline-schaste-20-sht-v-molochnom-shokolade",
+          "price": "1720.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/GAdPAem6pOa5_w",
+          "tags": [
+            "Сладости",
+            "Подарок",
+            "Внимание"
+          ],
+          "sort_order": 540
+        },
+        {
+          "title": "Парные браслеты",
+          "description": "Парные браслеты символизируют связь и подходят как памятный подарок для двоих",
+          "link": "https://www.nomination.ru/catalog/ukrasheniya/braslety/",
+          "price": "6950.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/mHu5x5qwKayDJw",
+          "tags": [
+            "Украшения",
+            "Романтика",
+            "Подарок"
+          ],
+          "sort_order": 550
+        },
+        {
+          "title": "Настольная игра для пар",
+          "description": "Настольная игра для пар помогает провести время вместе и лучше узнать друг друга",
+          "link": "https://ozon.ru/t/39r2Myg",
+          "price": "1493.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/V8favdU-THm-UQ",
+          "tags": [
+            "Игры",
+            "Развлечения",
+            "Пара"
+          ],
+          "sort_order": 560
+        },
+        {
+          "title": "Подарочный букет чай кофе",
+          "description": "Подарочный букет из чая или кофе — необычная альтернатива классическим цветам",
+          "link": "https://www.cantata.ru/item/chayniy-nabor-aromat-chudes-i-skazok-2025-1",
+          "price": "1730.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/98VkvSKHfJUFGg",
+          "tags": [
+            "Чай",
+            "Кофе",
+            "Подарок"
+          ],
+          "sort_order": 570
+        }
+      ]
+    },
+    {
+      "slug": "valentines",
+      "title": "На 14 февраля",
+      "subtitle": "",
+      "description": "Романтичные подарки для признаний, свиданий и особенного дня вдвоем",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/s8zpT96KY34Kgg",
+      "tags": [
+        "Техника",
+        "Дом",
+        "Развлечения",
+        "Украшения",
+        "Романтика",
+        "Подарок",
+        "Опыт",
+        "Свидание",
+        "Сладости",
+        "Еда",
+        "Путешествия",
+        "Декор",
+        "Карта",
+        "Игры",
+        "Пара",
+        "Книги",
+        "Психология",
+        "Отношения",
+        "Напитки",
+        "Хобби",
+        "Релакс",
+        "Уход",
+        "Фото"
+      ],
+      "items_total": 10,
+      "sort_order": 110,
+      "items": [
+        {
+          "title": "Мини-проектор",
+          "description": "Мини-проектор позволяет смотреть фильмы и видео на большом экране в домашних условиях",
+          "link": "https://www.ozon.ru/product/proektor-dlya-prosmotra-filmov-so-smart-tv-s-podderzhkoy-razresheniya-1920h1080-full-hd-uhd-3308088992/?__rr=1&from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "6000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/pwFfnZbd0uXBFw",
+          "tags": [
+            "Техника",
+            "Дом",
+            "Развлечения"
+          ],
+          "sort_order": 890
+        },
+        {
+          "title": "Парные браслеты с гравировкой инициалов",
+          "description": "Парные браслеты с гравировкой подчеркивают связь и становятся символичным подарком",
+          "link": "https://juliettes.ru/komplekti_parnih_braceletov_s_gravirovkoi_dlya_nee_i_dlya_nego_is_serebra/tproduct/368242881-310552928691-komplekt-parnih-brasletov-s-gravirovkoi",
+          "price": "95000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/2vWE2yy9JXPqrQ",
+          "tags": [
+            "Украшения",
+            "Романтика",
+            "Подарок"
+          ],
+          "sort_order": 900
+        },
+        {
+          "title": "Сертификат на свидание в гончарной мастерской",
+          "description": "Сертификат на гончарное свидание — это совместный опыт и новые эмоции",
+          "link": "https://msk.kolokol.school/certificates",
+          "price": "12000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/0Lzabnl8E7Ox_w",
+          "tags": [
+            "Опыт",
+            "Свидание",
+            "Подарок"
+          ],
+          "sort_order": 910
+        },
+        {
+          "title": "Шоколад ручной работы",
+          "description": "Шоколад ручной работы создается с учетом вкусов получателя и выглядит как уникальный подарок",
+          "link": "https://frenchkiss.ru/shokolad-v-podarok/",
+          "price": "200.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/8mLYzqVyJu-HbA",
+          "tags": [
+            "Сладости",
+            "Подарок",
+            "Еда"
+          ],
+          "sort_order": 920
+        },
+        {
+          "title": "Стираемая карта мира",
+          "description": "Стираемая карта мира позволяет отмечать посещенные страны и планировать новые путешествия",
+          "link": "https://www.ozon.ru/product/skretch-karta-mira-puteshestvuy-poznavay-a1-85h60sm-v-tubuse-157684660/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "1245.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/-xsjoq7NCr2fzQ",
+          "tags": [
+            "Путешествия",
+            "Декор",
+            "Карта"
+          ],
+          "sort_order": 930
+        },
+        {
+          "title": "Настольная игра для двоих",
+          "description": "Настольная игра для двоих помогает провести время вместе и разнообразить досуг",
+          "link": "https://ozon.ru/t/39r2Myg",
+          "price": "1500.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/1IKj_yEtCVj0JA",
+          "tags": [
+            "Игры",
+            "Пара",
+            "Развлечения"
+          ],
+          "sort_order": 940
+        },
+        {
+          "title": "Книга по психологии отношений",
+          "description": "Книга по психологии отношений помогает лучше понимать партнера и выстраивать гармонию",
+          "link": "https://www.ozon.ru/product/obnimi-menya-krepche-dzhonson-syu-249171690/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "475.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/xx5_3iu8TnUN7w",
+          "tags": [
+            "Книги",
+            "Психология",
+            "Отношения"
+          ],
+          "sort_order": 950
+        },
+        {
+          "title": "Набор для коктейль-мастер-класса",
+          "description": "Набор для коктейль-мастер-класса позволяет научиться готовить напитки вместе",
+          "link": "https://www.ozon.ru/product/nabor-barmena-dlya-prigotovleniya-kokteyley-iz-12-predmetov-kokteyl-master-layt-285997550/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "2700.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/FdEQoeW_F-q8Lw",
+          "tags": [
+            "Напитки",
+            "Хобби",
+            "Пара"
+          ],
+          "sort_order": 960
+        },
+        {
+          "title": "Массажное масло",
+          "description": "Массажное масло подходит для расслабления и создания романтической атмосферы",
+          "link": "https://goldapple.ru/19000340657-the-sex?srsltid=AfmBOoplmK0C11YpSQCoy6b6bgURogzGl-CwhZre_4trIVBV83gXuOsu",
+          "price": "905.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/jWSPV-7rtxk4Lw",
+          "tags": [
+            "Релакс",
+            "Уход",
+            "Романтика"
+          ],
+          "sort_order": 970
+        },
+        {
+          "title": "Фотографирование радужки глаза",
+          "description": "Фотографирование радужки глаза — необычный способ сохранить уникальность",
+          "link": "https://irismoscow.ru",
+          "price": "1800.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/6_kFkAYX1ssZEg",
+          "tags": [
+            "Опыт",
+            "Фото",
+            "Подарок"
+          ],
+          "sort_order": 980
+        }
+      ]
+    },
+    {
+      "slug": "housewarming",
+      "title": "На новоселье",
+      "subtitle": "",
+      "description": "Практичные и стильные подарки для обустройства нового дома",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/RAZyd59hzL2FGA",
+      "tags": [
+        "Дом",
+        "Декор",
+        "Посуда",
+        "Растения",
+        "Кухня",
+        "Уют",
+        "Напитки",
+        "Бар",
+        "Интерьер",
+        "Хранение",
+        "Организация",
+        "Сервировка",
+        "Текстиль",
+        "Настроение",
+        "Еда"
+      ],
+      "items_total": 10,
+      "sort_order": 120,
+      "items": [
+        {
+          "title": "Набор подставок под напитки",
+          "description": "Подставки под напитки защищают поверхность и дополняют интерьер",
+          "link": "https://www.ozon.ru/product/podstavka-pod-kruzhku-birdekel-nabor-iz-6-retro-vinilovyh-plastinok-podstavka-pod-stakan-rockabilly-279763852/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "430.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/dUQw4KfuRm5VEw",
+          "tags": [
+            "Дом",
+            "Декор",
+            "Посуда"
+          ],
+          "sort_order": 990
+        },
+        {
+          "title": "Суккулент в керамическом горшке",
+          "description": "Суккулент в горшке — неприхотливое растение для украшения дома",
+          "link": "https://www.ozon.ru/product/nabor-komnatnoe-rastenie-i-udobreniya-krassula-ovata-minor-zhivoe-rastenie-2642143776/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "975.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/b-tHaiwGJkE6CQ",
+          "tags": [
+            "Растения",
+            "Декор",
+            "Дом"
+          ],
+          "sort_order": 1000
+        },
+        {
+          "title": "Стильные прихватки/фартук",
+          "description": "Прихватки или фартук делают готовку более удобной и стильной",
+          "link": "https://www.ozon.ru/product/nabor-silikonovyh-prihvatok-2240663054/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "425.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/YCcDuWm90-B7xg",
+          "tags": [
+            "Кухня",
+            "Дом",
+            "Уют"
+          ],
+          "sort_order": 1010
+        },
+        {
+          "title": "Набор мини-бар",
+          "description": "Мини-бар набор включает аксессуары для приготовления напитков дома",
+          "link": "https://www.ozon.ru/product/nabor-barmena-mini-bar-nabor-dlya-kokteyley-s-sheykerom-podarok-na-novyy-god-2019019922/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "2300.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/XUZZCBXhtz3UJg",
+          "tags": [
+            "Напитки",
+            "Дом",
+            "Бар"
+          ],
+          "sort_order": 1020
+        },
+        {
+          "title": "Стильные постеры",
+          "description": "Постеры помогают украсить пространство и добавить индивидуальности",
+          "link": "https://www.ozon.ru/product/postery-2-sht-50h70-na-stenu-abstraktsiya-temno-krasnye-formy-nabor-kartin-dlya-interera-2524291529/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "920.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Ea-fUT4igW-ztA",
+          "tags": [
+            "Декор",
+            "Интерьер",
+            "Дом"
+          ],
+          "sort_order": 1030
+        },
+        {
+          "title": "Полка-органайзер для мелочей",
+          "description": "Полка-органайзер помогает удобно хранить мелочи",
+          "link": "https://www.ozon.ru/product/etazherka-na-kolesikah-classmark-dlya-vannoy-i-kuhni-universalnyy-organayzer-napolnaya-5-sektsiy-s-1674771143/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "4300.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/bARX9OCN4OU7pA",
+          "tags": [
+            "Хранение",
+            "Дом",
+            "Организация"
+          ],
+          "sort_order": 1040
+        },
+        {
+          "title": "Дизайнерские салфетки",
+          "description": "Дизайнерские салфетки добавляют стиль сервировке",
+          "link": "https://www.dolcegabbana.com/ru-cy/casa/%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0-%D1%81%D1%82%D0%BE%D0%BB%D0%B0/%D1%81%D1%82%D0%BE%D0%BB%D0%BE%D0%B2%D1%8B%D0%B9-%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%B8%D0%BB%D1%8C/%D1%81%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B8/",
+          "price": "195.00",
+          "currency": "euro",
+          "image_url": "https://disk.yandex.ru/i/zVNz4HEHnRB53w",
+          "tags": [
+            "Сервировка",
+            "Декор",
+            "Дом"
+          ],
+          "sort_order": 1050
+        },
+        {
+          "title": "Покрывало с текстурой",
+          "description": "Покрывало с текстурой создает уют и дополняет интерьер",
+          "link": "https://goldapple.ru/19000299379-iris-blue",
+          "price": "7560.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Ml_4rt7k8A_V6w",
+          "tags": [
+            "Уют",
+            "Дом",
+            "Текстиль"
+          ],
+          "sort_order": 1060
+        },
+        {
+          "title": "Магниты на холодильник",
+          "description": "Магниты на холодильник добавляют яркости и настроения",
+          "link": "https://www.ozon.ru/product/krasochnye-magnity-na-holodilnik-sostradanie-8sht-3127446961/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "200.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ujkzbPRpcdYeTw",
+          "tags": [
+            "Декор",
+            "Настроение",
+            "Дом"
+          ],
+          "sort_order": 1070
+        },
+        {
+          "title": "Набор специй",
+          "description": "Набор специй делает приготовление блюд более разнообразным",
+          "link": "https://www.ozon.ru/product/podarochnyy-nabor-spetsiy-i-priprav-emir-spice-iz-6-vkusov-podarok-na-23-fevralya-i-8-marta-1777884186/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "530.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/sCITFUgl5BQKlA",
+          "tags": [
+            "Кухня",
+            "Еда",
+            "Дом"
+          ],
+          "sort_order": 1080
+        }
+      ]
+    },
+    {
+      "slug": "no-gift",
+      "title": "«Ничего не дари»",
+      "subtitle": "",
+      "description": "Небанальные и легкие подарки, когда говорят ничего не нужно",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/OsUS0MWSvaviRg",
+      "tags": [
+        "Фото",
+        "Винтаж",
+        "Хобби",
+        "Музыка",
+        "Персональный",
+        "Подарок",
+        "Свет",
+        "Декор",
+        "Уют",
+        "Еда",
+        "Снеки",
+        "Аксессуары",
+        "Практичность",
+        "Стиль",
+        "Книги",
+        "Мини",
+        "Канцелярия",
+        "Записи",
+        "Развлечения",
+        "Сюрприз",
+        "Внимание",
+        "Простота"
+      ],
+      "items_total": 10,
+      "sort_order": 140,
+      "items": [
+        {
+          "title": "Пленочная камера",
+          "description": "Пленочная камера позволяет запечатлеть моменты в винтажном стиле",
+          "link": "https://ozon.ru/t/wWQLbmL",
+          "price": "2480.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/XJh5_MFgoSb2sw",
+          "tags": [
+            "Фото",
+            "Винтаж",
+            "Хобби"
+          ],
+          "sort_order": 1190
+        },
+        {
+          "title": "Личный плейлист с QR-кодом",
+          "description": "Плейлист с QR-кодом — персональный и трогательный подарок",
+          "link": "https://qrfy.com/ru/qr-types/playlist",
+          "price": "0.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/9G2JyC6D9oNgFQ",
+          "tags": [
+            "Музыка",
+            "Персональный",
+            "Подарок"
+          ],
+          "sort_order": 1200
+        },
+        {
+          "title": "Лампа-гриб",
+          "description": "Лампа-гриб создает мягкое и атмосферное освещение",
+          "link": "https://ozon.ru/t/nK4bGyL",
+          "price": "1940.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Fn4Ov46o5MAf4A",
+          "tags": [
+            "Свет",
+            "Декор",
+            "Уют"
+          ],
+          "sort_order": 1210
+        },
+        {
+          "title": "Редкие снеки",
+          "description": "Редкие снеки позволяют попробовать необычные вкусы",
+          "link": "https://korshop.ru/catalog/sladosti_sneki/sneki/",
+          "price": "80.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/JDALJlwdK4x7Cg",
+          "tags": [
+            "Еда",
+            "Снеки",
+            "Подарок"
+          ],
+          "sort_order": 1220
+        },
+        {
+          "title": "Карабин-брелок",
+          "description": "Карабин-брелок — практичный аксессуар на каждый день",
+          "link": "https://pyeoptics.com/shop/catalogue/karabin-mold_8079/",
+          "price": "3000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/A7cINcClAd1ENA",
+          "tags": [
+            "Аксессуары",
+            "Практичность",
+            "Стиль"
+          ],
+          "sort_order": 1230
+        },
+        {
+          "title": "Карманная мини-книга",
+          "description": "Карманная книга подходит для чтения в дороге",
+          "link": "https://ozon.ru/t/4eyZoOA",
+          "price": "355.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/jFJnamisWs4slQ",
+          "tags": [
+            "Книги",
+            "Мини",
+            "Хобби"
+          ],
+          "sort_order": 1240
+        },
+        {
+          "title": "Мини-скетчбук",
+          "description": "Мини-скетчбук удобен для заметок и зарисовок",
+          "link": "https://ozon.ru/t/a5JGkx1",
+          "price": "380.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/XfnZMMlKKrNcZw",
+          "tags": [
+            "Канцелярия",
+            "Хобби",
+            "Записи"
+          ],
+          "sort_order": 1250
+        },
+        {
+          "title": "Лотерейный билет",
+          "description": "Лотерейный билет добавляет элемент неожиданности",
+          "link": "https://www.stoloto.ru/ruslotto/game?draw=1741",
+          "price": "50.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/wSa6ilV-SZfq4A",
+          "tags": [
+            "Развлечения",
+            "Сюрприз",
+            "Подарок"
+          ],
+          "sort_order": 1260
+        },
+        {
+          "title": "Элитная ручка",
+          "description": "Элитная ручка — стильный и статусный аксессуар",
+          "link": "https://penelite.ru/?srsltid=AfmBOoqnUPwt7q8aHDh9_zyEvj0vzhHtdR6kcyckFGBD1QVnkw_PPWu0",
+          "price": "15000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/I1_oJfUSc2eM2w",
+          "tags": [
+            "Канцелярия",
+            "Стиль",
+            "Подарок"
+          ],
+          "sort_order": 1270
+        },
+        {
+          "title": "Купон \"кофе/ужин за мой счет\"",
+          "description": "Купон на кофе или ужин — простой и приятный жест внимания",
+          "link": "",
+          "price": null,
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/T23CdkfVSCLIog",
+          "tags": [
+            "Внимание",
+            "Подарок",
+            "Простота"
+          ],
+          "sort_order": 1280
+        }
+      ]
+    },
+    {
+      "slug": "cozy-evening",
+      "title": "Для уютного вечера",
+      "subtitle": "",
+      "description": "Уютные подарки для теплых вечеров дома и отдыха",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/1iFPQBSCHphOTA",
+      "tags": [
+        "Свечи",
+        "Уют",
+        "Декор",
+        "Дом",
+        "Сервировка",
+        "Книги",
+        "Медитация",
+        "Релакс",
+        "Напитки",
+        "Удобство",
+        "Комфорт",
+        "Ароматы",
+        "Интерьер",
+        "Свет",
+        "Атмосфера",
+        "Чай",
+        "Игры",
+        "Компания",
+        "Развлечения"
+      ],
+      "items_total": 10,
+      "sort_order": 150,
+      "items": [
+        {
+          "title": "Набор свечей",
+          "description": "Набор свечей создает уютную атмосферу",
+          "link": "https://www.wildberries.ru/catalog/489520985/detail.aspx?size=682141059",
+          "price": "400.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/aO1ujcqIGirhEA",
+          "tags": [
+            "Свечи",
+            "Уют",
+            "Декор"
+          ],
+          "sort_order": 1290
+        },
+        {
+          "title": "Бамбуковый поднос",
+          "description": "Бамбуковый поднос удобен для сервировки и завтраков в постель",
+          "link": "https://ozon.ru/t/tkuV7BC",
+          "price": "1500.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/c5YJIUYLYxZvaw",
+          "tags": [
+            "Дом",
+            "Сервировка",
+            "Уют"
+          ],
+          "sort_order": 1300
+        },
+        {
+          "title": "Книга буддийских медитаций",
+          "description": "Книга буддийских медитаций помогает расслабиться и сосредоточиться",
+          "link": "https://ozon.ru/t/M4DxkE7",
+          "price": "715.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/VDIWDMlu7UKJGw",
+          "tags": [
+            "Книги",
+            "Медитация",
+            "Релакс"
+          ],
+          "sort_order": 1310
+        },
+        {
+          "title": "Термокружка",
+          "description": "Термокружка сохраняет температуру напитка",
+          "link": "https://ozon.ru/t/Qo9qoqs",
+          "price": "525.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/EBHkHAeLeUPDjQ",
+          "tags": [
+            "Напитки",
+            "Удобство",
+            "Дом"
+          ],
+          "sort_order": 1320
+        },
+        {
+          "title": "Теплый плед",
+          "description": "Теплый плед создает ощущение уюта",
+          "link": "https://ozon.ru/t/2HpGp8K",
+          "price": "2000.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/bdL8OQqDhZeQ8A",
+          "tags": [
+            "Уют",
+            "Дом",
+            "Комфорт"
+          ],
+          "sort_order": 1330
+        },
+        {
+          "title": "Аромадиффузор электрический",
+          "description": "Аромадиффузор наполняет пространство приятным ароматом",
+          "link": "https://www.ozon.ru/product/aromalampa-dlya-efirnyh-masel-elektricheskaya-1603964367/?from=share_ios&perehod=smm_share_button_productpage_link",
+          "price": "1640.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/azVHeqrK8AxecA",
+          "tags": [
+            "Ароматы",
+            "Дом",
+            "Релакс"
+          ],
+          "sort_order": 1340
+        },
+        {
+          "title": "Подушка с принтом",
+          "description": "Подушка с принтом добавляет интерьеру индивидуальности",
+          "link": "https://ozon.ru/t/nK4b3F2",
+          "price": "1720.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/7LZUHwbA3_iVPg",
+          "tags": [
+            "Декор",
+            "Интерьер",
+            "Уют"
+          ],
+          "sort_order": 1350
+        },
+        {
+          "title": "Мини-гирлянда/фонарь",
+          "description": "Гирлянда или фонарь создают мягкое освещение",
+          "link": "https://ozon.ru/t/pmgW409",
+          "price": "490.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/fr5YrqbVEmTTKw",
+          "tags": [
+            "Свет",
+            "Уют",
+            "Атмосфера"
+          ],
+          "sort_order": 1360
+        },
+        {
+          "title": "Набор редких чаев",
+          "description": "Набор редких чаев подходит для уютных чаепитий",
+          "link": "https://vip-chay.ru/podarochnyy-chay/podarochnyy-nabor-czin-czyun-mey-zolotye-brovi-skakuna/",
+          "price": "11800.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/r4fUyD3N2XjcEg",
+          "tags": [
+            "Чай",
+            "Напитки",
+            "Уют"
+          ],
+          "sort_order": 1370
+        },
+        {
+          "title": "Настольная игра для компании",
+          "description": "Настольная игра для компании делает встречи веселее",
+          "link": "https://ozon.ru/t/uCLXhOC",
+          "price": "420.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/8JpHwdiMxzBi7Q",
+          "tags": [
+            "Игры",
+            "Компания",
+            "Развлечения"
+          ],
+          "sort_order": 1380
+        }
+      ]
+    },
+    {
+      "slug": "grammys-2026",
+      "title": "Грэмми 2026: радость для меломанов",
+      "subtitle": "",
+      "description": "\"Мне следовало бы дарить тебе больше подарков...\"",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/rAu1nXg2TnFSrg",
+      "tags": [
+        "Музыка",
+        "Развлечения",
+        "Одежда",
+        "Сувениры",
+        "Коллекционирование"
+      ],
+      "items_total": 6,
+      "sort_order": 160,
+      "items": [
+        {
+          "title": "Футболка (унисекс) \"Lady Gaga, MAYHEM\"",
+          "description": "Категория - \"Купи… или купи\"",
+          "link": "https://www.wildberries.ru/catalog/447762797/detail.aspx?targetUrl=SN",
+          "price": "882.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/AR1NwDd-eXivpg",
+          "tags": [
+            "Музыка",
+            "Развлечения",
+            "Одежда"
+          ],
+          "sort_order": 1630
+        },
+        {
+          "title": "Брелок \"CD-альбом \"Sabrina Carpenter - Man’s Best Friend\"",
+          "description": "Oh, boy! Порадуйте настоящего фаната Сабрины Карпентер этим сувениров (такие брелки есть и с другими альбомами!)",
+          "link": "https://www.wildberries.ru/catalog/552837381/detail.aspx?targetUrl=SN",
+          "price": "602.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/HKUVY3A4GpZSIg",
+          "tags": [
+            "Музыка",
+            "Развлечения",
+            "Сувениры"
+          ],
+          "sort_order": 1640
+        },
+        {
+          "title": "Виниловая пластинка \"Billie Eilish - HIT ME HARD AND SOFT (Yellow Vinyl)\"",
+          "description": "Идеальный подарок для птиц одного полета",
+          "link": "https://www.pult.ru/product/vinilovaya-plastinka-billie-eilish-hit-me-hard-and-soft-yellow-vinyl-lp",
+          "price": "5990.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/DjHj7zZpnOzTdA",
+          "tags": [
+            "Музыка",
+            "Развлечения",
+            "Коллекционирование"
+          ],
+          "sort_order": 1650
+        },
+        {
+          "title": "Футболка (унисекс) \"Kendrick Lamar, GNX\"",
+          "description": "Футболка с живой легендой рэпа",
+          "link": "https://www.wildberries.ru/catalog/390795474/detail.aspx?targetUrl=SN",
+          "price": "1576.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/VZ4acHwCsz7GZw",
+          "tags": [
+            "Музыка",
+            "Развлечения",
+            "Одежда"
+          ],
+          "sort_order": 1660
+        },
+        {
+          "title": "Карточки \"APT. - Rose, Bruno Mars\"",
+          "description": "Набор ломинированных карточек с исполнителями одного из главных хитов 2024 года",
+          "link": "https://www.wildberries.ru/catalog/273050243/detail.aspx?targetUrl=SN",
+          "price": "175.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/laowvB-Vj3RVTQ",
+          "tags": [
+            "Музыка",
+            "Развлечения",
+            "Коллекционирование"
+          ],
+          "sort_order": 1670
+        },
+        {
+          "title": "Постер 50x70 Bad Bunny DeBÍ TiRAR MáS FOToS",
+          "description": "Постер с обложкой \"Альбома года\" на Грэмми 2026",
+          "link": "https://www.wildberries.ru/catalog/569201009/detail.aspx?targetUrl=SN",
+          "price": "920.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/JZP29wNSNeDIdQ",
+          "tags": [
+            "Музыка",
+            "Развлечения",
+            "Одежда"
+          ],
+          "sort_order": 1680
+        }
+      ]
+    },
+    {
+      "slug": "world-cup-2026",
+      "title": "Чемпионат Мира по футболу 2026",
+      "subtitle": "",
+      "description": "Подарки для тех, кто точно будет следить за ЧМ-2026.",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/Ul8rcT_48idrQg",
+      "tags": [
+        "Книги",
+        "Спорт, Развлечения",
+        "Спорт",
+        "Развлечения",
+        "Коллекционирование",
+        "Одежда",
+        "Игры",
+        "Мемы",
+        "Посуда"
+      ],
+      "items_total": 8,
+      "sort_order": 170,
+      "items": [
+        {
+          "title": "Книга \"Все чемпионаты мира по футболу. 1930-2026\"",
+          "description": "Подарите футбольному фанату путеводитель в историю Мундиаля",
+          "link": "https://www.chitai-gorod.ru/product/vse-cempionaty-mira-po-futbolu-1930-2026-3129653?ysclid=mohs7zfln0722567096",
+          "price": "1179.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/gb6K49NtZpSwCw",
+          "tags": [
+            "Книги",
+            "Спорт, Развлечения"
+          ],
+          "sort_order": 1690
+        },
+        {
+          "title": "Футбольный мяч",
+          "description": "Мяч, стилизованный под Мундиаль 2026. И поиграть можно, и украсить комнату им",
+          "link": "https://www.wildberries.ru/catalog/494886441/detail.aspx?targetUrl=SN",
+          "price": "2040.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/0uxwYz0R1O3N8A",
+          "tags": [
+            "Спорт",
+            "Развлечения",
+            "Коллекционирование"
+          ],
+          "sort_order": 1700
+        },
+        {
+          "title": "Футболка \"Месси. Сборная Аргентины\"",
+          "description": "Джерси легендарного футболиста, чья сборная - действующий чемпион мира",
+          "link": "https://ozon.ru/t/vs4xkmB",
+          "price": "1286.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/02I-8AOhnFzVLA",
+          "tags": [
+            "Спорт",
+            "Развлечения",
+            "Одежда",
+            "Коллекционирование"
+          ],
+          "sort_order": 1710
+        },
+        {
+          "title": "EA Sports FC 26 (PS4)",
+          "description": "Игра на PS4. Что может быть лучше, чем поиграть с друзьями в Fifa?",
+          "link": "https://www.dns-shop.ru/product/566ed3377e69d21a/igra-ea-sports-fc-26-ps4/?ysclid=mohsn6ftpq497833162&utm_medium=organic&utm_source=yandex&utm_referrer=https%3A%2F%2Fyandex.ru%2F",
+          "price": "4299.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/1uPoTuFvsRtEeA",
+          "tags": [
+            "Игры",
+            "Развлечения"
+          ],
+          "sort_order": 1720
+        },
+        {
+          "title": "Настольная игра \"Футболполия\"",
+          "description": "Аналог легендарной \"Монополии\", но в мире футбола",
+          "link": "https://www.wildberries.ru/catalog/466595657/detail.aspx?targetUrl=SN",
+          "price": "3235.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/1X3pf7ixmRd8sw",
+          "tags": [
+            "Игры",
+            "Развлечения"
+          ],
+          "sort_order": 1730
+        },
+        {
+          "title": "Кружка \"Месси с кубком\"",
+          "description": "Кружка с одним из главных мемов прошлого Чемпионата Мира в Катаре",
+          "link": "https://www.wildberries.ru/catalog/147029638/detail.aspx?targetUrl=SN",
+          "price": "469.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/suwqOq2eAf_v8Q",
+          "tags": [
+            "Мемы",
+            "Спорт",
+            "Посуда"
+          ],
+          "sort_order": 1740
+        },
+        {
+          "title": "FunkoPOP! Football Barcelona Lamine Yamal",
+          "description": "Коллекционная фигурка с юной легендой футбола Испании",
+          "link": "https://market.yandex.ru/cc/9KfAnX",
+          "price": "1633.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/6N3tdE8hJDx6xA",
+          "tags": [
+            "Спорт",
+            "Коллекционирование"
+          ],
+          "sort_order": 1750
+        },
+        {
+          "title": "Конструктор \"LEGO Editions. Официальный трофей ЧМ 2026\"",
+          "description": "Комбо для фанатов футбола и Лего",
+          "link": "https://www.detmir.ru/product/index/id/7109272/",
+          "price": "31999.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/7tHYIb4UfIhCOg",
+          "tags": [
+            "Спорт",
+            "Развлечения",
+            "Коллекционирование"
+          ],
+          "sort_order": 1760
+        }
+      ]
+    },
+    {
+      "slug": "board-games",
+      "title": "Настольные игры: лучшее",
+      "subtitle": "",
+      "description": "Маленькие радости - большие победы",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/pix8QZdLhWyEYw",
+      "tags": [
+        "Развлечения",
+        "Настолки"
+      ],
+      "items_total": 9,
+      "sort_order": 180,
+      "items": [
+        {
+          "title": "Карточная игра \"Юный Свинутс\"",
+          "description": "Интересный аналог Uno. Игра скарсит времяпрепровождение с друзьями. К слову, есть несколько вараинтов Свинтуса",
+          "link": "https://www.detmir.ru/product/index/id/1940911/",
+          "price": "489.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/8JTE9dsaNXJi8w",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1770
+        },
+        {
+          "title": "Настольная игра \"Спасти Пухлю!\"",
+          "description": "Если вы хотите сделать подарок ребенку-фанату вселенной Гравити Фолз, то это иделаьный вариант. К слову, есть другие настолки по этой всленной",
+          "link": "https://www.detmir.ru/product/index/id/3372026/",
+          "price": "799.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/99_KJMmj_GkGPA",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1780
+        },
+        {
+          "title": "Настольная игра \"Суд идет!\"",
+          "description": "Самое то для дружеской веселой компании",
+          "link": "https://www.wildberries.ru/catalog/642819085/detail.aspx?targetUrl=SN",
+          "price": "2557.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/EwSK7ekmbq9F0g",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1790
+        },
+        {
+          "title": "Настольная игра \"Бункер\"",
+          "description": "Еще одна игра, в которой необходимо отстаивать свою точку зрения, промоутить себя. Да и сама по себе игра - классика жанра",
+          "link": "https://www.chitai-gorod.ru/product/nastolnaya-igra-bunker-2979566?ysclid=mohtyhh126450534528",
+          "price": "4299.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/0svTQT325Bdv0A",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1800
+        },
+        {
+          "title": "Игра \"Small Talk\"",
+          "description": "Игры могут быть еще и полезными",
+          "link": "https://www.wildberries.ru/catalog/471362142/detail.aspx?targetUrl=SN",
+          "price": "1047.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/2oaBl3nMsT-mxg",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1810
+        },
+        {
+          "title": "Детективная игра \"Настоящий детектив\"",
+          "description": "За 2 часа необходимо раскрыть дело, которое покрыто мраком... Играть можно как одному, так и в команде",
+          "link": "https://www.wildberries.ru/catalog/732915822/detail.aspx?targetUrl=SN",
+          "price": "1133.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/pz7jVJUgxYI0Xg",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1820
+        },
+        {
+          "title": "Психологическая игра \"НЕЗНАКОМЫЕ\"",
+          "description": "Один из лучших способов сблизииться с друзьями и узнать друг о друге побольше",
+          "link": "https://www.wildberries.ru/catalog/168918895/detail.aspx?targetUrl=SN",
+          "price": "1310.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/5SYZhPkYkRyqcg",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1830
+        },
+        {
+          "title": "Игра \"500 злобных карт\" (18+)",
+          "description": "Нотка юмора в вечер с дурзьями? А что если целую симфонию шуток?",
+          "link": "https://www.wildberries.ru/catalog/338082188/detail.aspx?targetUrl=SN",
+          "price": "1080.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/JZHnxC1kH7eQfA",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1840
+        },
+        {
+          "title": "Настольная игра \"Беспринципные\" (18+)",
+          "description": "Игра по популярному российскому сериалу явно украсит ваш вечер с друзьями",
+          "link": "https://www.chitai-gorod.ru/product/igra-kartocnaa-18h12h4-besprincipnye-premium-18-isbn-net-3149790?ysclid=mohuhcewhq726249049",
+          "price": "1271.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/6VemPyRXlmTdQA",
+          "tags": [
+            "Развлечения",
+            "Настолки"
+          ],
+          "sort_order": 1850
+        }
+      ]
+    },
+    {
+      "slug": "23-february",
+      "title": "На 23 февраля",
+      "subtitle": "",
+      "description": "Идеи подарков для драгоценных защитников",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/7tG6ls_ar2r6_w",
+      "tags": [
+        "Праздники",
+        "23 февраля",
+        "Дом",
+        "Еда",
+        "Ароматы",
+        "Одежда",
+        "Коллекционирование",
+        "Аксессуары",
+        "Электроника",
+        "Красота",
+        "Гигиена",
+        "Спорт",
+        "Антистерсс"
+      ],
+      "items_total": 9,
+      "sort_order": 200,
+      "items": [
+        {
+          "title": "Набор мультитулов",
+          "description": "Прекрасные агрегаты, полезные как в хозяйстве, так и в туризме",
+          "link": "https://www.vseinstrumenti.ru/product/nabor-multitul-gigant-3-predmeta-g647-1085651/",
+          "price": "1954.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/c1d4tThujwAa8Q",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Дом"
+          ],
+          "sort_order": 1940
+        },
+        {
+          "title": "Съедобный букет с сыром и колбасой \"Арчи\"",
+          "description": "Нежнятинка, мяснятинка, сырятинка... Баланс \"вкусно\" и \"красиво\" (пс, есть и аналоги из рыбы или морепродуктов)",
+          "link": "https://flowwow.com/edible-bouquets/muzhskoy-buket-archi-4568/?from=ya_market&amp%3Bamp%3Bamp=&utm_source=yandex&utm_medium=cpc&utm_campaign=rus_src_tg_food-bouquet_discount_ru_geo%5Ccatid-29%5Cnocity%5Cregionid-1%7Cid-700708947%7Cpl-desktop&utm_id=700708947&utm_term=---autotargeting&utm_content=c%3A700708947%7Cg%3A5622861704%7Cb%3A1882467271586240279%7Ck%3A205622861704%7Cst%3Asearch%7Cs%3Anone%7Ct%3Apremium%7Cdev%3Adesktop%7Ccatid-29%7Ccityid-95%7C&pm_source=none&pm_block=premium&pm_position=1&pm_phrase=&pm_campaign_type=type1&pm_phraseid=205622861704&pm_r=205622861704&pm_matcht=&pm_atn=&pm_rgn=%D0%9D%D0%B8%D0%B6%D0%BD%D0%B8%D0%B9%20%D0%9D%D0%BE%D0%B2%D0%B3%D0%BE%D1%80%D0%BE%D0%B4&pm_rgid=47&yclid=12728187858863783935",
+          "price": "3500.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/Wq1LWYUZn2wGMA",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Еда",
+            "Ароматы"
+          ],
+          "sort_order": 1950
+        },
+        {
+          "title": "Носки в подарочном боксе",
+          "description": "Вечная классика, еще и красиво упакованная. К слову, в бокс можно всегда можно положить еще что-нибудь (фотокарточку, послание, деньги)",
+          "link": "https://www.wildberries.ru/catalog/311671281/detail.aspx?targetUrl=SN",
+          "price": "348.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/LqIklCaP44sfBg",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Одежда",
+            "Коллекционирование"
+          ],
+          "sort_order": 1960
+        },
+        {
+          "title": "Электронная зажигалка",
+          "description": "Элегантно. Практично",
+          "link": "https://market.yandex.ru/cc/9KfPZe",
+          "price": "2096.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/y3bwx0lBNqhkwA",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Аксессуары"
+          ],
+          "sort_order": 1970
+        },
+        {
+          "title": "Электробритва Philips",
+          "description": "Купите тому самому знакомому, который до сих пор скупает одноразовые бритвы",
+          "link": "https://www.dns-shop.ru/product/49fd309247c2ed20/elektrobritva-philips-s588510/",
+          "price": "8999.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/1Y4m-zzhGfGNkQ",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Электроника",
+            "Красота"
+          ],
+          "sort_order": 1980
+        },
+        {
+          "title": "Подарочный набор \"Мужик №1\" (гель для душа + гель для бритья)",
+          "description": "Стилизованные под гоночные предметы (канситра для бензина и машинное масло) продукты гигиены - креативное решение для подарка фанату F-1",
+          "link": "https://market.yandex.ru/cc/9KfPZe",
+          "price": "2096.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/d3FvSkqYueMr7w",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Гигиена",
+            "Спорт"
+          ],
+          "sort_order": 1990
+        },
+        {
+          "title": "Футболка любимого футбольного клуба",
+          "description": "Из популярных: Барселона, ПСЖ, Ливерпуль, Арсенал, Бавария, Реал Мадрид, Манчестер Сити, Интер, Наполи",
+          "link": "https://www.wildberries.ru/catalog/178497824/detail.aspx?targetUrl=SN",
+          "price": "939.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/iwkGfWiaflCgmA",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Спорт",
+            "Одежда"
+          ],
+          "sort_order": 2000
+        },
+        {
+          "title": "Груша боксерская напольная",
+          "description": "Антистресс и для здоровья полезно",
+          "link": "https://www.wildberries.ru/catalog/261328563/detail.aspx?targetUrl=SN",
+          "price": "4694.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/-7JSeC-XDZOO8A",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Спорт",
+            "Антистерсс"
+          ],
+          "sort_order": 2010
+        },
+        {
+          "title": "Куртка-бомбер \"F1\"",
+          "description": "Фанаты Макса Ферстаппена будут рады",
+          "link": "https://www.wildberries.ru/catalog/244495162/detail.aspx?targetUrl=SN",
+          "price": "5607.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/YVcYJyalMU0RVg",
+          "tags": [
+            "Праздники",
+            "23 февраля",
+            "Одежда",
+            "Спорт"
+          ],
+          "sort_order": 2020
+        }
+      ]
+    },
+    {
+      "slug": "fc-barcelona",
+      "title": "ФК \"Барселона\"",
+      "subtitle": "",
+      "description": "Подборка в честь испанского гранда и спонсора красивого футбола",
+      "section": "gift_ideas",
+      "section_slugs": [
+        "gift_ideas"
+      ],
+      "badge": "",
+      "cover_image_url": "https://disk.yandex.ru/i/nSY90OE4M8AUzQ",
+      "tags": [
+        "Спорт",
+        "Игрушки",
+        "Одежда",
+        "Книги",
+        "Аксессуары",
+        "Коллекционирование",
+        "Декор",
+        "Интерьер",
+        "Дизайн",
+        "Рисование",
+        "Хобби"
+      ],
+      "items_total": 8,
+      "sort_order": 210,
+      "items": [
+        {
+          "title": "Плюшевый мишка в футболке Ламина Ямаля",
+          "description": "Милый подарок для футбольного фаната",
+          "link": "https://www.wildberries.ru/catalog/932308721/detail.aspx?targetUrl=SN",
+          "price": "1858.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/0a04EKvVoj5hvQ",
+          "tags": [
+            "Спорт",
+            "Игрушки"
+          ],
+          "sort_order": 2030
+        },
+        {
+          "title": "Футболка с принтом \"Рафинья\"",
+          "description": "Креативный элемент одежды для фанатов бразильца",
+          "link": "https://www.wildberries.ru/catalog/920419871/detail.aspx?targetUrl=SN",
+          "price": "1610.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/ZO8PFr8juOcjhw",
+          "tags": [
+            "Спорт",
+            "Одежда"
+          ],
+          "sort_order": 2040
+        },
+        {
+          "title": "Книга \"ФК \"Барселона\". Все о великом испанском клубе\"",
+          "description": "Шикарное предложение для книголюбов",
+          "link": "https://www.chitai-gorod.ru/product/fk-barselona-vse-o-velikom-ispanskom-klube-3127040",
+          "price": "529.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/YJGGkslfe4_hGQ",
+          "tags": [
+            "Спорт",
+            "Книги"
+          ],
+          "sort_order": 2050
+        },
+        {
+          "title": "3D-стикеры",
+          "description": "Небольшой презент для фаната сине-грантовых",
+          "link": "https://www.wildberries.ru/catalog/371444918/detail.aspx?targetUrl=SN",
+          "price": "302.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/yzbXljhGOKWXXQ",
+          "tags": [
+            "Спорт",
+            "Аксессуары"
+          ],
+          "sort_order": 2060
+        },
+        {
+          "title": "Сувенирный шарф",
+          "description": "Этот согревающий на холодном стадионе презент не оставит равнодушным",
+          "link": "https://www.wildberries.ru/catalog/173689355/detail.aspx?targetUrl=SN",
+          "price": "787.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/gOfZsZ0o_0IdHw",
+          "tags": [
+            "Спорт",
+            "Одежда",
+            "Коллекционирование"
+          ],
+          "sort_order": 2070
+        },
+        {
+          "title": "Тематический светильник",
+          "description": "Светильник в виде логотипа испанского гранда",
+          "link": "https://market.yandex.ru/cc/9Kyg6g",
+          "price": "1322.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/wVKl4Vz_IIL3ZA",
+          "tags": [
+            "Спорт",
+            "Декор",
+            "Интерьер",
+            "Дизайн"
+          ],
+          "sort_order": 2080
+        },
+        {
+          "title": "Картина по номерам",
+          "description": "Прекрасное решение для фаната Барселоны и любителя рисовать",
+          "link": "https://ozon.ru/t/R9JS0tr",
+          "price": "974.00",
+          "currency": "rub",
+          "image_url": "https://disk.yandex.ru/i/m0OFvmFuFf2umA",
+          "tags": [
+            "Спорт",
+            "Рисование",
+            "Хобби"
+          ],
+          "sort_order": 2090
+        },
+        {
+          "title": "Футболка-джерси",
+          "description": "На сайте клуба можно выбрать любого вида джерси (домашняя вариация, гостевая, резервная)",
+          "link": "https://store.fcbarcelona.com/products/fc-barcelona-home-amshirt-25-26-ucl",
+          "price": "114.99",
+          "currency": "euro",
+          "image_url": "https://disk.yandex.ru/i/Ohn7lr9Ivtu2qg",
+          "tags": [
+            "Спорт",
+            "Одежда",
+            "Коллекционирование"
+          ],
+          "sort_order": 2100
+        }
+      ]
+    }
+  ]
+}

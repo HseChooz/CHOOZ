@@ -51,7 +51,7 @@ class WishItem(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     currency = models.CharField(
         max_length=8,
@@ -78,7 +78,7 @@ class Note(models.Model):
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     is_favorite = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -94,17 +94,35 @@ class Note(models.Model):
         return self.title
 
 
+class CollectionSection(models.Model):
+    slug = models.SlugField(max_length=64, unique=True)
+    title = models.CharField(max_length=255)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["sort_order", "id"]
+
+    def __str__(self):
+        return self.title
+
+
 class Collection(models.Model):
     class Section(models.TextChoices):
         FOR_YOU = "for_you", "Подборки для вас"
         BY_CHARACTER = "by_character", "Подборки по характеру"
         EDITORIAL = "editorial", "Редакторские подборки"
+        GIFT_IDEAS = "gift_ideas", "Идеи подарков"
 
     slug = models.SlugField(max_length=128, unique=True)
     title = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     section = models.CharField(max_length=32, choices=Section.choices)
+    sections = models.ManyToManyField(
+        CollectionSection,
+        related_name="collections",
+        blank=True,
+    )
     badge = models.CharField(max_length=64, blank=True)
     cover_image_url = models.URLField(blank=True, default="")
     tags = models.JSONField(default=list, blank=True)
@@ -125,7 +143,7 @@ class CollectionItem(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE, related_name="items")
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     currency = models.CharField(
         max_length=8,
@@ -153,7 +171,7 @@ class Event(models.Model):
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     notify_enabled = models.BooleanField(default=False)
     repeat_yearly = models.BooleanField(default=False)
     date = models.DateField()

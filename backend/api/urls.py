@@ -4,7 +4,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from strawberry.django.views import GraphQLView
 
 from api.graphql.schema import schema
-from api.views import hardcoded_asset
+from api.views import hardcoded_asset, yandex_public_asset
 
 
 class AuthGraphQLView(GraphQLView):
@@ -21,6 +21,7 @@ class AuthGraphQLView(GraphQLView):
 
 
 urlpatterns = [
+    path("assets/yandex-public/<str:token>", yandex_public_asset),
     path("assets/<path:asset_path>", hardcoded_asset),
     path(
         "graphql/",

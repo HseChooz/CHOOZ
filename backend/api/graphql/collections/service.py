@@ -13,15 +13,18 @@ from api.graphql.types import (
     CollectionsHomeType,
     CollectionType,
 )
-from api.models import Collection, CollectionItem, WishItem
+from api.models import Collection, CollectionItem, CollectionSection, WishItem
+from api.yandex_disk import build_yandex_public_asset_path, is_yandex_public_asset_url
 
 SECTION_ORDER = [
     Collection.Section.FOR_YOU,
     Collection.Section.BY_CHARACTER,
     Collection.Section.EDITORIAL,
+    Collection.Section.GIFT_IDEAS,
 ]
 HARDCODED_ASSET_ROUTE_PREFIX = "/api/assets/"
 HARDCODED_COLLECTIONS_ASSET_PREFIX = "collections/"
+SECTION_ORDER_INDEX = {str(section): index for index, section in enumerate(SECTION_ORDER)}
 
 
 def require_user(info: Info):
@@ -32,7 +35,7 @@ def require_user(info: Info):
 
 
 def collections_qs():
-    return Collection.objects.annotate(items_count=Count("items")).prefetch_related("items")
+    return Collection.objects.annotate(items_count=Count("items")).prefetch_related("items", "sections")
 
 
 def get_collection_by_slug(slug: str) -> Collection | None:
@@ -97,18 +100,93 @@ def resolve_collection_asset_url(
 
     parsed = urlsplit(raw_value)
     if parsed.scheme and parsed.netloc:
-        return raw_value
-
-    normalized_value = raw_value.lstrip("/")
-    if normalized_value.startswith(HARDCODED_COLLECTIONS_ASSET_PREFIX):
-        resolved_path = f"{HARDCODED_ASSET_ROUTE_PREFIX}{normalized_value}"
+        if is_yandex_public_asset_url(raw_value):
+            resolved_path = build_yandex_public_asset_path(raw_value)
+        else:
+            return raw_value
     else:
-        resolved_path = f"/{normalized_value}"
+        normalized_value = raw_value.lstrip("/")
+        if normalized_value.startswith(HARDCODED_COLLECTIONS_ASSET_PREFIX):
+            resolved_path = f"{HARDCODED_ASSET_ROUTE_PREFIX}{normalized_value}"
+        else:
+            resolved_path = f"/{normalized_value}"
 
     if request is None:
         return resolved_path
 
     return request.build_absolute_uri(resolved_path)
+
+
+def fallback_section_title(section_key: str | None) -> str:
+    if not section_key:
+        return ""
+    try:
+        return Collection.Section(section_key).label
+    except ValueError:
+        return section_key
+
+
+def fallback_section_sort_order(section_key: str | None) -> int:
+    if not section_key:
+        return len(SECTION_ORDER) * 10
+    return SECTION_ORDER_INDEX.get(section_key, len(SECTION_ORDER)) * 10
+
+
+def collection_sections(collection: Collection) -> list[CollectionSection]:
+    related_sections = list(collection.sections.all())
+    if related_sections:
+        return sorted(
+            related_sections,
+            key=lambda section: (
+                section.sort_order,
+                SECTION_ORDER_INDEX.get(section.slug, len(SECTION_ORDER)),
+                section.id or 0,
+            ),
+        )
+
+    if not collection.section:
+        return []
+
+    return [
+        CollectionSection(
+            slug=collection.section,
+            title=fallback_section_title(collection.section),
+            sort_order=fallback_section_sort_order(collection.section),
+        )
+    ]
+
+
+def collection_section_slugs(collection: Collection) -> set[str]:
+    return {section.slug for section in collection_sections(collection)}
+
+
+def primary_collection_section(collection: Collection) -> CollectionSection | None:
+    sections = collection_sections(collection)
+    if not sections:
+        return None
+
+    if collection.section:
+        for section in sections:
+            if section.slug == collection.section:
+                return section
+
+    return sections[0]
+
+
+def ordered_sections(collections: Iterable[Collection]) -> list[CollectionSection]:
+    sections_by_slug: dict[str, CollectionSection] = {}
+    for collection in collections:
+        for section in collection_sections(collection):
+            sections_by_slug.setdefault(section.slug, section)
+
+    return sorted(
+        sections_by_slug.values(),
+        key=lambda section: (
+            section.sort_order,
+            SECTION_ORDER_INDEX.get(section.slug, len(SECTION_ORDER)),
+            section.id or 0,
+        ),
+    )
 
 
 def collection_available_tags(
@@ -306,6 +384,7 @@ def to_collection_type(
     )
     items = filter_collection_items_by_search(items, search_query)
     wish_map = build_collection_item_wish_map(user, items)
+    primary_section = primary_collection_section(collection)
     return CollectionType(
         id=str(collection.id),
         slug=collection.slug,
@@ -317,8 +396,12 @@ def to_collection_type(
             collection.cover_image_url,
             request=request,
         ),
-        section_key=collection.section,
-        section_title=collection.get_section_display(),
+        section_key=(primary_section.slug if primary_section else collection.section),
+        section_title=(
+            primary_section.title
+            if primary_section is not None
+            else fallback_section_title(collection.section)
+        ),
         tags=collection_available_tags(collection, all_items),
         items_count=_items_count(collection),
         items=[
@@ -341,17 +424,17 @@ def to_collections_home_type(
     sections_map: OrderedDict[str, CollectionSectionType] = OrderedDict()
     filtered_collections = filter_collections_by_search(collections, search_query)
 
-    for section in SECTION_ORDER:
+    for section in ordered_sections(filtered_collections):
         section_collections = [
             collection
             for collection in filtered_collections
-            if collection.section == section
+            if section.slug in collection_section_slugs(collection)
         ]
         if not section_collections:
             continue
-        sections_map[str(section)] = CollectionSectionType(
-            key=str(section),
-            title=section.label,
+        sections_map[section.slug] = CollectionSectionType(
+            key=section.slug,
+            title=section.title,
             collections=[
                 to_collection_preview_type(collection, request=request)
                 for collection in section_collections

@@ -9,7 +9,7 @@ from api.graphql.collections.service import (
     to_collection_type,
     to_collections_home_type,
 )
-from api.models import Collection, CollectionItem, WishItem
+from api.models import Collection, CollectionItem, CollectionSection, WishItem
 
 pytestmark = pytest.mark.django_db
 
@@ -70,6 +70,17 @@ def test_resolve_collection_asset_url_builds_absolute_url_for_hardcoded_asset():
     )
 
     assert result == "http://testserver/api/assets/collections/shared/funny-cat.png"
+
+
+def test_resolve_collection_asset_url_builds_proxy_url_for_yandex_public_asset():
+    request = RequestFactory().get("/api/graphql/")
+
+    result = resolve_collection_asset_url(
+        "https://disk.yandex.ru/i/example-public-image",
+        request=request,
+    )
+
+    assert result.startswith("http://testserver/api/assets/yandex-public/")
 
 
 def test_filter_collection_items_by_tags_matches_any_selected_tag():
@@ -187,6 +198,36 @@ def test_to_collections_home_type_can_filter_by_search_query_using_item_data():
 
     assert [section.key for section in result.sections] == ["for_you"]
     assert [collection.slug for collection in result.sections[0].collections] == ["reader-picks"]
+
+
+def test_to_collections_home_type_duplicates_collection_across_multiple_sections():
+    for_you, _created = CollectionSection.objects.get_or_create(
+        slug="for_you",
+        defaults={
+            "title": "Подборки для вас",
+            "sort_order": 10,
+        },
+    )
+    gift_ideas, _created = CollectionSection.objects.get_or_create(
+        slug="gift_ideas",
+        defaults={
+            "title": "Идеи подарков",
+            "sort_order": 40,
+        },
+    )
+    collection = Collection.objects.create(
+        slug="multi-home",
+        title="Multi Home",
+        section=Collection.Section.FOR_YOU,
+        sort_order=10,
+    )
+    collection.sections.add(for_you, gift_ideas)
+
+    result = to_collections_home_type([collection])
+
+    assert [section.key for section in result.sections] == ["for_you", "gift_ideas"]
+    assert [item.slug for item in result.sections[0].collections] == ["multi-home"]
+    assert [item.slug for item in result.sections[1].collections] == ["multi-home"]
 
 
 def test_to_collection_item_type_resolves_hardcoded_image_url(user):
