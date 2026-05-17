@@ -31,6 +31,11 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.AlterField(
+            model_name="collectionitem",
+            name="link",
+            field=models.URLField(blank=True, default="", max_length=2000),
+        ),
+        migrations.AlterField(
             model_name="collection",
             name="section",
             field=models.CharField(
@@ -43,11 +48,26 @@ class Migration(migrations.Migration):
                 max_length=32,
             ),
         ),
+        migrations.AlterField(
+            model_name="event",
+            name="link",
+            field=models.URLField(blank=True, default="", max_length=2000),
+        ),
         migrations.AddField(
             model_name="collection",
             name="sections",
             field=models.ManyToManyField(
                 blank=True, related_name="collections", to="api.collectionsection"
             ),
+        ),
+        migrations.AlterField(
+            model_name="note",
+            name="link",
+            field=models.URLField(blank=True, default="", max_length=2000),
+        ),
+        migrations.AlterField(
+            model_name="wishitem",
+            name="link",
+            field=models.URLField(blank=True, default="", max_length=2000),
         ),
     ]

@@ -51,7 +51,7 @@ class WishItem(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     currency = models.CharField(
         max_length=8,
@@ -78,7 +78,7 @@ class Note(models.Model):
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     is_favorite = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -143,7 +143,7 @@ class CollectionItem(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE, related_name="items")
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     currency = models.CharField(
         max_length=8,
@@ -171,7 +171,7 @@ class Event(models.Model):
     )
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(max_length=2000, blank=True, default="")
     notify_enabled = models.BooleanField(default=False)
     repeat_yearly = models.BooleanField(default=False)
     date = models.DateField()
