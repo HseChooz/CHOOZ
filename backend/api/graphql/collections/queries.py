@@ -23,7 +23,7 @@ class CollectionsQuery:
         search: Annotated[Optional[str], strawberry.argument(name="search")] = None,
     ) -> list[CollectionSectionType]:
         require_user(info)
-        collections = list(collections_qs().order_by("section", "sort_order", "id"))
+        collections = list(collections_qs().order_by("sort_order", "id"))
         return to_collection_sections(
             collections,
             request=info.context.request,
@@ -37,7 +37,7 @@ class CollectionsQuery:
         search: Annotated[Optional[str], strawberry.argument(name="search")] = None,
     ) -> CollectionsHomeType:
         require_user(info)
-        collections = list(collections_qs().order_by("section", "sort_order", "id"))
+        collections = list(collections_qs().order_by("sort_order", "id"))
         return to_collections_home_type(
             collections,
             request=info.context.request,

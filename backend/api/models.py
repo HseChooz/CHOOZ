@@ -94,17 +94,35 @@ class Note(models.Model):
         return self.title
 
 
+class CollectionSection(models.Model):
+    slug = models.SlugField(max_length=64, unique=True)
+    title = models.CharField(max_length=255)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["sort_order", "id"]
+
+    def __str__(self):
+        return self.title
+
+
 class Collection(models.Model):
     class Section(models.TextChoices):
         FOR_YOU = "for_you", "Подборки для вас"
         BY_CHARACTER = "by_character", "Подборки по характеру"
         EDITORIAL = "editorial", "Редакторские подборки"
+        GIFT_IDEAS = "gift_ideas", "Идеи подарков"
 
     slug = models.SlugField(max_length=128, unique=True)
     title = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     section = models.CharField(max_length=32, choices=Section.choices)
+    sections = models.ManyToManyField(
+        CollectionSection,
+        related_name="collections",
+        blank=True,
+    )
     badge = models.CharField(max_length=64, blank=True)
     cover_image_url = models.URLField(blank=True, default="")
     tags = models.JSONField(default=list, blank=True)
