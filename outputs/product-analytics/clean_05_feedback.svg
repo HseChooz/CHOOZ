@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="815" height="128" viewBox="0 0 815 128">
+
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<rect x="0" y="0" width="245" height="128" rx="18" fill="#0058FF"/>
+<text x="22" y="48" fill="#FFFFFF" font-size="42px" text-anchor="start">17</text>
+<text x="22" y="78" fill="#FFFFFF" font-size="16px" text-anchor="start">респондентов</text>
+<text x="22" y="104" fill="#FFFFFF" font-size="13px" text-anchor="start">опрос пользователей</text>
+<rect x="285" y="0" width="245" height="128" rx="18" fill="#FF5101"/>
+<text x="307" y="48" fill="#FFFFFF" font-size="42px" text-anchor="start">≈65</text>
+<text x="307" y="78" fill="#FFFFFF" font-size="16px" text-anchor="start">NPS</text>
+<text x="307" y="104" fill="#FFFFFF" font-size="13px" text-anchor="start">первичная оценка</text>
+<rect x="570" y="0" width="245" height="128" rx="18" fill="#0058FF"/>
+<text x="592" y="48" fill="#FFFFFF" font-size="42px" text-anchor="start">5.0</text>
+<text x="592" y="78" fill="#FFFFFF" font-size="16px" text-anchor="start">App Store</text>
+<text x="592" y="104" fill="#FFFFFF" font-size="13px" text-anchor="start">оценка приложения</text>
+</svg>

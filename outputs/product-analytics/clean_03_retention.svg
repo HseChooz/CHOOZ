@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="410" viewBox="0 0 760 410">
+
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<line x1="50" y1="330.0" x2="700" y2="330.0" stroke="#FFFFFF55" stroke-width="1"/>
+<line x1="50" y1="270.0" x2="700" y2="270.0" stroke="#FFFFFF55" stroke-width="1"/>
+<line x1="50" y1="210.0" x2="700" y2="210.0" stroke="#FFFFFF55" stroke-width="1"/>
+<line x1="50" y1="150.0" x2="700" y2="150.0" stroke="#FFFFFF55" stroke-width="1"/>
+<line x1="50" y1="90.0" x2="700" y2="90.0" stroke="#FFFFFF55" stroke-width="1"/>
+<line x1="50" y1="30.0" x2="700" y2="30.0" stroke="#FFFFFF55" stroke-width="1"/>
+<rect x="140" y="80.4" width="94" height="249.6" rx="10" fill="#0058FF"/>
+<text x="187.0" y="62.400000000000006" fill="#FFFFFF" font-size="24px" text-anchor="middle">20.8%</text>
+<text x="187.0" y="372" fill="#FFFFFF" font-size="23px" text-anchor="middle">Day 1</text>
+<rect x="330" y="301.2" width="94" height="28.8" rx="10" fill="#FF5101"/>
+<text x="377.0" y="283.2" fill="#FFFFFF" font-size="24px" text-anchor="middle">2.4%</text>
+<text x="377.0" y="372" fill="#FFFFFF" font-size="23px" text-anchor="middle">Day 7</text>
+<rect x="520" y="265.2" width="94" height="64.8" rx="10" fill="#0058FF"/>
+<text x="567.0" y="247.2" fill="#FFFFFF" font-size="24px" text-anchor="middle">5.4%</text>
+<text x="567.0" y="372" fill="#FFFFFF" font-size="23px" text-anchor="middle">Day 14</text>
+</svg>

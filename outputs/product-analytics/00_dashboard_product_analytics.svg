@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1080" viewBox="0 0 1600 1080">
+<rect width="1600" height="1080" fill="#222222"/>
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<text x="60" y="74" fill="#FFFFFF" font-size="46px" text-anchor="start">Сводка продуктовой аналитики</text>
+<text x="60" y="116" fill="#FFFFFF" font-size="25px" text-anchor="start">Период: 15.02.2026-14.05.2026</text>
+<rect x="60" y="154" width="280" height="108" rx="18" fill="#0058FF"/>
+<text x="82" y="202" fill="#FFFFFF" font-size="42px" text-anchor="start">57</text>
+<text x="82" y="232" fill="#FFFFFF" font-size="16px" text-anchor="start">пользователей</text>
+
+<rect x="370" y="154" width="280" height="108" rx="18" fill="#FF5101"/>
+<text x="392" y="202" fill="#FFFFFF" font-size="42px" text-anchor="start">56</text>
+<text x="392" y="232" fill="#FFFFFF" font-size="16px" text-anchor="start">установок</text>
+
+<rect x="680" y="154" width="280" height="108" rx="18" fill="#0058FF"/>
+<text x="702" y="202" fill="#FFFFFF" font-size="42px" text-anchor="start">98%</text>
+<text x="702" y="232" fill="#FFFFFF" font-size="16px" text-anchor="start">из Telegram</text>
+
+<rect x="990" y="154" width="280" height="108" rx="18" fill="#FF5101"/>
+<text x="1012" y="202" fill="#FFFFFF" font-size="42px" text-anchor="start">≈65</text>
+<text x="1012" y="232" fill="#FFFFFF" font-size="16px" text-anchor="start">NPS</text>
+
+<rect x="1300" y="154" width="240" height="108" rx="18" fill="#0058FF"/>
+<text x="1322" y="202" fill="#FFFFFF" font-size="42px" text-anchor="start">5.0</text>
+<text x="1322" y="232" fill="#FFFFFF" font-size="16px" text-anchor="start">App Store</text>
+
+<text x="72" y="326" fill="#FFFFFF" font-size="25px" text-anchor="start">Привлечение</text>
+<circle cx="245" cy="470" r="82" fill="none" stroke="#FF5101" stroke-width="42"/>
+<circle cx="245" cy="470" r="82" fill="none" stroke="#0058FF" stroke-width="42" stroke-dasharray="504.91677128495155 10.304423903774477" transform="rotate(-90 245 470)"/>
+<text x="245" y="462" fill="#FFFFFF" font-size="46px" text-anchor="middle">98%</text>
+<text x="245" y="500" fill="#FFFFFF" font-size="20px" text-anchor="middle">Telegram</text>
+<text x="245" y="528" fill="#FFFFFF" font-size="15px" text-anchor="middle"></text>
+<text x="245" y="628" fill="#FFFFFF" font-size="20px" text-anchor="middle">98% установок</text>
+<text x="470" y="326" fill="#FFFFFF" font-size="25px" text-anchor="start">Активация</text>
+<rect x="470" y="374" width="430.0" height="46" rx="8" fill="#0058FF"/>
+<text x="490" y="405" fill="#FFFFFF" font-size="18px" text-anchor="start">Пользователи: 57</text>
+<rect x="470" y="444" width="294.2105263157895" height="46" rx="8" fill="#FF5101"/>
+<text x="490" y="475" fill="#FFFFFF" font-size="18px" text-anchor="start">Onboarding: 39</text>
+<rect x="470" y="514" width="211.2280701754386" height="46" rx="8" fill="#0058FF"/>
+<text x="490" y="545" fill="#FFFFFF" font-size="18px" text-anchor="start">Авторизация: 28</text>
+<text x="1055" y="326" fill="#FFFFFF" font-size="25px" text-anchor="start">Retention</text>
+<rect x="1055" y="418.56" width="84" height="141.44" rx="8" fill="#0058FF"/>
+<text x="1097" y="598" fill="#FFFFFF" font-size="16px" text-anchor="middle">Day 1</text>
+<text x="1097" y="406.56" fill="#FFFFFF" font-size="18px" text-anchor="middle">20.8%</text>
+<rect x="1205" y="543.68" width="84" height="16.32" rx="8" fill="#FF5101"/>
+<text x="1247" y="598" fill="#FFFFFF" font-size="16px" text-anchor="middle">Day 7</text>
+<text x="1247" y="531.68" fill="#FFFFFF" font-size="18px" text-anchor="middle">2.4%</text>
+<rect x="1355" y="523.28" width="84" height="36.720000000000006" rx="8" fill="#0058FF"/>
+<text x="1397" y="598" fill="#FFFFFF" font-size="16px" text-anchor="middle">Day 14</text>
+<text x="1397" y="511.28" fill="#FFFFFF" font-size="18px" text-anchor="middle">5.4%</text>
+<text x="72" y="658" fill="#FFFFFF" font-size="25px" text-anchor="start">Использование функций</text>
+<text x="72" y="728" fill="#FFFFFF" font-size="19px" text-anchor="start">Календарь</text>
+<rect x="255" y="700" width="349.09090909090907" height="36" rx="7" fill="#0058FF"/>
+<text x="680" y="727" fill="#FFFFFF" font-size="20px" text-anchor="start">48</text>
+<text x="72" y="780" fill="#FFFFFF" font-size="19px" text-anchor="start">Вишлист</text>
+<rect x="255" y="752" width="152.72727272727272" height="36" rx="7" fill="#FF5101"/>
+<text x="680" y="779" fill="#FFFFFF" font-size="20px" text-anchor="start">21</text>
+<text x="72" y="832" fill="#FFFFFF" font-size="19px" text-anchor="start">Уведомления</text>
+<rect x="255" y="804" width="43.63636363636363" height="36" rx="7" fill="#0058FF"/>
+<text x="680" y="831" fill="#FFFFFF" font-size="20px" text-anchor="start">6</text>
+<text x="860" y="658" fill="#FFFFFF" font-size="25px" text-anchor="start">Канал и обратная связь</text>
+<rect x="860" y="700" width="220" height="122" rx="18" fill="#0058FF"/>
+<text x="882" y="748" fill="#FFFFFF" font-size="42px" text-anchor="start">105</text>
+<text x="882" y="778" fill="#FFFFFF" font-size="16px" text-anchor="start">подписчиков</text>
+<text x="882" y="804" fill="#FFFFFF" font-size="13px" text-anchor="start">+15 за неделю</text>
+<rect x="1110" y="700" width="220" height="122" rx="18" fill="#FF5101"/>
+<text x="1132" y="748" fill="#FFFFFF" font-size="42px" text-anchor="start">161</text>
+<text x="1132" y="778" fill="#FFFFFF" font-size="16px" text-anchor="start">просмотр постов</text>
+
+<rect x="860" y="850" width="220" height="122" rx="18" fill="#0058FF"/>
+<text x="882" y="898" fill="#FFFFFF" font-size="42px" text-anchor="start">17</text>
+<text x="882" y="928" fill="#FFFFFF" font-size="16px" text-anchor="start">опрос</text>
+<text x="882" y="954" fill="#FFFFFF" font-size="13px" text-anchor="start">респондентов</text>
+<rect x="1110" y="850" width="220" height="122" rx="18" fill="#FF5101"/>
+<text x="1132" y="898" fill="#FFFFFF" font-size="42px" text-anchor="start">10,5%</text>
+<text x="1132" y="928" fill="#FFFFFF" font-size="16px" text-anchor="start">уведомления</text>
+<text x="1132" y="954" fill="#FFFFFF" font-size="13px" text-anchor="start">включили</text>
+<text x="60" y="1032" fill="#FFFFFF" font-size="22px" text-anchor="start">Вывод: есть органический интерес; точки роста - авторизация, удержание и включение уведомлений.</text>
+</svg>

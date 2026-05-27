@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640">
+<rect width="1000" height="640" fill="#222222"/>
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<text x="60" y="78" fill="#FFFFFF" font-size="36px" text-anchor="start">Воронка активации</text>
+<polygon points="120.0,158 880.0,158 848.0,240 152.0,240" fill="#0058FF"/>
+<text x="500" y="194" fill="#FFFFFF" font-size="25px" text-anchor="middle">Пользователи: 57</text>
+<text x="500" y="224" fill="#FFFFFF" font-size="18px" text-anchor="middle">100%</text>
+<polygon points="240.0,296 760.0,296 728.0,378 272.0,378" fill="#FF5101"/>
+<text x="500" y="332" fill="#FFFFFF" font-size="25px" text-anchor="middle">Завершили onboarding: 39</text>
+<text x="500" y="362" fill="#FFFFFF" font-size="18px" text-anchor="middle">68%</text>
+<polygon points="313.33333333333337,434 686.6666666666667,434 654.6666666666667,516 345.33333333333337,516" fill="#0058FF"/>
+<text x="500" y="470" fill="#FFFFFF" font-size="25px" text-anchor="middle">Прошли авторизацию: 28</text>
+<text x="500" y="500" fill="#FFFFFF" font-size="18px" text-anchor="middle">49%</text>
+<text x="60" y="570" fill="#FFFFFF" font-size="21px" text-anchor="start">Точка роста: авторизация отсекает часть пользователей после onboarding.</text>
+</svg>

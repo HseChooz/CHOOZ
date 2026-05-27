@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
+<rect width="1000" height="600" fill="#222222"/>
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<text x="60" y="78" fill="#FFFFFF" font-size="36px" text-anchor="start">Использование функций</text>
+<text x="60" y="208" fill="#FFFFFF" font-size="24px" text-anchor="start">Календарь</text>
+<rect x="300" y="170" width="628.3636363636364" height="62" rx="10" fill="#0058FF"/>
+<text x="948.3636363636364" y="210" fill="#FFFFFF" font-size="21px" text-anchor="start">48 · 1.6 на пользователя</text>
+<text x="60" y="336" fill="#FFFFFF" font-size="24px" text-anchor="start">Вишлист</text>
+<rect x="300" y="298" width="274.90909090909093" height="62" rx="10" fill="#FF5101"/>
+<text x="594.909090909091" y="338" fill="#FFFFFF" font-size="21px" text-anchor="start">21 · 0.7 на пользователя</text>
+<text x="60" y="464" fill="#FFFFFF" font-size="24px" text-anchor="start">Уведомления</text>
+<rect x="300" y="426" width="78.54545454545455" height="62" rx="10" fill="#0058FF"/>
+<text x="398.54545454545456" y="466" fill="#FFFFFF" font-size="21px" text-anchor="start">6 · 10.5% пользователей</text>
+</svg>

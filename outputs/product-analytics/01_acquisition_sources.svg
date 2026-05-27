@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+<rect width="1000" height="620" fill="#222222"/>
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<text x="60" y="78" fill="#FFFFFF" font-size="36px" text-anchor="start">Источники установок</text>
+<circle cx="390" cy="285" r="120" fill="none" stroke="#FF5101" stroke-width="42"/>
+<circle cx="390" cy="285" r="120" fill="none" stroke="#0058FF" stroke-width="42" stroke-dasharray="738.9025921243193 15.079644737230979" transform="rotate(-90 390 285)"/>
+<text x="390" y="277" fill="#FFFFFF" font-size="46px" text-anchor="middle">98%</text>
+<text x="390" y="315" fill="#FFFFFF" font-size="20px" text-anchor="middle">Telegram / органика</text>
+<text x="390" y="343" fill="#FFFFFF" font-size="15px" text-anchor="middle">основной канал привлечения</text>
+<rect x="700" y="166" width="230" height="128" rx="18" fill="#0058FF"/>
+<text x="722" y="214" fill="#FFFFFF" font-size="42px" text-anchor="start">105</text>
+<text x="722" y="244" fill="#FFFFFF" font-size="16px" text-anchor="start">подписчиков</text>
+<text x="722" y="270" fill="#FFFFFF" font-size="13px" text-anchor="start">+15 за неделю</text>
+<rect x="700" y="326" width="230" height="128" rx="18" fill="#FF5101"/>
+<text x="722" y="374" fill="#FFFFFF" font-size="42px" text-anchor="start">161</text>
+<text x="722" y="404" fill="#FFFFFF" font-size="16px" text-anchor="start">просмотр постов</text>
+
+<text x="60" y="548" fill="#FFFFFF" font-size="21px" text-anchor="start">Вывод: почти все установки пришли из Telegram / органики.</text>
+</svg>

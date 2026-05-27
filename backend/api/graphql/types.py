@@ -43,6 +43,12 @@ class UserWishItemsResult:
 
 
 @strawberry.type
+class WishlistShareLinkType:
+    url: str
+    is_enabled: bool = strawberry.field(name="isEnabled")
+
+
+@strawberry.type
 class EventType:
     id: strawberry.ID
     title: str

@@ -5,7 +5,13 @@ enum ProfileNavigationDestination {
 }
 
 @MainActor
-final class ProfileRouter {
+protocol ProfileRouting: AnyObject {
+    func routeTo(destination: ProfileNavigationDestination)
+    func presentShareSheet(items: [Any])
+}
+
+@MainActor
+final class ProfileRouter: ProfileRouting {
     
     // MARK: - Init
     

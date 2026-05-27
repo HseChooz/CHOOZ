@@ -1,0 +1,23 @@
+Backend technology icons for CHOOZ presentation
+Generated assets: raw SVG/PNG, white SVG/PNG, color SVG/PNG.
+
+Python: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/python.svg
+Django: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/django.svg
+Django ORM: generated text badge
+Strawberry GraphQL: generated text badge
+GraphQL: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/graphql.svg
+PostgreSQL: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/postgresql.svg
+SimpleJWT: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/jsonwebtokens.svg
+Yandex ID: generated text badge
+Sign in with Apple: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/apple.svg
+S3 Storage: generated text badge
+MinIO: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/minio.svg
+boto3: generated text badge
+Docker: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/docker.svg
+Docker Compose: generated text badge
+Gunicorn: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/gunicorn.svg
+Uvicorn: generated text badge
+pytest: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/pytest.svg
+pytest-django: generated text badge
+Ruff: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/ruff.svg
+uv: https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/uv.svg

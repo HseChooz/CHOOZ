@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520">
+<rect width="1000" height="520" fill="#222222"/>
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<text x="60" y="78" fill="#FFFFFF" font-size="36px" text-anchor="start">Обратная связь</text>
+<rect x="80" y="160" width="260" height="150" rx="18" fill="#0058FF"/>
+<text x="102" y="208" fill="#FFFFFF" font-size="42px" text-anchor="start">17</text>
+<text x="102" y="238" fill="#FFFFFF" font-size="16px" text-anchor="start">респондентов</text>
+<text x="102" y="264" fill="#FFFFFF" font-size="13px" text-anchor="start">опрос пользователей</text>
+<rect x="380" y="160" width="260" height="150" rx="18" fill="#FF5101"/>
+<text x="402" y="208" fill="#FFFFFF" font-size="42px" text-anchor="start">≈65</text>
+<text x="402" y="238" fill="#FFFFFF" font-size="16px" text-anchor="start">NPS</text>
+<text x="402" y="264" fill="#FFFFFF" font-size="13px" text-anchor="start">первичная оценка</text>
+<rect x="680" y="160" width="260" height="150" rx="18" fill="#0058FF"/>
+<text x="702" y="208" fill="#FFFFFF" font-size="42px" text-anchor="start">5.0</text>
+<text x="702" y="238" fill="#FFFFFF" font-size="16px" text-anchor="start">App Store</text>
+<text x="702" y="264" fill="#FFFFFF" font-size="13px" text-anchor="start">оценка приложения</text>
+<text x="80" y="405" fill="#FFFFFF" font-size="21px" text-anchor="start">Вывод: первые отзывы подтверждают интерес к MVP, но выборка пока небольшая.</text>
+</svg>

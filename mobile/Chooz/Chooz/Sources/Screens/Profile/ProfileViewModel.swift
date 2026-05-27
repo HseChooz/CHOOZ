@@ -8,15 +8,17 @@ final class ProfileViewModel {
     // MARK: - Init
     
     init(
-        router: ProfileRouter,
-        profileService: ProfileService,
+        router: any ProfileRouting,
+        profileService: any ProfileServicing,
         wishlistViewModel: WishlistViewModel,
-        analytics: ProfileAnalytics
+        analytics: any ProfileAnalyticsTracking,
+        toastManager: any ToastPresenting
     ) {
         self.router = router
         self.profileService = profileService
         self.wishlistViewModel = wishlistViewModel
         self.analytics = analytics
+        self.toastManager = toastManager
     }
     
     // MARK: - Internal Properties
@@ -55,15 +57,28 @@ final class ProfileViewModel {
     }
     
     func shareProfile() {
-        guard let userId = profileService.userId else { return }
-        guard let url = URL(string: "chooz://profile/\(userId)") else { return }
-        analytics.trackProfileShared(userId: userId)
-        router.presentShareSheet(items: [url])
+        guard shareTask == nil else { return }
+
+        shareTask = Task { @MainActor in
+            defer { shareTask = nil }
+
+            do {
+                let url = try await profileService.prepareWishlistShareLink()
+                if let userId = profileService.userId {
+                    analytics.trackProfileShared(userId: userId)
+                }
+                router.presentShareSheet(items: [url])
+            } catch {
+                toastManager.showError("Не удалось поделиться вишлистом", subtitle: nil)
+            }
+        }
     }
     
     // MARK: - Private Properties
     
-    private let router: ProfileRouter
-    private let profileService: ProfileService
-    private let analytics: ProfileAnalytics
+    private let router: any ProfileRouting
+    private let profileService: any ProfileServicing
+    private let analytics: any ProfileAnalyticsTracking
+    private let toastManager: any ToastPresenting
+    private var shareTask: Task<Void, Never>?
 }

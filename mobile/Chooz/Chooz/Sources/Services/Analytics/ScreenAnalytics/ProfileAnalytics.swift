@@ -1,6 +1,14 @@
 import Foundation
 
-final class ProfileAnalytics {
+@MainActor
+protocol ProfileAnalyticsTracking: AnyObject {
+    func trackScreenViewed()
+    func trackProfileShared(userId: String)
+    func setUserProfileID(_ profileID: String)
+}
+
+@MainActor
+final class ProfileAnalytics: ProfileAnalyticsTracking {
     
     // MARK: - Init
     

@@ -1,0 +1,27 @@
+query MyWishlistShareLink {
+  myWishlistShareLink {
+    url
+    isEnabled
+  }
+}
+
+mutation PrepareWishlistShareLink {
+  prepareWishlistShareLink {
+    url
+    isEnabled
+  }
+}
+
+mutation DisableWishlistShareLink {
+  disableWishlistShareLink {
+    url
+    isEnabled
+  }
+}
+
+mutation RegenerateWishlistShareLink {
+  regenerateWishlistShareLink {
+    url
+    isEnabled
+  }
+}
