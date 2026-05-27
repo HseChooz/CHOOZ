@@ -11,13 +11,15 @@ final class ProfileFactory {
         profileService: ProfileService,
         wishlistViewModel: WishlistViewModel,
         settingsFactory: SettingsFactory,
-        analyticsService: AnalyticsService
+        analyticsService: AnalyticsService,
+        toastManager: ToastManager
     ) {
         self.appRouter = appRouter
         self.profileService = profileService
         self.wishlistViewModel = wishlistViewModel
         self.settingsFactory = settingsFactory
         self.analyticsService = analyticsService
+        self.toastManager = toastManager
     }
     
     // MARK: - Internal Methods
@@ -29,7 +31,8 @@ final class ProfileFactory {
             router: router,
             profileService: profileService,
             wishlistViewModel: wishlistViewModel,
-            analytics: analytics
+            analytics: analytics,
+            toastManager: toastManager
         )
         let view = ProfileView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: view)
@@ -49,4 +52,5 @@ final class ProfileFactory {
     private let wishlistViewModel: WishlistViewModel
     private let settingsFactory: SettingsFactory
     private let analyticsService: AnalyticsService
+    private let toastManager: ToastManager
 }

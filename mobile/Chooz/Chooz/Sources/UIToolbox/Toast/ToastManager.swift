@@ -1,7 +1,12 @@
 import SwiftUI
 
 @MainActor
-final class ToastManager {
+protocol ToastPresenting: AnyObject {
+    func showError(_ title: String, subtitle: String?)
+}
+
+@MainActor
+final class ToastManager: ToastPresenting {
     
     // MARK: - Internal Methods
     

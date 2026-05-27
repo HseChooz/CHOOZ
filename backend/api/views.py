@@ -2,7 +2,13 @@ import mimetypes
 from pathlib import Path
 
 from django.http import FileResponse, Http404, HttpResponseRedirect
+from django.shortcuts import render
 
+from api.wishlist_share import (
+    get_public_share_by_token,
+    get_public_wishlist_items,
+    public_display_name,
+)
 from api.yandex_disk import (
     decode_yandex_public_asset_token,
     is_yandex_public_asset_url,
@@ -44,3 +50,45 @@ def yandex_public_asset(_request, token: str) -> HttpResponseRedirect:
     response = HttpResponseRedirect(download_url)
     response["Cache-Control"] = "public, max-age=300"
     return response
+
+
+def public_wishlist(request, token: str):
+    share_link = get_public_share_by_token(token)
+    if share_link is None:
+        return render(
+            request,
+            "wishlist/public.html",
+            {
+                "page_title": "Вишлист не найден",
+                "status_title": "Ссылка недоступна",
+                "status_description": "Проверь ссылку и попробуй открыть ее еще раз.",
+                "is_error": True,
+            },
+            status=404,
+        )
+
+    if not share_link.is_enabled:
+        return render(
+            request,
+            "wishlist/public.html",
+            {
+                "page_title": "Публичный доступ отключен",
+                "status_title": "Ссылка отключена",
+                "status_description": "Владелец вишлиста закрыл публичный доступ к этой странице.",
+                "is_error": True,
+            },
+            status=410,
+        )
+
+    items = get_public_wishlist_items(share_link.owner, request=request)
+    return render(
+        request,
+        "wishlist/public.html",
+        {
+            "page_title": f"Вишлист {public_display_name(share_link.owner)}",
+            "owner_name": public_display_name(share_link.owner),
+            "items": items,
+            "is_empty": len(items) == 0,
+            "is_error": False,
+        },
+    )

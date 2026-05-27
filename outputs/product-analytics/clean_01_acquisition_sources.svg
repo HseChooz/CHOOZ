@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470">
+
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<circle cx="240" cy="230" r="130" fill="none" stroke="#FF5101" stroke-width="42"/>
+<circle cx="240" cy="230" r="130" fill="none" stroke="#0058FF" stroke-width="42" stroke-dasharray="800.4778081346792 16.33628179866696" transform="rotate(-90 240 230)"/>
+<text x="240" y="222" fill="#FFFFFF" font-size="46px" text-anchor="middle">98%</text>
+<text x="240" y="260" fill="#FFFFFF" font-size="20px" text-anchor="middle">Telegram</text>
+<text x="240" y="288" fill="#FFFFFF" font-size="15px" text-anchor="middle"></text>
+<text x="240" y="410" fill="#FFFFFF" font-size="24px" text-anchor="middle">98% установок</text>
+<rect x="470" y="110" width="250" height="130" rx="18" fill="#0058FF"/>
+<text x="492" y="158" fill="#FFFFFF" font-size="42px" text-anchor="start">105</text>
+<text x="492" y="188" fill="#FFFFFF" font-size="16px" text-anchor="start">подписчиков</text>
+<text x="492" y="214" fill="#FFFFFF" font-size="13px" text-anchor="start">+15 за неделю</text>
+<rect x="470" y="280" width="250" height="130" rx="18" fill="#FF5101"/>
+<text x="492" y="328" fill="#FFFFFF" font-size="42px" text-anchor="start">161</text>
+<text x="492" y="358" fill="#FFFFFF" font-size="16px" text-anchor="start">просмотр постов</text>
+
+</svg>

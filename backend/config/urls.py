@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.http import JsonResponse
 from django.urls import include, path
 
+from api.views import public_wishlist
+
 
 def health(_request):
     return JsonResponse({"status": "ok"})
@@ -28,4 +30,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("health/", health),
+    path("wishlist/<str:token>/", public_wishlist, name="public-wishlist"),
 ]

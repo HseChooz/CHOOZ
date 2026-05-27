@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="350" viewBox="0 0 660 350">
+
+<style>
+  text {
+    font-family: 'Vela Sans GX', 'Inter', 'Arial', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+  }
+  .small { font-size: 18px; }
+  .tiny { font-size: 14px; }
+  .title { font-size: 46px; }
+  .subtitle { font-size: 28px; }
+  .metric { font-size: 44px; }
+  .label { font-size: 16px; }
+</style>
+<polygon points="20.0,30 640.0,30 606.0,102 54.0,102" fill="#0058FF"/>
+<text x="330" y="62" fill="#FFFFFF" font-size="25px" text-anchor="middle">Пользователи: 57</text>
+<text x="330" y="89" fill="#FFFFFF" font-size="18px" text-anchor="middle">100%</text>
+<polygon points="117.89473684210526,142 542.1052631578948,142 508.1052631578948,214 151.89473684210526,214" fill="#FF5101"/>
+<text x="330" y="174" fill="#FFFFFF" font-size="25px" text-anchor="middle">Onboarding: 39</text>
+<text x="330" y="201" fill="#FFFFFF" font-size="18px" text-anchor="middle">68%</text>
+<polygon points="177.71929824561403,254 482.280701754386,254 448.280701754386,326 211.71929824561403,326" fill="#0058FF"/>
+<text x="330" y="286" fill="#FFFFFF" font-size="25px" text-anchor="middle">Авторизация: 28</text>
+<text x="330" y="313" fill="#FFFFFF" font-size="18px" text-anchor="middle">49%</text>
+</svg>

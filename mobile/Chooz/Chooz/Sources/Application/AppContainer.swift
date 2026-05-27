@@ -179,7 +179,8 @@ final class AppContainer: AppScreenFactory {
         profileService: profileService,
         wishlistViewModel: wishlistViewModel,
         settingsFactory: settingsFactory,
-        analyticsService: analyticsService
+        analyticsService: analyticsService,
+        toastManager: toastManager
     )
 
     lazy var calendarFactory: CalendarFactory = CalendarFactory(

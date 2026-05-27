@@ -7,6 +7,7 @@ type Query {
   wishItems: [WishItemType!]!
   wishItem(id: ID!): WishItemType!
   userWishItems(userId: ID!): UserWishItemsResult
+  myWishlistShareLink: WishlistShareLinkType
   notes(onlyFavorites: Boolean! = false): [NoteType!]!
   note(id: ID!): NoteType!
   events(onlyUpcoming: Boolean! = true, fromDate: Date = null, limit: Int! = 200): [EventType!]!
@@ -33,6 +34,9 @@ type Mutation {
   deleteMyAccount: Boolean!
   createWishItemImageUpload(id: ID!, filename: String!, contentType: String! = "image/png"): PresignedUpload!
   attachWishItemImage(id: ID!, key: String!): WishItemType!
+  prepareWishlistShareLink: WishlistShareLinkType!
+  disableWishlistShareLink: WishlistShareLinkType!
+  regenerateWishlistShareLink: WishlistShareLinkType!
   addCollectionItemToWishlist(collectionItemId: ID!): CollectionItemType!
   removeCollectionItemFromWishlist(collectionItemId: ID!): CollectionItemType!
 }
@@ -95,6 +99,11 @@ type TokenPair {
 type UserWishItemsResult {
   user: UserType!
   items: [WishItemType!]!
+}
+
+type WishlistShareLinkType {
+  url: String!
+  isEnabled: Boolean!
 }
 
 type CollectionPreviewType {
