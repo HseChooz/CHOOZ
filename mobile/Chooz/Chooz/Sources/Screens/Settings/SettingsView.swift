@@ -4,8 +4,9 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
     
     // MARK: - Init
     
-    init(viewModel: ViewModel) {
+    init(viewModel: ViewModel, wishlistShareModel: WishlistShareSettingsModel) {
         self.viewModel = viewModel
+        self.wishlistShareModel = wishlistShareModel
     }
     
     // MARK: - Body
@@ -16,6 +17,7 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
             
             VStack(spacing: 64.0) {
                 appSettingsSectionView
+                wishlistShareSectionView
                 
                 accountSettingsSectionView
             }
@@ -25,6 +27,7 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
         .background(Colors.Common.white)
         .onAppear {
             viewModel.onAppear()
+            wishlistShareModel.onAppear()
         }
         .confirmationDialog(
             isPresented: $isLogoutConfirmationPresented,
@@ -44,14 +47,25 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
                 viewModel.deleteAccount()
             }
         )
+        .confirmationDialog(
+            isPresented: $isRegenerateWishlistLinkConfirmationPresented,
+            title: "Обновить публичную ссылку?",
+            description: "Старая ссылка перестанет открывать вишлист.",
+            primaryAction: ConfirmationDialogAction(title: "Оставить текущую") {},
+            destructiveAction: ConfirmationDialogAction(title: "Обновить") {
+                wishlistShareModel.regenerateLinkAction()
+            }
+        )
     }
     
     // MARK: - Private Properties
     
     private let viewModel: ViewModel
+    @Bindable private var wishlistShareModel: WishlistShareSettingsModel
     
     @State private var isLogoutConfirmationPresented: Bool = false
     @State private var isDeleteAccountConfirmationPresented: Bool = false
+    @State private var isRegenerateWishlistLinkConfirmationPresented: Bool = false
     
     // MARK: - Private Views
     
@@ -81,6 +95,70 @@ struct SettingsView<ViewModel: SettingsViewModel>: View {
                     hasChevron: false,
                     action: {
                         viewModel.openDebugPanel()
+                    }
+                )
+            }
+        }
+    }
+
+    private var wishlistShareSectionView: some View {
+        VStack(alignment: .leading, spacing: 16.0) {
+            SettingsToggleView(
+                title: "Публичный вишлист",
+                isOn: Binding(
+                    get: { wishlistShareModel.isEnabled },
+                    set: { wishlistShareModel.isEnabled = $0 }
+                )
+            )
+            .padding(.vertical, 16.0)
+
+            VStack(alignment: .leading, spacing: 8.0) {
+                Text(wishlistShareModel.statusText)
+                    .font(.velaSans(size: 14.0, weight: .semiBold))
+                    .foregroundStyle(Colors.Neutral.grey600)
+
+                if let linkText = wishlistShareModel.linkText {
+                    Text(linkText)
+                        .font(.velaSans(size: 13.0, weight: .semiBold))
+                        .foregroundStyle(Colors.Blue.blue500)
+                        .lineLimit(2)
+                        .textSelection(.enabled)
+                }
+            }
+
+            dashDivider
+
+            VStack(spacing: 16.0) {
+                SettingsButtonView(
+                    title: "Поделиться ссылкой",
+                    style: .neutral,
+                    hasChevron: false,
+                    systemIconName: "square.and.arrow.up",
+                    isDisabled: !wishlistShareModel.canShare,
+                    action: {
+                        wishlistShareModel.shareLinkAction()
+                    }
+                )
+
+                SettingsButtonView(
+                    title: "Скопировать ссылку",
+                    style: .neutral,
+                    hasChevron: false,
+                    systemIconName: "doc.on.doc",
+                    isDisabled: !wishlistShareModel.canCopy,
+                    action: {
+                        wishlistShareModel.copyLinkAction()
+                    }
+                )
+
+                SettingsButtonView(
+                    title: "Обновить ссылку",
+                    style: .neutral,
+                    hasChevron: false,
+                    systemIconName: "arrow.clockwise",
+                    isDisabled: !wishlistShareModel.canRegenerate,
+                    action: {
+                        isRegenerateWishlistLinkConfirmationPresented = true
                     }
                 )
             }

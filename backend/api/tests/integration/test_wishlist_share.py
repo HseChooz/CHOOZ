@@ -230,6 +230,8 @@ def test_public_wishlist_page_renders_items(client, user):
     assert "12,990" in content or "12990" in content
     assert "RUB" in content
     assert "/api/assets/collections/shared/funny-cat.png" in content
+    assert 'meta name="robots" content="noindex, nofollow"' in content
+    assert 'property="og:title"' in content
     assert user.email not in content
     assert "accessToken" not in content
     assert "refreshToken" not in content

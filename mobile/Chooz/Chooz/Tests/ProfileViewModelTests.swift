@@ -130,8 +130,27 @@ private final class ProfileServiceSpy: ProfileServicing {
 
     func fetchMe() async {}
 
+    func fetchWishlistShareLink() async throws -> WishlistShareLinkState? {
+        nil
+    }
+
     func prepareWishlistShareLink() async throws -> URL {
         try prepareShareLinkResult.get()
+    }
+
+    func prepareWishlistShareLinkState() async throws -> WishlistShareLinkState {
+        WishlistShareLinkState(
+            url: try prepareShareLinkResult.get(),
+            isEnabled: true
+        )
+    }
+
+    func disableWishlistShareLink() async throws -> WishlistShareLinkState {
+        throw ProfileViewModelTestError.failed
+    }
+
+    func regenerateWishlistShareLink() async throws -> WishlistShareLinkState {
+        throw ProfileViewModelTestError.failed
     }
 
     private let prepareShareLinkResult: Result<URL, Error>
@@ -153,6 +172,10 @@ private final class ProfileAnalyticsSpy: ProfileAnalyticsTracking {
 @MainActor
 private final class ToastSpy: ToastPresenting {
     private(set) var errors: [(String, String?)] = []
+
+    func showSuccessBlue(_ title: String) {}
+
+    func showInfo(_ title: String, subtitle: String?) {}
 
     func showError(_ title: String, subtitle: String?) {
         errors.append((title, subtitle))

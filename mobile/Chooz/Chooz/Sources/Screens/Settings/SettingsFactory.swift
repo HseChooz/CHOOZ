@@ -16,13 +16,22 @@ final class SettingsFactory {
         let router = SettingsRouter(deps: deps)
         let analytics = SettingsAnalytics(analyticsService: deps.analyticsService)
         let calendarInteractor = CalendarInteractor(calendarService: deps.calendarService)
+        let wishlistShareModel = WishlistShareSettingsModel(
+            profileService: deps.profileService,
+            toastManager: deps.toastManager,
+            sharePresenter: router,
+            clipboard: ClipboardWriter()
+        )
         let viewModel = SettingsViewModelImpl(
             router: router,
             analytics: analytics,
             calendarInteractor: calendarInteractor,
             deps: deps
         )
-        let view = SettingsView(viewModel: viewModel)
+        let view = SettingsView(
+            viewModel: viewModel,
+            wishlistShareModel: wishlistShareModel
+        )
         let hostingController = UIHostingController(rootView: view)
         
         let appearance = UINavigationBarAppearance()
