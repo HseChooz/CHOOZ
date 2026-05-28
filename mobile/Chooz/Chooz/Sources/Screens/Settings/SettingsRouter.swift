@@ -6,12 +6,17 @@ protocol SettingsRouterDeps {
     var debugPanelFactory: DebugPanelFactory { get }
 }
 
+@MainActor
+protocol SettingsRouting: AnyObject {
+    func routeTo(destination: SettingsDestination)
+}
+
 enum SettingsDestination {
     case debugPanel
 }
 
 @MainActor
-final class SettingsRouter {
+final class SettingsRouter: SettingsRouting, WishlistSharePresenting {
     
     // MARK: - Init
     
@@ -27,6 +32,11 @@ final class SettingsRouter {
             let vc = deps.debugPanelFactory.makeScreen()
             deps.appRouter.push(vc)
         }
+    }
+
+    func presentShareSheet(items: [Any]) {
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        deps.appRouter.present(activityVC)
     }
     
     // MARK: - Private Properties

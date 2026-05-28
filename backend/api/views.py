@@ -81,14 +81,24 @@ def public_wishlist(request, token: str):
         )
 
     items = get_public_wishlist_items(share_link.owner, request=request)
+    owner_name = public_display_name(share_link.owner)
+    items_count = len(items)
+    description = (
+        "Вишлист пока пуст."
+        if items_count == 0
+        else f"Публичный вишлист {owner_name}. Сейчас в списке {items_count} желаний."
+    )
     return render(
         request,
         "wishlist/public.html",
         {
-            "page_title": f"Вишлист {public_display_name(share_link.owner)}",
-            "owner_name": public_display_name(share_link.owner),
+            "page_title": f"Вишлист {owner_name}",
+            "owner_name": owner_name,
             "items": items,
-            "is_empty": len(items) == 0,
+            "items_count": items_count,
+            "share_description": description,
+            "preview_image_url": next((item.image_url for item in items if item.image_url), None),
+            "is_empty": items_count == 0,
             "is_error": False,
         },
     )

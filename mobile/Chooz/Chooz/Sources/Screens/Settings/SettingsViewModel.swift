@@ -54,6 +54,7 @@ final class SettingsViewModelImpl: SettingsViewModel {
     // MARK: - Internal Methods
 
     func onAppear() {
+        analytics.trackScreenViewed()
         applyNotificationsState(deps.userDefaultsService.notificationsEnabled)
         syncNotificationsState()
         updateDebugPanelAvailability()

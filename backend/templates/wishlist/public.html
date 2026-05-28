@@ -4,6 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page_title }}</title>
+    <meta name="robots" content="noindex, nofollow">
+    {% if not is_error %}
+        <meta name="description" content="{{ share_description }}">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ page_title }}">
+        <meta property="og:description" content="{{ share_description }}">
+        <meta property="og:url" content="{{ request.build_absolute_uri }}">
+        {% if preview_image_url %}
+            <meta property="og:image" content="{{ preview_image_url }}">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:image" content="{{ preview_image_url }}">
+        {% else %}
+            <meta name="twitter:card" content="summary">
+        {% endif %}
+        <meta name="twitter:title" content="{{ page_title }}">
+        <meta name="twitter:description" content="{{ share_description }}">
+    {% endif %}
     <style>
         :root {
             color-scheme: light;
@@ -71,6 +88,19 @@
             line-height: 1.5;
         }
 
+        .hero-meta {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+            margin-top: 18px;
+            padding: 0 12px;
+            background: var(--surface-alt);
+            border-radius: 999px;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
         .items {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -99,6 +129,20 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .item-image-empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 24px;
+            color: var(--muted);
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+            text-align: center;
         }
 
         .item-body {
@@ -204,6 +248,15 @@
                 <p class="eyebrow">CHOOZ</p>
                 <h1>{{ owner_name }}</h1>
                 <p class="subtitle">Публичный вишлист. Здесь собраны подарки, которые сейчас хочется получить.</p>
+                <div class="hero-meta">
+                    {% if items_count == 1 %}
+                        1 желание
+                    {% elif items_count >= 2 and items_count <= 4 %}
+                        {{ items_count }} желания
+                    {% else %}
+                        {{ items_count }} желаний
+                    {% endif %}
+                </div>
             </section>
 
             {% if is_empty %}
@@ -218,6 +271,8 @@
                             <div class="item-image">
                                 {% if item.image_url %}
                                     <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                                {% else %}
+                                    <div class="item-image-empty">{{ item.title }}</div>
                                 {% endif %}
                             </div>
                             <div class="item-body">

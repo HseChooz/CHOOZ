@@ -2,6 +2,8 @@ import SwiftUI
 
 @MainActor
 protocol ToastPresenting: AnyObject {
+    func showSuccessBlue(_ title: String)
+    func showInfo(_ title: String, subtitle: String?)
     func showError(_ title: String, subtitle: String?)
 }
 

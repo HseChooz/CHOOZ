@@ -15,11 +15,15 @@ struct SettingsButtonView: View {
         title: String,
         style: Style,
         hasChevron: Bool,
+        systemIconName: String? = nil,
+        isDisabled: Bool = false,
         action: @escaping @MainActor () -> Void = {}
     ) {
         self.title = title
         self.style = style
         self.hasChevron = hasChevron
+        self.systemIconName = systemIconName
+        self.isDisabled = isDisabled
         self.action = action
     }
     
@@ -32,8 +36,6 @@ struct SettingsButtonView: View {
                 HStack(alignment: .center, spacing: .zero) {
                     HStack(spacing: 8.0) {
                         lockIcon
-                            .resizable()
-                            .scaledToFill()
                             .frame(width: 20.0, height: 20.0)
                         
                         Text(title)
@@ -54,6 +56,8 @@ struct SettingsButtonView: View {
             }
         )
         .buttonStyle(ScaleButtonStyle())
+        .disabled(isDisabled)
+        .opacity(isDisabled ? 0.45 : 1.0)
     }
     
     // MARK: - Private Properties
@@ -61,12 +65,27 @@ struct SettingsButtonView: View {
     private let title: String
     private let style: Style
     private let hasChevron: Bool
+    private let systemIconName: String?
+    private let isDisabled: Bool
     private let action: @MainActor () -> Void
     
-    private var lockIcon: Image {
-        switch style {
-        case .neutral: Images.Icons.lock
-        case .red: Images.Icons.lockRed
+    @ViewBuilder
+    private var lockIcon: some View {
+        if let systemIconName {
+            Image(systemName: systemIconName)
+                .font(.system(size: 18.0, weight: .semibold))
+                .foregroundStyle(titleColor)
+        } else {
+            switch style {
+            case .neutral:
+                Images.Icons.lock
+                    .resizable()
+                    .scaledToFit()
+            case .red:
+                Images.Icons.lockRed
+                    .resizable()
+                    .scaledToFit()
+            }
         }
     }
     
