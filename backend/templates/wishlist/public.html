@@ -51,6 +51,8 @@
         html,
         body {
             min-height: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         body {
@@ -82,20 +84,29 @@
         }
 
         .page {
-            min-height: 100vh;
-            padding: 24px 16px 140px;
+            height: 100dvh;
+            overflow: hidden;
         }
 
         .shell {
             width: min(100%, var(--page-width));
             margin: 0 auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
         }
 
         .profile {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 18px;
+            flex-shrink: 0;
+            padding: 24px 16px 0;
+            background: var(--bg);
+            position: relative;
+            z-index: 3;
         }
 
         .brand-avatar {
@@ -127,7 +138,46 @@
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 18px 14px;
-            margin-top: 38px;
+        }
+
+        .content-shell {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .content-shell::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            height: 38px;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(245, 245, 247, 1) 0%,
+                    rgba(245, 245, 247, 0.88) 28%,
+                    rgba(245, 245, 247, 0.42) 62%,
+                    rgba(245, 245, 247, 0) 100%
+                );
+            filter: blur(10px);
+        }
+
+        .wishlist-scroll {
+            height: 100%;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 18px 16px 148px;
+            scrollbar-width: none;
+        }
+
+        .wishlist-scroll::-webkit-scrollbar {
+            display: none;
         }
 
         .wishlist-card {
@@ -254,10 +304,27 @@
             right: 0;
             bottom: 0;
             z-index: 20;
-            padding: 12px 16px var(--safe-bottom);
-            background: rgba(255, 255, 255, 0.98);
-            border-top: 1px solid rgba(32, 33, 38, 0.06);
-            box-shadow: 0 -10px 26px rgba(22, 24, 29, 0.06);
+            padding: 20px 16px var(--safe-bottom);
+            background: transparent;
+        }
+
+        .cta-bar::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: -68px;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(245, 245, 247, 0) 0%,
+                    rgba(245, 245, 247, 0.64) 34%,
+                    rgba(245, 245, 247, 0.92) 68%,
+                    rgba(245, 245, 247, 1) 100%
+                );
+            filter: blur(12px);
         }
 
         .cta-bar-inner {
@@ -266,6 +333,8 @@
             gap: 10px;
             width: min(100%, 420px);
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .cta-bar-inner.has-secondary {
@@ -297,13 +366,38 @@
         }
 
         .cta-button-primary {
+            position: relative;
             background: #2c2c2e;
             color: #ffffff;
-            box-shadow: 0 12px 28px rgba(32, 33, 38, 0.14);
+            box-shadow:
+                0 18px 34px rgba(44, 44, 46, 0.16),
+                0 1px 0 rgba(255, 255, 255, 0.08) inset;
+        }
+
+        .cta-button-primary::before {
+            content: "";
+            position: absolute;
+            left: 12%;
+            right: 12%;
+            bottom: -10px;
+            height: 26px;
+            border-radius: 999px;
+            background: rgba(44, 44, 46, 0.18);
+            filter: blur(18px);
+            opacity: 0.95;
+            z-index: -1;
+            transition:
+                opacity 0.2s ease-in-out,
+                transform 0.2s ease-in-out;
         }
 
         .cta-button-primary:hover {
             background: #202126;
+        }
+
+        .cta-button-primary:hover::before {
+            opacity: 1;
+            transform: scale(1.04);
         }
 
         .cta-button-secondary {
@@ -511,23 +605,26 @@
             color: var(--muted);
         }
 
-        @media (min-width: 680px) {
-            .page {
-                padding: 36px 28px 164px;
-            }
+        .modal-description[hidden] {
+            display: none;
+        }
 
+        @media (min-width: 680px) {
             .profile {
-                padding-top: 8px;
+                padding: 36px 28px 0;
             }
 
             .profile-name {
                 margin-top: 22px;
             }
 
+            .wishlist-scroll {
+                padding: 22px 28px 172px;
+            }
+
             .wishlist-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
                 gap: 22px 18px;
-                margin-top: 44px;
             }
 
             .modal {
@@ -572,6 +669,7 @@
             .cta-bar {
                 padding-left: 28px;
                 padding-right: 28px;
+                padding-top: 26px;
             }
 
             .cta-bar-inner.has-secondary {
@@ -581,14 +679,20 @@
         }
 
         @media (min-width: 920px) {
-            .page {
-                padding: 42px 40px 172px;
+            .profile {
+                padding-left: 40px;
+                padding-right: 40px;
             }
 
             .wishlist-grid {
                 grid-template-columns: repeat(5, minmax(0, 1fr));
                 gap: 26px 18px;
-                margin-top: 42px;
+            }
+
+            .wishlist-scroll {
+                padding-left: 40px;
+                padding-right: 40px;
+                padding-bottom: 180px;
             }
 
             .card-title {
@@ -632,47 +736,50 @@
                 </div>
                 <h1 class="profile-name" id="wishlist-owner-name">{{ owner_name }}</h1>
             </section>
-
-            {% if is_empty %}
-                <section class="empty-state">
-                    <div class="status-badge">Пока тихо</div>
-                    <h2>Вишлист пока пуст</h2>
-                    <p>Сюда еще не добавили желания. Загляни позже.</p>
+            <div class="content-shell">
+                <section class="wishlist-scroll" aria-label="Список желаний">
+                    {% if is_empty %}
+                        <div class="empty-state">
+                            <div class="status-badge">Пока тихо</div>
+                            <h2>Вишлист пока пуст</h2>
+                            <p>Сюда еще не добавили желания. Загляни позже.</p>
+                        </div>
+                    {% else %}
+                        <div class="wishlist-grid">
+                            {% for item in items %}
+                                <article
+                                    class="wishlist-card"
+                                    tabindex="0"
+                                    role="button"
+                                    data-item-card
+                                    data-title="{{ item.title }}"
+                                    data-description="{{ item.description|default:'' }}"
+                                    data-image-url="{{ item.image_url|default:'' }}"
+                                    data-link="{{ item.link|default:'' }}"
+                                    data-price="{{ item.price_display|default:'' }}"
+                                    data-currency="{{ item.currency_symbol|default:'' }}"
+                                >
+                                    <div class="card-media">
+                                        {% if item.image_url %}
+                                            <img src="{{ item.image_url }}" alt="{{ item.title }}" loading="lazy">
+                                        {% else %}
+                                            <div class="card-media-empty" aria-hidden="true"></div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <h2 class="card-title">{{ item.title }}</h2>
+                                        <div class="card-price">
+                                            {% if item.price_display %}
+                                                {{ item.price_display }}{% if item.currency_symbol %} {{ item.currency_symbol }}{% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </section>
-            {% else %}
-                <section class="wishlist-grid" aria-label="Список желаний">
-                    {% for item in items %}
-                        <article
-                            class="wishlist-card"
-                            tabindex="0"
-                            role="button"
-                            data-item-card
-                            data-title="{{ item.title }}"
-                            data-description="{{ item.description|default:'' }}"
-                            data-image-url="{{ item.image_url|default:'' }}"
-                            data-link="{{ item.link|default:'' }}"
-                            data-price="{{ item.price_display|default:'' }}"
-                            data-currency="{{ item.currency_symbol|default:'' }}"
-                        >
-                            <div class="card-media">
-                                {% if item.image_url %}
-                                    <img src="{{ item.image_url }}" alt="{{ item.title }}" loading="lazy">
-                                {% else %}
-                                    <div class="card-media-empty" aria-hidden="true"></div>
-                                {% endif %}
-                            </div>
-                            <div class="card-body">
-                                <h2 class="card-title">{{ item.title }}</h2>
-                                <div class="card-price">
-                                    {% if item.price_display %}
-                                        {{ item.price_display }}{% if item.currency_symbol %} {{ item.currency_symbol }}{% endif %}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </article>
-                    {% endfor %}
-                </section>
-            {% endif %}
+            </div>
         {% endif %}
     </div>
 </main>
@@ -782,9 +889,11 @@
                 if (descriptionText.trim()) {
                     description.textContent = descriptionText;
                     description.classList.remove("is-placeholder");
+                    description.hidden = false;
                 } else {
-                    description.textContent = "Описание пока не добавлено.";
-                    description.classList.add("is-placeholder");
+                    description.textContent = "";
+                    description.classList.remove("is-placeholder");
+                    description.hidden = true;
                 }
 
                 if (closeTimeoutId) {
