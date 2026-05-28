@@ -227,11 +227,13 @@ def test_public_wishlist_page_renders_items(client, user):
     assert "Alice Stone" in content
     assert "Collection Lamp" in content
     assert "Warm light for the room" in content
-    assert "12,990" in content or "12990" in content
-    assert "RUB" in content
+    assert "12990.0" in content
+    assert "₽" in content
     assert "/api/assets/collections/shared/funny-cat.png" in content
     assert 'meta name="robots" content="noindex, nofollow"' in content
     assert 'property="og:title"' in content
+    assert "wishlist-count" not in content
+    assert 'class="modal-button' not in content
     assert user.email not in content
     assert "accessToken" not in content
     assert "refreshToken" not in content
