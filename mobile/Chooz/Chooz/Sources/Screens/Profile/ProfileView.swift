@@ -31,6 +31,14 @@ struct ProfileView: View {
         .toolbar {
             toolbarContentView
         }
+        .adaptiveSheet(isPresented: $viewModel.isInsightSheetPresented) {
+            WishlistInsightView(
+                viewModel: WishlistInsightViewModel(
+                    insightService: viewModel.insightService,
+                    items: viewModel.wishlistItems
+                )
+            )
+        }
         .onAppear {
             viewModel.fetchProfile()
         }
@@ -47,13 +55,30 @@ struct ProfileView: View {
     private var toolbarContentView: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             HStack(spacing: 16.0) {
+                aiInsightButtonView
+
                 settingsButtonView
-                
+
                 shareButtonView
             }
         }
     }
     
+    private var aiInsightButtonView: some View {
+        Button(
+            action: viewModel.openAIInsight,
+            label: {
+                Images.Icons.sparkle
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 24.0, height: 24.0)
+            }
+        )
+        .buttonStyle(ScaleButtonStyle())
+        .disabled(!viewModel.isInsightAvailable)
+        .opacity(viewModel.isInsightAvailable ? 1.0 : 0.4)
+    }
+
     private var settingsButtonView: some View {
         Button(
             action: viewModel.openSettings,

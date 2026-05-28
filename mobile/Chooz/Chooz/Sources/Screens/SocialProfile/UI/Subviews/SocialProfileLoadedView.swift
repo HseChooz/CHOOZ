@@ -14,7 +14,11 @@ struct SocialProfileLoadedView: View {
     var body: some View {
         VStack(spacing: 32.0) {
             ProfileHeaderView(model: model.header)
-            
+
+            if !model.isEmpty {
+                aiInsightButtonView
+            }
+
             if model.isEmpty {
                 emptyStateView
             } else {
@@ -41,7 +45,25 @@ struct SocialProfileLoadedView: View {
     private let eventsHandler: SocialProfileLoadedViewEventsHandler
     
     // MARK: - Private Views
-    
+
+    private var aiInsightButtonView: some View {
+        Button(action: eventsHandler.openAIInsight) {
+            HStack(spacing: 8.0) {
+                Images.Icons.sparkle
+                    .font(.system(size: 16.0, weight: .medium))
+
+                Text("AI-анализ интересов")
+                    .font(.velaSans(size: 14.0, weight: .semiBold))
+            }
+            .foregroundStyle(Colors.Common.white)
+            .padding(.horizontal, 20.0)
+            .padding(.vertical, 12.0)
+            .background(Colors.Blue.blue500)
+            .clipShape(RoundedRectangle(cornerRadius: 12.0))
+        }
+        .buttonStyle(ScaleButtonStyle())
+    }
+
     private var emptyStateView: some View {
         ScrollView {
             Text("Вишлист пуст")

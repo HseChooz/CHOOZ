@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SocialProfileView<ViewModel: SocialProfileViewModel>: View {
+struct SocialProfileView<ViewModel: SocialProfileViewModel & Observable>: View {
     
     // MARK: - Init
     
@@ -12,14 +12,23 @@ struct SocialProfileView<ViewModel: SocialProfileViewModel>: View {
     
     var body: some View {
         contentView
+            .adaptiveSheet(isPresented: $viewModel.isInsightSheetPresented) {
+                WishlistInsightView(
+                    viewModel: WishlistInsightViewModel(
+                        insightService: viewModel.insightService,
+                        items: viewModel.insightItems
+                    )
+                )
+            }
             .onAppear {
                 viewModel.requestProfile()
             }
     }
     
     // MARK: - Private Properties
-    
-    private let viewModel: ViewModel
+
+    @Bindable
+    private var viewModel: ViewModel
     
     // MARK: - Private Views
     

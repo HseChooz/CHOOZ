@@ -33,6 +33,7 @@ Pods/
 
 # Tuist
 Derived/
+.derivedData/
 
 # IDE
 .idea/
@@ -45,3 +46,7 @@ Derived/
 .env
 .env.*
 !.env.example
+
+# AI Models
+mobile/Chooz/Chooz/Resources/Models/Qwen*/
+mobile/CoreML-LLM/

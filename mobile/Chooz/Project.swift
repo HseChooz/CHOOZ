@@ -3,7 +3,8 @@ import ProjectDescription
 let project = Project(
     name: "Chooz",
     packages: [
-        .package(url: "https://github.com/apollographql/apollo-ios.git", .upToNextMajor(from: "1.7.0"))
+        .package(url: "https://github.com/apollographql/apollo-ios.git", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/john-rocky/CoreML-LLM", from: "1.9.0")
     ],
     targets: [
         .target(
@@ -11,7 +12,7 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "com.chooz.app",
-            deploymentTargets: .iOS("17.0"),
+            deploymentTargets: .iOS("18.0"),
             infoPlist: .extendingDefault(with: [
                 "CFBundleShortVersionString": .string("$(MARKETING_VERSION)"),
                 "CFBundleVersion": .string("$(CURRENT_PROJECT_VERSION)"),
@@ -69,7 +70,10 @@ let project = Project(
                 ])
             ]),
             sources: ["Chooz/Sources/**"],
-            resources: ["Chooz/Resources/**"],
+            resources: [
+                .glob(pattern: "Chooz/Resources/**", excluding: ["Chooz/Resources/Models/**"]),
+                .folderReference(path: "Chooz/Resources/Models/Qwen2.5-0.5B")
+            ],
             entitlements: .file(path: "Chooz/Chooz.entitlements"),
             scripts: [
                 .pre(
@@ -80,6 +84,7 @@ let project = Project(
             ],
             dependencies: [
                 .package(product: "Apollo"),
+                .package(product: "CoreMLLLM"),
                 .external(name: "AppMetricaCore"),
                 .external(name: "AppMetricaCrashes"),
                 .external(name: "GoogleSignIn"),
@@ -107,7 +112,7 @@ let project = Project(
             destinations: .iOS,
             product: .unitTests,
             bundleId: "dev.tuist.ChoozTests",
-            deploymentTargets: .iOS("17.0"),
+            deploymentTargets: .iOS("18.0"),
             infoPlist: .default,
             sources: ["Chooz/Tests/**"],
             dependencies: [.target(name: "Chooz")]

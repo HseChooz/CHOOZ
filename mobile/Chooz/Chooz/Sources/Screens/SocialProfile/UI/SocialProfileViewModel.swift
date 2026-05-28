@@ -7,7 +7,10 @@ protocol SocialProfileViewModel:
     SocialProfileLoadedViewEventsHandler
 {
     var viewState: SocialProfileViewState { get }
-    
+    var isInsightSheetPresented: Bool { get set }
+    var insightService: WishlistInsightService { get }
+    var insightItems: [WishlistItem] { get }
+
     func requestProfile()
     func retryProfileRequest()
 }
@@ -17,20 +20,28 @@ protocol SocialProfileViewModel:
 final class SocialProfileViewModelImpl: SocialProfileViewModel {
     
     // MARK: - Internal Properties
-    
+
     private(set) var viewState: SocialProfileViewState = .loading
-    
+    var isInsightSheetPresented: Bool = false
+    let insightService: WishlistInsightService
+
+    var insightItems: [WishlistItem] {
+        sourcePayload?.items ?? []
+    }
+
     // MARK: - Init
-    
+
     init(
         interactor: SocialProfileInteractor,
         router: any SocialProfileRouter,
         viewStateBuilder: SocialProfileViewStateBuilder,
+        insightService: WishlistInsightService,
         analytics: SocialProfileAnalytics
     ) {
         self.interactor = interactor
         self.router = router
         self.viewStateBuilder = viewStateBuilder
+        self.insightService = insightService
         self.analytics = analytics
     }
     
@@ -61,8 +72,13 @@ final class SocialProfileViewModelImpl: SocialProfileViewModel {
         guard let item = sourcePayload?.items.first(where: { $0.id == id }) else {
             return
         }
-        
+
         router.routeTo(destination: .wishlistItem(item))
+    }
+
+    func openAIInsight() {
+        insightService.reset()
+        isInsightSheetPresented = true
     }
     
     // MARK: - Private Properties

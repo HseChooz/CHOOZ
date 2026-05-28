@@ -10,12 +10,14 @@ final class ProfileFactory {
         appRouter: AppRouter,
         profileService: ProfileService,
         wishlistViewModel: WishlistViewModel,
+        insightService: WishlistInsightService,
         settingsFactory: SettingsFactory,
         analyticsService: AnalyticsService
     ) {
         self.appRouter = appRouter
         self.profileService = profileService
         self.wishlistViewModel = wishlistViewModel
+        self.insightService = insightService
         self.settingsFactory = settingsFactory
         self.analyticsService = analyticsService
     }
@@ -29,6 +31,7 @@ final class ProfileFactory {
             router: router,
             profileService: profileService,
             wishlistViewModel: wishlistViewModel,
+            insightService: insightService,
             analytics: analytics
         )
         let view = ProfileView(viewModel: viewModel)
@@ -47,6 +50,7 @@ final class ProfileFactory {
     private let appRouter: AppRouter
     private let profileService: ProfileService
     private let wishlistViewModel: WishlistViewModel
+    private let insightService: WishlistInsightService
     private let settingsFactory: SettingsFactory
     private let analyticsService: AnalyticsService
 }

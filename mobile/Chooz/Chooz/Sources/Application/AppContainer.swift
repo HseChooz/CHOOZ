@@ -75,6 +75,11 @@ final class AppContainer: AppScreenFactory {
         appRouter: appRouter
     )
 
+    lazy var insightCacheService: InsightCacheService = InsightCacheService()
+    lazy var wishlistInsightService: WishlistInsightService = WishlistInsightService(
+        cacheService: insightCacheService
+    )
+
     lazy var socialProfileService: SocialProfileService = SocialProfileServiceImpl(
         wishlistService: wishlistService
     )
@@ -149,7 +154,8 @@ final class AppContainer: AppScreenFactory {
         deps: SocialProfileFactoryDepsImpl(
             socialProfileService: socialProfileService,
             appRouter: appRouter,
-            analyticsService: analyticsService
+            analyticsService: analyticsService,
+            insightService: wishlistInsightService
         )
     )
     
@@ -178,6 +184,7 @@ final class AppContainer: AppScreenFactory {
         appRouter: appRouter,
         profileService: profileService,
         wishlistViewModel: wishlistViewModel,
+        insightService: wishlistInsightService,
         settingsFactory: settingsFactory,
         analyticsService: analyticsService
     )
