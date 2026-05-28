@@ -28,10 +28,18 @@ MINIO_BUCKET = os.getenv("MINIO_BUCKET", "")
 MINIO_REGION = os.getenv("MINIO_REGION", "us-east-1")
 MINIO_USE_SSL = os.getenv("MINIO_USE_SSL", "0") == "1"
 MINIO_PUBLIC_BASE_URL = os.getenv("MINIO_PUBLIC_BASE_URL", "")
+APP_STORE_URL = os.getenv("APP_STORE_URL", "")
+APPLE_APP_SITE_ASSOCIATION_APP_ID = os.getenv(
+    "APPLE_APP_SITE_ASSOCIATION_APP_ID", ""
+)
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()]
+# CSRF_TRUSTED_ORIGINS = [
+#     o.strip()
+#     for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+#     if o.strip()
+# ]
 
 
 # Application definition

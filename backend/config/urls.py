@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.http import JsonResponse
 from django.urls import include, path
 
-from api.views import public_wishlist
+from api.views import apple_app_site_association, public_wishlist
 
 
 def health(_request):
@@ -30,5 +30,15 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("health/", health),
+    path(
+        ".well-known/apple-app-site-association",
+        apple_app_site_association,
+        name="apple-app-site-association-well-known",
+    ),
+    path(
+        "apple-app-site-association",
+        apple_app_site_association,
+        name="apple-app-site-association",
+    ),
     path("wishlist/<str:token>/", public_wishlist, name="public-wishlist"),
 ]

@@ -49,6 +49,11 @@ class WishlistShareLinkType:
 
 
 @strawberry.type
+class WishlistShareTargetType:
+    user_id: strawberry.ID = strawberry.field(name="userId")
+
+
+@strawberry.type
 class EventType:
     id: strawberry.ID
     title: str

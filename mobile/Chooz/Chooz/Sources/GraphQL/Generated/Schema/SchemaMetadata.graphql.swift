@@ -45,6 +45,7 @@ extension ChoozAPI {
       case "UserWishItemsResult": return ChoozAPI.Objects.UserWishItemsResult
       case "WishItemType": return ChoozAPI.Objects.WishItemType
       case "WishlistShareLinkType": return ChoozAPI.Objects.WishlistShareLinkType
+      case "WishlistShareTargetType": return ChoozAPI.Objects.WishlistShareTargetType
       default: return nil
       }
     }

@@ -79,10 +79,16 @@ final class AppContainer: AppScreenFactory {
         wishlistService: wishlistService
     )
 
+    lazy var wishlistShareRouteResolver: WishlistShareRouteResolving = WishlistShareRouteResolver(
+        apolloClient: apolloClient
+    )
+
     lazy var deepLinkService: DeepLinkService = DeepLinkService(
         appRouter: appRouter,
         socialProfileFactory: socialProfileFactory,
-        tokenStorage: tokenStorage
+        tokenStorage: tokenStorage,
+        wishlistShareRouteResolver: wishlistShareRouteResolver,
+        toastManager: toastManager
     )
 
     lazy var mainTabService: MainTabService = MainTabServiceImpl(apolloClient: apolloClient)

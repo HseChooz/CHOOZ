@@ -1,7 +1,11 @@
 import Foundation
 import Security
 
-final class TokenStorage {
+protocol AuthStateProviding: AnyObject {
+    var isLoggedIn: Bool { get }
+}
+
+final class TokenStorage: AuthStateProviding {
     
     // MARK: - Internal Properties
     

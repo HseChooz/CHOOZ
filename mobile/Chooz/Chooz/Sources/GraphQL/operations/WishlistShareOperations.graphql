@@ -5,6 +5,12 @@ query MyWishlistShareLink {
   }
 }
 
+query WishlistShareTarget($token: String!) {
+  wishlistShareTarget(token: $token) {
+    userId
+  }
+}
+
 mutation PrepareWishlistShareLink {
   prepareWishlistShareLink {
     url
