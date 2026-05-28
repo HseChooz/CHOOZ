@@ -20,6 +20,10 @@ def build_share_url(request, token: str) -> str:
     return request.build_absolute_uri(build_share_path(token))
 
 
+def build_app_open_url(token: str) -> str:
+    return f"chooz://wishlist/{token}"
+
+
 def get_or_create_share_link(user) -> WishlistShareLink:
     share_link, created = WishlistShareLink.objects.get_or_create(
         owner=user,

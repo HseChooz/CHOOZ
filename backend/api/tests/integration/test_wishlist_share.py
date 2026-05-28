@@ -1,4 +1,5 @@
 import pytest
+from django.test import override_settings
 
 from api.models import Collection, CollectionItem, WishItem, WishlistShareLink
 
@@ -61,6 +62,94 @@ def test_prepare_wishlist_share_link_creates_link(gql, access_token, user):
         "url": f"http://testserver/wishlist/{share_link.token}/",
         "isEnabled": True,
     }
+
+
+def test_wishlist_share_target_returns_owner_user_id_for_active_token(
+    gql,
+    access_token,
+    user,
+):
+    WishlistShareLink.objects.create(owner=user, token="public-target", is_enabled=True)
+
+    response = gql(
+        """
+        query WishlistShareTarget($token: String!) {
+          wishlistShareTarget(token: $token) {
+            userId
+          }
+        }
+        """,
+        variables={"token": "public-target"},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert payload["data"]["wishlistShareTarget"] == {"userId": str(user.id)}
+
+
+def test_wishlist_share_target_requires_auth(gql, user):
+    WishlistShareLink.objects.create(owner=user, token="public-target", is_enabled=True)
+
+    response = gql(
+        """
+        query WishlistShareTarget($token: String!) {
+          wishlistShareTarget(token: $token) {
+            userId
+          }
+        }
+        """,
+        variables={"token": "public-target"},
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert payload["data"] is None
+    assert payload["errors"][0]["extensions"]["code"] == "UNAUTHORIZED"
+
+
+def test_wishlist_share_target_returns_not_found_for_unknown_token(gql, access_token):
+    response = gql(
+        """
+        query WishlistShareTarget($token: String!) {
+          wishlistShareTarget(token: $token) {
+            userId
+          }
+        }
+        """,
+        variables={"token": "missing"},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert payload["data"] is None
+    assert payload["errors"][0]["extensions"]["code"] == "WISHLIST_SHARE_NOT_FOUND"
+
+
+def test_wishlist_share_target_returns_disabled_for_disabled_token(
+    gql,
+    access_token,
+    user,
+):
+    WishlistShareLink.objects.create(owner=user, token="disabled-target", is_enabled=False)
+
+    response = gql(
+        """
+        query WishlistShareTarget($token: String!) {
+          wishlistShareTarget(token: $token) {
+            userId
+          }
+        }
+        """,
+        variables={"token": "disabled-target"},
+        token=access_token,
+    )
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert payload["data"] is None
+    assert payload["errors"][0]["extensions"]["code"] == "WISHLIST_SHARE_DISABLED"
 
 
 def test_prepare_wishlist_share_link_reuses_existing_enabled_link(gql, access_token, user):
@@ -232,6 +321,7 @@ def test_public_wishlist_page_renders_items(client, user):
     assert "/api/assets/collections/shared/funny-cat.png" in content
     assert 'meta name="robots" content="noindex, nofollow"' in content
     assert 'property="og:title"' in content
+    assert 'href="chooz://wishlist/public-token"' in content
     assert "wishlist-count" not in content
     assert 'class="modal-button' not in content
     assert user.email not in content
@@ -271,3 +361,44 @@ def test_public_wishlist_page_returns_410_for_disabled_link(client, user):
 
     assert response.status_code == 410
     assert "Ссылка отключена" in content
+
+
+@override_settings(
+    APP_STORE_URL="https://apps.apple.com/app/id1234567890",
+    APPLE_APP_SITE_ASSOCIATION_APP_ID="TEAMID.com.chooz.app",
+)
+def test_public_wishlist_page_renders_install_cta(client, user):
+    share_link = WishlistShareLink.objects.create(owner=user, token="cta-token", is_enabled=True)
+
+    response = client.get(f"/wishlist/{share_link.token}/")
+    content = response.content.decode("utf-8")
+
+    assert response.status_code == 200
+    assert 'href="https://apps.apple.com/app/id1234567890"' in content
+    assert "Установить CHOOZ" in content
+
+
+@override_settings(APPLE_APP_SITE_ASSOCIATION_APP_ID="TEAMID.com.chooz.app")
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/.well-known/apple-app-site-association",
+        "/apple-app-site-association",
+    ],
+)
+def test_apple_app_site_association_endpoints_render_expected_payload(client, path):
+    response = client.get(path)
+    payload = response.json()
+
+    assert response.status_code == 200
+    assert payload == {
+        "applinks": {
+            "apps": [],
+            "details": [
+                {
+                    "appID": "TEAMID.com.chooz.app",
+                    "paths": ["/wishlist/*"],
+                }
+            ],
+        }
+    }

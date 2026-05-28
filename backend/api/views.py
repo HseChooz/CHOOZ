@@ -1,10 +1,12 @@
 import mimetypes
 from pathlib import Path
 
-from django.http import FileResponse, Http404, HttpResponseRedirect
+from django.conf import settings
+from django.http import FileResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 
 from api.wishlist_share import (
+    build_app_open_url,
     get_public_share_by_token,
     get_public_wishlist_items,
     public_display_name,
@@ -16,6 +18,27 @@ from api.yandex_disk import (
 )
 
 HARDCODED_ASSETS_ROOT = (Path(__file__).resolve().parent / "hardcoded_assets").resolve()
+
+
+def apple_app_site_association(_request) -> JsonResponse:
+    details = []
+    if settings.APPLE_APP_SITE_ASSOCIATION_APP_ID:
+        details.append(
+            {
+                "appID": settings.APPLE_APP_SITE_ASSOCIATION_APP_ID,
+                "paths": ["/wishlist/*"],
+            }
+        )
+    response = JsonResponse(
+        {
+            "applinks": {
+                "apps": [],
+                "details": details,
+            }
+        }
+    )
+    response["Cache-Control"] = "public, max-age=3600"
+    return response
 
 
 def hardcoded_asset(_request, asset_path: str) -> FileResponse:
@@ -97,7 +120,10 @@ def public_wishlist(request, token: str):
             "items": items,
             "items_count": items_count,
             "share_description": description,
+            "page_url": request.build_absolute_uri(),
             "preview_image_url": next((item.image_url for item in items if item.image_url), None),
+            "app_open_url": build_app_open_url(share_link.token),
+            "app_store_url": settings.APP_STORE_URL,
             "is_empty": items_count == 0,
             "is_error": False,
         },

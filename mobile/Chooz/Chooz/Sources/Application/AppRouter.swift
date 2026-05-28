@@ -7,7 +7,16 @@ protocol AppScreenFactory: AnyObject {
 }
 
 @MainActor
-final class AppRouter {
+protocol AppRouting: AnyObject {
+    func push(
+        _ viewController: UIViewController,
+        animated: Bool,
+        hideBackButton: Bool
+    )
+}
+
+@MainActor
+final class AppRouter: AppRouting {
 
     // MARK: - Init
 

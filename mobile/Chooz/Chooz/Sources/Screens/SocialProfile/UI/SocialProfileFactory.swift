@@ -2,7 +2,12 @@ import UIKit
 import SwiftUI
 
 @MainActor
-struct SocialProfileFactory {
+protocol SocialProfileScreenBuilding {
+    func makeScreen(userId: String) -> UIViewController
+}
+
+@MainActor
+struct SocialProfileFactory: SocialProfileScreenBuilding {
     
     // MARK: - Init
     

@@ -1,7 +1,8 @@
 import strawberry
 from strawberry.types import Info
 
-from api.graphql.types import WishlistShareLinkType
+from api.graphql.errors import gql_error
+from api.graphql.types import WishlistShareLinkType, WishlistShareTargetType
 from api.graphql.wish_items.service import require_user
 from api.models import WishlistShareLink
 from api.wishlist_share import build_share_url
@@ -30,3 +31,19 @@ class WishlistShareQuery:
             share_link,
             request=info.context.request,
         )
+
+    @strawberry.field(name="wishlistShareTarget")
+    def wishlist_share_target(
+        self,
+        info: Info,
+        token: str,
+    ) -> "WishlistShareTargetType":
+        require_user(info)
+        share_link = WishlistShareLink.objects.select_related("owner").filter(
+            token=token
+        ).first()
+        if share_link is None:
+            gql_error("WISHLIST_SHARE_NOT_FOUND", "Wishlist share link not found")
+        if not share_link.is_enabled:
+            gql_error("WISHLIST_SHARE_DISABLED", "Wishlist share link is disabled")
+        return WishlistShareTargetType(user_id=str(share_link.owner_id))

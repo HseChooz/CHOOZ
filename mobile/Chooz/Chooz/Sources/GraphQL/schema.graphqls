@@ -8,6 +8,7 @@ type Query {
   wishItem(id: ID!): WishItemType!
   userWishItems(userId: ID!): UserWishItemsResult
   myWishlistShareLink: WishlistShareLinkType
+  wishlistShareTarget(token: String!): WishlistShareTargetType!
   notes(onlyFavorites: Boolean! = false): [NoteType!]!
   note(id: ID!): NoteType!
   events(onlyUpcoming: Boolean! = true, fromDate: Date = null, limit: Int! = 200): [EventType!]!
@@ -104,6 +105,10 @@ type UserWishItemsResult {
 type WishlistShareLinkType {
   url: String!
   isEnabled: Boolean!
+}
+
+type WishlistShareTargetType {
+  userId: ID!
 }
 
 type CollectionPreviewType {
