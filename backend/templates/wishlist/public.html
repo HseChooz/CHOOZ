@@ -109,50 +109,10 @@
         }
 
         .brand-mark {
-            position: relative;
-            width: 38px;
-            height: 20px;
-        }
-
-        .brand-mark::before,
-        .brand-mark::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 18px;
-            height: 18px;
-            border-radius: 999px;
-            background: #ffffff;
-        }
-
-        .brand-mark::before {
-            left: 0;
-            transform: rotate(11deg);
-        }
-
-        .brand-mark::after {
-            right: 0;
-            transform: rotate(-11deg);
-        }
-
-        .brand-mark span,
-        .brand-mark i {
-            position: absolute;
-            top: 5px;
-            z-index: 1;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: rgba(32, 33, 38, 0.52);
-        }
-
-        .brand-mark span {
-            left: 12px;
-        }
-
-        .brand-mark i {
-            right: 12px;
-            font-style: normal;
+            display: block;
+            width: 41px;
+            height: auto;
+            filter: brightness(0) invert(1);
         }
 
         .profile-name {
@@ -209,6 +169,12 @@
             gap: 10px;
             text-align: left;
             cursor: pointer;
+            transform: scale(1);
+            transition: transform 0.15s ease-in-out;
+        }
+
+        .wishlist-card:active {
+            transform: scale(0.96);
         }
 
         .wishlist-card:focus-visible,
@@ -321,6 +287,12 @@
             position: fixed;
             inset: 0;
             z-index: 40;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+        }
+
+        .modal.is-visible {
+            opacity: 1;
         }
 
         .modal-backdrop {
@@ -329,6 +301,12 @@
             background: rgba(32, 33, 38, 0.34);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+        }
+
+        .modal.is-visible .modal-backdrop {
+            opacity: 1;
         }
 
         .modal-dialog {
@@ -343,14 +321,32 @@
             background: var(--surface);
             box-shadow: var(--shadow);
             overflow: hidden;
+            transform: translateY(28px) scale(0.98);
+            transform-origin: center bottom;
+            opacity: 0;
+            transition:
+                transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .modal.is-visible .modal-dialog {
+            transform: translateY(0) scale(1);
+            opacity: 1;
         }
 
         .modal-handle {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            z-index: 2;
             width: 46px;
             height: 5px;
-            margin: 12px auto 10px;
+            margin: 0;
             border-radius: 999px;
-            background: rgba(32, 33, 38, 0.12);
+            background: rgba(255, 255, 255, 0.7);
+            transform: translateX(-50%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .modal-close {
@@ -366,6 +362,18 @@
             border-radius: 999px;
             color: rgba(32, 33, 38, 0.72);
             cursor: pointer;
+            transition:
+                transform 0.15s ease-in-out,
+                opacity 0.15s ease-in-out,
+                color 0.15s ease-in-out;
+        }
+
+        .modal-close:active {
+            transform: scale(0.92);
+        }
+
+        .modal-close:hover {
+            color: rgba(32, 33, 38, 0.96);
         }
 
         .modal-close::before {
@@ -409,6 +417,19 @@
             color: #ffffff;
             box-shadow: 0 12px 28px rgba(31, 107, 255, 0.3);
             text-decoration: none;
+            transition:
+                transform 0.15s ease-in-out,
+                background 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out;
+        }
+
+        .modal-link:hover {
+            background: var(--accent-strong);
+            box-shadow: 0 14px 30px rgba(31, 107, 255, 0.34);
+        }
+
+        .modal-link:active {
+            transform: scale(0.94);
         }
 
         .modal-content {
@@ -486,6 +507,8 @@
                 width: min(100%, 540px);
                 max-height: none;
                 border-radius: 34px;
+                transform: scale(0.92);
+                transform-origin: center center;
             }
 
             .modal-handle {
@@ -545,9 +568,9 @@
 <main class="page">
     <div class="shell">
         {% if is_error %}
-            <section class="profile">
-                <div class="brand-avatar" aria-hidden="true">
-                    <div class="brand-mark"><span></span><i></i></div>
+                <section class="profile">
+                    <div class="brand-avatar" aria-hidden="true">
+                    <img class="brand-mark" src="/api/assets/branding/short_logo_v3.png" alt="">
                 </div>
             </section>
             <section class="status">
@@ -558,7 +581,7 @@
         {% else %}
             <section class="profile" aria-labelledby="wishlist-owner-name">
                 <div class="brand-avatar" aria-hidden="true">
-                    <div class="brand-mark"><span></span><i></i></div>
+                    <img class="brand-mark" src="/api/assets/branding/short_logo_v3.png" alt="">
                 </div>
                 <h1 class="profile-name" id="wishlist-owner-name">{{ owner_name }}</h1>
                 <div class="tabs" aria-label="Разделы профиля">
@@ -585,8 +608,8 @@
                             data-description="{{ item.description|default:'' }}"
                             data-image-url="{{ item.image_url|default:'' }}"
                             data-link="{{ item.link|default:'' }}"
-                            data-price="{% if item.price %}{{ item.price|floatformat:'-2' }}{% endif %}"
-                            data-currency="{{ item.currency_label|default:'' }}"
+                            data-price="{{ item.price_display|default:'' }}"
+                            data-currency="{{ item.currency_symbol|default:'' }}"
                         >
                             <div class="card-media">
                                 {% if item.image_url %}
@@ -637,7 +660,9 @@
             const price = document.getElementById("wishlist-modal-price");
             const cards = document.querySelectorAll("[data-item-card]");
             const closeControls = document.querySelectorAll("[data-modal-close]");
+            const animationDuration = 250;
             let lastFocusedCard = null;
+            let closeTimeoutId = null;
 
             if (!modal || !media || !title || !description || !price || cards.length === 0) {
                 return;
@@ -670,12 +695,21 @@
             };
 
             const closeModal = () => {
-                modal.hidden = true;
+                modal.classList.remove("is-visible");
                 modal.setAttribute("aria-hidden", "true");
                 document.body.style.overflow = "";
-                if (lastFocusedCard) {
-                    lastFocusedCard.focus();
+
+                if (closeTimeoutId) {
+                    window.clearTimeout(closeTimeoutId);
                 }
+
+                closeTimeoutId = window.setTimeout(() => {
+                    modal.hidden = true;
+                    closeTimeoutId = null;
+                    if (lastFocusedCard) {
+                        lastFocusedCard.focus();
+                    }
+                }, animationDuration);
             };
 
             const openModal = (card) => {
@@ -699,9 +733,17 @@
                     description.classList.add("is-placeholder");
                 }
 
+                if (closeTimeoutId) {
+                    window.clearTimeout(closeTimeoutId);
+                    closeTimeoutId = null;
+                }
+
                 modal.hidden = false;
                 modal.setAttribute("aria-hidden", "false");
                 document.body.style.overflow = "hidden";
+                window.requestAnimationFrame(() => {
+                    modal.classList.add("is-visible");
+                });
             };
 
             cards.forEach((card) => {
