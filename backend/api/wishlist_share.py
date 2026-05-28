@@ -1,5 +1,6 @@
 import secrets
 from dataclasses import dataclass
+from decimal import Decimal
 
 from django.urls import reverse
 
@@ -73,13 +74,50 @@ def public_display_name(user) -> str:
     return full_name or user.username
 
 
+CURRENCY_SYMBOLS = {
+    "rub": "₽",
+    "usd": "$",
+    "eur": "€",
+    "byn": "Br",
+    "kzt": "₸",
+    "jpy": "¥",
+    "krw": "₩",
+    "try": "₺",
+    "aed": "د.إ",
+    "ils": "₪",
+    "uzs": "сўм",
+    "kgs": "с",
+    "gbp": "£",
+    "chf": "CHF",
+    "uah": "₴",
+    "pln": "zł",
+}
+
+
+def public_currency_symbol(currency: str | None) -> str | None:
+    key = (currency or "").strip().casefold()
+    if not key:
+        return None
+    return CURRENCY_SYMBOLS.get(key)
+
+
+def format_public_price(value) -> str | None:
+    if value is None:
+        return None
+
+    formatted = f"{Decimal(value):.2f}".rstrip("0")
+    if formatted.endswith("."):
+        formatted += "0"
+    return formatted
+
+
 @dataclass(frozen=True)
 class PublicWishlistItem:
     title: str
     description: str
     link: str | None
-    price: object | None
-    currency_label: str | None
+    price_display: str | None
+    currency_symbol: str | None
     image_url: str | None
 
 
@@ -97,8 +135,8 @@ def get_public_wishlist_items(user, *, request=None) -> list[PublicWishlistItem]
                 title=wish_item.title,
                 description=wish_item.description,
                 link=wish_item.link,
-                price=item.price,
-                currency_label=item.get_currency_display() if item.currency else None,
+                price_display=format_public_price(item.price),
+                currency_symbol=public_currency_symbol(item.currency),
                 image_url=wish_item.image_url,
             )
         )
