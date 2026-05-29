@@ -24,7 +24,9 @@ struct SocialProfileFactory {
             interactor: interactor,
             router: router,
             viewStateBuilder: viewStateBuilder,
-            analytics: analytics
+            analytics: analytics,
+            llmService: deps.llmService,
+            analyticsService: deps.analyticsService
         )
         let rootView = SocialProfileView(viewModel: viewModel)
         let vc = UIHostingController(rootView: rootView)

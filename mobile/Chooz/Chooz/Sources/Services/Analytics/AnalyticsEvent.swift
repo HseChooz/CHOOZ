@@ -72,6 +72,13 @@ enum AnalyticsEvent {
     case profileShared(userId: String)
     case profileOpened(source: String)
     
+    // MARK: - AI Insights
+    
+    case aiInsightsOpened(source: String)
+    case aiInsightsGenerated
+    case aiInsightsRegenerated
+    case aiInsightsError
+    
     // MARK: - Screen Views
     
     case screenViewed(Screen)
@@ -148,6 +155,14 @@ enum AnalyticsEvent {
             return "profile_shared"
         case .profileOpened:
             return "profile_opened"
+        case .aiInsightsOpened:
+            return "ai_insights_opened"
+        case .aiInsightsGenerated:
+            return "ai_insights_generated"
+        case .aiInsightsRegenerated:
+            return "ai_insights_regenerated"
+        case .aiInsightsError:
+            return "ai_insights_error"
         case .screenViewed:
             return "screen_viewed"
         }
@@ -230,6 +245,10 @@ enum AnalyticsEvent {
             return ["source": source]
         case .screenViewed(let screen):
             return ["screen": screen.rawValue]
+        case .aiInsightsOpened(let source):
+            return ["source": source]
+        case .aiInsightsGenerated, .aiInsightsRegenerated, .aiInsightsError:
+            return nil
         case .firstLaunch, .appSessionStarted:
             return nil
         }

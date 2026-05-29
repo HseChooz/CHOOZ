@@ -17,4 +17,5 @@ enum Screen: String {
     case collectionItemDetails = "collection_item_details"
     case settings
     case socialProfile = "social_profile"
+    case aiInsights = "ai_insights"
 }

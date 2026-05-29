@@ -15,6 +15,10 @@ struct SocialProfileLoadedView: View {
         VStack(spacing: 32.0) {
             ProfileHeaderView(model: model.header)
             
+            if !model.isEmpty {
+                aiInsightsButtonView
+            }
+            
             if model.isEmpty {
                 emptyStateView
             } else {
@@ -23,6 +27,14 @@ struct SocialProfileLoadedView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(Colors.Common.white)
+        .sheet(isPresented: Binding(
+            get: { eventsHandler.isAIInsightsPresented },
+            set: { eventsHandler.isAIInsightsPresented = $0 }
+        )) {
+            AIInsightsView(viewModel: eventsHandler.makeAIInsightsViewModel())
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
     }
     
     // MARK: - Private Types
@@ -41,6 +53,26 @@ struct SocialProfileLoadedView: View {
     private let eventsHandler: SocialProfileLoadedViewEventsHandler
     
     // MARK: - Private Views
+    
+    private var aiInsightsButtonView: some View {
+        Button(action: { eventsHandler.isAIInsightsPresented = true }) {
+            HStack(spacing: 8.0) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 14.0, weight: .semibold))
+                
+                Text("AI-анализ интересов")
+                    .font(.velaSans(size: 14.0, weight: .semiBold))
+            }
+            .foregroundStyle(Colors.Blue.blue500)
+            .padding(.horizontal, 16.0)
+            .padding(.vertical, 10.0)
+            .background(
+                RoundedRectangle(cornerRadius: 12.0)
+                    .stroke(Colors.Blue.blue500, lineWidth: 1.5)
+            )
+        }
+        .buttonStyle(ScaleButtonStyle())
+    }
     
     private var emptyStateView: some View {
         ScrollView {

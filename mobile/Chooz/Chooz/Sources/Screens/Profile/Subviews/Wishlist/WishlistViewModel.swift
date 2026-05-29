@@ -39,6 +39,10 @@ final class WishlistViewModel {
         return wishes.isEmpty ? .empty : .loaded(wishes)
     }
     
+    var currentWishes: [WishlistItem] {
+        wishlistService.wishes
+    }
+    
     var isWishFormSheetPresented: Bool = false
     var isWishSheetPresented: Bool = false
     var isDeleteConfirmationPresented: Bool = false

@@ -31,6 +31,11 @@ struct ProfileView: View {
         .toolbar {
             toolbarContentView
         }
+        .sheet(isPresented: $viewModel.isAIInsightsPresented) {
+            AIInsightsView(viewModel: viewModel.makeAIInsightsViewModel())
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
         .onAppear {
             viewModel.fetchProfile()
         }
@@ -47,11 +52,26 @@ struct ProfileView: View {
     private var toolbarContentView: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             HStack(spacing: 16.0) {
+                aiButtonView
+                
                 settingsButtonView
                 
                 shareButtonView
             }
         }
+    }
+    
+    private var aiButtonView: some View {
+        Button(
+            action: viewModel.openAIInsights,
+            label: {
+                Image(systemName: "sparkles")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 24.0, height: 24.0)
+            }
+        )
+        .buttonStyle(ScaleButtonStyle())
     }
     
     private var settingsButtonView: some View {

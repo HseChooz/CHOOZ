@@ -22,6 +22,7 @@ final class AppContainer: AppScreenFactory {
     lazy var userDefaultsService: UserDefaultsService = UserDefaultsService()
     lazy var toastManager: ToastManager = ToastManager()
     lazy var analyticsService: AnalyticsService = AnalyticsService()
+    lazy var llmService: LLMService = LLMService()
     lazy var profileService: ProfileService = ProfileService(apolloClient: apolloClient)
     lazy var wishlistService: WishlistService = WishlistService(apolloClient: apolloClient)
     lazy var calendarService: CalendarService = CalendarService(apolloClient: apolloClient)
@@ -149,7 +150,8 @@ final class AppContainer: AppScreenFactory {
         deps: SocialProfileFactoryDepsImpl(
             socialProfileService: socialProfileService,
             appRouter: appRouter,
-            analyticsService: analyticsService
+            analyticsService: analyticsService,
+            llmService: llmService
         )
     )
     
@@ -179,7 +181,8 @@ final class AppContainer: AppScreenFactory {
         profileService: profileService,
         wishlistViewModel: wishlistViewModel,
         settingsFactory: settingsFactory,
-        analyticsService: analyticsService
+        analyticsService: analyticsService,
+        llmService: llmService
     )
 
     lazy var calendarFactory: CalendarFactory = CalendarFactory(

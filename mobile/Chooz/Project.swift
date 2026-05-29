@@ -11,7 +11,7 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "com.chooz.app",
-            deploymentTargets: .iOS("17.0"),
+            deploymentTargets: .iOS("26.0"),
             infoPlist: .extendingDefault(with: [
                 "CFBundleShortVersionString": .string("$(MARKETING_VERSION)"),
                 "CFBundleVersion": .string("$(CURRENT_PROJECT_VERSION)"),
@@ -107,7 +107,7 @@ let project = Project(
             destinations: .iOS,
             product: .unitTests,
             bundleId: "dev.tuist.ChoozTests",
-            deploymentTargets: .iOS("17.0"),
+            deploymentTargets: .iOS("26.0"),
             infoPlist: .default,
             sources: ["Chooz/Tests/**"],
             dependencies: [.target(name: "Chooz")]

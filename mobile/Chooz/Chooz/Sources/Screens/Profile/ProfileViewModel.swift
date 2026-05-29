@@ -11,12 +11,16 @@ final class ProfileViewModel {
         router: ProfileRouter,
         profileService: ProfileService,
         wishlistViewModel: WishlistViewModel,
-        analytics: ProfileAnalytics
+        analytics: ProfileAnalytics,
+        llmService: LLMService,
+        analyticsService: AnalyticsService
     ) {
         self.router = router
         self.profileService = profileService
         self.wishlistViewModel = wishlistViewModel
         self.analytics = analytics
+        self.llmService = llmService
+        self.analyticsService = analyticsService
     }
     
     // MARK: - Internal Properties
@@ -32,6 +36,7 @@ final class ProfileViewModel {
     let wishlistViewModel: WishlistViewModel
     
     var selectedSegment: ProfileSegment = .wishlist
+    var isAIInsightsPresented: Bool = false
     
     private var isDataLoaded: Bool = false
     
@@ -61,9 +66,28 @@ final class ProfileViewModel {
         router.presentShareSheet(items: [url])
     }
     
+    func openAIInsights() {
+        isAIInsightsPresented = true
+    }
+    
+    func makeAIInsightsViewModel() -> AIInsightsViewModel {
+        let userName = [profileService.firstName, profileService.lastName]
+            .compactMap { $0 }
+            .joined(separator: " ")
+        let aiAnalytics = AIInsightsAnalytics(analyticsService: analyticsService, source: "profile")
+        return AIInsightsViewModel(
+            llmService: llmService,
+            items: wishlistViewModel.currentWishes,
+            userName: userName.isEmpty ? nil : userName,
+            analytics: aiAnalytics
+        )
+    }
+    
     // MARK: - Private Properties
     
     private let router: ProfileRouter
     private let profileService: ProfileService
     private let analytics: ProfileAnalytics
+    private let llmService: LLMService
+    private let analyticsService: AnalyticsService
 }
