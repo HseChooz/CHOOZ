@@ -8,6 +8,12 @@
     <meta name="theme-color" content="#f5f5f7">
     {% if not is_error %}
         <meta name="description" content="{{ share_description }}">
+        {% if app_store_app_id %}
+            <meta
+                name="apple-itunes-app"
+                content="app-id={{ app_store_app_id }}{% if app_open_url %}, app-argument={{ app_open_url }}{% endif %}"
+            >
+        {% endif %}
         <meta property="og:type" content="website">
         <meta property="og:title" content="{{ page_title }}">
         <meta property="og:description" content="{{ share_description }}">
@@ -787,12 +793,71 @@
 {% if not is_error %}
         <div class="cta-bar" aria-label="Действия для вишлиста">
             <div class="cta-bar-inner{% if app_store_url %} has-secondary{% endif %}">
-                <a class="cta-button cta-button-primary" href="{{ app_open_url }}">Открыть в приложении</a>
+                <a
+                    class="cta-button cta-button-primary"
+                    href="{{ app_open_url }}"
+                    data-open-in-app
+                    data-app-store-url="{{ app_store_url|default:'' }}"
+                >Открыть в приложении</a>
                 {% if app_store_url %}
                     <a class="cta-button cta-button-secondary" href="{{ app_store_url }}" target="_blank" rel="noopener noreferrer">Установить CHOOZ</a>
                 {% endif %}
         </div>
     </div>
+{% endif %}
+
+{% if not is_error %}
+    <script>
+        (function () {
+            const openInAppLink = document.querySelector("[data-open-in-app]");
+
+            if (!openInAppLink) {
+                return;
+            }
+
+            const appStoreUrl = openInAppLink.dataset.appStoreUrl;
+            if (!appStoreUrl) {
+                return;
+            }
+
+            openInAppLink.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                let isResolved = false;
+                let fallbackTimeoutId = null;
+
+                const clearFallback = () => {
+                    isResolved = true;
+                    if (fallbackTimeoutId !== null) {
+                        window.clearTimeout(fallbackTimeoutId);
+                        fallbackTimeoutId = null;
+                    }
+                    document.removeEventListener("visibilitychange", handleVisibilityChange);
+                    window.removeEventListener("pagehide", clearFallback);
+                    window.removeEventListener("blur", clearFallback);
+                };
+
+                const handleVisibilityChange = () => {
+                    if (document.hidden) {
+                        clearFallback();
+                    }
+                };
+
+                document.addEventListener("visibilitychange", handleVisibilityChange);
+                window.addEventListener("pagehide", clearFallback, { once: true });
+                window.addEventListener("blur", clearFallback, { once: true });
+
+                fallbackTimeoutId = window.setTimeout(() => {
+                    if (isResolved || document.hidden) {
+                        return;
+                    }
+                    window.location.assign(appStoreUrl);
+                }, 1200);
+
+                window.location.assign(openInAppLink.href);
+            });
+        })();
+    </script>
 {% endif %}
 
 {% if not is_error and not is_empty %}

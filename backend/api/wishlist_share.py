@@ -1,3 +1,4 @@
+import re
 import secrets
 from dataclasses import dataclass
 from decimal import Decimal
@@ -6,6 +7,8 @@ from django.urls import reverse
 
 from api.graphql.wish_items.service import to_wish_item_type
 from api.models import WishItem, WishlistShareLink
+
+DEFAULT_APP_STORE_URL = "https://apps.apple.com/kz/app/chooz/id6760219704"
 
 
 def _generate_token() -> str:
@@ -22,6 +25,20 @@ def build_share_url(request, token: str) -> str:
 
 def build_app_open_url(token: str) -> str:
     return f"chooz://wishlist/{token}"
+
+
+def resolve_app_store_url(configured_url: str | None) -> str:
+    return (configured_url or "").strip() or DEFAULT_APP_STORE_URL
+
+
+def extract_app_store_app_id(app_store_url: str | None) -> str | None:
+    if not app_store_url:
+        return None
+
+    match = re.search(r"/id(\d+)", app_store_url)
+    if not match:
+        return None
+    return match.group(1)
 
 
 def get_or_create_share_link(user) -> WishlistShareLink:
