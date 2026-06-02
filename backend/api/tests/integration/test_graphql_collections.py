@@ -79,7 +79,7 @@ def test_collections_home_returns_sections_from_spreadsheet_seed(gql, access_tok
     assert sections_by_key["for_you"]["collections"][0]["coverImageUrl"].startswith(
         "http://testserver/api/assets/yandex-public/"
     )
-    assert sections_by_key["editorial"]["collections"][0]["slug"] == "anna"
+    assert sections_by_key["editorial"]["collections"][0]["slug"] == "egor"
     assert "romantic" in {
         collection["slug"]
         for collection in sections_by_key["gift_ideas"]["collections"]
