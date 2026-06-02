@@ -320,8 +320,12 @@ def test_public_wishlist_page_renders_items(client, user):
     assert "₽" in content
     assert "/api/assets/collections/shared/funny-cat.png" in content
     assert 'meta name="robots" content="noindex, nofollow"' in content
+    assert 'name="apple-itunes-app"' in content
+    assert 'content="app-id=6760219704, app-argument=chooz://wishlist/public-token"' in content
     assert 'property="og:title"' in content
     assert 'href="chooz://wishlist/public-token"' in content
+    assert 'data-app-store-url="https://apps.apple.com/kz/app/chooz/id6760219704"' in content
+    assert 'href="https://apps.apple.com/kz/app/chooz/id6760219704"' in content
     assert "wishlist-count" not in content
     assert 'class="modal-button' not in content
     assert user.email not in content
@@ -375,6 +379,8 @@ def test_public_wishlist_page_renders_install_cta(client, user):
 
     assert response.status_code == 200
     assert 'href="https://apps.apple.com/app/id1234567890"' in content
+    assert 'data-app-store-url="https://apps.apple.com/app/id1234567890"' in content
+    assert 'content="app-id=1234567890, app-argument=chooz://wishlist/cta-token"' in content
     assert "Установить CHOOZ" in content
 
 

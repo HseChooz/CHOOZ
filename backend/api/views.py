@@ -7,9 +7,11 @@ from django.shortcuts import render
 
 from api.wishlist_share import (
     build_app_open_url,
+    extract_app_store_app_id,
     get_public_share_by_token,
     get_public_wishlist_items,
     public_display_name,
+    resolve_app_store_url,
 )
 from api.yandex_disk import (
     decode_yandex_public_asset_token,
@@ -106,6 +108,7 @@ def public_wishlist(request, token: str):
     items = get_public_wishlist_items(share_link.owner, request=request)
     owner_name = public_display_name(share_link.owner)
     items_count = len(items)
+    app_store_url = resolve_app_store_url(settings.APP_STORE_URL)
     description = (
         "Вишлист пока пуст."
         if items_count == 0
@@ -123,7 +126,8 @@ def public_wishlist(request, token: str):
             "page_url": request.build_absolute_uri(),
             "preview_image_url": next((item.image_url for item in items if item.image_url), None),
             "app_open_url": build_app_open_url(share_link.token),
-            "app_store_url": settings.APP_STORE_URL,
+            "app_store_url": app_store_url,
+            "app_store_app_id": extract_app_store_app_id(app_store_url),
             "is_empty": items_count == 0,
             "is_error": False,
         },
