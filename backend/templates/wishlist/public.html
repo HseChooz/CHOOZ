@@ -47,7 +47,6 @@
             --radius: 28px;
             --radius-small: 20px;
             --page-width: 1200px;
-            --safe-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
         }
 
         * {
@@ -115,6 +114,15 @@
             z-index: 3;
         }
 
+        .profile-actions {
+            position: absolute;
+            top: 22px;
+            right: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .brand-avatar {
             position: relative;
             display: grid;
@@ -138,6 +146,47 @@
             font-weight: 800;
             line-height: 1.05;
             text-align: center;
+        }
+
+        .app-store-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.74);
+            border: 1px solid rgba(32, 33, 38, 0.06);
+            box-shadow:
+                0 10px 24px rgba(22, 24, 29, 0.08),
+                0 1px 0 rgba(255, 255, 255, 0.42) inset;
+            color: rgba(32, 33, 38, 0.7);
+            text-decoration: none;
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            transition:
+                transform 0.15s ease-in-out,
+                color 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out,
+                background 0.2s ease-in-out;
+        }
+
+        .app-store-cta:hover {
+            color: rgba(32, 33, 38, 0.94);
+            background: rgba(255, 255, 255, 0.86);
+            box-shadow:
+                0 12px 28px rgba(22, 24, 29, 0.1),
+                0 1px 0 rgba(255, 255, 255, 0.48) inset;
+        }
+
+        .app-store-cta:active {
+            transform: scale(0.94);
+        }
+
+        .app-store-cta svg {
+            width: 24px;
+            height: 24px;
+            display: block;
         }
 
         .wishlist-grid {
@@ -178,7 +227,7 @@
             overflow-y: auto;
             overscroll-behavior: contain;
             -webkit-overflow-scrolling: touch;
-            padding: 18px 16px 148px;
+            padding: 18px 16px 44px;
             scrollbar-width: none;
         }
 
@@ -302,118 +351,6 @@
             color: var(--muted-strong);
             font-size: 14px;
             font-weight: 600;
-        }
-
-        .cta-bar {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 20;
-            padding: 20px 16px var(--safe-bottom);
-            background: transparent;
-        }
-
-        .cta-bar::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            top: -68px;
-            pointer-events: none;
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(245, 245, 247, 0) 0%,
-                    rgba(245, 245, 247, 0.64) 34%,
-                    rgba(245, 245, 247, 0.92) 68%,
-                    rgba(245, 245, 247, 1) 100%
-                );
-            filter: blur(12px);
-        }
-
-        .cta-bar-inner {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            width: min(100%, 420px);
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-bar-inner.has-secondary {
-            width: min(100%, 420px);
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 56px;
-            padding: 0 18px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1;
-            white-space: nowrap;
-            text-align: center;
-            transition:
-                transform 0.15s ease-in-out,
-                background 0.2s ease-in-out,
-                color 0.2s ease-in-out,
-                box-shadow 0.2s ease-in-out;
-        }
-
-        .cta-button:active {
-            transform: scale(0.97);
-        }
-
-        .cta-button-primary {
-            position: relative;
-            background: #2c2c2e;
-            color: #ffffff;
-            box-shadow:
-                0 18px 34px rgba(44, 44, 46, 0.16),
-                0 1px 0 rgba(255, 255, 255, 0.08) inset;
-        }
-
-        .cta-button-primary::before {
-            content: "";
-            position: absolute;
-            left: 12%;
-            right: 12%;
-            bottom: -10px;
-            height: 26px;
-            border-radius: 999px;
-            background: rgba(44, 44, 46, 0.18);
-            filter: blur(18px);
-            opacity: 0.95;
-            z-index: -1;
-            transition:
-                opacity 0.2s ease-in-out,
-                transform 0.2s ease-in-out;
-        }
-
-        .cta-button-primary:hover {
-            background: #202126;
-        }
-
-        .cta-button-primary:hover::before {
-            opacity: 1;
-            transform: scale(1.04);
-        }
-
-        .cta-button-secondary {
-            background: #f2f2f4;
-            color: var(--text);
-            border: 1px solid rgba(32, 33, 38, 0.06);
-        }
-
-        .cta-button-secondary:hover {
-            background: #ebebee;
         }
 
         .modal[hidden] {
@@ -620,12 +557,17 @@
                 padding: 36px 28px 0;
             }
 
+            .profile-actions {
+                top: 34px;
+                right: 28px;
+            }
+
             .profile-name {
                 margin-top: 22px;
             }
 
             .wishlist-scroll {
-                padding: 22px 28px 172px;
+                padding: 22px 28px 54px;
             }
 
             .wishlist-grid {
@@ -671,23 +613,16 @@
             .modal-price {
                 font-size: 18px;
             }
-
-            .cta-bar {
-                padding-left: 28px;
-                padding-right: 28px;
-                padding-top: 26px;
-            }
-
-            .cta-bar-inner.has-secondary {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                width: min(100%, 620px);
-            }
         }
 
         @media (min-width: 920px) {
             .profile {
                 padding-left: 40px;
                 padding-right: 40px;
+            }
+
+            .profile-actions {
+                right: 40px;
             }
 
             .wishlist-grid {
@@ -737,6 +672,25 @@
             </section>
         {% else %}
             <section class="profile" aria-labelledby="wishlist-owner-name">
+                {% if show_app_store_icon %}
+                    <div class="profile-actions" aria-label="Открытие приложения">
+                        <a
+                            class="app-store-cta"
+                            href="{{ app_open_url }}"
+                            aria-label="Открыть в приложении или перейти в App Store"
+                            data-open-in-app
+                            data-app-store-url="{{ app_store_url|default:'' }}"
+                            data-app-store-cta
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M10.25 5.25L5.5 13.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M13.75 5.25L18.5 13.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M8.25 17.5H15.75" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M7.5 13.5H16.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </a>
+                    </div>
+                {% endif %}
                 <div class="brand-avatar" aria-hidden="true">
                     <img class="brand-mark" src="/api/assets/branding/profile-avatar-mark.svg" alt="">
                 </div>
@@ -789,22 +743,6 @@
         {% endif %}
     </div>
 </main>
-
-{% if not is_error %}
-        <div class="cta-bar" aria-label="Действия для вишлиста">
-            <div class="cta-bar-inner{% if app_store_url %} has-secondary{% endif %}">
-                <a
-                    class="cta-button cta-button-primary"
-                    href="{{ app_open_url }}"
-                    data-open-in-app
-                    data-app-store-url="{{ app_store_url|default:'' }}"
-                >Открыть в приложении</a>
-                {% if app_store_url %}
-                    <a class="cta-button cta-button-secondary" href="{{ app_store_url }}" target="_blank" rel="noopener noreferrer">Установить CHOOZ</a>
-                {% endif %}
-        </div>
-    </div>
-{% endif %}
 
 {% if not is_error %}
     <script>

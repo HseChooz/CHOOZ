@@ -323,15 +323,35 @@ def test_public_wishlist_page_renders_items(client, user):
     assert 'name="apple-itunes-app"' in content
     assert 'content="app-id=6760219704, app-argument=chooz://wishlist/public-token"' in content
     assert 'property="og:title"' in content
-    assert 'href="chooz://wishlist/public-token"' in content
-    assert 'data-app-store-url="https://apps.apple.com/kz/app/chooz/id6760219704"' in content
-    assert 'href="https://apps.apple.com/kz/app/chooz/id6760219704"' in content
+    assert 'data-app-store-cta' not in content
+    assert "Открыть в приложении" not in content
+    assert "Установить CHOOZ" not in content
+    assert 'class="cta-bar"' not in content
     assert "wishlist-count" not in content
     assert 'class="modal-button' not in content
     assert user.email not in content
     assert "accessToken" not in content
     assert "refreshToken" not in content
     assert "Bearer" not in content
+
+
+def test_public_wishlist_page_renders_app_store_icon_for_iphone(client, user):
+    share_link = WishlistShareLink.objects.create(owner=user, token="iphone-token", is_enabled=True)
+
+    response = client.get(
+        f"/wishlist/{share_link.token}/",
+        HTTP_USER_AGENT=(
+            "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) "
+            "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1"
+        ),
+    )
+    content = response.content.decode("utf-8")
+
+    assert response.status_code == 200
+    assert 'data-app-store-cta' in content
+    assert 'href="chooz://wishlist/iphone-token"' in content
+    assert 'data-app-store-url="https://apps.apple.com/kz/app/chooz/id6760219704"' in content
+    assert 'aria-label="Открыть в приложении или перейти в App Store"' in content
 
 
 def test_public_wishlist_page_uses_empty_state(client, user):
@@ -374,14 +394,18 @@ def test_public_wishlist_page_returns_410_for_disabled_link(client, user):
 def test_public_wishlist_page_renders_install_cta(client, user):
     share_link = WishlistShareLink.objects.create(owner=user, token="cta-token", is_enabled=True)
 
-    response = client.get(f"/wishlist/{share_link.token}/")
+    response = client.get(
+        f"/wishlist/{share_link.token}/",
+        HTTP_USER_AGENT=(
+            "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) "
+            "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1"
+        ),
+    )
     content = response.content.decode("utf-8")
 
     assert response.status_code == 200
-    assert 'href="https://apps.apple.com/app/id1234567890"' in content
     assert 'data-app-store-url="https://apps.apple.com/app/id1234567890"' in content
     assert 'content="app-id=1234567890, app-argument=chooz://wishlist/cta-token"' in content
-    assert "Установить CHOOZ" in content
 
 
 @override_settings(APPLE_APP_SITE_ASSOCIATION_APP_ID="TEAMID.com.chooz.app")
