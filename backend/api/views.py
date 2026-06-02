@@ -22,6 +22,10 @@ from api.yandex_disk import (
 HARDCODED_ASSETS_ROOT = (Path(__file__).resolve().parent / "hardcoded_assets").resolve()
 
 
+def _is_iphone_request(request) -> bool:
+    return "iPhone" in request.headers.get("User-Agent", "")
+
+
 def apple_app_site_association(_request) -> JsonResponse:
     details = []
     if settings.APPLE_APP_SITE_ASSOCIATION_APP_ID:
@@ -128,6 +132,7 @@ def public_wishlist(request, token: str):
             "app_open_url": build_app_open_url(share_link.token),
             "app_store_url": app_store_url,
             "app_store_app_id": extract_app_store_app_id(app_store_url),
+            "show_app_store_icon": _is_iphone_request(request),
             "is_empty": items_count == 0,
             "is_error": False,
         },
