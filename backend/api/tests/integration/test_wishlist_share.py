@@ -352,7 +352,7 @@ def test_public_wishlist_page_renders_app_store_icon_for_iphone(client, user):
     assert 'href="chooz://wishlist/iphone-token"' in content
     assert 'data-app-store-url="https://apps.apple.com/kz/app/chooz/id6760219704"' in content
     assert 'aria-label="Открыть в приложении или перейти в App Store"' in content
-    assert '/api/assets/branding/app-store-cta-icon.png' in content
+    assert '<svg viewBox="0 0 640 640" aria-hidden="true">' in content
 
 
 def test_public_wishlist_page_uses_empty_state(client, user):
